@@ -1,4 +1,6 @@
 "use client";
+import { accountHeaders, paidFetch } from "../../lib/ai/request-client";
+import { useAccountScope } from "./account-scope";
 import { useEffect, useRef, useState } from "react";
 import {
   Sparkles,
@@ -74,16 +76,23 @@ export function AIPanel({
   update,
   onOpenSource,
   onActivity,
+  contextual = false,
+  drafts,
+  onDraft,
 }: {
   item: LearningItem;
   t: Messages;
   locale: Locale;
   initialTask: AITask;
   update: (item: LearningItem) => void;
-  onOpenSource?: () => void;
+  onOpenSource?: (reference?: SourceReference) => void;
   onActivity?: (kind: "chat" | "summary") => void;
+  contextual?: boolean;
+  drafts?: { question: string; goal: string };
+  onDraft?: (value: { question: string; goal: string }) => void;
 }) {
   const a = aiCopy[locale];
+  const account = useAccountScope();
   const copy = productCopy[locale];
   const learning = linkCopy[locale];
   const full = fullSummaryCopy[locale];
@@ -94,7 +103,7 @@ export function AIPanel({
   const [config, setConfig] = useState<ProviderStatus | null>(null),
     [task, setTask] = useState<AITask>(initialTask),
     [language, setLanguage] = useState<Locale>(locale),
-    [question, setQuestion] = useState(""),
+    [question, setQuestion] = useState(drafts?.question || ""),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [result, setResult] = useState<AIResult | null>(null),
@@ -134,10 +143,13 @@ export function AIPanel({
     [guidance, setGuidance] = useState<AIInput["guidance"]>("hints"),
     [presentation, setPresentation] = useState<AIInput["presentation"]>("auto"),
     [mathStyle, setMathStyle] = useState<MathStyle>("notebook"),
-    [goal, setGoal] = useState(""),
+    [goal, setGoal] = useState(drafts?.goal || ""),
     [useVideo, setUseVideo] = useState(!!video && !item.text);
   const [rangeStart, setRangeStart] = useState("00:00"),
     [rangeEnd, setRangeEnd] = useState("10:00");
+  useEffect(() => {
+    onDraft?.({ question, goal });
+  }, [question, goal, onDraft]);
   const abort = useRef<AbortController | null>(null),
     itemRef = useRef(item),
     locked = useRef(false);
@@ -231,7 +243,11 @@ export function AIPanel({
         if (saved.ragScope?.snapshotId) {
           const check = await fetch(
             `/api/rag/documents?snapshotId=${encodeURIComponent(saved.ragScope.snapshotId)}`,
-            { signal: controller.signal, cache: "no-store" },
+            {
+              signal: controller.signal,
+              cache: "no-store",
+              headers: accountHeaders(account),
+            },
           );
           if (!active) return;
           if (!check.ok) {
@@ -251,7 +267,11 @@ export function AIPanel({
         }
         const restored = await fetch(
           `/api/tutor/session?sessionId=${encodeURIComponent(saved.sessionId)}`,
-          { signal: controller.signal, cache: "no-store" },
+          {
+            signal: controller.signal,
+            cache: "no-store",
+            headers: accountHeaders(account),
+          },
         );
         if (!active) return;
         if (!restored.ok) {
@@ -516,12 +536,16 @@ export function AIPanel({
         value: AIInput,
         signal: AbortSignal,
       ): Promise<AIResult> {
-        const response = await fetch("/api/ai", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(value),
-          signal,
-        });
+        const response = await paidFetch(
+          "/api/ai",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(value),
+            signal,
+          },
+          account,
+        );
         const type = response.headers.get("content-type") || "";
         if (!type.includes("application/json"))
           throw new Error("PROVIDER_ERROR");
@@ -677,7 +701,9 @@ export function AIPanel({
             ? full.sourceChanged
             : e instanceof Error && e.message === "TUTOR_LOCKED"
               ? tutorCopy.rule
-              : e instanceof Error && (e.message.startsWith("RAG_")||e.message.startsWith("EMBEDDING"))
+              : e instanceof Error &&
+                  (e.message.startsWith("RAG_") ||
+                    e.message.startsWith("EMBEDDING"))
                 ? ragError(e.message, locale === "vi")
                 : e instanceof Error && e.message === "INVALID_RAG_OUTPUT"
                   ? ragError(e.message, locale === "vi")
@@ -711,11 +737,15 @@ export function AIPanel({
       const form = new FormData();
       form.set("file", blob, item.fileName || "recording.webm");
       form.set("language", language);
-      const response = await fetch("/api/voice", {
-        method: "POST",
-        body: form,
-        signal: abort.current.signal,
-      });
+      const response = await paidFetch(
+        "/api/voice",
+        {
+          method: "POST",
+          body: form,
+          signal: abort.current.signal,
+        },
+        account,
+      );
       if (!response.ok) {
         const error = await response.json();
         throw new Error(error.error || "PROVIDER_ERROR");
@@ -757,28 +787,30 @@ export function AIPanel({
           <p>{copy.subtitle}</p>
         </div>
       </div>
-      <div className="lm-task-switch" aria-label={a.mode}>
-        {(["chat", "summary", "cards", "quiz"] as const).map((k) => (
-          <button
-            key={k}
-            className={task === k ? "selected" : ""}
-            aria-pressed={task === k}
-            disabled={blocked}
-            onClick={() => {
-              setTask(k);
-              setResult(null);
-              setError("");
-            }}
-          >
-            {k === "chat" ? (
-              <Sparkles size={16} />
-            ) : k === "summary" ? (
-              <BookOpen size={16} />
-            ) : null}
-            {t[k]}
-          </button>
-        ))}
-      </div>
+      {!contextual && (
+        <div className="lm-task-switch" aria-label={a.mode}>
+          {(["chat", "summary", "cards", "quiz"] as const).map((k) => (
+            <button
+              key={k}
+              className={task === k ? "selected" : ""}
+              aria-pressed={task === k}
+              disabled={blocked}
+              onClick={() => {
+                setTask(k);
+                setResult(null);
+                setError("");
+              }}
+            >
+              {k === "chat" ? (
+                <Sparkles size={16} />
+              ) : k === "summary" ? (
+                <BookOpen size={16} />
+              ) : null}
+              {t[k]}
+            </button>
+          ))}
+        </div>
+      )}
       <div className="lm-source-chip">
         <BookOpen size={15} />
         <span>
@@ -817,7 +849,7 @@ export function AIPanel({
           <div>
             <p>{tutorCopy.extract}</p>
             {onOpenSource && (
-              <button className="lm-button" onClick={onOpenSource}>
+              <button className="lm-button" onClick={() => onOpenSource()}>
                 {learning.source}
                 <ArrowUpRight size={15} />
               </button>
@@ -832,7 +864,7 @@ export function AIPanel({
             <strong>{learning.source}</strong>
             <p>{learning.intro}</p>
             {onOpenSource && (
-              <button className="lm-button" onClick={onOpenSource}>
+              <button className="lm-button" onClick={() => onOpenSource()}>
                 {learning.extract}
                 <ArrowUpRight size={15} />
               </button>
@@ -1338,6 +1370,7 @@ export function AIPanel({
       )}
       {task === "summary" && savedSummary && (
         <RichSummary
+          onOpenSource={onOpenSource}
           key={savedSummary.id}
           artifact={savedSummary}
           item={item}

@@ -1,46 +1,721 @@
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),ts=require('typescript');
-const root=path.resolve(__dirname,'..'),cache=new Map();let session=null;
-function load(relative){const file=path.resolve(root,relative);if(file===path.join(root,'lib/lumio/auth.ts'))return{authOptions:()=>({}),providerStatus:()=>({google:true,facebook:false})};if(cache.has(file))return cache.get(file).exports;const module={exports:{}};cache.set(file,module);new Function('require','module','exports',ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText)(name=>name==='next-auth'?{getServerSession:async()=>session}:name.startsWith('.')?load(path.relative(root,path.resolve(path.dirname(file),name+'.ts'))):require(name),module,module.exports);return module.exports;}
-const env={NODE_ENV:'development',NEXTAUTH_URL:'http://127.0.0.1:3000',NEXTAUTH_SECRET:'rag-api-auth-fixture-only-'.repeat(3),LUMIO_AI_ENABLED:'true',LUMIO_PUBLIC_DEMO:'false',LUMIO_DESKTOP:'false',LUMIO_COMPETITION_PREVIEW:'false',LUMIO_EMBEDDINGS_ENABLED:'true',OPENAI_API_KEY:'test-not-a-key',OPENAI_MODEL:'test-model',OPENAI_EMBEDDING_MODEL:'text-embedding-3-small',GEMINI_API_KEY:'',GEMINI_MODEL:''};const before=Object.fromEntries(Object.keys(env).map(k=>[k,process.env[k]]));Object.assign(process.env,env);
-const platform=load('lib/server/store.ts'),store=platform.createStore(':memory:',{adminEmails:['rag-admin@example.test']});Object.assign(platform,{getStore:()=>store,getUser:id=>store.getUser(id),isFeatureEnabled:key=>store.isFeatureEnabled(key),recordAIUsage:e=>store.recordAIUsage(e)});
-const documents=load('app/api/rag/documents/route.ts'),search=load('app/api/rag/search/route.ts'),ai=load('app/api/ai/route.ts');
-const admin=store.ensureIdentity({provider:'google',providerAccountId:'rag-admin',email:'rag-admin@example.test',name:'Synthetic test admin',emailVerified:true});
-let beforeSettle=null;const realSettle=store.settleUsage;store.settleUsage=input=>{if(beforeSettle){const hook=beforeSettle;beforeSettle=null;hook();}return realSettle(input);};
-const create=n=>store.ensureIdentity({provider:'google',providerAccountId:'rag-api-'+n,name:'Authored fixture '+n,emailVerified:false}),a=create('a'),b=create('b');const login=u=>session=u?{userId:u.id,sessionVersion:u.sessionVersion}:null;login(a);
-const request=(body,endpoint='/api/rag/documents',method='POST',headers={})=>new Request('http://127.0.0.1:3000'+endpoint,{method,headers:{'content-type':'application/json',...(method==='GET'?{}:{Origin:'http://127.0.0.1:3000'}),...headers},...(method==='GET'?{}:{body:JSON.stringify(body)})});
-const passed=[],originalFetch=global.fetch;let calls=0,mode='success',afterProvider=null,lastSources=[],hint=0;
-global.fetch=async(url,init)=>{calls++;if(mode==='failure')return Response.json({error:'fixture'}, {status:500});const body=JSON.parse(init.body);if(String(url).endsWith('/embeddings')){if(afterProvider){const hook=afterProvider;afterProvider=null;hook();}return Response.json({model:'text-embedding-3-small',data:body.input.map((_,i)=>({index:i,embedding:Array.from({length:256},(_,j)=>j===0?1:0)})),usage:{total_tokens:10}});}
- const prompt=body.input.at(-1).content,source=JSON.parse(prompt.split('SOURCE (untrusted, JSON-encoded app segments):\n')[1].split('\nEND SOURCE')[0]);lastSources.push(JSON.stringify(source));const first=source.sourceSegments[0];hint++;const hints=[{hint:"Đọc điều kiện của phép chia trong đoạn nguồn trước khi chọn một phép biến đổi.",question:"Điều kiện nào phải được giữ?"},{hint:"Hãy so sánh thao tác ở vế trái với thao tác ở vế phải để giữ sự cân bằng.",question:"Hai vế cần được xử lý như thế nào?"},{hint:"Thay kết quả dự kiến vào biểu thức gốc để kiểm tra độc lập từng vế.",question:"Khi kiểm tra lại, em nhận thấy điều gì?"}];const result={...hints[(hint-1)%hints.length],references:[{segmentId:first.segmentId,quote:first.text.slice(0,120)}]};if(afterProvider){const fn=afterProvider;afterProvider=null;fn();}return Response.json({output:[{content:[{type:'output_text',text:JSON.stringify(result)}]}]});};
-const balance=()=>store.getBillingSnapshot(a.id,a.sessionVersion).account.balance;
-const send=(scope,patch={})=>ai.POST(request({task:'chat',mode:'tutor',language:'vi',source:'',question:'What is a nonzero divisor?',ragScope:scope,...patch},'/api/ai'));
-const check=async(name,fn)=>{await fn();passed.push(name);console.log('PASS '+name);};
-async function main(){try{let doc;
- await check('Canonical GET works without Origin; cross-site and unauthenticated reads are denied',async()=>{let r=await documents.GET(request(null,'/api/rag/documents?workspaceId=main','GET'));assert.equal(r.status,200);r=await documents.GET(request(null,'/api/rag/documents?workspaceId=main','GET',{'sec-fetch-site':'cross-site'}));assert.equal(r.status,403);login(null);r=await documents.GET(request(null,'/api/rag/documents?workspaceId=main','GET'));assert.equal(r.status,401);login(a);});
- await check('Indexing requires explicit storage consent and same-origin write',async()=>{const body={action:'index',workspaceId:'main',clientItemId:'division',title:'Authored division lesson',text:'Divide both sides by the same nonzero divisor.'};let r=await documents.POST(request(body));assert.equal(r.status,400);r=await documents.POST(request({...body,storageConsent:true},undefined,'POST',{origin:'https://evil.invalid'}));assert.equal(r.status,403);r=await documents.POST(request({...body,storageConsent:true}));assert.equal(r.status,200);doc=(await r.json()).document;assert.equal(calls,0);});
- const scope=()=>({workspaceId:'main',documentIds:[doc.id]});
- await check('Search and vector indexing deny foreign document ids before transport',async()=>{login(b);let r=await search.POST(request({scope:scope(),query:'divisor'},'/api/rag/search'));assert.equal(r.status,404);r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id,externalConsent:true}));assert.equal(r.status,404);assert.equal(calls,0);login(a);});
- await check('Lexical search returns verbatim source and costs zero credits',async()=>{const before=balance(),r=await search.POST(request({scope:scope(),query:'nonzero divisor'},'/api/rag/search'));assert.equal(r.status,200);const value=await r.json();assert.equal(value.hits.length,1);assert.equal(value.credits,0);assert.equal(balance(),before);assert.equal(calls,0);});
- await check('No evidence creates no provider call or credit debit',async()=>{const before=balance(),r=await send(scope(),{question:'volcanic magma eruption'});assert.equal(r.status,422);assert.equal((await r.json()).error,'RAG_NO_EVIDENCE');assert.equal(calls,0);assert.equal(balance(),before);});
- let first;
- await check('Actual AI route maps model quote to owner-bound document provenance and snapshot',async()=>{const r=await send(scope());assert.equal(r.status,200);first=await r.json();assert.ok(first.rag.snapshotId);assert.equal(first.references[0].rag.documentId,doc.id);assert.equal(first.references[0].page,undefined);assert.equal(first.tutor.hintCount,1);assert.equal(first.provider,undefined);});
- await check('Follow-up reuses immutable retrieval text instead of searching the new student response',async()=>{const r=await send({...scope(),snapshotId:first.rag.snapshotId},{tutorSessionId:first.tutor.sessionId,question:'I think I should divide both sides.'});assert.equal(r.status,200);assert.equal((await r.json()).tutor.hintCount,2);assert.equal(lastSources[0],lastSources[1]);});
- await check('Full-solution gate is still enforced for retrieved sources before three hints',async()=>{const n=calls,before=balance(),r=await send({...scope(),snapshotId:first.rag.snapshotId},{tutorSessionId:first.tutor.sessionId,guidance:'full'});assert.equal(r.status,409);assert.equal((await r.json()).error,'TUTOR_LOCKED');assert.equal(calls,n);assert.equal(balance(),before);});
- await check('Changed source revision rejects old tutor snapshot before paid transport',async()=>{doc=store.ragIndex(a.id,{workspaceId:'main',clientItemId:'division',title:'Authored division lesson',text:'A nonzero divisor is required before division.'});const n=calls,before=balance(),r=await send({...scope(),snapshotId:first.rag.snapshotId},{tutorSessionId:first.tutor.sessionId});assert.equal(r.status,409);assert.equal((await r.json()).error,'RAG_SOURCE_CHANGED');assert.equal(calls,n);assert.equal(balance(),before);});
- await check('Deletion during provider generation prevents response commit and refunds credits',async()=>{const before=balance();afterProvider=()=>store.ragDelete(a.id,'main',doc.id);const r=await send(scope());assert.equal(r.status,404);assert.equal((await r.json()).error,'RAG_DOCUMENT_NOT_FOUND');assert.equal(balance(),before);doc=store.ragIndex(a.id,{workspaceId:'main',clientItemId:'division',title:'Authored lesson',text:'A nonzero divisor is required before division.'});});
- await check('Optional embeddings require external consent; successful vectors debit exactly two credits atomically',async()=>{const before=balance(),n=calls;let r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id}));assert.equal(r.status,400);assert.equal(calls,n);r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id,externalConsent:true}));assert.equal(r.status,200);assert.equal((await r.json()).document.semantic,true);assert.equal(balance(),before-2);});
- await check('Embedding provider error refunds reservation and preserves lexical index',async()=>{doc=store.ragIndex(a.id,{workspaceId:'main',clientItemId:'division',title:'Authored lesson',text:'The divisor must be nonzero before dividing both equation sides.'});const before=balance();mode='failure';const r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id,externalConsent:true}));mode='success';assert.equal(r.status,502);assert.equal(balance(),before);assert.ok(store.ragSearch(a.id,scope(),'divisor').hits.length);});
- await check('Hybrid search is explicit, combines vectors and lexical hits, and debits two credits',async()=>{let indexed=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id,externalConsent:true}));assert.equal(indexed.status,200);const before=balance(),r=await search.POST(request({scope:{...scope(),mode:'hybrid',consent:true},query:'division'},'/api/rag/search'));assert.equal(r.status,200);const value=await r.json();assert.equal(value.mode,'hybrid');assert.equal(value.hits.length,1);assert.equal(value.credits,2);assert.equal(balance(),before-2);});
- await check('Failed first RAG hint returns its immutable snapshot and can retry without resetting the exercise',async()=>{mode='failure';const before=balance(),failed=await send(scope());mode='success';assert.equal(failed.status,502);const body=await failed.json();assert.equal(body.tutor.hintCount,0);assert.ok(body.rag.snapshotId);assert.equal(balance(),before);const retried=await send({...scope(),snapshotId:body.rag.snapshotId},{tutorSessionId:body.tutor.sessionId});assert.equal(retried.status,200);assert.equal((await retried.json()).tutor.hintCount,1);});
- await check('Repeated embedding request for current source is idempotent with no extra transport or debit',async()=>{const n=calls,before=balance(),r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:doc.id,externalConsent:true}));assert.equal(r.status,200);const body=await r.json();assert.equal(body.unchanged,true);assert.equal(body.credits,0);assert.equal(calls,n);assert.equal(balance(),before);});
- const ownedFixture=name=>{const user=create(name),document=store.ragIndex(user.id,{workspaceId:'main',clientItemId:name,title:'Authored divisor source',text:'A nonzero divisor is required before dividing both equation sides.'});login(user);return {user,document,scope:{workspaceId:'main',documentIds:[document.id]}};};
- const wallet=user=>store.getBillingSnapshot(user.id,store.getUser(user.id).sessionVersion).account.balance;
- const vectorsFor=f=>{const data=store.ragEmbeddingInput(f.user.id,'main',f.document.id);store.ragSetEmbeddings(f.user.id,'main',f.document.id,f.document.digest,f.document.revision,'text-embedding-3-small',data.chunks.map(()=>Array.from({length:256},(_,i)=>i===0?1:0)));};
- await check('Session revocation during document embedding rolls back vector assignment and refunds credits',async()=>{const f=ownedFixture('revoke-index'),before=wallet(f.user);afterProvider=()=>store.updateUserAccess(admin.id,f.user.id,'revoke','Synthetic revoke during provider wait');const r=await documents.POST(request({action:'embed',workspaceId:'main',documentId:f.document.id,externalConsent:true}));assert.equal(r.status,401);assert.equal((await r.json()).error,'SESSION_REVOKED');assert.equal(wallet(f.user),before);assert.equal(store.ragList(f.user.id,'main')[0].semantic,false);});
- await check('Session revocation during semantic search rejects excerpts and refunds query credits',async()=>{const f=ownedFixture('revoke-query');vectorsFor(f);const before=wallet(f.user);afterProvider=()=>store.updateUserAccess(admin.id,f.user.id,'revoke','Synthetic revoke during search');const r=await search.POST(request({scope:{...f.scope,mode:'hybrid',consent:true},query:'divisor'},'/api/rag/search'));assert.equal(r.status,401);const body=await r.json();assert.equal(body.error,'SESSION_REVOKED');assert.equal(body.hits,undefined);assert.equal(wallet(f.user),before);});
- await check('A source update between precheck and settlement is rejected inside the atomic tutor transaction',async()=>{const f=ownedFixture('atomic-race'),before=wallet(f.user);beforeSettle=()=>store.ragIndex(f.user.id,{workspaceId:'main',clientItemId:'atomic-race',title:'Changed source',text:'The revised lesson requires checking a nonzero divisor.'});const r=await send(f.scope);assert.equal(r.status,409);const body=await r.json();assert.equal(body.error,'RAG_SOURCE_CHANGED');assert.equal(body.tutor.hintCount,0);assert.equal(wallet(f.user),before);});
- await check('Source changes during query embedding cannot be billed as a hybrid result from stale vectors',async()=>{const f=ownedFixture('query-change');vectorsFor(f);const before=wallet(f.user);afterProvider=()=>store.ragIndex(f.user.id,{workspaceId:'main',clientItemId:'query-change',title:'Revised source',text:'Check the divisor before making a division.'});const r=await search.POST(request({scope:{...f.scope,mode:'hybrid',consent:true},query:'divisor'},'/api/rag/search'));assert.equal(r.status,409);assert.equal((await r.json()).error,'RAG_SOURCE_CHANGED');assert.equal(wallet(f.user),before);});
- await check('A failed first-turn semantic embedding refunds both chat and query reservations',async()=>{const f=ownedFixture('hybrid-failure');vectorsFor(f);const before=wallet(f.user);mode='failure';const r=await send({...f.scope,mode:'hybrid',consent:true});mode='success';assert.equal(r.status,502);assert.equal(wallet(f.user),before);});
- await check('Hybrid tutoring debits both costs once and follow-ups do not embed the question again',async()=>{const f=ownedFixture('hybrid-success');vectorsFor(f);const before=wallet(f.user),n=calls;let r=await send({...f.scope,mode:'hybrid',consent:true});assert.equal(r.status,200);const body=await r.json();assert.equal(body.rag.mode,'hybrid');assert.equal(calls,n+2);assert.equal(wallet(f.user),before-6);r=await send({...f.scope,mode:'hybrid',snapshotId:body.rag.snapshotId},{tutorSessionId:body.tutor.sessionId,question:'Help me see the next step.'});assert.equal(r.status,200);assert.equal(calls,n+3);assert.equal(wallet(f.user),before-10);const usage=store.listUsage(100).filter(e=>e.userId===f.user.id&&e.task==='index');assert.equal(usage.length,1);assert.equal(usage[0].inputTokens,10);assert.match(usage[0].requestId,/^[\w-]+$/);});
- fs.writeFileSync(path.join(root,'docs/regional/qa-rag-api-report.json'),JSON.stringify({checkedAt:new Date().toISOString(),status:'PASS',passed:passed.length,checks:passed,scope:'Actual route/SQLite/ledger with explicit synthetic auth and mocked provider transport; zero paid requests.'},null,2));console.log(passed.length+' RAG API checks passed; no real OAuth or paid provider claim.');
- }finally{global.fetch=originalFetch;store.close();for(const[k,v]of Object.entries(before))v===undefined?delete process.env[k]:process.env[k]=v;}}
-main().catch(e=>{console.error(e);process.exitCode=1;});
+const assert = require("node:assert/strict"),
+  fs = require("node:fs"),
+  path = require("node:path"),
+  ts = require("typescript");
+const root = path.resolve(__dirname, ".."),
+  cache = new Map();
+let session = null;
+function load(relative) {
+  const file = path.resolve(root, relative);
+  if (file === path.join(root, "lib/lumio/auth.ts"))
+    return {
+      authOptions: () => ({}),
+      providerStatus: () => ({ google: true, facebook: false }),
+    };
+  if (cache.has(file)) return cache.get(file).exports;
+  const module = { exports: {} };
+  cache.set(file, module);
+  new Function(
+    "require",
+    "module",
+    "exports",
+    ts.transpileModule(fs.readFileSync(file, "utf8"), {
+      compilerOptions: {
+        module: ts.ModuleKind.CommonJS,
+        target: ts.ScriptTarget.ES2022,
+      },
+    }).outputText,
+  )(
+    (name) =>
+      name === "next-auth"
+        ? { getServerSession: async () => session }
+        : name.startsWith(".")
+          ? load(
+              path.relative(
+                root,
+                path.resolve(path.dirname(file), name + ".ts"),
+              ),
+            )
+          : require(name),
+    module,
+    module.exports,
+  );
+  return module.exports;
+}
+const env = {
+  NODE_ENV: "development",
+  NEXTAUTH_URL: "http://127.0.0.1:3000",
+  NEXTAUTH_SECRET: "rag-api-auth-fixture-only-".repeat(3),
+  LUMIO_AI_ENABLED: "true",
+  LUMIO_PUBLIC_DEMO: "false",
+  LUMIO_DESKTOP: "false",
+  LUMIO_COMPETITION_PREVIEW: "false",
+  LUMIO_EMBEDDINGS_ENABLED: "true",
+  OPENAI_API_KEY: "test-not-a-key",
+  OPENAI_MODEL: "test-model",
+  OPENAI_EMBEDDING_MODEL: "text-embedding-3-small",
+  GEMINI_API_KEY: "",
+  GEMINI_MODEL: "",
+};
+const before = Object.fromEntries(
+  Object.keys(env).map((k) => [k, process.env[k]]),
+);
+Object.assign(process.env, env);
+const platform = load("lib/server/store.ts"),
+  store = platform.createStore(":memory:", {
+    adminEmails: ["rag-admin@example.test"],
+  });
+Object.assign(platform, {
+  getStore: () => store,
+  getUser: (id) => store.getUser(id),
+  isFeatureEnabled: (key) => store.isFeatureEnabled(key),
+  recordAIUsage: (e) => store.recordAIUsage(e),
+});
+const documents = load("app/api/rag/documents/route.ts"),
+  search = load("app/api/rag/search/route.ts"),
+  ai = load("app/api/ai/route.ts");
+const admin = store.ensureIdentity({
+  provider: "google",
+  providerAccountId: "rag-admin",
+  email: "rag-admin@example.test",
+  name: "Synthetic test admin",
+  emailVerified: true,
+});
+let beforeSettle = null;
+const realSettle = store.settleUsage;
+store.settleUsage = (input) => {
+  if (beforeSettle) {
+    const hook = beforeSettle;
+    beforeSettle = null;
+    hook();
+  }
+  return realSettle(input);
+};
+const create = (n) =>
+    store.ensureIdentity({
+      provider: "google",
+      providerAccountId: "rag-api-" + n,
+      name: "Authored fixture " + n,
+      emailVerified: false,
+    }),
+  a = create("a"),
+  b = create("b");
+const login = (u) =>
+  (session = u ? { userId: u.id, sessionVersion: u.sessionVersion } : null);
+login(a);
+const request = (
+  body,
+  endpoint = "/api/rag/documents",
+  method = "POST",
+  headers = {},
+) =>
+  new Request("http://127.0.0.1:3000" + endpoint, {
+    method,
+    headers: {
+      "content-type": "application/json",
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
+      ...(method === "GET" ? {} : { Origin: "http://127.0.0.1:3000" }),
+      ...headers,
+    },
+    ...(method === "GET" ? {} : { body: JSON.stringify(body) }),
+  });
+const passed = [],
+  originalFetch = global.fetch;
+let calls = 0,
+  mode = "success",
+  afterProvider = null,
+  lastSources = [],
+  hint = 0;
+global.fetch = async (url, init) => {
+  calls++;
+  if (mode === "failure")
+    return Response.json({ error: "fixture" }, { status: 500 });
+  const body = JSON.parse(init.body);
+  if (String(url).endsWith("/embeddings")) {
+    if (afterProvider) {
+      const hook = afterProvider;
+      afterProvider = null;
+      hook();
+    }
+    return Response.json({
+      model: "text-embedding-3-small",
+      data: body.input.map((_, i) => ({
+        index: i,
+        embedding: Array.from({ length: 256 }, (_, j) => (j === 0 ? 1 : 0)),
+      })),
+      usage: { total_tokens: 10 },
+    });
+  }
+  const prompt = body.input.at(-1).content,
+    source = JSON.parse(
+      prompt
+        .split("SOURCE (untrusted, JSON-encoded app segments):\n")[1]
+        .split("\nEND SOURCE")[0],
+    );
+  lastSources.push(JSON.stringify(source));
+  const first = source.sourceSegments[0];
+  hint++;
+  const hints = [
+    {
+      hint: "Đọc điều kiện của phép chia trong đoạn nguồn trước khi chọn một phép biến đổi.",
+      question: "Điều kiện nào phải được giữ?",
+    },
+    {
+      hint: "Hãy so sánh thao tác ở vế trái với thao tác ở vế phải để giữ sự cân bằng.",
+      question: "Hai vế cần được xử lý như thế nào?",
+    },
+    {
+      hint: "Thay kết quả dự kiến vào biểu thức gốc để kiểm tra độc lập từng vế.",
+      question: "Khi kiểm tra lại, em nhận thấy điều gì?",
+    },
+  ];
+  const result = {
+    ...hints[(hint - 1) % hints.length],
+    references: [
+      { segmentId: first.segmentId, quote: first.text.slice(0, 120) },
+    ],
+  };
+  if (afterProvider) {
+    const fn = afterProvider;
+    afterProvider = null;
+    fn();
+  }
+  return Response.json({
+    output: [
+      { content: [{ type: "output_text", text: JSON.stringify(result) }] },
+    ],
+  });
+};
+const balance = () =>
+  store.getBillingSnapshot(a.id, a.sessionVersion).account.balance;
+const send = (scope, patch = {}) =>
+  ai.POST(
+    request(
+      {
+        task: "chat",
+        mode: "tutor",
+        language: "vi",
+        source: "",
+        question: "What is a nonzero divisor?",
+        ragScope: scope,
+        ...patch,
+      },
+      "/api/ai",
+    ),
+  );
+const check = async (name, fn) => {
+  await fn();
+  passed.push(name);
+  console.log("PASS " + name);
+};
+async function main() {
+  try {
+    let doc;
+    await check(
+      "Canonical GET works without Origin; cross-site and unauthenticated reads are denied",
+      async () => {
+        let r = await documents.GET(
+          request(null, "/api/rag/documents?workspaceId=main", "GET"),
+        );
+        assert.equal(r.status, 200);
+        r = await documents.GET(
+          request(null, "/api/rag/documents?workspaceId=main", "GET", {
+            "sec-fetch-site": "cross-site",
+          }),
+        );
+        assert.equal(r.status, 403);
+        login(null);
+        r = await documents.GET(
+          request(null, "/api/rag/documents?workspaceId=main", "GET"),
+        );
+        assert.equal(r.status, 401);
+        login(a);
+      },
+    );
+    await check(
+      "Indexing requires explicit storage consent and same-origin write",
+      async () => {
+        const body = {
+          action: "index",
+          workspaceId: "main",
+          clientItemId: "division",
+          title: "Authored division lesson",
+          text: "Divide both sides by the same nonzero divisor.",
+        };
+        let r = await documents.POST(request(body));
+        assert.equal(r.status, 400);
+        r = await documents.POST(
+          request({ ...body, storageConsent: true }, undefined, "POST", {
+            origin: "https://evil.invalid",
+          }),
+        );
+        assert.equal(r.status, 403);
+        r = await documents.POST(request({ ...body, storageConsent: true }));
+        assert.equal(r.status, 200);
+        doc = (await r.json()).document;
+        assert.equal(calls, 0);
+      },
+    );
+    const scope = () => ({ workspaceId: "main", documentIds: [doc.id] });
+    await check(
+      "Search and vector indexing deny foreign document ids before transport",
+      async () => {
+        login(b);
+        let r = await search.POST(
+          request({ scope: scope(), query: "divisor" }, "/api/rag/search"),
+        );
+        assert.equal(r.status, 404);
+        r = await documents.POST(
+          request({
+            action: "embed",
+            workspaceId: "main",
+            documentId: doc.id,
+            externalConsent: true,
+          }),
+        );
+        assert.equal(r.status, 404);
+        assert.equal(calls, 0);
+        login(a);
+      },
+    );
+    await check(
+      "Lexical search returns verbatim source and costs zero credits",
+      async () => {
+        const before = balance(),
+          r = await search.POST(
+            request(
+              { scope: scope(), query: "nonzero divisor" },
+              "/api/rag/search",
+            ),
+          );
+        assert.equal(r.status, 200);
+        const value = await r.json();
+        assert.equal(value.hits.length, 1);
+        assert.equal(value.credits, 0);
+        assert.equal(balance(), before);
+        assert.equal(calls, 0);
+      },
+    );
+    await check(
+      "No evidence creates no provider call or credit debit",
+      async () => {
+        const before = balance(),
+          r = await send(scope(), { question: "volcanic magma eruption" });
+        assert.equal(r.status, 422);
+        assert.equal((await r.json()).error, "RAG_NO_EVIDENCE");
+        assert.equal(calls, 0);
+        assert.equal(balance(), before);
+      },
+    );
+    let first;
+    await check(
+      "Actual AI route maps model quote to owner-bound document provenance and snapshot",
+      async () => {
+        const r = await send(scope());
+        assert.equal(r.status, 200);
+        first = await r.json();
+        assert.ok(first.rag.snapshotId);
+        assert.equal(first.references[0].rag.documentId, doc.id);
+        assert.equal(first.references[0].page, undefined);
+        assert.equal(first.tutor.hintCount, 1);
+        assert.equal(first.provider, undefined);
+      },
+    );
+    await check(
+      "Follow-up reuses immutable retrieval text instead of searching the new student response",
+      async () => {
+        const r = await send(
+          { ...scope(), snapshotId: first.rag.snapshotId },
+          {
+            tutorSessionId: first.tutor.sessionId,
+            question: "I think I should divide both sides.",
+          },
+        );
+        assert.equal(r.status, 200);
+        assert.equal((await r.json()).tutor.hintCount, 2);
+        assert.equal(lastSources[0], lastSources[1]);
+      },
+    );
+    await check(
+      "Full-solution gate is still enforced for retrieved sources before three hints",
+      async () => {
+        const n = calls,
+          before = balance(),
+          r = await send(
+            { ...scope(), snapshotId: first.rag.snapshotId },
+            { tutorSessionId: first.tutor.sessionId, guidance: "full" },
+          );
+        assert.equal(r.status, 409);
+        assert.equal((await r.json()).error, "TUTOR_LOCKED");
+        assert.equal(calls, n);
+        assert.equal(balance(), before);
+      },
+    );
+    await check(
+      "Changed source revision rejects old tutor snapshot before paid transport",
+      async () => {
+        doc = store.ragIndex(a.id, {
+          workspaceId: "main",
+          clientItemId: "division",
+          title: "Authored division lesson",
+          text: "A nonzero divisor is required before division.",
+        });
+        const n = calls,
+          before = balance(),
+          r = await send(
+            { ...scope(), snapshotId: first.rag.snapshotId },
+            { tutorSessionId: first.tutor.sessionId },
+          );
+        assert.equal(r.status, 409);
+        assert.equal((await r.json()).error, "RAG_SOURCE_CHANGED");
+        assert.equal(calls, n);
+        assert.equal(balance(), before);
+      },
+    );
+    await check(
+      "Deletion during provider generation prevents response commit and refunds credits",
+      async () => {
+        const before = balance();
+        afterProvider = () => store.ragDelete(a.id, "main", doc.id);
+        const r = await send(scope());
+        assert.equal(r.status, 404);
+        assert.equal((await r.json()).error, "RAG_DOCUMENT_NOT_FOUND");
+        assert.equal(balance(), before);
+        doc = store.ragIndex(a.id, {
+          workspaceId: "main",
+          clientItemId: "division",
+          title: "Authored lesson",
+          text: "A nonzero divisor is required before division.",
+        });
+      },
+    );
+    await check(
+      "Optional embeddings require external consent; successful vectors debit exactly two credits atomically",
+      async () => {
+        const before = balance(),
+          n = calls;
+        let r = await documents.POST(
+          request({ action: "embed", workspaceId: "main", documentId: doc.id }),
+        );
+        assert.equal(r.status, 400);
+        assert.equal(calls, n);
+        r = await documents.POST(
+          request({
+            action: "embed",
+            workspaceId: "main",
+            documentId: doc.id,
+            externalConsent: true,
+          }),
+        );
+        assert.equal(r.status, 200);
+        assert.equal((await r.json()).document.semantic, true);
+        assert.equal(balance(), before - 2);
+      },
+    );
+    await check(
+      "Embedding provider error refunds reservation and preserves lexical index",
+      async () => {
+        doc = store.ragIndex(a.id, {
+          workspaceId: "main",
+          clientItemId: "division",
+          title: "Authored lesson",
+          text: "The divisor must be nonzero before dividing both equation sides.",
+        });
+        const before = balance();
+        mode = "failure";
+        const r = await documents.POST(
+          request({
+            action: "embed",
+            workspaceId: "main",
+            documentId: doc.id,
+            externalConsent: true,
+          }),
+        );
+        mode = "success";
+        assert.equal(r.status, 502);
+        assert.equal(balance(), before);
+        assert.ok(store.ragSearch(a.id, scope(), "divisor").hits.length);
+      },
+    );
+    await check(
+      "Hybrid search is explicit, combines vectors and lexical hits, and debits two credits",
+      async () => {
+        let indexed = await documents.POST(
+          request({
+            action: "embed",
+            workspaceId: "main",
+            documentId: doc.id,
+            externalConsent: true,
+          }),
+        );
+        assert.equal(indexed.status, 200);
+        const before = balance(),
+          r = await search.POST(
+            request(
+              {
+                scope: { ...scope(), mode: "hybrid", consent: true },
+                query: "division",
+              },
+              "/api/rag/search",
+            ),
+          );
+        assert.equal(r.status, 200);
+        const value = await r.json();
+        assert.equal(value.mode, "hybrid");
+        assert.equal(value.hits.length, 1);
+        assert.equal(value.credits, 2);
+        assert.equal(balance(), before - 2);
+      },
+    );
+    await check(
+      "Failed first RAG hint returns its immutable snapshot and can retry without resetting the exercise",
+      async () => {
+        mode = "failure";
+        const before = balance(),
+          failed = await send(scope());
+        mode = "success";
+        assert.equal(failed.status, 502);
+        const body = await failed.json();
+        assert.equal(body.tutor.hintCount, 0);
+        assert.ok(body.rag.snapshotId);
+        assert.equal(balance(), before);
+        const retried = await send(
+          { ...scope(), snapshotId: body.rag.snapshotId },
+          { tutorSessionId: body.tutor.sessionId },
+        );
+        assert.equal(retried.status, 200);
+        assert.equal((await retried.json()).tutor.hintCount, 1);
+      },
+    );
+    await check(
+      "Repeated embedding request for current source is idempotent with no extra transport or debit",
+      async () => {
+        const n = calls,
+          before = balance(),
+          r = await documents.POST(
+            request({
+              action: "embed",
+              workspaceId: "main",
+              documentId: doc.id,
+              externalConsent: true,
+            }),
+          );
+        assert.equal(r.status, 200);
+        const body = await r.json();
+        assert.equal(body.unchanged, true);
+        assert.equal(body.credits, 0);
+        assert.equal(calls, n);
+        assert.equal(balance(), before);
+      },
+    );
+    const ownedFixture = (name) => {
+      const user = create(name),
+        document = store.ragIndex(user.id, {
+          workspaceId: "main",
+          clientItemId: name,
+          title: "Authored divisor source",
+          text: "A nonzero divisor is required before dividing both equation sides.",
+        });
+      login(user);
+      return {
+        user,
+        document,
+        scope: { workspaceId: "main", documentIds: [document.id] },
+      };
+    };
+    const wallet = (user) =>
+      store.getBillingSnapshot(user.id, store.getUser(user.id).sessionVersion)
+        .account.balance;
+    const vectorsFor = (f) => {
+      const data = store.ragEmbeddingInput(f.user.id, "main", f.document.id);
+      store.ragSetEmbeddings(
+        f.user.id,
+        "main",
+        f.document.id,
+        f.document.digest,
+        f.document.revision,
+        "text-embedding-3-small",
+        data.chunks.map(() =>
+          Array.from({ length: 256 }, (_, i) => (i === 0 ? 1 : 0)),
+        ),
+      );
+    };
+    await check(
+      "Session revocation during document embedding rolls back vector assignment and refunds credits",
+      async () => {
+        const f = ownedFixture("revoke-index"),
+          before = wallet(f.user);
+        afterProvider = () =>
+          store.updateUserAccess(
+            admin.id,
+            f.user.id,
+            "revoke",
+            "Synthetic revoke during provider wait",
+          );
+        const r = await documents.POST(
+          request({
+            action: "embed",
+            workspaceId: "main",
+            documentId: f.document.id,
+            externalConsent: true,
+          }),
+        );
+        assert.equal(r.status, 401);
+        assert.equal((await r.json()).error, "SESSION_REVOKED");
+        assert.equal(wallet(f.user), before);
+        assert.equal(store.ragList(f.user.id, "main")[0].semantic, false);
+      },
+    );
+    await check(
+      "Session revocation during semantic search rejects excerpts and refunds query credits",
+      async () => {
+        const f = ownedFixture("revoke-query");
+        vectorsFor(f);
+        const before = wallet(f.user);
+        afterProvider = () =>
+          store.updateUserAccess(
+            admin.id,
+            f.user.id,
+            "revoke",
+            "Synthetic revoke during search",
+          );
+        const r = await search.POST(
+          request(
+            {
+              scope: { ...f.scope, mode: "hybrid", consent: true },
+              query: "divisor",
+            },
+            "/api/rag/search",
+          ),
+        );
+        assert.equal(r.status, 401);
+        const body = await r.json();
+        assert.equal(body.error, "SESSION_REVOKED");
+        assert.equal(body.hits, undefined);
+        assert.equal(wallet(f.user), before);
+      },
+    );
+    await check(
+      "A source update between precheck and settlement is rejected inside the atomic tutor transaction",
+      async () => {
+        const f = ownedFixture("atomic-race"),
+          before = wallet(f.user);
+        beforeSettle = () =>
+          store.ragIndex(f.user.id, {
+            workspaceId: "main",
+            clientItemId: "atomic-race",
+            title: "Changed source",
+            text: "The revised lesson requires checking a nonzero divisor.",
+          });
+        const r = await send(f.scope);
+        assert.equal(r.status, 409);
+        const body = await r.json();
+        assert.equal(body.error, "RAG_SOURCE_CHANGED");
+        assert.equal(body.tutor.hintCount, 0);
+        assert.equal(wallet(f.user), before);
+      },
+    );
+    await check(
+      "Source changes during query embedding cannot be billed as a hybrid result from stale vectors",
+      async () => {
+        const f = ownedFixture("query-change");
+        vectorsFor(f);
+        const before = wallet(f.user);
+        afterProvider = () =>
+          store.ragIndex(f.user.id, {
+            workspaceId: "main",
+            clientItemId: "query-change",
+            title: "Revised source",
+            text: "Check the divisor before making a division.",
+          });
+        const r = await search.POST(
+          request(
+            {
+              scope: { ...f.scope, mode: "hybrid", consent: true },
+              query: "divisor",
+            },
+            "/api/rag/search",
+          ),
+        );
+        assert.equal(r.status, 409);
+        assert.equal((await r.json()).error, "RAG_SOURCE_CHANGED");
+        assert.equal(wallet(f.user), before);
+      },
+    );
+    await check(
+      "A failed first-turn semantic embedding refunds both chat and query reservations",
+      async () => {
+        const f = ownedFixture("hybrid-failure");
+        vectorsFor(f);
+        const before = wallet(f.user);
+        mode = "failure";
+        const r = await send({ ...f.scope, mode: "hybrid", consent: true });
+        mode = "success";
+        assert.equal(r.status, 502);
+        assert.equal(wallet(f.user), before);
+      },
+    );
+    await check(
+      "Hybrid tutoring debits both costs once and follow-ups do not embed the question again",
+      async () => {
+        const f = ownedFixture("hybrid-success");
+        vectorsFor(f);
+        const before = wallet(f.user),
+          n = calls;
+        let r = await send({ ...f.scope, mode: "hybrid", consent: true });
+        assert.equal(r.status, 200);
+        const body = await r.json();
+        assert.equal(body.rag.mode, "hybrid");
+        assert.equal(calls, n + 2);
+        assert.equal(wallet(f.user), before - 6);
+        r = await send(
+          { ...f.scope, mode: "hybrid", snapshotId: body.rag.snapshotId },
+          {
+            tutorSessionId: body.tutor.sessionId,
+            question: "Help me see the next step.",
+          },
+        );
+        assert.equal(r.status, 200);
+        assert.equal(calls, n + 3);
+        assert.equal(wallet(f.user), before - 10);
+        const usage = store
+          .listUsage(100)
+          .filter((e) => e.userId === f.user.id && e.task === "index");
+        assert.equal(usage.length, 1);
+        assert.equal(usage[0].inputTokens, 10);
+        assert.match(usage[0].requestId, /^[\w-]+$/);
+      },
+    );
+    fs.writeFileSync(
+      path.join(root, "docs/regional/qa-rag-api-report.json"),
+      JSON.stringify(
+        {
+          checkedAt: new Date().toISOString(),
+          status: "PASS",
+          passed: passed.length,
+          checks: passed,
+          scope:
+            "Actual route/SQLite/ledger with explicit synthetic auth and mocked provider transport; zero paid requests.",
+        },
+        null,
+        2,
+      ),
+    );
+    console.log(
+      passed.length +
+        " RAG API checks passed; no real OAuth or paid provider claim.",
+    );
+  } finally {
+    global.fetch = originalFetch;
+    store.close();
+    for (const [k, v] of Object.entries(before))
+      v === undefined ? delete process.env[k] : (process.env[k] = v);
+  }
+}
+main().catch((e) => {
+  console.error(e);
+  process.exitCode = 1;
+});

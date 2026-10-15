@@ -4,7 +4,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -16,6 +15,7 @@ import 'package:lumio_mobile/core/repository.dart';
 import 'package:lumio_mobile/core/tutor_session.dart';
 import 'package:lumio_mobile/ui/common.dart';
 import 'package:lumio_mobile/ui/study.dart';
+import 'test_fonts.dart';
 
 const id = '00000000-0000-4000-8000-000000000001';
 final previewKey = GlobalKey();
@@ -88,25 +88,7 @@ Future<void> mount(WidgetTester tester, AppStore store) async {
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
-  await tester.runAsync(() async {
-    final fonts = Directory(
-      '../../work/toolchains/flutter/bin/cache/artifacts/material_fonts',
-    );
-    if (fonts.existsSync()) {
-      for (final pair in [
-        ('Roboto', 'roboto-regular.ttf'),
-        ('MaterialIcons', 'materialicons-regular.otf'),
-      ]) {
-        final loader = FontLoader(pair.$1)
-          ..addFont(
-            File(
-              '${fonts.path}/${pair.$2}',
-            ).readAsBytes().then((bytes) => ByteData.sublistView(bytes)),
-          );
-        await loader.load();
-      }
-    }
-  });
+  await tester.runAsync(loadLumioTestFonts);
   await tester.pumpWidget(
     StoreScope(
       store: store,
@@ -114,7 +96,16 @@ Future<void> mount(WidgetTester tester, AppStore store) async {
         key: previewKey,
         child: const MaterialApp(
           debugShowCheckedModeBanner: false,
-          home: TutorPage(itemId: 'math'),
+          home: Banner(
+            message: 'QA FIXTURE',
+            location: BannerLocation.topEnd,
+            textStyle: TextStyle(
+              fontFamily: 'Roboto',
+              color: Colors.white,
+              fontSize: 10,
+            ),
+            child: TutorPage(itemId: 'math'),
+          ),
         ),
       ),
     ),
@@ -142,8 +133,14 @@ void main() {
       final api = LumioApi(
         Uri.parse('https://lumio.example'),
         token: 'synthetic-token',
+        canonicalUserId: 'synthetic-canonical-user',
         clientFactory: () => MockClient((request) async {
           expect(request.headers['Authorization'], 'Bearer synthetic-token');
+          expect(request.headers['X-Lumio-User'], 'synthetic-canonical-user');
+          expect(
+            request.headers['Idempotency-Key'],
+            matches(RegExp(r'^[a-f0-9-]{36}$')),
+          );
           sent = jsonDecode(request.body);
           return http.Response(
             jsonEncode({'text': 'Checked response', 'tutor': state(3)}),
@@ -174,6 +171,8 @@ void main() {
     () async {
       final api = LumioApi(
         Uri.parse('https://lumio.example'),
+        token: 'synthetic-token',
+        canonicalUserId: 'synthetic-canonical-user',
         clientFactory: () => MockClient(
           (_) async => http.Response(
             jsonEncode({
@@ -329,9 +328,11 @@ void main() {
                 as RenderRepaintBoundary;
         final image = await boundary.toImage(pixelRatio: 2);
         final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-        await Directory('docs').create(recursive: true);
+        await Directory(
+          '../../docs/v7/evidence/native',
+        ).create(recursive: true);
         await File(
-          'docs/qa-regional-mobile-tutor.png',
+          '../../docs/v7/evidence/native/qa-regional-mobile-tutor.png',
         ).writeAsBytes(bytes!.buffer.asUint8List());
         image.dispose();
       });

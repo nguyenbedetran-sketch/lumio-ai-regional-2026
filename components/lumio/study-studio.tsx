@@ -1,4 +1,6 @@
 "use client";
+import { paidFetch } from "../../lib/ai/request-client";
+import { useAccountScope } from "./account-scope";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -73,6 +75,7 @@ export function StudyStudio({
     audioRef = useRef(""),
     alive = useRef(true);
   const workbench = useRef<HTMLElement>(null);
+  const account = useAccountScope();
   const opener = useRef<HTMLButtonElement | null>(null);
   const workbenchId = useId();
   const sc = studyV3Copy[locale];
@@ -130,12 +133,16 @@ export function StudyStudio({
     abort.current = controller;
     const timeout = setTimeout(() => controller.abort(), 90000);
     try {
-      const response = await fetch("/api/voice", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: script.trim(), language }),
-        signal: controller.signal,
-      });
+      const response = await paidFetch(
+        "/api/voice",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: script.trim(), language }),
+          signal: controller.signal,
+        },
+        account,
+      );
       if (!response.ok) {
         const problem = await response
           .json()

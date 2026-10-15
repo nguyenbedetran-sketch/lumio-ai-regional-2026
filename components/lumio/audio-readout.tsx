@@ -1,4 +1,5 @@
 "use client";
+import { useAccountScope } from "./account-scope";
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { LoaderCircle, Square, Volume2 } from "lucide-react";
 import type { Locale } from "../../lib/lumio/i18n";
@@ -117,6 +118,7 @@ export function AudioReadout({
   disabled?: boolean;
   onActiveChange?: (active: boolean) => void;
 }) {
+  const account = useAccountScope();
   const audio = useRef<HTMLAudioElement>(null);
   const player = useRef<ReadoutPlayback | null>(null);
   const activeChange = useRef(onActiveChange);
@@ -140,7 +142,7 @@ export function AudioReadout({
     const current = new ReadoutPlayback({
       audio: audio.current,
       generate: (part, selectedLanguage, signal) =>
-        synthesizeVoice(part, selectedLanguage, "clear", signal),
+        synthesizeVoice(part, selectedLanguage, "clear", signal, account),
       onState: (next) => {
         setState(next);
         const nextActive = ["loading", "ready", "playing", "paused"].includes(
@@ -191,7 +193,7 @@ export function AudioReadout({
       className="lm-readout"
       style={{ display: "grid", gap: 10 }}
     >
-      <OutboundDataNotice locale={locale} action="speech"/>
+      <OutboundDataNotice locale={locale} action="speech" />
       <div className="lm-row">
         <button
           type="button"

@@ -16,7 +16,7 @@ function inspect(filename) {
       .prepare("SELECT version FROM schema_migrations ORDER BY version")
       .all()
       .map((r) => Number(r.version));
-    if (versions.length !== 13 || versions.some((v, i) => v !== i + 1))
+    if (versions.length !== 14 || versions.some((v, i) => v !== i + 1))
       throw Error("SCHEMA_NOT_SUPPORTED");
     for (const table of [
       "users",
@@ -26,6 +26,7 @@ function inspect(filename) {
       "billing_reservations",
       "billing_ledger",
       "ai_usage",
+      "ai_http_requests",
       "mobile_sessions",
       "tutor_sessions",
       "tutor_turns",
@@ -58,7 +59,7 @@ function inspect(filename) {
       "teaching_preferences",
     ])
       db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
-    return { integrity: "ok", schemaVersion: 13 };
+    return { integrity: "ok", schemaVersion: 14 };
   } finally {
     db.close();
   }

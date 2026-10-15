@@ -104,7 +104,10 @@ export function validateInput(raw: unknown): AIInput {
     }
     if (v.task !== "chat") throw new AIError("INVALID_RAG_SCOPE");
   }
-  if (!["chat", "summary", "cards", "quiz"].includes(String(v.task)))
+  if (
+    typeof v.task !== "string" ||
+    !["chat", "summary", "cards", "quiz"].includes(v.task)
+  )
     throw new AIError("INVALID_TASK");
   const text = (x: unknown, max: number) => {
     if (typeof x !== "string" || x.length > max)
@@ -121,7 +124,10 @@ export function validateInput(raw: unknown): AIInput {
       throw new AIError("INVALID_SOURCE_EVIDENCE");
     }
   }
-  if (!["vi", "en", "zh-CN", "ja", "ko"].includes(String(v.language)))
+  if (
+    typeof v.language !== "string" ||
+    !["vi", "en", "zh-CN", "ja", "ko"].includes(v.language)
+  )
     throw new AIError("INVALID_LANGUAGE");
   let media: AIInput["media"];
   const mode = v.mode ?? "tutor";
@@ -130,10 +136,14 @@ export function validateInput(raw: unknown): AIInput {
   const presentation = v.presentation ?? "auto";
   const mathStyle = v.mathStyle ?? "notebook";
   if (
-    !["quick", "think", "deep", "tutor"].includes(String(mode)) ||
-    !["beginner", "intermediate", "advanced"].includes(String(difficulty)) ||
-    !["hints", "full"].includes(String(guidance)) ||
-    !["auto", "math"].includes(String(presentation)) ||
+    typeof mode !== "string" ||
+    !["quick", "think", "deep", "tutor"].includes(mode) ||
+    typeof difficulty !== "string" ||
+    !["beginner", "intermediate", "advanced"].includes(difficulty) ||
+    typeof guidance !== "string" ||
+    !["hints", "full"].includes(guidance) ||
+    typeof presentation !== "string" ||
+    !["auto", "math"].includes(presentation) ||
     !MATH_STYLES.includes(mathStyle as MathStyle)
   )
     throw new AIError("INVALID_TUTOR_CONTEXT");

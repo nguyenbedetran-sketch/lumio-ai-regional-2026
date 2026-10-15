@@ -1,5 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { TeachingDraftBoundary, useTeachingDraftGuard } from "./draft-guard";
+import type { TeachingState } from "../../lib/teaching/contracts";
 import {
   Activity,
   ArrowLeft,
@@ -155,6 +157,18 @@ export function TeacherWorkspace({
 }: {
   account: { key: string; id: string; name: string };
 }) {
+  return (
+    <TeachingDraftBoundary>
+      <TeacherWorkspaceContent account={account} />
+    </TeachingDraftBoundary>
+  );
+}
+function TeacherWorkspaceContent({
+  account,
+}: {
+  account: { key: string; id: string; name: string };
+}) {
+  const guard = useTeachingDraftGuard();
   const client = useTeachingClient(account.key),
     [module, setModule] = useState<TeacherModule>("dashboard"),
     [createOrg, setCreateOrg] = useState(false),
@@ -162,10 +176,13 @@ export function TeacherWorkspace({
   const data = client.data,
     current = navigation.find((item) => item.id === module)!;
   function navigate(next: TeacherModule) {
-    setModule(next);
-    client.clearNotice();
-    client.clearError();
-    window.scrollTo({ top: 0, behavior: "instant" });
+    if (next === module) return;
+    guard.leave(() => {
+      setModule(next);
+      client.clearNotice();
+      client.clearError();
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
   }
   return (
     <div className="tw-shell" data-teacher-workspace>
@@ -177,33 +194,7 @@ export function TeacherWorkspace({
           </div>
         </a>
         <span className="tw-space-label">KHÔNG GIAN GIẢNG DẠY</span>
-        <nav aria-label="Không gian giáo viên">
-          {navigation.map((item) => (
-            <button
-              key={item.id}
-              aria-label={item.title}
-              aria-current={item.id === module ? "page" : undefined}
-              onClick={() => navigate(item.id)}
-            >
-              <item.icon size={18} />
-              {item.title}
-              {item.id === "grading" && !!data?.dashboard.awaitingGrading && (
-                <span>{data.dashboard.awaitingGrading}</span>
-              )}
-              {item.id === "announcements" &&
-                data?.preferences?.inAppNotifications !== false &&
-                !!data?.announcements.filter((a) => a.status === "published")
-                  .length && (
-                  <span title="Tổng thông báo đã đăng, không phải số chưa đọc">
-                    {
-                      data.announcements.filter((a) => a.status === "published")
-                        .length
-                    }
-                  </span>
-                )}
-            </button>
-          ))}
-        </nav>
+        <TeacherNavigation module={module} navigate={navigate} data={data} />
         <div className="tw-sidebar-bottom">
           <a href="/">
             <ArrowLeft
@@ -244,7 +235,10 @@ export function TeacherWorkspace({
                 aria-label="Không gian giảng dạy"
                 value={data.organization?.id || ""}
                 disabled={client.busy || client.loading}
-                onChange={(e) => void client.selectOrganization(e.target.value)}
+                onChange={(e) => {
+                  const id = e.target.value;
+                  guard.leave(() => void client.selectOrganization(id));
+                }}
               >
                 {data.organizations.map((org) => (
                   <option value={org.id} key={org.id}>
@@ -255,7 +249,7 @@ export function TeacherWorkspace({
             ) : null}
             <span className={`tw-connection ${client.online ? "" : "offline"}`}>
               <i />
-              {client.online ? "Đã kết nối" : "Ngoại tuyến"}
+              {client.online ? "Có mạng" : "Ngoại tuyến"}
             </span>
             <button
               className="tw-icon-button"
@@ -287,9 +281,9 @@ export function TeacherWorkspace({
               <p>{current.description}</p>
             </div>
             {data?.organization && module === "dashboard" && (
-              <Button onClick={() => navigate("classes")}>
-                <Plus size={16} />
-                Mở lớp học
+              <Button onClick={() => navigate(dashboardNext(data).module)}>
+                <ArrowRight size={16} />
+                {dashboardNext(data).label}
               </Button>
             )}
           </div>
@@ -410,6 +404,114 @@ export function TeacherWorkspace({
     </div>
   );
 }
+function dashboardNext(data: TeachingState) {
+  if (!data.dashboard.classes)
+    return { module: "classes" as const, label: "Tạo lớp đầu tiên" };
+  if (data.dashboard.awaitingGrading)
+    return {
+      module: "grading" as const,
+      label: `Chấm ${data.dashboard.awaitingGrading} bài nộp`,
+    };
+  if (!data.dashboard.materials)
+    return { module: "library" as const, label: "Thêm học liệu" };
+  if (!data.dashboard.lessons)
+    return { module: "lessons" as const, label: "Soạn bài giảng" };
+  return {
+    module: "assignments" as const,
+    label: data.dashboard.assignments ? "Xem bài tập" : "Tạo bài tập",
+  };
+}
+const primaryModules: TeacherModule[] = [
+  "dashboard",
+  "classes",
+  "lessons",
+  "assignments",
+  "grading",
+];
+const secondaryGroups: { label: string; ids: TeacherModule[] }[] = [
+  { label: "Chuẩn bị học liệu", ids: ["library", "questions", "assistant"] },
+  { label: "Theo dõi lớp", ids: ["analytics", "reports"] },
+  { label: "Trao đổi", ids: ["announcements"] },
+];
+function TeacherNavigation({
+  module,
+  navigate,
+  data,
+}: {
+  module: TeacherModule;
+  navigate: (id: TeacherModule) => void;
+  data: TeachingState | null;
+}) {
+  const [expanded, setExpanded] = useState(false);
+  useEffect(() => {
+    setExpanded(!primaryModules.includes(module));
+  }, [module]);
+  const shortLabels: Partial<Record<TeacherModule, string>> = {
+    dashboard: "Tổng quan",
+    classes: "Lớp học",
+    lessons: "Bài giảng",
+    assignments: "Bài tập",
+    grading: "Chấm bài",
+  };
+  function button(id: TeacherModule) {
+    const item = navigation.find((n) => n.id === id)!;
+    return (
+      <button
+        key={id}
+        type="button"
+        aria-label={item.title}
+        aria-current={module === id ? "page" : undefined}
+        onClick={() => navigate(id)}
+      >
+        <item.icon size={18} />
+        <span className="tw-nav-full">{item.title}</span>
+        <span className="tw-nav-short" aria-hidden="true">
+          {shortLabels[id] || item.title}
+        </span>
+        {id === "grading" && !!data?.dashboard.awaitingGrading && (
+          <span className="tw-nav-count">{data.dashboard.awaitingGrading}</span>
+        )}
+        {id === "announcements" &&
+          data?.preferences?.inAppNotifications !== false &&
+          !!data?.announcements.filter((a) => a.status === "published")
+            .length && (
+            <span
+              className="tw-nav-count"
+              title="Tổng thông báo đã đăng, không phải số chưa đọc"
+            >
+              {
+                data.announcements.filter((a) => a.status === "published")
+                  .length
+              }
+            </span>
+          )}
+      </button>
+    );
+  }
+  return (
+    <nav aria-label="Không gian giáo viên">
+      <div className="tw-primary-nav">{primaryModules.map(button)}</div>
+      <details
+        className="tw-more-nav"
+        open={expanded}
+        onToggle={(e) => setExpanded(e.currentTarget.open)}
+      >
+        <summary>
+          Công cụ khác <ChevronRight size={15} />
+        </summary>
+        <div className="tw-secondary-nav">
+          {secondaryGroups.map((group) => (
+            <section key={group.label} aria-label={group.label}>
+              <h2>{group.label}</h2>
+              {group.ids.map(button)}
+            </section>
+          ))}
+        </div>
+      </details>
+      <div className="tw-account-nav">{button("settings")}</div>
+    </nav>
+  );
+}
 function Dashboard({
   client,
   navigate,
@@ -421,26 +523,22 @@ function Dashboard({
     stats = data.dashboard;
   return (
     <div className="tw-grid tw-enter">
-      <section className="tw-hero">
+      <section className="tw-hero tw-hero-compact">
         <div>
           <span className="tw-eyebrow">
             CHÀO MỪNG TRỞ LẠI · {data.organization?.name.toLocaleUpperCase()}
           </span>
           <h2>
-            Một bài học được chuẩn bị tốt
-            <br />
-            mở ra nhiều điều hơn.
+            {stats.awaitingGrading
+              ? `${stats.awaitingGrading} bài nộp đang chờ bạn xem lại.`
+              : stats.classes
+                ? "Tiếp tục chuẩn bị cho lớp của bạn."
+                : "Bắt đầu từ một lớp, rồi thêm học liệu."}
           </h2>
           <p>
             Bắt đầu từ học liệu, thêm mục tiêu rồi thiết kế những câu hỏi giúp
             lớp hiểu thật. Lumio cùng bạn chuẩn bị; bạn là người duyệt sau cùng.
           </p>
-          <Button onClick={() => navigate("lessons")}>
-            Đến Studio bài giảng <ArrowRight size={16} />
-          </Button>
-        </div>
-        <div className="tw-hero-art">
-          <BookOpen size={64} strokeWidth={1.2} />
         </div>
       </section>
       <div className="tw-grid four">

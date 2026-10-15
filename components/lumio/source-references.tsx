@@ -217,14 +217,22 @@ export function SourceReferences({
                 <MathText text={ref.quote} inline />
               </blockquote>
               <div className={styles.actions}>
-                {onOpenSource && !ref.rag && (
+                {onOpenSource && (
                   <button
                     type="button"
                     className="lm-button"
                     onClick={() => onOpenSource(ref)}
                   >
                     <BookOpen size={15} />
-                    {c.open}
+                    {
+                      {
+                        vi: "Xem vị trí trích dẫn",
+                        en: "View cited location",
+                        "zh-CN": "查看引文位置",
+                        ja: "引用箇所を見る",
+                        ko: "인용 위치 보기",
+                      }[locale]
+                    }
                   </button>
                 )}
                 {href(ref) && (
@@ -235,7 +243,15 @@ export function SourceReferences({
                     rel="noopener noreferrer"
                   >
                     <ExternalLink size={15} />
-                    {c.open}
+                    {
+                      {
+                        vi: "Mở bản gốc",
+                        en: "Open original",
+                        "zh-CN": "打开原件",
+                        ja: "元の資料を開く",
+                        ko: "원본 열기",
+                      }[locale]
+                    }
                   </a>
                 )}
               </div>

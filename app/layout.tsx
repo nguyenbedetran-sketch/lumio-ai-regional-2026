@@ -20,6 +20,7 @@ import "./dashboard-v3.css";
 import "./study-v3.css";
 import "./premium-v3.css";
 import "./regional.css";
+import "./learner-v7.css";
 import { publicSiteSchema, siteMetadata } from "../lib/metadata";
 export const metadata = siteMetadata;
 export default function Layout({ children }: { children: React.ReactNode }) {

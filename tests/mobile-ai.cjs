@@ -99,11 +99,26 @@ const identity = (id) =>
 const owner = identity("owner");
 const snapshot = (user) =>
   store.getBillingSnapshot(user.id, store.getUser(user.id).sessionVersion);
+const boundUser = (token) => {
+  try {
+    return store.mobileIdentity(token).user.id;
+  } catch {
+    return "";
+  }
+};
 function native(route, token, body, extra = {}) {
   return new Request(origin + route, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "x-lumio-user": boundUser(token),
+      "idempotency-key": crypto.randomUUID(),
+      ...(!token && browserSession
+        ? {
+            "x-lumio-account":
+              store.getUser(browserSession.userId)?.storageKey || "",
+          }
+        : {}),
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...extra,
     },
@@ -140,7 +155,12 @@ function transcription(token, extra = {}) {
   );
   return new Request(origin + "/api/voice", {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}`, ...extra },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "x-lumio-user": boundUser(token),
+      "idempotency-key": crypto.randomUUID(),
+      ...extra,
+    },
     body: form,
   });
 }

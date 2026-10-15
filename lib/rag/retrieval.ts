@@ -4,22 +4,88 @@ const stop = new Set(
     " ",
   ),
 );
+/** Deterministic lexical bounds, independent of host ICU/dictionaries. */
+export const LEXICAL_TOKEN_LIMITS = {
+  inputCharacters: 120000,
+  queryCharacters: 4000,
+  terms: 8192,
+  queryTerms: 40,
+  termCharacters: 64,
+} as const;
+const eastAsian =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}\u30fc]/u;
+/**
+ * Keep Latin/Vietnamese accent folding, but preserve kana voicing and composed
+ * Hangul. East Asian runs use overlapping bigrams, not a claimed word/morpheme
+ * model. Document unigrams also permit a deliberate one-character query.
+ * These search tokens never replace the original text or citation offsets.
+ */
+function tokenize(text: string, query = false): string[] {
+  const result: string[] = [];
+  const emit = (value: string) => {
+    if (
+      value &&
+      value.length <= LEXICAL_TOKEN_LIMITS.termCharacters &&
+      result.length < LEXICAL_TOKEN_LIMITS.terms
+    )
+      result.push(value);
+  };
+  const flush = (run: string, cjk: boolean) => {
+    if (!cjk) {
+      emit(run.normalize("NFD").replace(/\p{M}/gu, "").replace(/đ/g, "d"));
+      return;
+    }
+    const chars = Array.from(run);
+    if (chars.length === 1) {
+      emit(run);
+      return;
+    }
+    if (chars.length > 2) emit(run);
+    for (
+      let i = 1;
+      i < chars.length && result.length < LEXICAL_TOKEN_LIMITS.terms;
+      i++
+    )
+      emit(chars[i - 1] + chars[i]);
+    // Multi-character queries require a bigram/full run rather than matching
+    // every passage containing one common character or Korean syllable.
+    if (!query) for (const char of chars) emit(char);
+  };
+  const normalized = text
+    .slice(
+      0,
+      query
+        ? LEXICAL_TOKEN_LIMITS.queryCharacters
+        : LEXICAL_TOKEN_LIMITS.inputCharacters,
+    )
+    .normalize("NFKC")
+    .toLowerCase();
+  for (const match of normalized.matchAll(/[\p{L}\p{N}\p{M}\u30fc]+/gu)) {
+    let run = "",
+      cjk = false;
+    for (const char of match[0]) {
+      const nextCjk = eastAsian.test(char);
+      if (run && nextCjk !== cjk) {
+        flush(run, cjk);
+        run = "";
+      }
+      run += char;
+      cjk = nextCjk;
+      if (result.length >= LEXICAL_TOKEN_LIMITS.terms) break;
+    }
+    if (run) flush(run, cjk);
+    if (result.length >= LEXICAL_TOKEN_LIMITS.terms) break;
+  }
+  return result;
+}
 export function terms(text: string): string[] {
-  return (
-    text
-      .normalize("NFD")
-      .replace(/\p{M}/gu, "")
-      .toLowerCase()
-      .replace(/đ/g, "d")
-      .match(/[a-z0-9]+/g) || []
-  );
+  return tokenize(text);
 }
 const stopNormalized = new Set([...stop].flatMap(terms));
 export function queryTerms(text: string) {
-  return [...new Set(terms(text).filter((t) => !stopNormalized.has(t)))].slice(
-    0,
-    40,
-  );
+  return [
+    ...new Set(tokenize(text, true).filter((t) => !stopNormalized.has(t))),
+  ].slice(0, LEXICAL_TOKEN_LIMITS.queryTerms);
 }
 export function lexicalRank(rows: RagHit[], query: string): RagHit[] {
   const q = queryTerms(query);

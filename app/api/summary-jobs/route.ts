@@ -83,7 +83,8 @@ export async function PATCH(req: Request) {
       body = await readJSON(req);
     if (
       typeof body.jobId !== "string" ||
-      !["cancel", "resume", "delete"].includes(String(body.action))
+      typeof body.action !== "string" ||
+      !["cancel", "resume", "delete"].includes(body.action)
     )
       throw new PlatformError("INVALID_JOB_ACTION");
     const result = getStore().controlSummaryJob(

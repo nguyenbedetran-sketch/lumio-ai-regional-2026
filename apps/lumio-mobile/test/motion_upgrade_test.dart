@@ -2,7 +2,6 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumio_mobile/core/app_store.dart';
@@ -14,6 +13,7 @@ import 'package:lumio_mobile/main.dart';
 import 'package:lumio_mobile/ui/common.dart';
 import 'package:lumio_mobile/ui/focus.dart';
 import 'package:lumio_mobile/ui/practice.dart';
+import 'test_fonts.dart';
 import 'package:lumio_mobile/ui/study.dart';
 import 'package:lumio_mobile/ui/study_motion.dart';
 
@@ -78,8 +78,10 @@ Future<void> capture(WidgetTester tester, GlobalKey key, String name) async {
         key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
     final image = await boundary.toImage(pixelRatio: 2);
     final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-    await Directory('outputs').create(recursive: true);
-    await File('outputs/$name').writeAsBytes(bytes!.buffer.asUint8List());
+    await Directory('../../docs/v7/evidence/native').create(recursive: true);
+    await File(
+      '../../docs/v7/evidence/native/$name',
+    ).writeAsBytes(bytes!.buffer.asUint8List());
     image.dispose();
   });
 }
@@ -369,24 +371,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      await tester.runAsync(() async {
-        final fonts = Directory(
-          '../../work/toolchains/flutter/bin/cache/artifacts/material_fonts',
-        );
-        if (fonts.existsSync()) {
-          for (final pair in [
-            ('Roboto', 'roboto-regular.ttf'),
-            ('MaterialIcons', 'materialicons-regular.otf'),
-          ]) {
-            await (FontLoader(pair.$1)..addFont(
-                  File(
-                    '${fonts.path}/${pair.$2}',
-                  ).readAsBytes().then((b) => ByteData.sublistView(b)),
-                ))
-                .load();
-          }
-        }
-      });
+      await tester.runAsync(loadLumioTestFonts);
       final store = AppStore(PreviewRepository())
         ..ready = true
         ..onboarded = true

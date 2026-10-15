@@ -1,5 +1,15 @@
 "use client";
-import { useEffect, useRef, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { useTeachingDraft } from "./draft-guard";
+import { containDialogFocus } from "./dialog-focus";
 import {
   ArrowRight,
   CheckCircle2,
@@ -109,18 +119,26 @@ export function Tag({
 }) {
   return <span className={`tw-tag ${tone}`}>{children}</span>;
 }
+const ModalCloseContext = createContext<null | (() => void)>(null);
 export function Modal({
   title,
   children,
   onClose,
   disabled = false,
+  initiallyDirty = false,
 }: {
   title: string;
   children: ReactNode;
   onClose: () => void;
   disabled?: boolean;
+  initiallyDirty?: boolean;
 }) {
-  const ref = useRef<HTMLDialogElement>(null);
+  const ref = useRef<HTMLDialogElement>(null),
+    titleId = useId(),
+    draft = useTeachingDraft(title, initiallyDirty);
+  const close = () => {
+    if (!disabled) draft.close(onClose);
+  };
   useEffect(() => {
     const before = document.activeElement as HTMLElement | null,
       dialog = ref.current;
@@ -134,26 +152,32 @@ export function Modal({
     <dialog
       ref={ref}
       className="tw-dialog"
+      aria-labelledby={titleId}
+      onInputCapture={draft.markDirty}
+      onChangeCapture={draft.markDirty}
+      onKeyDown={containDialogFocus}
       onCancel={(e) => {
         e.preventDefault();
-        if (!disabled) onClose();
+        close();
       }}
     >
       <header>
         <div>
           <span className="tw-eyebrow">LUMIO · GIẢNG DẠY</span>
-          <h2>{title}</h2>
+          <h2 id={titleId}>{title}</h2>
         </div>
         <button
           type="button"
           aria-label="Đóng biểu mẫu"
           disabled={disabled}
-          onClick={onClose}
+          onClick={close}
         >
           <X size={20} />
         </button>
       </header>
-      {children}
+      <ModalCloseContext.Provider value={close}>
+        {children}
+      </ModalCloseContext.Provider>
     </dialog>
   );
 }
@@ -166,9 +190,10 @@ export function FormFooter({
   onClose: () => void;
   label?: string;
 }) {
+  const close = useContext(ModalCloseContext) || onClose;
   return (
     <div className="tw-form-footer">
-      <Button secondary type="button" disabled={busy} onClick={onClose}>
+      <Button secondary type="button" disabled={busy} onClick={close}>
         Hủy
       </Button>
       <Button type="submit" busy={busy}>
@@ -177,6 +202,87 @@ export function FormFooter({
       </Button>
     </div>
   );
+}
+export function ModalCancelButton({
+  onClose,
+  children,
+  disabled = false,
+}: {
+  onClose: () => void;
+  children: ReactNode;
+  disabled?: boolean;
+}) {
+  const close = useContext(ModalCloseContext) || onClose;
+  return (
+    <Button secondary disabled={disabled} onClick={close}>
+      {children}
+    </Button>
+  );
+}
+export function useTeachingConfirmation() {
+  const [pending, setPending] = useState<{
+      title: string;
+      description: string;
+      label: string;
+      action: () => Promise<unknown>;
+    } | null>(null),
+    [busy, setBusy] = useState(false),
+    [error, setError] = useState("");
+  const running = useRef(false);
+  return {
+    ask: (next: NonNullable<typeof pending>) => {
+      if (!running.current) {
+        setPending(next);
+        setError("");
+      }
+    },
+    dialog: pending ? (
+      <Modal
+        title={pending.title}
+        onClose={() => setPending(null)}
+        disabled={busy}
+      >
+        <div className="tw-pad tw-form">
+          <p className="tw-note">{pending.description}</p>
+          {error && (
+            <div className="tw-alert" role="alert">
+              {error}
+            </div>
+          )}
+          <div className="tw-form-footer">
+            <ModalCancelButton onClose={() => setPending(null)} disabled={busy}>
+              Giữ nguyên
+            </ModalCancelButton>
+            <Button
+              danger
+              busy={busy}
+              onClick={async () => {
+                if (running.current) return;
+                running.current = true;
+                setBusy(true);
+                setError("");
+                try {
+                  await pending.action();
+                  setPending(null);
+                } catch (e) {
+                  setError(
+                    e instanceof Error
+                      ? e.message
+                      : "Chưa hoàn tất thay đổi. Hãy thử lại.",
+                  );
+                } finally {
+                  running.current = false;
+                  setBusy(false);
+                }
+              }}
+            >
+              {pending.label}
+            </Button>
+          </div>
+        </div>
+      </Modal>
+    ) : null,
+  };
 }
 export function AddButton({
   children,

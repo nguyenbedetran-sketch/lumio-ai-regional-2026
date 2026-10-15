@@ -5,7 +5,17 @@ import { PlatformError } from "../../../../lib/server/types";
 import { AIError } from "../../../../lib/ai/contracts";
 import { parseRagScope } from "../../../../lib/rag/types";
 import { embedTexts, embeddingStatus } from "../../../../lib/rag/embeddings";
-import { authorizeAI, type AILease } from "../../../../lib/ai/guard";
+import {
+  authorizeStoredAI,
+  failure,
+  type AILease,
+} from "../../../../lib/ai/guard";
+import {
+  aiHttpFingerprint,
+  aiHttpKey,
+  AIHttpRequestError,
+  type AIHttpLease,
+} from "../../../../lib/server/ai-http-core";
 import {
   reserveUsage,
   settleUsage,
@@ -17,8 +27,9 @@ export const runtime = "nodejs",
   dynamic = "force-dynamic";
 export async function POST(req: Request) {
   let lease: AILease | undefined, reservation: UsageReservation | undefined;
-  const requestId = crypto.randomUUID(),
-    started = Date.now();
+  let httpLease: AIHttpLease | undefined;
+  let requestId: string = crypto.randomUUID();
+  const started = Date.now();
   try {
     const actor = await ragActor(req),
       body = await readJSON(req, 16000);
@@ -35,25 +46,44 @@ export async function POST(req: Request) {
     )
       throw new PlatformError("INVALID_RAG_QUERY");
     // Resolve all selected documents under this actor before any paid provider call.
-    const initial = getStore().ragSearch(
+    const store = getStore(),
+      query = body.query.trim();
+    const initial = store.ragSearch(
       actor.user.id,
       scope,
-      body.query,
+      query,
       undefined,
       actor.user.sessionVersion,
     );
     let vector: { vector: number[]; model: string } | undefined;
+    let inputTokens = 0;
     if (scope.mode === "hybrid") {
       if (scope.consent !== true)
         throw new PlatformError("RAG_CONSENT_REQUIRED");
       if (!embeddingStatus().enabled)
         throw new AIError("EMBEDDINGS_DISABLED", 503);
-      getStore().ragRequireSemantic(
+      const model = embeddingStatus().model;
+      store.ragRequireSemantic(
         actor.user.id,
         scope,
-        embeddingStatus().model,
+        model,
+        actor.user.sessionVersion,
       );
-      lease = await authorizeAI(req);
+      httpLease = store.beginAIHttpRequest(
+        actor.user.id,
+        actor.user.sessionVersion,
+        "rag-search",
+        aiHttpKey(req.headers.get("idempotency-key")),
+        aiHttpFingerprint({
+          workspaceId: scope.workspaceId,
+          documentIds: scope.documentIds,
+          query,
+          documents: initial.documents,
+          model,
+        }),
+      );
+      requestId = httpLease.requestId;
+      lease = authorizeStoredAI(actor.user.id, actor.user.sessionVersion);
       reservation = reserveUsage({
         userId: lease.userId,
         sessionVersion: lease.sessionVersion,
@@ -63,26 +93,18 @@ export async function POST(req: Request) {
         kind: "text",
       });
       const result = await embedTexts(
-        [body.query],
+        [query],
         fetch,
         AbortSignal.any([req.signal, AbortSignal.timeout(30000)]),
       );
       vector = { vector: result.vectors[0], model: result.model };
-      recordAIUsageSafe({
-        requestId,
-        userId: lease.userId,
-        task: "index",
-        provider: "openai",
-        model: result.model,
-        status: "success",
-        inputTokens: result.totalTokens,
-        latencyMs: Date.now() - started,
-      });
+      // Telemetry success is recorded only after the atomic result/credit commit below.
+      inputTokens = result.totalTokens || 0;
     }
     const result = getStore().ragSearch(
       actor.user.id,
       scope,
-      body.query,
+      query,
       vector,
       actor.user.sessionVersion,
     );
@@ -99,11 +121,13 @@ export async function POST(req: Request) {
         vector.model,
         actor.user.sessionVersion,
       );
-    if (lease && reservation)
-      settleUsage({
+    if (lease && reservation) {
+      const settled = settleUsage({
         userId: lease.userId,
         reservationId: reservation.reservationId,
         onSettled: () => {
+          req.signal.throwIfAborted();
+          store.assertAIHttpRequest(httpLease!);
           getStore().ragAssertDocuments(
             actor.user.id,
             lease!.sessionVersion,
@@ -117,10 +141,33 @@ export async function POST(req: Request) {
               vector.model,
               lease!.sessionVersion,
             );
+          store.completeAIHttpRequest(httpLease!);
         },
       });
+      if (!settled.changed || settled.status !== "settled")
+        throw new PlatformError("BILLING_REQUEST_FINALIZED", 409);
+      recordAIUsageSafe({
+        requestId,
+        userId: lease.userId,
+        task: "index",
+        provider: "openai",
+        model: vector!.model,
+        status: "success",
+        inputTokens,
+        latencyMs: Date.now() - started,
+      });
+    }
     return json({ ...result, credits: reservation?.units || 0, requestId });
   } catch (e) {
+    if (httpLease)
+      try {
+        getStore().failAIHttpRequest(
+          httpLease,
+          e instanceof PlatformError || e instanceof AIError
+            ? e.code
+            : "PROVIDER_UNAVAILABLE",
+        );
+      } catch {}
     if (lease && reservation)
       try {
         failUsage({
@@ -128,6 +175,9 @@ export async function POST(req: Request) {
           reservationId: reservation.reservationId,
         });
       } catch {}
+    if (e instanceof AIHttpRequestError) return failure(e);
+    if (req.signal.aborted)
+      return json({ error: "REQUEST_CANCELLED", requestId }, 499);
     return e instanceof AIError
       ? json({ error: e.code, requestId }, e.status)
       : errorResponse(e);

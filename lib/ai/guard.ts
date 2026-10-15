@@ -1,19 +1,14 @@
-import { getServerSession } from "next-auth";
-import { authOptions, providerStatus } from "../lumio/auth";
 import { AIError } from "./contracts";
-import { getUser, getStore, isFeatureEnabled } from "../server/store";
-import { assertSameOrigin } from "../server/access";
+import { getStore, isFeatureEnabled } from "../server/store";
+import { assertSameOrigin, requireActor } from "../server/access";
 import { PlatformError } from "../server/types";
 import { requireMobile } from "../server/mobile-access";
 import { isDesktopPreview } from "../server/desktop-mode";
 import { isCompetitionPreview } from "../server/competition-preview";
-export type AILease = (() => void) & { userId: string; sessionVersion: number };
-/** Server-only continuation of a persisted owned job. No HTTP credential or public bypass. */
-export function authorizeStoredAI(
-  userId: string,
-  sessionVersion: number,
-  voice = false,
-): AILease {
+import { AIHttpRequestError } from "../server/ai-http-core";
+export type AIPrincipal = { userId: string; sessionVersion: number };
+export type AILease = (() => void) & AIPrincipal;
+function enabled(voice: boolean) {
   if (
     isDesktopPreview() ||
     process.env.LUMIO_AI_ENABLED !== "true" ||
@@ -21,6 +16,42 @@ export function authorizeStoredAI(
     (voice && !isFeatureEnabled("ai.voice"))
   )
     throw new AIError("AI_DISABLED", 503);
+}
+/** No AI quota/credits: also used by owned tutor-session and receipt recovery endpoints. */
+export async function requireBoundAIActor(req: Request): Promise<AIPrincipal> {
+  const native = req.headers.has("authorization");
+  if (!native) {
+    if (req.method !== "GET") assertSameOrigin(req);
+    else if (
+      ["cross-site", "same-site"].includes(
+        req.headers.get("sec-fetch-site") || "",
+      )
+    )
+      throw new PlatformError("INVALID_ORIGIN", 403);
+  }
+  const { user } = native ? requireMobile(req) : await requireActor();
+  if (
+    native
+      ? req.headers.get("x-lumio-user") !== user.id
+      : req.headers.get("x-lumio-account") !== user.storageKey
+  )
+    throw new PlatformError("SESSION_REVOKED", 401);
+  return { userId: user.id, sessionVersion: user.sessionVersion };
+}
+export async function resolveAIPrincipal(
+  req: Request,
+  voice = false,
+): Promise<AIPrincipal> {
+  enabled(voice);
+  return requireBoundAIActor(req);
+}
+/** Server-only continuation of a persisted owned job; no public bypass credentials. */
+export function authorizeStoredAI(
+  userId: string,
+  sessionVersion: number,
+  voice = false,
+): AILease {
+  enabled(voice);
   const store = getStore(),
     user = store.getUser(userId);
   if (!user || user.disabled || user.sessionVersion !== sessionVersion)
@@ -45,52 +76,8 @@ export async function authorizeAI(
   req: Request,
   voice = false,
 ): Promise<AILease> {
-  if (
-    isDesktopPreview() ||
-    process.env.LUMIO_AI_ENABLED !== "true" ||
-    !isFeatureEnabled("ai.enabled") ||
-    (voice && !isFeatureEnabled("ai.voice"))
-  )
-    throw new AIError("AI_DISABLED", 503);
-  const config = providerStatus();
-  let principal = "";
-  let userId: string | undefined;
-  let sessionVersion = 0;
-  if (req.headers.has("authorization")) {
-    const { user } = requireMobile(req);
-    principal = user.id;
-    userId = user.id;
-    sessionVersion = user.sessionVersion;
-  } else {
-    try {
-      assertSameOrigin(req);
-    } catch {
-      throw new AIError("INVALID_ORIGIN", 403);
-    }
-  }
-  if (!userId && (config.google || config.facebook)) {
-    const session = await getServerSession(authOptions());
-    const identity = session as unknown as {
-      userId?: string;
-      sessionVersion?: number;
-    } | null;
-    const user = identity?.userId ? getUser(identity.userId) : null;
-    if (
-      user &&
-      !user.disabled &&
-      user.sessionVersion === identity?.sessionVersion
-    ) {
-      principal = user.id;
-      userId = user.id;
-      sessionVersion = user.sessionVersion;
-    }
-  }
-  // Every paid provider call must belong to a canonical account and credit ledger.
-  if (!principal || !userId) throw new AIError("SIGN_IN_REQUIRED", 401);
-  // Transactional SQLite counters coordinate processes sharing this database.
-  // Separate machines still require a shared durable backend; free-host resets
-  // remain explicitly disclosed by the competition preview.
-  return authorizeStoredAI(userId, sessionVersion, voice);
+  const p = await resolveAIPrincipal(req, voice);
+  return authorizeStoredAI(p.userId, p.sessionVersion, voice);
 }
 export async function boundedBytes(
   req: Pick<Request, "body" | "headers">,
@@ -125,7 +112,13 @@ export function failure(e: unknown) {
   return Response.json(
     {
       error: known ? e.code : "PROVIDER_UNAVAILABLE",
-      requestId: crypto.randomUUID(),
+      requestId:
+        e instanceof AIHttpRequestError && e.receipt
+          ? e.receipt.requestId
+          : crypto.randomUUID(),
+      ...(e instanceof AIHttpRequestError && e.receipt
+        ? { receipt: e.receipt }
+        : {}),
     },
     {
       status: known ? e.status : 502,

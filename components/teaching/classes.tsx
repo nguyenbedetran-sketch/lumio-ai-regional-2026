@@ -16,6 +16,7 @@ import type {
   TeachingGroup,
 } from "../../lib/teaching/contracts";
 import { FormError, submit, type TeachingClient } from "./client";
+import { useTeachingTabs } from "./tabs";
 import {
   AddButton,
   Button,
@@ -26,9 +27,12 @@ import {
   Panel,
   Tag,
   dateTime,
+  useTeachingConfirmation,
+  ModalCancelButton,
 } from "./ui";
 
 export function ClassesView({ client }: { client: TeachingClient }) {
+  const confirmation = useTeachingConfirmation();
   const data = client.data!,
     [selected, setSelected] = useState<string | null>(null),
     [dialog, setDialog] = useState<
@@ -38,6 +42,13 @@ export function ClassesView({ client }: { client: TeachingClient }) {
     [tab, setTab] = useState("students"),
     [query, setQuery] = useState(""),
     [code, setCode] = useState("");
+  const tabChoices = [
+      ["students", "Học sinh"],
+      ["groups", "Nhóm học tập"],
+      ["team", "Đồng giảng dạy"],
+      ["invites", "Mã tham gia"],
+    ] as const,
+    tabs = useTeachingTabs(tab, tabChoices, setTab);
   const klass = data.classes.find((item) => item.id === selected),
     classes = data.classes.filter((item) =>
       [item.name, item.subject, item.grade]
@@ -88,287 +99,304 @@ export function ClassesView({ client }: { client: TeachingClient }) {
               </Button>
             </div>
           </div>
-          <div className="tw-tabs" role="tablist" aria-label="Quản lý lớp">
-            {[
-              ["students", "Học sinh"],
-              ["groups", "Nhóm học tập"],
-              ["team", "Đồng giảng dạy"],
-              ["invites", "Mã tham gia"],
-            ].map(([key, label]) => (
-              <button
-                key={key}
-                role="tab"
-                aria-selected={tab === key}
-                onClick={() => setTab(key)}
-              >
+          <div className="tw-tabs" {...tabs.listProps} aria-label="Quản lý lớp">
+            {tabChoices.map(([key, label]) => (
+              <button key={key} {...tabs.buttonProps(key)}>
                 {label}
               </button>
             ))}
           </div>
-          {tab === "students" && (
-            <Panel
-              title="Thành viên lớp"
-              action={
-                <AddButton onClick={() => setDialog("invite")}>
-                  Mời học sinh
-                </AddButton>
-              }
-            >
-              {data.enrollments.some((item) => item.classId === klass.id) ? (
-                <div className="tw-table-wrap">
-                  <table className="tw-table">
-                    <thead>
-                      <tr>
-                        <th>Học sinh</th>
-                        <th>Ngày tham gia</th>
-                        <th>Trạng thái</th>
-                        <th>Thao tác</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {data.enrollments
-                        .filter((item) => item.classId === klass.id)
-                        .map((member) => (
-                          <tr key={member.id}>
-                            <td>
-                              <strong>{member.name}</strong>
-                              <small>Chỉ từ tài khoản tự tham gia</small>
-                            </td>
-                            <td>{dateTime(member.joinedAt)}</td>
-                            <td>
-                              <Tag tone={member.active ? "green" : "neutral"}>
-                                {member.active ? "Đang học" : "Đã ngừng"}
-                              </Tag>
-                            </td>
-                            <td>
-                              <Button
-                                secondary
-                                disabled={client.busy}
-                                onClick={() =>
-                                  void client
-                                    .mutate({
-                                      action: member.active
-                                        ? "enrollment.remove"
-                                        : "enrollment.restore",
-                                      id: member.id,
-                                      expectedRevision: member.revision,
-                                    })
-                                    .catch(() => {})
-                                }
-                              >
-                                {member.active
-                                  ? "Ngừng tham gia"
-                                  : "Khôi phục tham gia"}
-                              </Button>
-                            </td>
-                          </tr>
-                        ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <Empty
-                  icon={Users}
-                  title="Lớp đã sẵn sàng cho những người học đầu tiên"
-                  action={
-                    <Button onClick={() => setDialog("invite")}>
-                      Tạo mã tham gia <ArrowRight size={15} />
-                    </Button>
-                  }
-                >
-                  Tạo mã và gửi cho học sinh. Tên và số lượng chỉ xuất hiện khi
-                  tài khoản thật tham gia.
-                </Empty>
-              )}
-            </Panel>
-          )}
-          {tab === "groups" && (
-            <Panel
-              title="Nhóm học tập"
-              action={
-                <AddButton onClick={() => editGroup(null)}>Tạo nhóm</AddButton>
-              }
-            >
-              {data.groups.filter((g) => g.classId === klass.id).length ? (
-                <div className="tw-grid two tw-pad">
-                  {data.groups
-                    .filter((g) => g.classId === klass.id)
-                    .map((group) => (
-                      <article className="tw-card" key={group.id}>
-                        <Tag tone="indigo">
-                          {group.memberIds.length} thành viên
-                        </Tag>
-                        <h3>{group.name}</h3>
-                        <p>
-                          {members
-                            .filter((m) => group.memberIds.includes(m.userId))
-                            .map((m) => m.name)
-                            .join(", ") || "Chưa thêm học sinh."}
-                        </p>
-                        <div className="tw-card-footer">
-                          <button
-                            className="tw-text-button"
-                            onClick={() => editGroup(group)}
-                          >
-                            Sửa nhóm
-                          </button>
-                          <button
-                            className="tw-text-button"
-                            disabled={client.busy}
-                            onClick={() =>
-                              void client
-                                .mutate({
-                                  action: "group.delete",
-                                  id: group.id,
-                                  expectedRevision: group.revision,
-                                })
-                                .catch(() => {})
-                            }
-                          >
-                            Xóa nhóm trống / kết thúc
-                          </button>
-                        </div>
-                      </article>
-                    ))}
-                </div>
-              ) : (
-                <Empty icon={Layers3} title="Mỗi nhóm, một nhịp học">
-                  Tạo nhóm từ học sinh đã tham gia để giao bài đúng đối tượng.
-                </Empty>
-              )}
-            </Panel>
-          )}
-          {tab === "team" && (
-            <Panel
-              title="Cùng chuẩn bị, cùng giảng dạy"
-              action={
-                data.permissions.manageOrg ? (
-                  <AddButton onClick={() => setDialog("team")}>
-                    Phân công giáo viên
+          <div {...tabs.panelProps}>
+            {tab === "students" && (
+              <Panel
+                title="Thành viên lớp"
+                action={
+                  <AddButton onClick={() => setDialog("invite")}>
+                    Mời học sinh
                   </AddButton>
-                ) : undefined
-              }
-            >
-              <div className="tw-pad tw-card-list">
-                {klass.teacherIds.map((id) => (
-                  <div className="tw-metric-row" key={id}>
-                    <span>
-                      {data.members.find((m) => m.userId === id)?.name ||
-                        "Giáo viên đã được phân công"}
-                      <small style={{ display: "block" }}>
-                        Quyền trong lớp này
-                      </small>
-                    </span>
-                    {data.permissions.manageOrg && (
-                      <button
-                        className="tw-text-button"
-                        disabled={client.busy}
-                        onClick={() =>
-                          void client
-                            .mutate({
-                              action: "teacher.remove",
-                              classId: klass.id,
-                              userId: id,
-                              expectedRevision: klass.revision,
-                            })
-                            .catch(() => {})
-                        }
-                      >
-                        Gỡ phân công
-                      </button>
-                    )}
-                  </div>
-                ))}
-                {!klass.teacherIds.length && (
-                  <p className="tw-muted">
-                    Chưa có giáo viên được phân công riêng. Quản trị không gian
-                    quản lý lớp này.
-                  </p>
-                )}
-                <p className="tw-note">
-                  Chỉ phân công tài khoản giáo viên đã được duyệt. Người được
-                  phân công mới sẽ tham gia tổ chức với vai trò giáo viên; không
-                  nhập email để tự cấp quyền cho một người khác.
-                </p>
-              </div>
-            </Panel>
-          )}
-          {tab === "invites" && (
-            <Panel
-              title="Một lời mời có giới hạn"
-              action={
-                <AddButton onClick={() => setDialog("invite")}>
-                  Tạo mã mới
-                </AddButton>
-              }
-            >
-              <div className="tw-pad">
-                {code && (
-                  <div className="tw-code">
-                    <span>
-                      {code}
-                      <small>
-                        Chỉ hiển thị ngay sau khi tạo. Hãy sao chép để gửi.
-                      </small>
-                    </span>
-                    <Button
-                      secondary
-                      onClick={() => void navigator.clipboard?.writeText(code)}
-                    >
-                      {" "}
-                      <Copy size={15} /> Sao chép
-                    </Button>
-                  </div>
-                )}
-                {data.invites.filter((i) => i.classId === klass.id).length ? (
-                  <div className="tw-card-list" style={{ marginTop: 18 }}>
-                    {data.invites
-                      .filter((i) => i.classId === klass.id)
-                      .map((invite) => (
-                        <div className="tw-metric-row" key={invite.id}>
-                          <span>
-                            Mã mời đã tạo
-                            <small style={{ display: "block" }}>
-                              Hết hạn {dateTime(invite.expiresAt)} ·{" "}
-                              {invite.uses}/{invite.maxUses} lượt
-                            </small>
-                          </span>
-                          <div className="tw-card-actions">
-                            <Tag tone={invite.active ? "green" : "neutral"}>
-                              {invite.active ? "Còn hiệu lực" : "Đã thu hồi"}
-                            </Tag>
-                            {invite.active && (
-                              <button
-                                className="tw-text-button"
-                                disabled={client.busy}
-                                onClick={() =>
-                                  void client
-                                    .mutate({
-                                      action: "invite.revoke",
-                                      id: invite.id,
-                                      expectedRevision: invite.revision,
+                }
+              >
+                {data.enrollments.some((item) => item.classId === klass.id) ? (
+                  <div className="tw-table-wrap">
+                    <table className="tw-table">
+                      <thead>
+                        <tr>
+                          <th>Học sinh</th>
+                          <th>Ngày tham gia</th>
+                          <th>Trạng thái</th>
+                          <th>Thao tác</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.enrollments
+                          .filter((item) => item.classId === klass.id)
+                          .map((member) => (
+                            <tr key={member.id}>
+                              <td>
+                                <strong>{member.name}</strong>
+                                <small>Chỉ từ tài khoản tự tham gia</small>
+                              </td>
+                              <td>{dateTime(member.joinedAt)}</td>
+                              <td>
+                                <Tag tone={member.active ? "green" : "neutral"}>
+                                  {member.active ? "Đang học" : "Đã ngừng"}
+                                </Tag>
+                              </td>
+                              <td>
+                                <Button
+                                  secondary
+                                  disabled={client.busy}
+                                  onClick={() =>
+                                    confirmation.ask({
+                                      title: member.active
+                                        ? "Ngừng quyền tham gia lớp?"
+                                        : "Khôi phục quyền tham gia lớp?",
+                                      description: `${member.name}: thay đổi quyền xem và nộp bài trong lớp này. Dữ liệu đã lưu không bị xóa.`,
+                                      label: member.active
+                                        ? "Xác nhận ngừng tham gia"
+                                        : "Xác nhận khôi phục",
+                                      action: () =>
+                                        client.mutate({
+                                          action: member.active
+                                            ? "enrollment.remove"
+                                            : "enrollment.restore",
+                                          id: member.id,
+                                          expectedRevision: member.revision,
+                                        }),
                                     })
-                                    .catch(() => {})
-                                }
-                              >
-                                Thu hồi
-                              </button>
-                            )}
+                                  }
+                                >
+                                  {member.active
+                                    ? "Ngừng tham gia"
+                                    : "Khôi phục tham gia"}
+                                </Button>
+                              </td>
+                            </tr>
+                          ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <Empty
+                    icon={Users}
+                    title="Lớp đã sẵn sàng cho những người học đầu tiên"
+                    action={
+                      <Button onClick={() => setDialog("invite")}>
+                        Tạo mã tham gia <ArrowRight size={15} />
+                      </Button>
+                    }
+                  >
+                    Tạo mã và gửi cho học sinh. Tên và số lượng chỉ xuất hiện
+                    khi tài khoản thật tham gia.
+                  </Empty>
+                )}
+              </Panel>
+            )}
+            {tab === "groups" && (
+              <Panel
+                title="Nhóm học tập"
+                action={
+                  <AddButton onClick={() => editGroup(null)}>
+                    Tạo nhóm
+                  </AddButton>
+                }
+              >
+                {data.groups.filter((g) => g.classId === klass.id).length ? (
+                  <div className="tw-grid two tw-pad">
+                    {data.groups
+                      .filter((g) => g.classId === klass.id)
+                      .map((group) => (
+                        <article className="tw-card" key={group.id}>
+                          <Tag tone="indigo">
+                            {group.memberIds.length} thành viên
+                          </Tag>
+                          <h3>{group.name}</h3>
+                          <p>
+                            {members
+                              .filter((m) => group.memberIds.includes(m.userId))
+                              .map((m) => m.name)
+                              .join(", ") || "Chưa thêm học sinh."}
+                          </p>
+                          <div className="tw-card-footer">
+                            <button
+                              className="tw-text-button"
+                              onClick={() => editGroup(group)}
+                            >
+                              Sửa nhóm
+                            </button>
+                            <button
+                              className="tw-text-button"
+                              disabled={client.busy}
+                              onClick={() =>
+                                confirmation.ask({
+                                  title: "Xóa nhóm học tập?",
+                                  description: `Nhóm “${group.name}” sẽ bị xóa. Học sinh vẫn thuộc lớp; đề đã giao giữ nguyên đối tượng đã chốt.`,
+                                  label: "Xác nhận xóa nhóm",
+                                  action: () =>
+                                    client.mutate({
+                                      action: "group.delete",
+                                      id: group.id,
+                                      expectedRevision: group.revision,
+                                    }),
+                                })
+                              }
+                            >
+                              Xóa nhóm
+                            </button>
                           </div>
-                        </div>
+                        </article>
                       ))}
                   </div>
                 ) : (
-                  !code && (
-                    <Empty icon={KeyRound} title="Chưa có mã tham gia">
-                      Mã mời có hạn dùng và số lượt. Học sinh đăng nhập rồi nhập
-                      mã tại /classroom.
-                    </Empty>
-                  )
+                  <Empty icon={Layers3} title="Mỗi nhóm, một nhịp học">
+                    Tạo nhóm từ học sinh đã tham gia để giao bài đúng đối tượng.
+                  </Empty>
                 )}
-              </div>
-            </Panel>
-          )}
+              </Panel>
+            )}
+            {tab === "team" && (
+              <Panel
+                title="Cùng chuẩn bị, cùng giảng dạy"
+                action={
+                  data.permissions.manageOrg ? (
+                    <AddButton onClick={() => setDialog("team")}>
+                      Phân công giáo viên
+                    </AddButton>
+                  ) : undefined
+                }
+              >
+                <div className="tw-pad tw-card-list">
+                  {klass.teacherIds.map((id) => (
+                    <div className="tw-metric-row" key={id}>
+                      <span>
+                        {data.members.find((m) => m.userId === id)?.name ||
+                          "Giáo viên đã được phân công"}
+                        <small style={{ display: "block" }}>
+                          Quyền trong lớp này
+                        </small>
+                      </span>
+                      {data.permissions.manageOrg && (
+                        <button
+                          className="tw-text-button"
+                          disabled={client.busy}
+                          onClick={() =>
+                            confirmation.ask({
+                              title: "Gỡ phân công giảng dạy?",
+                              description: `Giáo viên sẽ mất phân công trong lớp “${klass.name}”. Quyền tổ chức và dữ liệu đã lưu không tự bị xóa.`,
+                              label: "Xác nhận gỡ phân công",
+                              action: () =>
+                                client.mutate({
+                                  action: "teacher.remove",
+                                  classId: klass.id,
+                                  userId: id,
+                                  expectedRevision: klass.revision,
+                                }),
+                            })
+                          }
+                        >
+                          Gỡ phân công
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  {!klass.teacherIds.length && (
+                    <p className="tw-muted">
+                      Chưa có giáo viên được phân công riêng. Quản trị không
+                      gian quản lý lớp này.
+                    </p>
+                  )}
+                  <p className="tw-note">
+                    Chỉ phân công tài khoản giáo viên đã được duyệt. Người được
+                    phân công mới sẽ tham gia tổ chức với vai trò giáo viên;
+                    không nhập email để tự cấp quyền cho một người khác.
+                  </p>
+                </div>
+              </Panel>
+            )}
+            {tab === "invites" && (
+              <Panel
+                title="Một lời mời có giới hạn"
+                action={
+                  <AddButton onClick={() => setDialog("invite")}>
+                    Tạo mã mới
+                  </AddButton>
+                }
+              >
+                <div className="tw-pad">
+                  {code && (
+                    <div className="tw-code">
+                      <span>
+                        {code}
+                        <small>
+                          Chỉ hiển thị ngay sau khi tạo. Hãy sao chép để gửi.
+                        </small>
+                      </span>
+                      <Button
+                        secondary
+                        onClick={() =>
+                          void navigator.clipboard?.writeText(code)
+                        }
+                      >
+                        {" "}
+                        <Copy size={15} /> Sao chép
+                      </Button>
+                    </div>
+                  )}
+                  {data.invites.filter((i) => i.classId === klass.id).length ? (
+                    <div className="tw-card-list" style={{ marginTop: 18 }}>
+                      {data.invites
+                        .filter((i) => i.classId === klass.id)
+                        .map((invite) => (
+                          <div className="tw-metric-row" key={invite.id}>
+                            <span>
+                              Mã mời đã tạo
+                              <small style={{ display: "block" }}>
+                                Hết hạn {dateTime(invite.expiresAt)} ·{" "}
+                                {invite.uses}/{invite.maxUses} lượt
+                              </small>
+                            </span>
+                            <div className="tw-card-actions">
+                              <Tag tone={invite.active ? "green" : "neutral"}>
+                                {invite.active ? "Còn hiệu lực" : "Đã thu hồi"}
+                              </Tag>
+                              {invite.active && (
+                                <button
+                                  className="tw-text-button"
+                                  disabled={client.busy}
+                                  onClick={() =>
+                                    confirmation.ask({
+                                      title: "Thu hồi mã tham gia?",
+                                      description:
+                                        "Mã này sẽ không nhận thêm học sinh. Thành viên đã tham gia vẫn ở trong lớp; có thể tạo một mã mới khi cần.",
+                                      label: "Xác nhận thu hồi mã",
+                                      action: () =>
+                                        client.mutate({
+                                          action: "invite.revoke",
+                                          id: invite.id,
+                                          expectedRevision: invite.revision,
+                                        }),
+                                    })
+                                  }
+                                >
+                                  Thu hồi
+                                </button>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  ) : (
+                    !code && (
+                      <Empty icon={KeyRound} title="Chưa có mã tham gia">
+                        Mã mời có hạn dùng và số lượt. Học sinh đăng nhập rồi
+                        nhập mã tại /classroom.
+                      </Empty>
+                    )
+                  )}
+                </div>
+              </Panel>
+            )}
+          </div>
         </>
       ) : (
         <>
@@ -452,6 +480,7 @@ export function ClassesView({ client }: { client: TeachingClient }) {
           )}
         </>
       )}
+      {confirmation.dialog}
       {dialog && (
         <Modal
           title={
@@ -712,9 +741,7 @@ function ClassForm({
           </Field>
         )}
         <div className="tw-form-footer">
-          <Button secondary type="button" onClick={onClose}>
-            Hủy
-          </Button>
+          <ModalCancelButton onClose={onClose}>Hủy</ModalCancelButton>
           <Button busy={client.busy} type="submit">
             {mode === "invite" ? "Tạo mã tham gia" : "Lưu thay đổi"}
             <ArrowRight size={15} />

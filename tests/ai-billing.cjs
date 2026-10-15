@@ -99,7 +99,14 @@ const snapshot = (account) =>
 const post = (route, body, requestOrigin = origin) =>
   new Request(origin + route, {
     method: "POST",
-    headers: { "Content-Type": "application/json", Origin: requestOrigin },
+    headers: {
+      "Content-Type": "application/json",
+      Origin: requestOrigin,
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
+    },
     body: JSON.stringify(body),
   });
 const aiRequest = (patch = {}, requestOrigin = origin) =>
@@ -127,7 +134,13 @@ function transcriptionRequest() {
   );
   return new Request(origin + "/api/voice", {
     method: "POST",
-    headers: { Origin: origin },
+    headers: {
+      Origin: origin,
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
+    },
     body: form,
   });
 }
@@ -190,7 +203,7 @@ async function main() {
         aiRequest({ userId: owner.id, planId: "pro", credits: 999999 }),
       ),
       401,
-      "SIGN_IN_REQUIRED",
+      "SESSION_REVOKED",
     );
     assert.equal(calls, 0);
   });

@@ -1,6 +1,7 @@
 "use client";
 import { MathText } from "../lumio/math-text";
 import { useEffect, useRef, useState } from "react";
+import { useTeachingDraft } from "./draft-guard";
 import {
   ArrowRight,
   BookOpen,
@@ -181,6 +182,7 @@ export function GenerationPanel({
   anonymousExcerpt?: string;
 }) {
   const preferences = client.data!.preferences;
+  const generationDraft = useTeachingDraft("Bản nháp AI đang chuẩn bị");
   const [topic, setTopic] = useState(preferences?.subjects[0] || ""),
     [grade, setGrade] = useState(preferences?.grades[0] || ""),
     [objective, setObjective] = useState(""),
@@ -253,7 +255,10 @@ export function GenerationPanel({
         throw Error(teachingError(null));
       }
       if (!response.ok) throw Error(teachingError(body.error));
-      if (active.current) setResult(body);
+      if (active.current) {
+        setResult(body);
+        generationDraft.markDirty();
+      }
     } catch (e) {
       if (active.current && !controller.current?.signal.aborted)
         setError(e instanceof Error ? e.message : teachingError(null));
@@ -275,7 +280,12 @@ export function GenerationPanel({
       }
       eyebrow="LUMIO AI · KẾT QUẢ LUÔN LÀ BẢN NHÁP"
     >
-      <form className="tw-form tw-pad" onSubmit={submit(generate)}>
+      <form
+        className="tw-form tw-pad"
+        onInputCapture={generationDraft.markDirty}
+        onChangeCapture={generationDraft.markDirty}
+        onSubmit={submit(generate)}
+      >
         <div className="tw-form-row">
           <Field label={kind === "assistant" ? "Câu hỏi / Chủ đề" : "Chủ đề"}>
             <input
@@ -399,13 +409,15 @@ export function GenerationPanel({
             <Button
               secondary
               disabled={busy}
-              onClick={() => {
-                pending.current = null;
-                setAttempted(false);
-                setError("");
-                setResult(null);
-                setConsent(false);
-              }}
+              onClick={() =>
+                generationDraft.close(() => {
+                  pending.current = null;
+                  setAttempted(false);
+                  setError("");
+                  setResult(null);
+                  setConsent(false);
+                })
+              }
             >
               Bắt đầu lượt tạo mới
             </Button>
@@ -459,11 +471,17 @@ export function GenerationPanel({
             <Button
               secondary
               disabled={result.quality.blocked || client.busy}
-              onClick={() => onUse(result)}
+              onClick={() => {
+                generationDraft.markClean();
+                onUse(result);
+              }}
             >
               Mở trong trình chỉnh sửa <ArrowRight size={15} />
             </Button>
           )}
+          <Button secondary onClick={generationDraft.markClean}>
+            Đã xem, không cần lưu
+          </Button>
           {["assistant", "feedback"].includes(result.kind) && (
             <TeachingReferences
               references={(result.draft as TeachingTextDraft).references}
@@ -675,6 +693,10 @@ function LessonEditor({
       title={"id" in initial ? "Biên tập bài giảng" : "Soạn bài giảng"}
       onClose={onClose}
       disabled={client.busy}
+      initiallyDirty={
+        !("id" in initial) &&
+        !!(initial.title.trim() || initial.sections.some((s) => s.body.trim()))
+      }
     >
       <form
         className="tw-form"
@@ -1006,7 +1028,12 @@ function QuestionEditor({
   const patch = (key: keyof QuestionDraft, value: unknown) =>
     setDraft((d) => ({ ...d, [key]: value }));
   return (
-    <Modal title="Biên tập câu hỏi" onClose={onClose} disabled={client.busy}>
+    <Modal
+      title="Biên tập câu hỏi"
+      onClose={onClose}
+      disabled={client.busy}
+      initiallyDirty={!("id" in initial) && !!initial.prompt.trim()}
+    >
       <form
         className="tw-form"
         onSubmit={submit(async () => {

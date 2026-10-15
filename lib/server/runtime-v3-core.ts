@@ -242,6 +242,7 @@ export function createRuntimeV3Store({
       "billing_reservations",
       "billing_ledger",
       "ai_usage",
+      "ai_http_requests",
       "mobile_sessions",
       "tutor_sessions",
       "tutor_turns",
@@ -275,7 +276,7 @@ export function createRuntimeV3Store({
     ]) {
       db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
     }
-    return { ready: version === 13, schemaVersion: version };
+    return { ready: version === 14, schemaVersion: version };
   }
   return {
     acquireRuntimeAILease,

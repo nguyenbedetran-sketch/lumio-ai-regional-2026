@@ -2,10 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:crypto/crypto.dart';
+
 import 'models.dart';
+import 'paid_intents.dart';
 import 'tutor_session.dart';
 import 'web_sync.dart';
 
@@ -18,6 +22,8 @@ class ApiFailure implements Exception {
     'TUTOR_CONTEXT_CHANGED',
     'SESSION_REVOKED',
     'SIGN_IN_REQUIRED',
+    'ACCOUNT_CHANGED',
+    'INVALID_ACCOUNT',
   ].contains(code);
   @override
   String toString() => code;
@@ -85,10 +91,54 @@ class MobileSession {
 }
 
 class LumioApi {
-  LumioApi(this.origin, {this.token, http.Client Function()? clientFactory})
-    : _clientFactory = clientFactory ?? http.Client.new;
+  LumioApi(
+    this.origin, {
+    this.token,
+    String? canonicalUserId,
+    PaidIntentRegistry? paidIntents,
+    http.Client Function()? clientFactory,
+  }) : _canonicalUserId = canonicalUserId,
+       _paidIntents = paidIntents ?? PaidIntentRegistry.secure(),
+       _clientFactory = clientFactory ?? http.Client.new;
   final Uri origin;
   final String? token;
+  String? _canonicalUserId;
+  PaidIntentRegistry _paidIntents;
+  bool Function()? _sessionCurrent;
+  void bindCanonicalUser(
+    String? userId, {
+    PaidIntentRegistry? paidIntents,
+    bool Function()? sessionCurrent,
+  }) {
+    if (_canonicalUserId != null && _canonicalUserId != userId) {
+      throw const ApiFailure('ACCOUNT_CHANGED');
+    }
+    _canonicalUserId = userId;
+    if (paidIntents != null) _paidIntents = paidIntents;
+    _sessionCurrent = sessionCurrent;
+  }
+
+  void _checkPaidAccount() {
+    if (token == null ||
+        token!.isEmpty ||
+        _canonicalUserId == null ||
+        _canonicalUserId!.trim().isEmpty) {
+      throw const ApiFailure('SIGN_IN_REQUIRED');
+    }
+    if (_sessionCurrent?.call() == false) {
+      throw const ApiFailure('ACCOUNT_CHANGED');
+    }
+  }
+
+  Future<void> clearUncertainPaidRequests() async {
+    _checkPaidAccount();
+    try {
+      await _paidIntents.clearUncertain(origin, _canonicalUserId!);
+    } on PaidIntentFailure catch (e) {
+      throw ApiFailure(e.code);
+    }
+  }
+
   final http.Client Function() _clientFactory;
   final Set<http.Client> _clients = {};
   void cancel() {
@@ -103,13 +153,41 @@ class LumioApi {
     http.BaseRequest request, {
     int limit = 8 * 1024 * 1024,
     bool audio = false,
+    String? paidStamp,
   }) async {
-    final client = _clientFactory();
-    _clients.add(client);
+    final paid =
+        request.method == 'POST' &&
+        const ['/api/ai', '/api/voice'].contains(request.url.path);
+    PaidIntentLease? intent;
+    http.Client? client;
+    if (request.url.origin != origin.origin) {
+      throw const ApiFailure('INVALID_SERVER');
+    }
     if (token != null) request.headers['Authorization'] = 'Bearer $token';
+    if (_canonicalUserId != null) {
+      request.headers['X-Lumio-User'] = _canonicalUserId!;
+    }
     request.followRedirects =
         false; // Never leak a bearer token to a redirected origin.
     try {
+      if (paid) {
+        _checkPaidAccount();
+        final stamp =
+            paidStamp ?? (request is http.Request ? request.body : null);
+        if (stamp == null) {
+          throw const ApiFailure('AI_REQUEST_METADATA_INVALID');
+        }
+        intent = await _paidIntents.begin(
+          origin,
+          _canonicalUserId!,
+          request.url.path,
+          stamp,
+        );
+        _checkPaidAccount();
+        request.headers['Idempotency-Key'] = intent.key;
+      }
+      client = _clientFactory();
+      _clients.add(client);
       final response = await client
           .send(request)
           .timeout(const Duration(seconds: 125));
@@ -128,16 +206,59 @@ class LumioApi {
         TutorSnapshot? tutor;
         try {
           final j = object(jsonDecode(utf8.decode(result)));
-          code = j['error'] is String ? j['error'] : j['code'];
+          final rawCode = j['error'] is String ? j['error'] : j['code'];
+          code =
+              rawCode is String &&
+                  RegExp(r'^[A-Z][A-Z0-9_]{1,80}$').hasMatch(rawCode)
+              ? rawCode
+              : null;
           tutor = TutorSnapshot.tryParse(j['tutor']);
+          if (intent != null &&
+              code != null &&
+              response.statusCode < 500 &&
+              !const [
+                'AI_REQUEST_IN_PROGRESS',
+                'AI_REQUEST_COMPLETED',
+                'AI_REQUEST_CONFLICT',
+                'AI_REQUEST_UNSETTLED',
+              ].contains(code)) {
+            await _paidIntents.acknowledge(intent);
+          }
+          // A gateway may return a readable JSON 5xx after the origin has
+          // settled the charge. Keep this UUID until an explicit retry returns
+          // its authoritative failed/completed receipt; never retry here.
         } catch (_) {}
         throw ApiFailure(code ?? 'HTTP_${response.statusCode}', tutor: tutor);
       }
       if (audio &&
-          !(response.headers['content-type'] ?? '').startsWith('audio/')) {
+          (!response.headers.entries.any(
+                (header) =>
+                    header.key.toLowerCase() == 'content-type' &&
+                    header.value.toLowerCase().startsWith('audio/'),
+              ) ||
+              result.isEmpty)) {
         throw const ApiFailure('INVALID_AUDIO');
       }
+      if (intent != null) {
+        if (!audio) {
+          try {
+            object(jsonDecode(utf8.decode(result)));
+          } catch (_) {
+            throw const ApiFailure('INVALID_RESPONSE');
+          }
+        }
+        // A parsed response is the ACK. If clearing metadata fails, preserve
+        // its old UUID rather than allowing an unrecorded duplicate operation.
+        try {
+          await _paidIntents.acknowledge(intent);
+        } on PaidIntentFailure {
+          /* Safe retained receipt. */
+        }
+        _checkPaidAccount();
+      }
       return result;
+    } on PaidIntentFailure catch (e) {
+      throw ApiFailure(e.code);
     } on TimeoutException {
       throw const ApiFailure('TIMEOUT');
     } on SocketException {
@@ -145,8 +266,11 @@ class LumioApi {
     } on http.ClientException {
       throw const ApiFailure('NETWORK_ERROR');
     } finally {
-      _clients.remove(client);
-      client.close();
+      if (intent != null) _paidIntents.release(intent);
+      if (client != null) {
+        _clients.remove(client);
+        client.close();
+      }
     }
   }
 
@@ -215,14 +339,34 @@ class LumioApi {
     }
     final request = http.MultipartRequest('POST', endpoint('/api/voice'));
     request.fields['language'] = language;
+    final chunks = BytesBuilder();
+    await for (final chunk in file.openRead()) {
+      if (chunks.length + chunk.length > 8 * 1024 * 1024) {
+        throw const ApiFailure('AUDIO_TOO_LARGE');
+      }
+      chunks.add(chunk);
+    }
+    final bytes = chunks.takeBytes();
+    final filename = file.uri.pathSegments.last;
     request.files.add(
-      await http.MultipartFile.fromPath(
+      http.MultipartFile.fromBytes(
         'file',
-        file.path,
+        bytes,
+        filename: filename,
         contentType: MediaType('audio', 'mp4'),
       ),
     );
-    final result = object(jsonDecode(utf8.decode(await _send(request))));
+    final stamp = jsonEncode([
+      'transcribe',
+      language,
+      filename,
+      'audio/mp4',
+      bytes.length,
+      sha256.convert(bytes).toString(),
+    ]);
+    final result = object(
+      jsonDecode(utf8.decode(await _send(request, paidStamp: stamp))),
+    );
     if (result['text'] is! String) throw const ApiFailure('INVALID_RESPONSE');
     return result['text'];
   }

@@ -13,6 +13,7 @@ import { createRagStore } from "./rag-core";
 import { createSummaryJobStore } from "./job-core";
 import { createTeacherStore } from "./teacher-core";
 import { createTeachingStore } from "./teaching-core";
+import { createAIHttpStore } from "./ai-http-core";
 import { isPublicDemo } from "./public-demo";
 import { isCompetitionPreview } from "./competition-preview";
 import type {
@@ -441,6 +442,11 @@ export function createStore(
     reason: string,
     expectedSessionVersion?: number,
   ) {
+    if (
+      typeof action !== "string" ||
+      !["disable", "enable", "revoke"].includes(action)
+    )
+      throw new PlatformError("INVALID_REQUEST");
     if (text(reason, 301).length < 8 || reason.length > 300)
       throw new PlatformError("REASON_REQUIRED");
     return transaction(() => {
@@ -667,23 +673,47 @@ export function createStore(
       ),
     };
   }
+  const billingStore = createBillingStore({
+    db,
+    now,
+    stamp,
+    transaction,
+    getUser,
+    actorFor,
+    recordAudit,
+  });
   return {
-    ...createBillingStore({
+    ...billingStore,
+    ...createAIHttpStore({
       db,
       now,
       stamp,
       transaction,
       getUser,
-      actorFor,
-      recordAudit,
+      refund: billingStore.failUsage,
     }),
     ...createMobileStore({ db, now, stamp, transaction, getUser, recordAudit }),
     ...createTutorStore({ db, now, stamp, transaction, getUser }),
     ...createRuntimeV3Store({ db, now, stamp, transaction, getUser }),
     ...createRagStore({ db, now, stamp, transaction, getUser }),
     ...createSummaryJobStore({ db, now, stamp, transaction, getUser }),
-    ...createTeacherStore({ db, now, stamp, transaction, getUser, getMemberships, recordAudit }),
-    ...createTeachingStore({ db, now, stamp, transaction, getUser, recordAudit }),
+    ...createTeacherStore({
+      db,
+      now,
+      stamp,
+      transaction,
+      getUser,
+      getMemberships,
+      recordAudit,
+    }),
+    ...createTeachingStore({
+      db,
+      now,
+      stamp,
+      transaction,
+      getUser,
+      recordAudit,
+    }),
     close: () => db.close(),
     getUser,
     getUserByStorageKey,

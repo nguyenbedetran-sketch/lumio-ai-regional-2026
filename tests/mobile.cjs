@@ -78,9 +78,23 @@ Object.assign(process.env, {
   LUMIO_AI_ENABLED: "true",
   LUMIO_PUBLIC_DEMO: "false",
 });
+const boundUser = (token) => {
+  try {
+    return store.mobileIdentity(token).user.id;
+  } catch {
+    return "";
+  }
+};
 const req = (url, token, extra = {}) =>
   new Request("http://localhost:3000" + url, {
     headers: {
+      ...(token
+        ? { "x-lumio-user": boundUser(token) }
+        : {
+            "x-lumio-account": browserSession
+              ? store.getUser(browserSession.userId)?.storageKey || ""
+              : "",
+          }),
       ...(token ? { Authorization: "Bearer " + token } : {}),
       ...extra,
     },

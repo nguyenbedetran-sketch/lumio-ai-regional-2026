@@ -1,4 +1,6 @@
 "use client";
+import { useAccountScope } from "./account-scope";
+import { accountHeaders, paidFetch } from "../../lib/ai/request-client";
 import { useEffect, useState } from "react";
 import {
   Database,
@@ -63,18 +65,38 @@ export function ragError(code: string, vi: boolean) {
       : "Could not complete this action. Check your sign-in and connection, then retry.")
   );
 }
-async function api(url: string, body?: unknown, signal?: AbortSignal) {
-  const response = await fetch(url, {
+async function api(
+  url: string,
+  body?: unknown,
+  signal?: AbortSignal,
+  account = "guest",
+) {
+  const value = body as
+    { action?: string; scope?: { mode?: string } } | undefined;
+  const paid =
+    (url === "/api/rag/documents" && value?.action === "embed") ||
+    (url === "/api/rag/search" && value?.scope?.mode === "hybrid");
+  const init: RequestInit = {
     ...(body
       ? {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         }
       : {}),
     cache: "no-store",
+    headers: {
+      ...(body ? { "Content-Type": "application/json" } : {}),
+      ...accountHeaders(account),
+    },
     signal,
-  });
+  };
+  const response = paid
+    ? await paidFetch(
+        url as "/api/rag/search" | "/api/rag/documents",
+        init,
+        account,
+      )
+    : await fetch(url, init);
   const data = await response.json();
   if (!response.ok) throw Error(data.error || "RAG_UNAVAILABLE");
   return data;
@@ -91,6 +113,7 @@ export function RAGManager({
   locale: Locale;
 }) {
   const vi = locale === "vi";
+  const account = useAccountScope();
   const [space, setSpace] = useState(workspaceId || "main");
   useEffect(() => setSpace(workspaceId || "main"), [workspaceId]);
   const [documents, setDocuments] = useState<RagDocument[]>([]),
@@ -107,6 +130,7 @@ export function RAGManager({
       `/api/rag/documents?workspaceId=${encodeURIComponent(space)}`,
       undefined,
       signal,
+      account,
     );
     setDocuments(d.documents);
     setAvailable(d.embeddingsAvailable === true);
@@ -126,7 +150,7 @@ export function RAGManager({
     setBusy(true);
     setError("");
     try {
-      await api("/api/rag/documents", body);
+      await api("/api/rag/documents", body, undefined, account);
       await refresh();
       window.dispatchEvent(new Event("lumio-rag-changed"));
       setHits(null);
@@ -312,15 +336,20 @@ export function RAGManager({
           setBusy(true);
           setError("");
           try {
-            const result = await api("/api/rag/search", {
-              scope: {
-                workspaceId: space,
-                documentIds: documents.map((d) => d.id),
-                mode,
-                consent: external,
+            const result = await api(
+              "/api/rag/search",
+              {
+                scope: {
+                  workspaceId: space,
+                  documentIds: documents.map((d) => d.id),
+                  mode,
+                  consent: external,
+                },
+                query,
               },
-              query,
-            });
+              undefined,
+              account,
+            );
             setHits(result.hits);
           } catch (e) {
             setError(ragError(e instanceof Error ? e.message : "", vi));
@@ -422,6 +451,7 @@ export function RAGScopeSelector({
   onChange: (value: RagScope | undefined) => void;
   disabled?: boolean;
 }) {
+  const account = useAccountScope();
   const vi = locale === "vi",
     space = workspaceId || "main",
     [documents, setDocuments] = useState<RagDocument[]>([]),
@@ -433,6 +463,7 @@ export function RAGScopeSelector({
         `/api/rag/documents?workspaceId=${encodeURIComponent(space)}`,
         undefined,
         controller.signal,
+        account,
       )
         .then((d) => {
           setDocuments(d.documents);

@@ -2,6 +2,7 @@ import { runtimeV3Migration } from "./runtime-v3-schema";
 import { ragMigration } from "./rag-schema";
 import { summaryJobMigration } from "./job-schema";
 import { teacherMigration } from "./teacher-schema";
+import { aiHttpMigration } from "./ai-http-core";
 import {
   teachingMigration,
   teachingPreferencesMigration,
@@ -159,6 +160,7 @@ ALTER TABLE tutor_turns ADD COLUMN needs_clarification INTEGER NOT NULL DEFAULT 
   teacherMigration,
   teachingMigration,
   teachingPreferencesMigration,
+  aiHttpMigration,
 ];
 
 export const flagDefinitions = [

@@ -1,5 +1,6 @@
 import {
-  authorizeAI,
+  resolveAIPrincipal,
+  authorizeStoredAI,
   boundedBytes,
   failure,
   type AILease,
@@ -24,6 +25,11 @@ import { verifySourceEvidence } from "../../../lib/server/source-evidence";
 import { embedTexts, embeddingStatus } from "../../../lib/rag/embeddings";
 import type { RagSnapshot } from "../../../lib/rag/types";
 import { executeSummaryInput } from "../../../lib/server/summary-execution";
+import {
+  aiHttpKey,
+  aiHttpFingerprint,
+  type AIHttpLease,
+} from "../../../lib/server/ai-http-core";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
@@ -45,12 +51,14 @@ export async function POST(req: Request) {
         }
       : {};
   let tutorLease: TutorTurnLease | undefined;
-  const requestId = crypto.randomUUID(),
-    startedAt = Date.now();
+  let httpLease: AIHttpLease | undefined;
+  let requestId = crypto.randomUUID();
+  const startedAt = Date.now();
   const signal = AbortSignal.any([req.signal, AbortSignal.timeout(60000)]);
   let task = "invalid";
   try {
-    release = await authorizeAI(req);
+    const principal = await resolveAIPrincipal(req);
+    const key = aiHttpKey(req.headers.get("idempotency-key"));
     signal.throwIfAborted();
     if (!req.headers.get("content-type")?.includes("application/json"))
       throw new AIError("INVALID_CONTENT_TYPE", 415);
@@ -67,14 +75,31 @@ export async function POST(req: Request) {
     input.sourceEvidence = verifySourceEvidence(
       input.sourceEvidence,
       input.source,
-      release.userId,
+      principal.userId,
     );
+    httpLease = getStore().beginAIHttpRequest(
+      principal.userId,
+      principal.sessionVersion,
+      "ai",
+      key,
+      aiHttpFingerprint(input),
+    );
+    requestId = httpLease.requestId;
+    release = authorizeStoredAI(principal.userId, principal.sessionVersion);
     task = input.task;
     if (input.task === "summary") {
       const result = await executeSummaryInput(
         input,
         { userId: release.userId, sessionVersion: release.sessionVersion },
-        { requestId, signal, telemetry: false },
+        {
+          requestId,
+          signal,
+          telemetry: false,
+          commit: () => {
+            signal.throwIfAborted();
+            getStore().completeAIHttpRequest(httpLease!);
+          },
+        },
       );
       recordAIUsage({
         requestId,
@@ -228,32 +253,36 @@ export async function POST(req: Request) {
     let tutor: TutorState | undefined;
     if (tutorLease && !result.tutorReply)
       throw new AIError("INVALID_TUTOR_OUTPUT", 502);
-    settleUsage({
+    const settled = settleUsage({
       userId: release.userId,
       reservationId: reservation.reservationId,
       additionalReservationIds: embeddingReservation
         ? [embeddingReservation.reservationId]
         : undefined,
-      onSettled: tutorLease
-        ? () => {
-            if (ragSnapshot)
-              getStore().ragAssertSnapshot(
-                release!.userId,
-                ragSnapshot,
-                release!.sessionVersion,
-              );
-            tutor = getStore().commitTutorTurn(
-              tutorLease!,
-              result.tutorReply!,
-              result.text,
-              {
-                references: result.references,
-                verification: result.verification,
-              },
-            );
-          }
-        : undefined,
+      onSettled: () => {
+        signal.throwIfAborted();
+        getStore().assertAIHttpRequest(httpLease!);
+        if (ragSnapshot)
+          getStore().ragAssertSnapshot(
+            release!.userId,
+            ragSnapshot,
+            release!.sessionVersion,
+          );
+        if (tutorLease)
+          tutor = getStore().commitTutorTurn(
+            tutorLease!,
+            result.tutorReply!,
+            result.text,
+            {
+              references: result.references,
+              verification: result.verification,
+            },
+          );
+        getStore().completeAIHttpRequest(httpLease!, tutor?.sessionId);
+      },
     });
+    if (!settled.changed || settled.status !== "settled")
+      throw new PlatformError("BILLING_REQUEST_FINALIZED", 409);
     recordAIUsage({
       requestId,
       userId: release.userId,
@@ -276,6 +305,18 @@ export async function POST(req: Request) {
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (e) {
+    if (httpLease) {
+      try {
+        getStore().failAIHttpRequest(
+          httpLease,
+          e instanceof AIError || e instanceof PlatformError
+            ? e.code
+            : "PROVIDER_UNAVAILABLE",
+        );
+      } catch {
+        console.warn("[lumio] HTTP_RECEIPT_RECOVERY_REQUIRED");
+      }
+    }
     if (release && embeddingReservation)
       try {
         failUsage({

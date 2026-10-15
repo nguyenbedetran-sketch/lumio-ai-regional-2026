@@ -33,6 +33,7 @@ import {
   csv,
   dateTime,
   downloadText,
+  ModalCancelButton,
 } from "./ui";
 import { GenerationPanel } from "./content";
 const assignmentStatus: Record<string, string> = {
@@ -642,9 +643,7 @@ function GradeEditor({
               chưa công bố cho học sinh.
             </label>
             <div className="tw-form-footer">
-              <Button secondary type="button" onClick={onClose}>
-                Đóng
-              </Button>
+              <ModalCancelButton onClose={onClose}>Đóng</ModalCancelButton>
               <Button type="submit" busy={client.busy} disabled={!confirmed}>
                 Lưu phần chấm của giáo viên
               </Button>

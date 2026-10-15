@@ -192,9 +192,75 @@ const ko: Copy = {
 export const aiCopy: Record<Locale, Copy> = { en, vi, "zh-CN": zh, ja, ko };
 export function aiErrorMessage(code: string, locale: Locale) {
   const t = aiCopy[locale];
+  const requestState = {
+    vi: {
+      pending:
+        "Yêu cầu trước vẫn đang xử lý. Chưa gửi thêm yêu cầu hay trừ thêm credit; thử kiểm tra lại sau.",
+      completed:
+        "Yêu cầu này đã hoàn thành trên máy chủ; chưa gọi AI hoặc trừ credit lần nữa. Hãy mở lại hội thoại để khôi phục phần đã lưu. Kết quả âm thanh/tạo nội dung không được lưu trên máy chủ.",
+      failed:
+        "Yêu cầu trước không hoàn thành. Kiểm tra lịch sử credit trước khi chủ động thử lại.",
+      account:
+        "Tài khoản trong tab đã thay đổi. Tải lại trang và kiểm tra tài khoản trước khi tiếp tục.",
+      storage:
+        "Trình duyệt không lưu được mã yêu cầu an toàn. Chưa gửi tới AI; cho phép lưu dữ liệu của trang rồi thử lại.",
+    },
+    en: {
+      pending:
+        "The previous request is still processing. No additional paid request was sent; check again later.",
+      completed:
+        "This request already completed on the server. AI was not called or charged again. Reopen the conversation for saved turns. Generated audio/content is not cached on the server.",
+      failed:
+        "The previous request did not complete. Check credit history before an explicit retry.",
+      account:
+        "This tab's account changed. Reload and check the account before continuing.",
+      storage:
+        "The browser cannot safely retain the request ID. Nothing was sent to AI; allow site storage and retry.",
+    },
+    "zh-CN": {
+      pending: "上次请求仍在处理中，未发起新的付费请求，请稍后查看。",
+      completed:
+        "此请求已完成，未再次调用AI或扣费。请重新打开对话查看已保存内容。生成的音频/内容不会缓存在服务器。",
+      failed: "上次请求未完成，请检查积分记录后手动重试。",
+      account: "此标签页的账户已改变，请刷新并确认账户。",
+      storage:
+        "浏览器无法安全保存请求编号，尚未发送至AI。请允许站点存储后重试。",
+    },
+    ja: {
+      pending:
+        "前のリクエストを処理中です。追加の有料リクエストは送信していません。後で確認してください。",
+      completed:
+        "このリクエストは完了しています。AIの再実行や再課金はありません。保存済み会話を開き直してください。生成音声やコンテンツはサーバーにキャッシュされません。",
+      failed:
+        "前の処理は完了していません。クレジット履歴を確認してから再試行してください。",
+      account:
+        "タブのアカウントが変更されました。再読み込みして確認してください。",
+      storage:
+        "リクエストIDを安全に保存できません。AIには未送信です。サイトの保存を許可してください。",
+    },
+    ko: {
+      pending:
+        "이전 요청이 처리 중입니다. 새 유료 요청을 보내지 않았어요. 나중에 확인하세요.",
+      completed:
+        "이미 완료된 요청입니다. AI 호출이나 차감이 반복되지 않았어요. 저장된 대화를 다시 여세요. 생성한 음성/콘텐츠는 서버에 보관하지 않아요.",
+      failed:
+        "이전 요청이 완료되지 않았어요. 크레딧 내역을 확인한 뒤 직접 다시 시도하세요.",
+      account: "이 탭의 계정이 변경됐어요. 새로고침한 뒤 계정을 확인하세요.",
+      storage:
+        "요청 ID를 안전하게 저장할 수 없어 AI에 보내지 않았어요. 사이트 저장을 허용하고 다시 시도하세요.",
+    },
+  }[locale];
   return (
     (
       {
+        AI_REQUEST_IN_PROGRESS: requestState.pending,
+        AI_REQUEST_COMPLETED: requestState.completed,
+        AI_REQUEST_CONFLICT: requestState.failed,
+        AI_REQUEST_FAILED: requestState.failed,
+        AI_REQUEST_PENDING_LIMIT: requestState.pending,
+        AI_REQUEST_STORAGE_UNAVAILABLE: requestState.storage,
+        ACCOUNT_CHANGED: requestState.account,
+        INVALID_ACCOUNT: requestState.account,
         SIGN_IN_REQUIRED: productCopy[locale].accountHint,
         AI_DISABLED: productCopy[locale].offlineHint,
         PROVIDER_NOT_CONFIGURED: productCopy[locale].offlineHint,
@@ -203,8 +269,20 @@ export function aiErrorMessage(code: string, locale: Locale) {
         TUTOR_BUSY: t.limit,
         INVALID_TUTOR_OUTPUT: t.invalid,
         DUPLICATE_TUTOR_HINT: t.invalid,
-        INVALID_SOURCE_EVIDENCE: ({vi: "Nguồn đối chiếu đã thay đổi hoặc hết hiệu lực. Mở Nguồn học liệu, trích xuất lại văn bản rồi thử lại.", en: "Source evidence changed or expired. Open the source tab, extract the text again, then retry.", ja: "参照元が変更されたか無効です。元資料タブでテキストを再抽出してください。", ko: "출처가 변경되었거나 만료되었어요. 원본 탭에서 텍스트를 다시 추출하세요.", "zh-CN": "来源已更改或失效。请在原始资料页重新提取文字后重试。"})[locale],
-        SOURCE_SIGNING_UNAVAILABLE: ({vi: "Hiện chưa xác thực được nguồn học liệu. Vui lòng thử lại sau; không có kết quả mới được thêm.", en: "Source verification is unavailable. Retry later; no new result was added.", ja: "参照元を検証できません。しばらくしてから再試行してください。", ko: "출처를 검증할 수 없어요. 잠시 후 다시 시도하세요.", "zh-CN": "暂时无法验证来源。请稍后重试，未添加新结果。"})[locale],
+        INVALID_SOURCE_EVIDENCE: {
+          vi: "Nguồn đối chiếu đã thay đổi hoặc hết hiệu lực. Mở Nguồn học liệu, trích xuất lại văn bản rồi thử lại.",
+          en: "Source evidence changed or expired. Open the source tab, extract the text again, then retry.",
+          ja: "参照元が変更されたか無効です。元資料タブでテキストを再抽出してください。",
+          ko: "출처가 변경되었거나 만료되었어요. 원본 탭에서 텍스트를 다시 추출하세요.",
+          "zh-CN": "来源已更改或失效。请在原始资料页重新提取文字后重试。",
+        }[locale],
+        SOURCE_SIGNING_UNAVAILABLE: {
+          vi: "Hiện chưa xác thực được nguồn học liệu. Vui lòng thử lại sau; không có kết quả mới được thêm.",
+          en: "Source verification is unavailable. Retry later; no new result was added.",
+          ja: "参照元を検証できません。しばらくしてから再試行してください。",
+          ko: "출처를 검증할 수 없어요. 잠시 후 다시 시도하세요.",
+          "zh-CN": "暂时无法验证来源。请稍后重试，未添加新结果。",
+        }[locale],
         TUTOR_SESSION_LIMIT: t.limit,
         TUTOR_TURN_LIMIT: t.limit,
         PROVIDER_RATE_LIMIT: t.limit,
