@@ -132,39 +132,61 @@ export function useTeachingClient(accountKey: string) {
       setLoading(true);
       setError("");
       try {
-        const response = await fetch(
-          "/api/teaching" +
-            (orgId ? "?orgId=" + encodeURIComponent(orgId) : ""),
-          {
-            headers: { "X-Lumio-Account": accountKey },
-            cache: "no-store",
-            signal: controller.signal,
-          },
-        );
-        const body = await readResponse(response);
-        if (!response.ok) {
+        let requestedOrg = orgId;
+        // An unscoped GET is only a membership directory. Resolve one authorized
+        // scope before publishing state; an HTML select's visual default is not a load.
+        for (let round = 0; round < 2; round++) {
+          const response = await fetch(
+            "/api/teaching" +
+              (requestedOrg
+                ? "?orgId=" + encodeURIComponent(requestedOrg)
+                : ""),
+            {
+              headers: { "X-Lumio-Account": accountKey },
+              cache: "no-store",
+              signal: controller.signal,
+            },
+          );
+          const body = await readResponse(response);
+          if (!response.ok) {
+            if (
+              [401, 403].includes(response.status) &&
+              active.current &&
+              current === sequence.current
+            ) {
+              setData(null);
+              pending.current.clear();
+            }
+            throw Error(teachingError(body.error));
+          }
+          if (body.actor?.accountKey !== accountKey) {
+            if (active.current && current === sequence.current) {
+              setData(null);
+              pending.current.clear();
+            }
+            throw Error(teachingError("SESSION_REVOKED"));
+          }
           if (
-            [401, 403].includes(response.status) &&
-            active.current &&
-            current === sequence.current
+            !active.current ||
+            current !== sequence.current ||
+            controller.signal.aborted
+          )
+            return null;
+          if (
+            !requestedOrg &&
+            !body.organization &&
+            body.organizations?.length
           ) {
-            setData(null);
-            pending.current.clear();
+            requestedOrg = body.organizations[0].id;
+            continue;
           }
-          throw Error(teachingError(body.error));
-        }
-        if (body.actor?.accountKey !== accountKey) {
-          if (active.current && current === sequence.current) {
-            setData(null);
-            pending.current.clear();
-          }
-          throw Error(teachingError("SESSION_REVOKED"));
-        }
-        if (active.current && current === sequence.current) {
+          if (requestedOrg && body.organization?.id !== requestedOrg)
+            throw Error(teachingError("TEACHING_CONFLICT"));
           setData(body);
           org.current = body.organization?.id || "";
+          return body as TeachingState;
         }
-        return body as TeachingState;
+        return null;
       } catch (e) {
         if (
           active.current &&

@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-15T16:12:03.765Z",
+  "checkedAt": "2026-10-15T16:27:26.183Z",
   "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
   "providerCalls": 0,
   "phases": {
@@ -71,5 +71,5 @@
   },
   "passed": 8,
   "version": "3.2.0-teacher.1",
-  "completedAt": "2026-10-15T16:12:06.227Z"
+  "completedAt": "2026-10-15T16:27:28.619Z"
 }

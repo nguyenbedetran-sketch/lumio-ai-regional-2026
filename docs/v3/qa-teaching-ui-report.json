@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "passed": 52,
+  "passed": 55,
   "cases": [
     "Twelve teacher modules have a visible navigation entry",
     "New account contains no seeded classes, students or fabricated metrics",
@@ -51,6 +51,9 @@
     "Student sees the score only after the separate publication action",
     "Student classroom fits a 390px phone viewport",
     "Student mobile header keeps join, organization and refresh controls fully on screen",
+    "Reload resolves the membership-only directory with an explicit authorized organization GET",
+    "Existing single organization reloads real class counts and admin role instead of misleading empty onboarding",
+    "Reload restores an existing class without creating any duplicate organization or mutation",
     "Account change clears the previous teacher's private class content",
     "No runtime errors across the twelve modules and student workflow",
     "No external evidence, AI provider or payment was contacted"
@@ -68,7 +71,7 @@
   ],
   "scope": "Actual components and browser storage/DOM with synthetic HTTP; real backend/compiled tests are separate evidence",
   "unitChecks": 32,
-  "checkedAt": "2026-10-15T16:08:07.587Z",
+  "checkedAt": "2026-10-15T16:25:30.433Z",
   "tool": "@playwright/cli@0.1.21",
   "mode": "Actual teaching and student React/CSS; intercepted synthetic HTTP only; no product auth bypass, real students, payments or provider calls"
 }

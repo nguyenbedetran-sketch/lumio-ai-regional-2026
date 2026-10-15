@@ -5,6 +5,7 @@ async (page) => {
     requests = [],
     generations = [],
     receipts = new Map(),
+    reads = [],
     external = [];
   let loseAck = false,
     failMutation = false,
@@ -287,6 +288,9 @@ async (page) => {
       key = req.headers()["x-lumio-account"];
     if (!key) throw Error("MISSING_ACCOUNT_HEADER");
     if (req.method() === "GET") {
+      const orgMatch = /(?:\?|&)orgId=([^&]+)/.exec(req.url());
+      const requestedOrg = orgMatch ? decodeURIComponent(orgMatch[1]) : null;
+      reads.push({ key, orgId: requestedOrg });
       if (failRead) {
         failRead = false;
         return route.fulfill({
@@ -294,7 +298,50 @@ async (page) => {
           json: { error: "TEACHING_FORBIDDEN", private: "SYNTHETIC_SECRET" },
         });
       }
-      return route.fulfill({ json: response(key) });
+      const scoped = response(key);
+      if (!requestedOrg) {
+        const directory = {
+          ...scoped,
+          organization: null,
+          role: null,
+          permissions: { manageOrg: false, teach: false, learn: false },
+          classes: [],
+          members: [],
+          enrollments: [],
+          groups: [],
+          invites: [],
+          materials: [],
+          lessons: [],
+          questions: [],
+          assignments: [],
+          submissions: [],
+          announcements: [],
+          events: [],
+          settings: null,
+          preferences: null,
+          analytics: [],
+          dashboard: {
+            ...scoped.dashboard,
+            classes: 0,
+            students: 0,
+            materials: 0,
+            lessons: 0,
+            questions: 0,
+            assignments: 0,
+            awaitingGrading: 0,
+            dueSoon: 0,
+            publishedAssessments: 0,
+            averagePercent: null,
+          },
+        };
+        return route.fulfill({ json: directory });
+      }
+      if (!scoped.organizations.some((org) => org.id === requestedOrg))
+        return route.fulfill({
+          status: 403,
+          json: { error: "TEACHING_FORBIDDEN" },
+        });
+      return route.fulfill({ json: scoped });
     }
     const b = req.postDataJSON();
     requests.push(b);
@@ -1097,6 +1144,40 @@ async (page) => {
       }),
     ),
     "Student mobile header keeps join, organization and refresh controls fully on screen",
+  );
+  const writesBeforeReload = requests.length,
+    readStart = reads.length;
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.reload();
+  await page.locator(".tw-stat").first().waitFor();
+  check(
+    reads
+      .slice(readStart)
+      .some((r) => r.key === "qa-teaching-a" && r.orgId === null) &&
+      reads
+        .slice(readStart)
+        .some((r) => r.key === "qa-teaching-a" && r.orgId === "qa-org"),
+    "Reload resolves the membership-only directory with an explicit authorized organization GET",
+  );
+  check(
+    (await page
+      .getByRole("combobox", { name: "Không gian giảng dạy", exact: true })
+      .inputValue()) === "qa-org" &&
+      (await page.locator(".tw-stat").first().textContent()).includes("1") &&
+      (await page.locator(".tw-identity").textContent()).includes(
+        "Quản trị không gian",
+      ) &&
+      (await page
+        .getByRole("button", { name: "Tạo không gian giảng dạy", exact: false })
+        .count()) === 0,
+    "Existing single organization reloads real class counts and admin role instead of misleading empty onboarding",
+  );
+  await nav("Lớp học");
+  check(
+    (await page.locator("[data-teaching-classes]").textContent()).includes(
+      "KIỂM THỬ · Lớp 9",
+    ) && requests.length === writesBeforeReload,
+    "Reload restores an existing class without creating any duplicate organization or mutation",
   );
   await page.evaluate(() => window.__mountTeaching("teacher", "b"));
   await page
