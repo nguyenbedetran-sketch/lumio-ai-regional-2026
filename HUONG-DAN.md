@@ -1,6 +1,6 @@
 # Mở code và dùng Lumio AI khu vực V2 + V3.1
 
-Đây là hướng dẫn source web **3.1.0-regional.1**, SQLite schema11, của đội AI26A0048. Public đã thử tại [lumio-ai-demo.onrender.com](https://lumio-ai-demo.onrender.com/) trên runtime **`6eabc3219f9298676bdd29ae0ee15a91b9593288`**: health200, Google OAuth, form/queue giáo viên và tutor thật theo [report](docs/v3/public-v31-live-check.json). Không gửi hay duyệt hồ sơ giáo viên thật. **Chưa nộp lần cuối**; trạng thái gói/GitHub/Drive xem [báo cáo cuối](docs/regional/FINAL-REPORT.md).
+Đây là hướng dẫn source web **3.1.0-regional.1**, SQLite schema11, của đội AI26A0048. Public đã thử tại [lumio-ai-demo.onrender.com](https://lumio-ai-demo.onrender.com/) trên runtime **`6eabc3219f9298676bdd29ae0ee15a91b9593288`**: health200, Google OAuth, form/queue giáo viên và tutor thật theo [report](docs/v3/public-v31-live-check.json). Không gửi hay duyệt hồ sơ giáo viên thật. **Cổng đã ghi nhận lần nộp số 1 lúc 15:05:41 ngày 15/10/2026 (UTC+7)**; [biên nhận](docs/regional/REGIONAL-SUBMISSION-RECEIPT.json) lưu hai URL đã đối chiếu. Chỉ cập nhật tài liệu/tệp tải tại cùng URL, không nộp lần thứ hai. Trạng thái gói/GitHub/Drive xem [báo cáo cuối](docs/regional/FINAL-REPORT.md).
 
 Tài liệu được cập nhật sau phép thử public. Các commit doc-only trong HEAD bàn giao không làm đổi runtime đang chạy; hash Render trong report mới là mốc đã thử, không mặc nhiên là HEAD source/tài liệu mới nhất.
 

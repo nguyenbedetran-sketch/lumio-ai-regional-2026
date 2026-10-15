@@ -1,0 +1,16 @@
+{
+  "status":"PASS",
+  "team":"AI26A0048",
+  "round":"Bảng A · Miền Trung · Vòng Khu vực",
+  "portal":"https://ai.tainangviet.vn/dashboard/regional",
+  "receiptNumber":1,
+  "submittedAtLocal":"15:05:41 15/10/2026",
+  "timezone":"Asia/Bangkok (UTC+7)",
+  "visibleConfirmation":"Đã ghi nhận lần nộp số 1 lúc 15:05:41 15/10/2026.",
+  "sourceUrl":"https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026",
+  "evidenceUrl":"https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+  "runtimeCommit":"6eabc3219f9298676bdd29ae0ee15a91b9593288",
+  "sourceDocumentationCommitAtSubmit":"494683e414f019994cc6f6026a90d3ccbd34285e",
+  "verification":["Observed portal success notice and receipt history showing exactly one submission.","Read back both receipt link hrefs and confirmed exact GitHub and Drive destinations."],
+  "subsequentChanges":"Only documentation, receipt and downloadable packaging may be updated at these same URLs after acknowledgement. No second portal submission or untested runtime deployment is implied."
+}

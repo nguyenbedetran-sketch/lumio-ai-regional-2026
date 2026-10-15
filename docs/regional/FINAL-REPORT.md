@@ -29,7 +29,7 @@ Nâng cấp trên sản phẩm hiện có: AI thật, gia sư giúp người h�
 
 | 3. V3 public | PASS | Public3.1: Google OAuth và4 lượt tutor thật; khóa lời giải tới3 gợi ý, sửa lỗi x=6, lời giải x=5. Xác minh độc lập nghiệm/điều kiện/đủ nghiệm trong phạm vi hỗ trợ; bước biến đổi chỉ kiểm tra một phần. Public3.0 đã thử riêng PDF và hybrid RAG trên2 nguồn tự soạn. Chưa là đánh giá toàn diện hoặc kết quả học sinh. |
 
-| 4. Nộp cuối | NOT TESTED | Chưa nộp. Chỉ gửi một lần sau khi hoàn tất V2, V3 và phần giáo viên theo yêu cầu. |
+| 4. Nộp cuối | PASS | Cổng xác nhận lần nộp số1 lúc15:05:41 ngày15/10/2026 (UTC+7). Đã đọc lại hai href GitHub/Drive đúng đích; không nộp phiên bản thứ2. Xem REGIONAL-SUBMISSION-RECEIPT.json và ảnh biên nhận. |
 
 | Hạng mục V3 | Trạng thái tổng thể | Giới hạn chính |
 
@@ -345,9 +345,9 @@ Flutter: mở lumio-mobile có pubspec.yaml, flutter pub get/analyze/test/run v�
 
 | GitHub | PASS | https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026<br>Source công khai V3.1; runtime đã kiểm tra6eabc3219f9298676bdd29ae0ee15a91b9593288. HEAD có thể bổ sung tài liệu sau runtime. Không công khai lịch sử riêng, env hoặc cơ sở dữ liệu. |
 
-| Drive minh chứng | PARTIAL | https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG<br>Đã tạo đúng thư mục minh chứng và tải3 ảnh public; metadata xác nhận đúng thư mục và quyền ai có liên kết được xem. Đang hoàn tất PDF, source và gói minh chứng. |
+| Drive minh chứng | PASS | https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG<br>Đã tải PDF, gói minh chứng và3 ảnh public vào đúng thư mục; metadata/đọc lại danh sách xác nhận quyền ai có liên kết được xem. Truy cập HTTP không cookie trả200 và thấy tên các tệp. ZIP source bổ sung riêng sau khi chốt tài liệu; không đổi URL đã nộp. |
 
-| Nộp cuối | NOT TESTED | https://ai.tainangviet.vn/dashboard/regional<br>Chưa nộp. Chỉ gửi một lần sau khi hoàn tất V2, V3 và phần giáo viên theo yêu cầu. |
+| Nộp cuối | PASS | https://ai.tainangviet.vn/dashboard/regional<br>Cổng xác nhận lần nộp số1 lúc15:05:41 ngày15/10/2026 (UTC+7). Đã đọc lại hai href GitHub/Drive đúng đích; không nộp phiên bản thứ2. Xem REGIONAL-SUBMISSION-RECEIPT.json và ảnh biên nhận. |
 
 19. Lỗi / giới hạn còn lại
 
@@ -408,11 +408,13 @@ Nhóm tệp dưới đây để truy xuất; commit/source manifest là danh sá
 
 | Public V2 | 03_KiemThu/V2/public-v2-live-check.json | OAuth/AI/playback thật V2 riêng |
 
+| Biên nhận | 02_MinhChung_UI/Regional-submission-receipt.jpg | Cổng ghi lần nộp số 1; đã crop tài khoản |
+
 JSON/log gốc lưu tên từng case, expected/actual và lỗi: docs/regional cho V2/RAG/content/live; docs/v3 cho learning, math, sync, queue, mobile. Không trích toàn chat, key, account ID hoặc màn hình admin OAuth vào báo cáo công khai.
 
 22. Hướng cải tiến và trình tự nộp
 
-• Chốt build/regression/audit đúng commit; deploy rồi kiểm tra public V3 và quyền mở GitHub/Drive trước lần nộp cuối. Giữ bằng chứng phiên bản nộp thực tế.
+• Đã nộp một lần lúc 15:05:41 ngày 15/10/2026 (UTC+7); cổng ghi biên nhận số 1 và hai href đúng GitHub/Drive. Chỉ cập nhật tài liệu/tệp tại URL cũ, không nộp lại.
 
 • Có giáo viên chấm bộ đề đa dạng, đánh giá từng ý có được nguồn hỗ trợ; pilot tự nguyện và báo mẫu số/giới hạn; hiệu chuẩn ngưỡng kỹ năng trước tuyên bố mastery.
 
