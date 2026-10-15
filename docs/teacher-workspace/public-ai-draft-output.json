@@ -1,0 +1,61 @@
+{
+  "scope": "One generated lesson through the deployed UI using authored non-personal source; captured before editorial changes; not a student trial.",
+  "fields": [
+    {
+      "index": 0,
+      "value": "Căn bậc hai và điều kiện xác định"
+    },
+    {
+      "index": 1,
+      "value": "Căn bậc hai và điều kiện xác định"
+    },
+    {
+      "index": 2,
+      "value": "Lớp 9"
+    },
+    {
+      "index": 3,
+      "value": "Nhận biết định nghĩa căn bậc hai số học của một số không âm.\nXác định điều kiện xác định trước khi thực hiện phép bình phương trong phương trình chứa dấu căn.\nThực hiện phép giải phương trình có dấu căn, kiểm tra nghiệm bằng cách thay lại vào phương trình ban đầu."
+    },
+    {
+      "index": 4,
+      "value": "Kiến thức tiền đề"
+    },
+    {
+      "index": 5,
+      "value": "Học sinh cần biết số thực, phép bình phương và nhận dạng số không âm. Từ nguồn: \"Căn bậc hai số học của số a không âm là số x không âm sao cho x² = a.\" (nguồn cung cấp định nghĩa cơ bản)."
+    },
+    {
+      "index": 6,
+      "value": "Mục tiêu bài học"
+    },
+    {
+      "index": 7,
+      "value": "Sau bài, học sinh nắm được định nghĩa căn bậc hai số học, luôn đặt điều kiện xác định trước khi bình phương hai vế, và kiểm tra nghiệm bằng phép thay trở lại."
+    },
+    {
+      "index": 8,
+      "value": "Ví dụ mẫu (có điều kiện và kiểm tra nghiệm)"
+    },
+    {
+      "index": 9,
+      "value": "Giải phương trình √(x − 1) = 3. Bước 1: ghi điều kiện xác định √(x−1) nghĩa là x−1 ≥ 0 ⇒ x ≥ 1. Bước 2: bình phương hai vế: x−1 = 9 ⇒ x = 10. Bước 3: thay lại vào phương trình ban đầu để kiểm tra: √(10−1) = √9 = 3, thỏa. Kết luận: x = 10 là nghiệm."
+    },
+    {
+      "index": 10,
+      "value": "Luyện tập hướng dẫn (cùng giáo viên)"
+    },
+    {
+      "index": 11,
+      "value": "1) Giải cùng lớp: √(x + 3) = x − 1. Hướng dẫn học sinh: (a) đặt điều kiện trước khi bình phương; (b) thực hiện phép biến đổi đại số; (c) kiểm tra từng nghiệm tìm được. Lưu ý nguồn thảo luận bài toán tương tự: phải có x ≥ 1 trước khi bình phương và sau đó đối chiếu nghiệm với điều kiện."
+    },
+    {
+      "index": 12,
+      "value": "Luyện tập độc lập và kiểm tra thoát"
+    },
+    {
+      "index": 13,
+      "value": "Đề bài (3 câu): 1) Giải √(x − 4) = 2. 2) Giải √(2x + 1) = x − 1. 3) Giải √(x + 5) = 3 − x. Học sinh nộp lời giải có: điều kiện xác định, các bước biến đổi, nghiệm tạm và bước kiểm tra thay lại. Exit check: mỗi học sinh nộp ngắn gọn câu trả lời cho câu 2 — nêu điều kiện và các nghiệm hợp lệ. Nếu nguồn không đầy đủ cho các phương pháp thay thế, phần hướng dẫn thêm là đề xuất của giáo viên."
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-15T16:35:38.390Z",
+  "version": "3.2.0-teacher.1",
+  "publicUrl": "https://lumio-ai-demo.onrender.com/teacher",
+  "runtimeCommit": "6d5d6b490cc7fd57107809b1845c314e46ea0e4c",
+  "deployment": {
+    "service": "lumio-ai-demo",
+    "plan": "Free",
+    "id": "dep-db8fuc8473hc73aiud4g",
+    "dashboardObserved": "Deploy succeeded|Live",
+    "duration": "1m52s"
+  },
+  "scope": "Real production UI, Google OAuth and server persistence for project owner. Authored test-only empty organization/class; no invented teachers/students or trial results.",
+  "checks": [
+    "Google sign-in succeeds using the already authorized project-owner account; no new privileges granted.",
+    "Created one own test organization and one empty math class via actual production UI.",
+    "Hard reload automatically resolves the authorized organization; persisted class count1, students0, unpublished grades0 and organization-admin label remain correct.",
+    "Teacher navigation exposes12 modules without seeded students/grades.",
+    "Classroom detects owner teaching role and does not allow submitting as student in that organization.",
+    "Existing admin teacher-review queue opens and correctly reports no pending applications; no real application approved/rejected."
+  ],
+  "initialPublicAI": {
+    "runtimeCommit": "2e3c2299f2fa43a88a9c00b3b3b74156ab7af86c",
+    "generationRequests": 1,
+    "kind": "lesson",
+    "selectedSourceCharacters": 581,
+    "consent": "Explicit UI confirmation; authored non-personal text only",
+    "outcome": "A review-required draft returned, manually edited and saved as draft, not reviewed or published.",
+    "localization": "Five Vietnamese section headings; original body still had one English phrase Exit check. Editorial fix saved; not a claim of fully automatic localization.",
+    "sourceSupport": "Mixed; UI warned two sections lack matched excerpts.",
+    "math": "Example sqrt(x-1)=3 manually checked with domain and substitution; no broad semantic/math benchmark.",
+    "draftOutput": "public-ai-draft-output.json",
+    "screenshotAfterEditorialChanges": "public-ai-lesson.png"
+  },
+  "screenshots": [
+    "public-teacher-dashboard.png",
+    "public-admin-teacher-review.png",
+    "public-ai-lesson.png"
+  ],
+  "remainingLimits": [
+    "Free-host deployment reset previous test database and required a fresh Google sign-in. This is expected ephemeral hosting, not durable classroom storage.",
+    "AI Router/backend unchanged in final reload-only runtime fix; no repeat paid AI request on final commit.",
+    "No actual school/student pilot, real teacher identity verification, physical device/new native binaries or live payment validation."
+  ],
+  "portal": "No second regional submission."
+}

@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-10-15T16:33:32.146Z",
+  "scope": "Anonymous HTTPS production read-only checks. No account creation, provider calls or private cookies.",
+  "checks": [
+    "Health200 and expected3.2 version, ready preview schema",
+    "Public status reports configured Google and enabled AI; no provider call inferred",
+    "/api/teaching denies anonymous with JSON401",
+    "/api/teaching/export denies anonymous with JSON401",
+    "/teacher renders200 and has noindex privacy header",
+    "/classroom renders200 and has noindex privacy header"
+  ],
+  "health": {
+    "status": "ready",
+    "version": "3.2.0-teacher.1",
+    "mode": "competition-preview"
+  },
+  "configuration": {
+    "google": true,
+    "facebook": true,
+    "ai": true,
+    "capabilities": {
+      "tutor": true,
+      "summary": true,
+      "media": true,
+      "transcription": true,
+      "speech": true
+    }
+  },
+  "status": "PASS",
+  "passed": 6,
+  "providerRequests": 0,
+  "completedAt": "2026-10-15T16:33:34.137Z"
+}

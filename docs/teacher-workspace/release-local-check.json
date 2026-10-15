@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-15T16:30:54.455Z",
+  "version": "3.2.0-teacher.1",
+  "runtimeCommit": "6d5d6b490cc7fd57107809b1845c314e46ea0e4c",
+  "scope": "Clean local release checkout; pnpm test and final production build after workspace reload fix. Public deployment and real provider evidence have separate reports.",
+  "regression": {
+    "status": "PASS",
+    "assertions": 711,
+    "baseline": 600,
+    "new": 111
+  },
+  "build": {
+    "status": "PASS",
+    "framework": "Next.js 15.5.27",
+    "includesTypecheck": true
+  },
+  "productionDependenciesAudit": {
+    "status": "PASS",
+    "knownVulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "totalDependencies": 114
+  },
+  "logDigests": {
+    "regression-final.log": "607eaf3af827ed082d7c1adf48f16f06fecfa583550dd590cd7348ecb95fc92a",
+    "build-reload-fix.log": "2452bee33894b44aa95d882e6f91efc607fd3d821365818674054bc2d7402c4d",
+    "audit.json": "4bb4a020392a7e5281cbe33d725b0366586cf62acf1ddb702d7bceebf3070fdb"
+  },
+  "limitations": [
+    "Not a penetration test, broad AI semantic benchmark, school pilot or physical device validation.",
+    "No claim of durable multi-instance hosting; SQLite free-host competition preview."
+  ]
+}

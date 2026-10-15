@@ -37,22 +37,22 @@ Ngày: 15/10/2026. Source `3.2.0-teacher.1`, migration SQLite **1–13**. Nâng 
 | [backend-api-report.json](backend-api-report.json) | **49 PASS** | Handler Request/Response, canonical policy, migration/reopen, SQLite và CAS/receipt/exports/quotas; account/credential dữ liệu tổng hợp, không provider. |
 | [content-qa-report.json](content-qa-report.json) | **38 PASS** | Validator xác định, đầu ra đối kháng, exact quote/locator, MCQ/math hữu hạn, consent/minimization và generic-client context injection; không provider. |
 | [content-api-report.json](content-api-report.json) | **24 PASS**, **16 transport bị chặn**, **0 request provider thật** | Handler/SQLite ledger và assertion thật; OAuth/provider/clock kiểm soát trong fixture. Nguồn/quyền/phiên/AI preference đổi khi chờ bị reject/refund; UUID không tính credit lặp. |
-| [qa-teaching-ui-report.json](../v3/qa-teaching-ui-report.json) | **52 browser +32 SSR/pure PASS** | React/CSS/DOM thật, HTTP tổng hợp; 29 mutation/3 generation mocks; không OAuth/provider/student thật. Report mới nhất thay lần trước51 browser. Có desktop,768px,390px/reduced-motion/private-cache checks; không device proof. |
+| [qa-teaching-ui-report.json](../v3/qa-teaching-ui-report.json) | **55 browser +32 SSR/pure PASS** | React/CSS/DOM thật, HTTP tổng hợp; 29 mutation/3 generation mocks; không OAuth/provider/student thật. Report mới nhất thay lần trước51 browser. Có desktop,768px,390px/reduced-motion/private-cache checks; không device proof. |
 | [production-http-report.json](production-http-report.json) | **8 PASS**, phase1/2/3/4 = **3/2/1/2** | `next start` local đã biên dịch, HTTP thật, DB riêng và business handlers thật; session/account tổng hợp, **0 provider**. Restore sang SQLite file riêng/schema13 đạt; không là khôi phục host hoặc off-site DR. |
 | [real-provider-report.json](real-provider-report.json), [output](real-provider-output.json) | **2 request thật HTTP200** | Compiled local Next, synthetic authenticated owner, bài tiếng Việt tự soạn; một lesson và một batch hai MCQ. Khác phép thử public/OAuth/người học thật. |
-| TypeScript / regression / build staging do root chốt | **711 assertions PASS**; build production trước các sửa cuối đã PASS | Không cộng vào tổng các suite bên trên vì có giao nhau. Build chốt sau MathText/private-cache/localization fix được root xác minh riêng; không suy phép thử cũ sang release mới nếu chưa có report. |
+| TypeScript / regression / build staging do root chốt | **711 assertions PASS**; production build cuối và tám case compiled HTTP sau sửa tải lại **PASS** | Không cộng vào tổng các suite bên trên vì có giao nhau. Xem `release-local-check.json` và báo cáo public riêng, không suy phép thử local sang môi trường mạng. |
 
 ### Hai kết quả provider thật cho biết điều gì
 
 - Lesson: HTTP200, khoảng **11,6 giây** trong một mẫu; `review-required`, `sourceSupport:mixed`, ba section thiếu reference; `math:not-checked`. Có heading trộn tiếng Anh. Đây là lỗi/giới hạn được ghi nhận, không che bằng schema PASS.
 - Hai MCQ: HTTP200, khoảng **7,7 giây** trong một mẫu; `review-required`, `sourceSupport:exact-excerpts`, `math:not-checked`. Exact excerpt chỉ xác nhận quote có trong nguồn; chưa có chấm ngữ nghĩa độc lập cho mọi câu.
 - Cùng UUID trả409, không gọi provider thêm; không auto-save lesson/question, ledger còn184 từ200 trial và không còn credit held. Các thời gian n=2 không phải SLO hoặc load test.
-- Root đã bổ sung chỉ dẫn bản địa hóa sau hai request này. **Chưa có bằng chứng ở hai report đó rằng sửa ngôn ngữ đã chạy thành công trên public**; lần kiểm tra public sau, nếu có, phải ghi report riêng.
+- Root đã bổ sung chỉ dẫn bản địa hóa sau hai request này. Hai report local không xác nhận sửa ngôn ngữ trên public; lần public riêng ghi ở [FINAL-REPORT.md](FINAL-REPORT.md): năm heading tiếng Việt, còn một cụm tiếng Anh trong nội dung cần sửa, không được gọi là bản địa hóa hoàn hảo.
 
 ## Điều kiện còn lại trước tuyên bố production
 
 - **NOT TESTED**: giáo viên/học sinh thật, pilot tự nguyện và điểm trước/sau/ghi nhớ; không tạo người tham gia hoặc nhận xét giả. Protocol trống hiện có không phải kết quả.
-- **NOT TESTED trong report này**: deployment/public Teacher Workspace mới, Google OAuth của bản mới và kiểm lại ngôn ngữ sau sửa. Runtime đã nộp V3.1 có bằng chứng riêng; không tự nộp lại cổng khi cập nhật source.
+- Public Teacher Workspace, Google OAuth và một giáo án thật có bằng chứng riêng ở [FINAL-REPORT.md](FINAL-REPORT.md) và các report public. Các phép thử handler/UI tổng hợp trong bảng này không tự chứng minh những kết quả đó. Runtime đã nộp V3.1 có bằng chứng riêng; không tự nộp lại cổng khi cập nhật source.
 - **PARTIAL**: semantic accuracy, độc lập kiểm mọi giải thích/giáo án, curriculum alignment, calibrated learner mastery và độ phù hợp độ tuổi. AI chỉ tạo draft cần review.
 - **PARTIAL**: SQLite/Render Free, full-state reads và hàng rào dung lượng 2MiB content/256KiB communication/8MiB tổng không thay DB nhiều máy, pagination, off-host backup/DR, monitoring và load test. Đổi host/reset có thể mất dữ liệu.
 - **NOT TESTED / chưa triển khai đầy đủ**: APK/IPA Teacher Workspace, hai thiết bị vật lý, full native sync, realtime voice/Zoom loopback, store, institutional SSO, email/push và retention/xóa workspace tự phục vụ.
