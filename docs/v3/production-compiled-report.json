@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-10-15T07:04:12.219Z",
+  "status": "PASS",
+  "scope": "Built normal next start with clean release install, compiled ingest HTTP route, actual inline document workers; signed synthetic JWT fixture, not provider OAuth.",
+  "deploymentMode": "next-start",
+  "standalone": "release-repo",
+  "paidProviderRequests": 0,
+  "credentials": "Fresh synthetic test secret; no .env file or real credentials read.",
+  "checks": [
+    "Production server and compiled ingest route exist",
+    "unpdf, fflate and htmlparser2 resolve inside selected clean production tree",
+    "Route trace contains all three extraction dependency packages",
+    "Isolated production server starts without original workspace dependencies",
+    "Compiled V3 readiness reports current version without private metadata",
+    "Unauthenticated compiled ingest route rejects before extraction",
+    "Signed synthetic JWT traverses real NextAuth callback and canonical actor lookup",
+    "Compiled sync route persists canonical snapshot and rejects stale revision",
+    "Compiled RAG indexing and lexical retrieval preserve authored source without AI transport",
+    "Compiled PDF worker extracts two real pages and signs actual page locations",
+    "Compiled DOCX worker extracts heading and text without inventing a page",
+    "Compiled PPTX worker respects presentation relationship order rather than filenames",
+    "Compiled Office worker refuses structured math instead of flattening its meaning"
+  ],
+  "dependencies": {
+    "unpdf": "node_modules/.pnpm/unpdf@1.8.1/node_modules/unpdf/dist/index.cjs",
+    "fflate": "node_modules/.pnpm/fflate@0.8.3/node_modules/fflate/lib/node.cjs",
+    "htmlparser2": "node_modules/.pnpm/htmlparser2@10.1.0/node_modules/htmlparser2/dist/commonjs/index.js"
+  },
+  "traceMetadata": "release-repo/.next/server/app/api/ingest-document/route.js.nft.json",
+  "workerArchitecture": "inline eval worker embedded in traced route/chunk (no external worker script required)",
+  "authFixtureEncoder": "Clean release install next-auth/jwt; used only by probe parent to create synthetic test cookie, never by standalone server.",
+  "passed": 13,
+  "fixtureData": "Authored ASCII PDF and minimal authored OOXML ZIP fixtures; private SQLite removed after server exit."
+}

@@ -82,6 +82,18 @@ Render Free là host tạm: tài khoản, liên kết, credit, nhật ký, phiê
 
 Nếu cần viết app điện thoại, mở dự án Flutter/Dart riêng, bắt đầu từ `lib/main.dart` và README mobile; cần Flutter/Android SDK theo hướng dẫn dự án đó. Các file cài Android 0.3/Windows 0.1 cũ chưa được build lại/xác nhận mới. Sửa source không cập nhật file cài đã tải. Khả năng sync native cần xem README mobile và kết quả kiểm tra riêng, không suy ra từ việc web đã có API. iPhone/device thật chưa được xác nhận. Để thử phần khu vực mới đã kiểm tra browser, ưu tiên web trên máy tính/điện thoại.
 
+Trong ZIP/GitHub bàn giao, source điện thoại nằm ở **`apps/lumio-mobile`**, source laptop ở **`apps/lumio-desktop`**. Mở mỗi thư mục bằng một cửa sổ VS Code riêng. Flutter mới là source `0.4.0+4`; có Bản đồng bộ Web riêng trong Cài đặt, giữ metadata và cho sửa ghi chú; thư viện native cũ vẫn tách riêng.
+
+```sh
+cd apps/lumio-mobile
+flutter doctor
+flutter pub get
+flutter devices
+flutter run
+```
+
+Cần cài Flutter SDK và Android SDK, có emulator hoặc điện thoại Android bật gỡ lỗi USB. Chỉ chọn thiết bị do bạn sở hữu. Trong app, nhập backend HTTPS Lumio; trên web mở **Lumio trên điện thoại**, tự tạo mã ghép năm phút rồi nhập vào app. Không gửi mã ghép hoặc token cho người khác. Mã `.dart` bắt đầu ở `lib/main.dart`, UI ở `lib/ui`, HTTP và đồng bộ ở `lib/core`. `flutter analyze` và `flutter test` kiểm tra source; không thay cho chạy thử máy thật hoặc ký bản phát hành. Build iPhone cần môi trường macOS/Xcode và được thực hiện ở giai đoạn sau.
+
 ## 10. Lỗi thường gặp
 
 - Không thấy AI/đăng nhập: kiểm tra env phía server và công tắc quản trị; chưa cấu hình thì không có kết quả AI giả. Đọc thông báo và thử lại sau khi sửa đúng nguyên nhân.
