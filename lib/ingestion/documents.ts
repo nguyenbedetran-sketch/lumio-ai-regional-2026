@@ -1,5 +1,5 @@
 import { Worker } from "node:worker_threads";
-import { createRequire } from "node:module";
+import * as nodeModule from "node:module";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { getDocumentProxy } from "unpdf";
@@ -142,7 +142,11 @@ export async function extractDocument(
   if (!getDocumentProxy || !unzipSync || !Parser)
     throw new AIError("DOCUMENT_EXTRACTION_UNAVAILABLE", 503);
   signal?.throwIfAborted();
-  const resolver = createRequire(join(process.cwd(), "package.json"));
+  // Reflect.get keeps webpack from replacing a dynamic createRequire argument
+  // with undefined; the resolver must follow the deployed server's working dir.
+  const resolver = Reflect.get(nodeModule, "createRequire")(
+    join(process.cwd(), "package.json"),
+  ) as NodeRequire;
   return new Promise((resolve, reject) => {
     const worker = new Worker(WORKER, {
       eval: true,
