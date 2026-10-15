@@ -9,6 +9,8 @@ export type Permission =
   | "users.suspend"
   | "users.sessions.revoke"
   | "users.roles.update"
+  | "teachers.read"
+  | "teachers.review"
   | "audit_logs.read"
   | "ai.usage.read"
   | "features.read"

@@ -47,6 +47,7 @@ import {
   Compass,
   Wallet,
   Smartphone,
+  GraduationCap,
 } from "lucide-react";
 import { catalogs, languages, Locale, Messages } from "../../lib/lumio/i18n";
 import {
@@ -974,6 +975,11 @@ function Workspace({
               <ArrowUpRight size={14} />
             </a>
           )}
+          <a className="lm-nav-single" href="/teacher">
+            <GraduationCap size={17} />
+            {locale === "vi" ? "Dành cho giáo viên" : "For teachers"}
+            <ArrowUpRight size={14} />
+          </a>
           <div className="lm-local-card">
             <ShieldCheck size={18} />
             <div>

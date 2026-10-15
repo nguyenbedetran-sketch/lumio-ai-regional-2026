@@ -12,6 +12,8 @@ const systemGrants: Record<SystemRole, readonly Permission[]> = {
   DEV: ["admin.read", "ai.usage.read", "features.read", "system.read"],
   ADMIN: [
     "admin.read",
+    "teachers.read",
+    "teachers.review",
     "users.read",
     "users.suspend",
     "users.sessions.revoke",
@@ -22,6 +24,8 @@ const systemGrants: Record<SystemRole, readonly Permission[]> = {
   ],
   SUPER_ADMIN: [
     "admin.read",
+    "teachers.read",
+    "teachers.review",
     "users.read",
     "users.suspend",
     "users.sessions.revoke",

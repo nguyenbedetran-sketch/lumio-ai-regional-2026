@@ -5,7 +5,7 @@ import type { Actor } from "./types";
 export function adminSnapshot(actor: Actor) {
   const store = getStore();
   return {
-    actor: { id: actor.user.id, name: actor.user.name, role: actor.user.role },
+    actor: { id: actor.user.id, accountKey: actor.user.storageKey, name: actor.user.name, role: actor.user.role },
     permissions: permissionsFor(actor),
     dashboard: store.getDashboard(),
     users: can(actor, "users.read", { scope: "SYSTEM" })

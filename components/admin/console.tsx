@@ -15,6 +15,7 @@ import {
   Database,
   Fingerprint,
   Gauge,
+  GraduationCap,
   Layers3,
   LockKeyhole,
   RefreshCw,
@@ -28,8 +29,9 @@ import {
 } from "lucide-react";
 import type { AdminSnapshot } from "../../lib/server/admin-snapshot";
 import type { AuditEvent, AIUsageEvent, User } from "../../lib/server/types";
+import { TeacherReviewPanel } from "./teacher-review";
 
-type Tab = "overview" | "users" | "usage" | "flags" | "audit";
+type Tab = "overview" | "users" | "teachers" | "usage" | "flags" | "audit";
 const formatNumber = (n: number | null) =>
   n === null ? "—" : new Intl.NumberFormat("vi-VN").format(n);
 const date = (value: string) =>
@@ -114,7 +116,8 @@ export function AdminGate({ code }: { code: string }) {
 export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
   const [data, setData] = useState(initial),
     [tab, setTab] = useState<Tab>("overview"),
-    [busy, setBusy] = useState(false);
+    [busy, setBusy] = useState(false),
+    [teacherRefresh, setTeacherRefresh] = useState(0);
   const [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [query, setQuery] = useState("");
@@ -171,6 +174,12 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
         show: permitted("users.read"),
       },
       {
+        key: "teachers",
+        label: "Xét duyệt giáo viên",
+        icon: GraduationCap,
+        show: permitted("teachers.read"),
+      },
+      {
         key: "usage",
         label: "Hoạt động AI",
         icon: Sparkles,
@@ -210,6 +219,7 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
     setAuditOffset(0);
     setUsageOffset(0);
     setQuery("");
+    setTeacherRefresh((value) => value + 1);
   }
   async function changeAccess() {
     if (!confirm) return;
@@ -226,6 +236,21 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
     await refresh();
     setNotice("Đã cập nhật quyền truy cập và lưu nhật ký.");
   }
+  async function refreshTeacherAudit() {
+    try {
+      const next = await request<AdminSnapshot>("/api/admin");
+      setData(next);
+      setUsers(next.users);
+      setAudit(next.audit);
+      setUsage(next.usage);
+      setAuditOffset(0);
+      setUsageOffset(0);
+    } catch {
+      setError(
+        "Quyết định đã lưu; chưa tải lại được nhật ký. Hãy làm mới dữ liệu.",
+      );
+    }
+  }
   const { dashboard } = data,
     { users: counts, usage: metrics } = dashboard;
   const errorRate = metrics.requests
@@ -239,6 +264,10 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
     users: [
       "Con người phía sau mỗi lần học.",
       "Quản lý danh tính và quyền truy cập tài khoản.",
+    ],
+    teachers: [
+      "Đồng hành cùng người dạy.",
+      "Đối chiếu hồ sơ, ghi nhận quyết định và quản lý quyền giáo viên.",
     ],
     usage: [
       "Hiểu từng lượt sử dụng.",
@@ -267,7 +296,7 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
         <div className="ad-workspace">
           <span className="ad-environment-dot" />
           <div>
-            Local workspace<small>Môi trường kiểm tra</small>
+            Quản trị Lumio<small>Phiên được bảo vệ</small>
           </div>
           <LockKeyhole size={15} />
         </div>
@@ -640,6 +669,16 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                 }
               />
             </section>
+          )}
+          {tab === "teachers" && permitted("teachers.read") && (
+            <TeacherReviewPanel
+              key={data.actor.id + ":" + data.actor.accountKey}
+              actorId={data.actor.id}
+              accountKey={data.actor.accountKey}
+              canReview={permitted("teachers.review")}
+              refreshKey={teacherRefresh}
+              onReviewed={() => void refreshTeacherAudit()}
+            />
           )}
           {tab === "usage" && (
             <section className="ad-panel">
@@ -1077,6 +1116,11 @@ function AuditTable({ events }: { events: AuditEvent[] }) {
     USER_RESTORED: "Mở khóa tài khoản",
     USER_SESSIONS_REVOKED: "Thu hồi phiên",
     FEATURE_FLAG_CHANGED: "Đổi công tắc chức năng",
+    TEACHER_APPLICATION_SUBMITTED: "Gửi hồ sơ giáo viên",
+    TEACHER_APPLICATION_APPROVED: "Duyệt hồ sơ giáo viên",
+    TEACHER_APPLICATION_REJECTED: "Từ chối hồ sơ giáo viên",
+    TEACHER_CREDENTIAL_REVOKED: "Thu hồi quyền giáo viên",
+    TEACHER_REVIEW_DENIED: "Từ chối yêu cầu xét duyệt",
   };
   return (
     <div className="ad-audit-list">

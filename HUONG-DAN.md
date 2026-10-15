@@ -1,6 +1,6 @@
-# Mở code và dùng Lumio AI khu vực V2 + V3
+# Mở code và dùng Lumio AI khu vực V2 + V3.1
 
-Đây là hướng dẫn bản web dự thi AI26A0048. Kết quả public/GitHub/Drive/nộp bài xem trong [báo cáo cuối](docs/regional/FINAL-REPORT.md); tài liệu này không tự xác nhận đã deploy hoặc đã nộp. Báo cáo còn BẢN NHÁP nghĩa là trạng thái cuối chưa chốt.
+Đây là hướng dẫn source web **3.1.0-regional.1**, SQLite schema11, của đội AI26A0048. Bản này thêm hồ sơ/xét duyệt giáo viên trên nền V3. Kết quả public/GitHub/Drive/nộp bài xem trong [báo cáo cuối](docs/regional/FINAL-REPORT.md); tài liệu này không tự xác nhận đã deploy, duyệt thử giáo viên public hoặc đã nộp. Báo cáo còn BẢN NHÁP nghĩa là trạng thái cuối chưa chốt.
 
 ## 1. Mở và chạy trên laptop
 
@@ -26,6 +26,22 @@ Công cụ local dùng được không cần key. Google/Facebook và AI chỉ h
 Thư viện, file, ghi chú, quiz, lịch học/ôn và phản hồi lưu theo tài khoản trong trình duyệt. JSON không chứa PDF/ảnh/audio/video gốc hoặc tệp chuông riêng: giữ các tệp đó riêng. Nhập JSON không tăng ví credit hoặc cấp quyền server. Không xóa dữ liệu trình duyệt trước khi sao lưu.
 
 V3 có công cụ đồng bộ trong Cài đặt: chỉ gửi bản văn bản/ghi chú/thẻ/quiz/tiến độ/tùy chọn khi bạn bật đồng ý và thao tác. Đăng nhập không tự sync; bản máy chủ giữ tối đa 7 ngày và có thể mất sớm trên host miễn phí. Khi xung đột, xuất bản sao rồi chọn thay đổi cần giữ; không bấm ghi đè khi chưa hiểu bản nào mới. “Xóa bản máy chủ” không xóa thư viện cục bộ hoặc sổ credit. Tắt sync không xóa bản đã gửi.
+
+## Hồ sơ giáo viên - bổ sung V3.1
+
+1. Đăng nhập bằng Google/Facebook đã được cấu hình, mở **Dành cho giáo viên** trên thanh bên hoặc [http://localhost:3000/teacher](http://localhost:3000/teacher). Module này dùng tài khoản và SQLite hiện có, không cần thêm API key.
+2. Điền họ tên người giảng dạy; chọn quốc gia/vùng lãnh thổ; chọn tỉnh/thành rồi xã/phường ở Việt Nam, hoặc nhập khu vực tương đương ở nước khác. Danh mục tham khảo có phiên bản, không yêu cầu quận/huyện cũ. Nếu không tải được hoặc không tìm thấy, dùng **Nhập thủ công** và kiểm tra lại địa chỉ trường.
+3. Nhập trường/cơ sở, cấp dạy (có Mầm non), môn phân cách bằng dấu phẩy, tối đa 10 môn. Email công việc và link HTTPS công khai là tùy chọn. Không đưa căn cước, mật khẩu, ngày sinh hoặc thông tin học sinh vào đây.
+4. Xác nhận đang giảng dạy/thông tin đúng theo hiểu biết của mình và đồng ý lưu hồ sơ server để xét duyệt. Bấm **Gửi hồ sơ giáo viên**. Kết quả ban đầu là **Đang chờ duyệt**, không phải đã xác minh nghề nghiệp.
+5. Theo dõi trạng thái và ghi chú tại trang này. Có thể sửa khi đang chờ; bị từ chối hoặc thu hồi thì bổ sung rồi gửi lại. Khi đã được duyệt, muốn đổi bản khai cần quản trị viên thu hồi trước. Lỗi mạng giữ nội dung đang nhập trên trang; đừng đóng trang trước khi sao chép bản nháp. Nút tải trạng thái sẽ thay biểu mẫu bằng bản máy chủ theo thông báo.
+
+Người phụ trách thiết lập admin trong `.env.local` hoặc Environment hosting bằng `LUMIO_ADMIN_EMAILS`: email Google quản trị đã được dịch vụ xác minh. Khởi động lại server rồi đăng nhập lại; email công việc tự khai trong form không cấp quyền admin. Mở `/admin` → **Xét duyệt giáo viên**, lọc/tìm/mở hồ sơ, nhập lý do và duyệt/từ chối/thu hồi. Chỉ ADMIN/SUPER_ADMIN có quyền; DEV không đọc hồ sơ. Admin không được duyệt hồ sơ của chính mình. Nếu báo xung đột phiên bản, tải lại để xem bản mới trước quyết định.
+
+Quyền được cấp là **credential do admin xét bản khai**, không phải giấy xác minh danh tính/công tác chính thức. Nó không biến người dùng thành admin hoặc mở dữ liệu học sinh. **Lớp học, giao bài và phân tích học sinh chưa được xây dựng trong module này.** Danh mục địa phương hỗ trợ nhập liệu, không xác thực nơi công tác.
+
+Hồ sơ/credential giáo viên nằm riêng trên server, không trong JSON thư viện/sync. Hiện chưa tự hết hạn sau 7 ngày và chưa có nút/endpoint tự xóa hồ sơ này; xóa local/snapshot không xóa bản khai. Liên hệ người phụ trách dự án để xử lý dữ liệu tài khoản. Host miễn phí có thể mất hồ sơ/quyền khi DB reset. Xem [phạm vi backend](docs/v3/08-TEACHER-BACKEND.md), [danh mục tham khảo](docs/v3/09-LOCATION-DATA.md) và `/privacy`.
+
+Kiểm tra source3.1 có **600 PASS**; UI giáo viên admin **31 +3 SSR**, form **43 +4 SSR PASS** với dữ liệu tổng hợp trong browser riêng. Không phải hồ sơ giáo viên thật, OAuth thật hoặc xác nhận teacher public; trạng thái triển khai3.1 cần xem báo cáo cuối.
 
 ## 3. Học từ tài liệu
 
@@ -60,7 +76,7 @@ Trong Phòng giọng nói, chỉ thu sau khi chọn nguồn/cấp quyền; có n
 
 ## 7. Gói và credit - chưa thu tiền
 
-Free có 200 credit thử một lần/tài khoản server. Giá đề xuất: Plus 59.000đ/600 credit mỗi tháng; Premium 129.000đ/1.600; Pro 249.000đ/3.500; năm bằng 10 tháng. Gói thêm: 25.000đ/250, 59.000đ/700, 119.000đ/1.600. Đây là giá duyệt bản thi, chưa mở bán; nút thanh toán khóa, không tự nạp/gia hạn. Ví thực tế nằm riêng và không tăng khi xem gói.
+Free có 200 credit thử một lần/tài khoản server. Giá đề xuất đã chọn: Plus 59.000đ/600 credit mỗi tháng; Premium 129.000đ/1.600; Pro 249.000đ/3.500; năm bằng 10 tháng. Gói thêm: 25.000đ/250, 59.000đ/700, 119.000đ/1.600. Thanh toán thật **chủ động tắt** trong bản thi: chưa mở bán, nút thanh toán khóa, không tự nạp/gia hạn. Ví thực tế nằm riêng và không tăng khi xem gói.
 
 Trong chế độ khu vực, Free được mở thử các khả năng AI nâng cao khi đã cấu hình; vẫn kiểm tra tài khoản/credit/hạn mức. Ngoại lệ thử này không phải mua Plus/Premium/Pro. Yêu cầu lỗi hoàn phần credit đã giữ. Một video/bản đọc dài có nhiều yêu cầu, không phải một lần dùng cố định. [Bảng giá đề xuất](docs/regional/PRICING-PROPOSAL.md).
 
@@ -76,7 +92,9 @@ node scripts/start-regional.cjs
 
 Lệnh cuối cần origin HTTPS và đủ env server; không chạy như localhost HTTP thông thường. Dùng `render-regional.yaml`, không nhầm `render.yaml` UI-only cũ. Cấu hình trong [AI-SETUP.md](AI-SETUP.md). Root triển khai và kiểm tra URL thực tế riêng, không coi build local là public đã hoạt động.
 
-Render Free là host tạm: tài khoản, liên kết, credit, nhật ký, phiên gia sư, sync/chỉ mục và tác vụ có thể reset sau ngủ/restart/deploy; học liệu trình duyệt là kho riêng. Giới hạn AI: 15/phút, 150/ngày UTC và 1 đang chạy/tài khoản; bản khu vực thêm 200 lượt thử/ngày UTC và 3 đồng thời. V3 counter/lease nằm trong SQLite dùng chung; chỉ giữ qua restart khi tệp DB còn, không tự dùng chung nhiều máy có ổ riêng. Không nhập thông tin quan trọng chỉ giữ duy nhất trên bản thi.
+Render Free là host tạm: tài khoản, liên kết, credit, nhật ký, phiên gia sư, sync/chỉ mục, tác vụ và hồ sơ/quyền giáo viên có thể reset sau ngủ/restart/deploy; học liệu trình duyệt là kho riêng. Giới hạn AI: 15/phút, 150/ngày UTC và 1 đang chạy/tài khoản; bản khu vực thêm 200 lượt thử/ngày UTC và 3 đồng thời. V3 counter/lease nằm trong SQLite dùng chung; chỉ giữ qua restart khi tệp DB còn, không tự dùng chung nhiều máy có ổ riêng. Không nhập thông tin quan trọng chỉ giữ duy nhất trên bản thi.
+
+Source3.1 cần migration11 và ba bảng giáo viên; quá trình khởi tạo store tự chạy migration, giữ người dùng/role và snapshot trước đó. Khởi động lại Node sau khi nâng source; không sửa/xóa lịch sử migration. `/api/health` cần báo đúng version, nhưng health không chứng minh AI hoặc teacher public đã thử thành công. Backup/restore theo [hướng dẫn vận hành](docs/v3/05-OPERATIONS-AND-SYNC.md); không đưa DB riêng lên GitHub.
 
 ## 9. Android/Dart và Windows
 
@@ -100,6 +118,7 @@ Cần cài Flutter SDK và Android SDK, có emulator hoặc điện thoại Andr
 - Báo quota/credit: xem ví và hạn mức; đổi mode không né được bảo vệ. Không bấm lặp nhiều yêu cầu khi một lần đang chạy.
 - Cổng 3000 bận: dùng server đã mở hoặc dừng đúng server của bạn; không mở nhiều phiên cùng cổng.
 - Xung đột nhiều tab: xuất bản nháp trước, rồi tải bản đã lưu; không ghi đè dữ liệu tab khác.
+- Hồ sơ giáo viên không gửi được: xác nhận đúng tài khoản và hai ô khai báo; kiểm tra thông báo trường/email/link HTTPS. Nếu phiên đổi/hết hạn, đăng nhập lại. Nếu lỗi backend sau nâng cấp, dừng và khởi động lại Node để store chạy migration11; không bật admin giả hoặc sửa DB từ trình duyệt.
 - Báo public chưa sẵn sàng: xem báo cáo cuối/khởi động hosting; không lấy tài liệu lịch sử 1.x làm xác nhận 2.0.
 
 Xem [README](README.md), [AI và OAuth](AI-SETUP.md), [nghiệm thu](docs/regional/FINAL-REPORT.md), [quyền riêng tư khi web đang chạy](http://localhost:3000/privacy) và [thử nghiệm tự nguyện chưa thực hiện](docs/regional/STUDENT-PILOT.md).

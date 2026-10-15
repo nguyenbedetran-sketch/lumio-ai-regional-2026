@@ -1,6 +1,6 @@
-# Lumio AI - Bản khu vực AI26A0048, nâng cấp V2 + V3
+# Lumio AI - Bản khu vực AI26A0048, V2 + V3.1
 
-Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Web được nâng từ baseline V2 lên các module V3 có giới hạn; version chính xác xem `package.json`, bằng chứng xem `docs/regional` và `docs/v3`. Các tệp cài Android 0.3/Windows 0.1 trước đó **không tự được cập nhật khi source thay đổi**, chưa có xác nhận APK/EXE hoặc thiết bị thật cho đợt này.
+Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Source web hiện tại **3.1.0-regional.1**, SQLite migration **1–11**; V3.1 thêm hồ sơ và xét duyệt giáo viên trên các module V3 có giới hạn. Bằng chứng xem `docs/regional` và `docs/v3`. Các tệp cài Android 0.3/Windows 0.1 trước đó **không tự được cập nhật khi source thay đổi**, chưa có xác nhận APK/EXE hoặc thiết bị thật cho đợt này.
 
 Bản thi dùng hosting miễn phí, hạn mức và database tạm; chưa phải dịch vụ lưu trữ production. Có code không đồng nghĩa AI đã cấu hình, đã deploy hoặc đã nộp bài. Xem [báo cáo khu vực](docs/regional/FINAL-REPORT.md); nếu còn BẢN NHÁP thì trạng thái cuối chưa chốt.
 
@@ -26,19 +26,31 @@ Repository/ZIP không chứa `.env.local`, API/OAuth secret, `.data`, database, 
 - Quiz có giải thích, chủ đề, độ khó và nguồn; chặn lựa chọn/câu hỏi trùng. Thẻ hiện nguồn sau khi lật. Kiểm tra cấu trúc/nguồn không chứng minh mọi nội dung AI đều đúng.
 - Đề xuất tách sở thích với kết quả quiz/câu sai theo chủ đề/lịch ôn; chọn chủ đề, độ khó, mục tiêu; đa dạng hóa và có lý do bằng số liệu. Xử lý trên thiết bị; có tắt/xóa phản hồi, tự đánh giá sau học riêng với lượt mở.
 - Thông báo dữ liệu trước yêu cầu AI, `/privacy`, `/data-deletion` và xóa phiên gia sư chính chủ. Không gửi key tới trình duyệt hoặc ghi toàn học liệu/hội thoại vào log vận hành.
-- Bảng giá **đề xuất**: Free 0đ/200 credit một lần; Plus 59.000đ/600 credit mỗi tháng, Premium 129.000đ/1.600, Pro 249.000đ/3.500. Năm dự kiến bằng 10 tháng. Có gói bổ sung minh họa; checkout khóa, không thu tiền hoặc cấp credit trả phí. [Chi tiết](docs/regional/PRICING-PROPOSAL.md).
+- Bảng giá **đề xuất đã chọn cho bản thi**: Free 0đ/200 credit một lần; Plus 59.000đ/600 credit mỗi tháng, Premium 129.000đ/1.600, Pro 249.000đ/3.500. Năm dự kiến bằng 10 tháng. Có gói bổ sung minh họa; thanh toán thật **chủ động tắt**. Checkout không thu tiền hoặc cấp credit trả phí. [Chi tiết](docs/regional/PRICING-PROPOSAL.md).
 
 V3 bổ sung hồ sơ bằng chứng kỹ năng cục bộ, graph Toán nhỏ có tiên quyết khai báo, đề xuất theo lỗi/giãn cách/nhãn khó và mức bất định; một câu đúng không được coi thành thạo. Xem [phạm vi và kiểm thử](docs/v3/03-LEARNING-INTELLIGENCE.md). Trong Cài đặt có bản đồng bộ văn bản chủ động và chỉ mục tra cứu nhiều học liệu; không tự tải cả thư viện khi đăng nhập. Embedding ra ngoài mặc định tắt, cần cấu hình và đồng ý riêng. Tóm tắt chạy nền là đường riêng có consent: tối đa 120.000 ký tự hoặc 2 giờ YouTube /12 phần, lưu tiến độ trên server, có hủy/xóa; preview miễn phí không bảo đảm chạy liên tục. Các phần V3 không tự được tính PASS chỉ vì có source; xem báo cáo module và nghiệm thu cuối.
 
 Giữ source các chức năng trước: tóm tắt toàn bộ nguồn/video theo từng phần, chương/sơ đồ tư duy, đọc tiếng dài từng phần, thu âm cuộc họp có cấp quyền, focus có chuông, thống kê hoạt động, sáng/tối/5 ngôn ngữ/mobile, quản trị và liên kết Google/Facebook. Xem [tóm tắt](docs/WHOLE-MEDIA-SUMMARY.md), [đọc tiếng](docs/READ-ALOUD.md), [thu âm](docs/MEETING-CAPTURE.md). Không mặc nhiên coi mọi phần cứng đã được kiểm tra lại.
 
+## Hồ sơ và xét duyệt giáo viên
+
+Sau đăng nhập, mở **Dành cho giáo viên** trên thanh bên hoặc `/teacher`. Điền tên khai báo, quốc gia/vùng lãnh thổ, tỉnh/thành, xã/phường, trường, cấp dạy và môn; xác nhận thông tin và đồng ý lưu. Có Mầm non; email công việc và link HTTPS là tùy chọn. Việt Nam dùng danh mục local có phiên bản và cho nhập tay khi cần; nước khác dùng tên địa phương khai tay. Không yêu cầu căn cước, ngày sinh hoặc dữ liệu học sinh.
+
+Hồ sơ gửi lên luôn **chờ duyệt**. `/admin` → **Xét duyệt giáo viên** dành cho `ADMIN`/`SUPER_ADMIN`, có lọc/tìm/sắp xếp và ghi lý do trước duyệt/từ chối/thu hồi. `DEV` không xem hồ sơ này. Người phụ trách cấu hình `LUMIO_ADMIN_EMAILS` riêng ở server bằng email Google quản trị đã xác minh rồi đăng nhập lại; không nhập quyền admin từ trình duyệt. Admin không tự duyệt hồ sơ của mình. Không cần key hay dịch vụ xác minh trả phí mới cho module này.
+
+Quyền giáo viên là credential riêng do admin xét **bản khai**, không phải xác minh danh tính/công tác chính thức; API luôn trả `identityVerified:false`. Nó không đổi USER thành ADMIN, không tạo tổ chức hoặc quyền đọc dữ liệu học sinh. **Lớp học, giao bài và phân tích học sinh chưa triển khai.**
+
+Hồ sơ/credential giáo viên không nằm trong sync/thư viện local và **không tự hết hạn sau bảy ngày, chưa có endpoint tự xóa hồ sơ**. Xóa dữ liệu trình duyệt/snapshot không xóa bản khai server; liên hệ người phụ trách dự án để xử lý. DB và backup có thể chứa thông tin khai báo riêng, không đưa vào GitHub/minh chứng. Render Free có thể mất cả hồ sơ và quyền. [Backend/27 kiểm tra](docs/v3/08-TEACHER-BACKEND.md) · [Nguồn danh mục](docs/v3/09-LOCATION-DATA.md).
+
+UI local, public teacher và một hồ sơ giáo viên thật là các loại kiểm chứng riêng. Không suy ra feature public đã được duyệt thử chỉ vì có source hoặc API tests; xem báo cáo release mới nhất.
+
 ## Chọn đúng chế độ
 
-| Chế độ | Lệnh/cấu hình | Phạm vi |
-| --- | --- | --- |
-| Phát triển local | `pnpm dev` | Học liệu local; AI/OAuth cần env riêng; database server local |
-| Public UI-only cũ | `render.yaml`, `node scripts/start-public-demo.cjs` | Tắt AI/tài khoản/database; không phải bằng chứng AI thật |
-| Khu vực có AI | `render-regional.yaml`, `node scripts/start-regional.cjs` sau build | AI thật qua tài khoản/credit; SQLite tạm có thể reset |
+| Chế độ            | Lệnh/cấu hình                                                       | Phạm vi                                                       |
+| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Phát triển local  | `pnpm dev`                                                          | Học liệu local; AI/OAuth cần env riêng; database server local |
+| Public UI-only cũ | `render.yaml`, `node scripts/start-public-demo.cjs`                 | Tắt AI/tài khoản/database; không phải bằng chứng AI thật      |
+| Khu vực có AI     | `render-regional.yaml`, `node scripts/start-regional.cjs` sau build | AI thật qua tài khoản/credit; SQLite tạm có thể reset         |
 
 ```sh
 pnpm install --frozen-lockfile
@@ -50,7 +62,9 @@ Lệnh cuối cần origin **HTTPS hợp lệ**, `LUMIO_COMPETITION_PREVIEW=true
 
 Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang chạy/tài khoản. Chế độ khu vực thêm **200 lượt thử AI/ngày UTC và 3 đồng thời**. V3 lưu cửa sổ/lease vào SQLite: các process phải dùng chung đúng tệp DB; không bảo đảm nhiều máy có ổ riêng. Restart giữ counter nếu tệp DB còn; hosting reset DB thì counter cũng reset. Không phải ngân sách tiền tuyệt đối. Credit được kiểm tra trước khi gọi, lỗi hoàn phần giữ. Hosting miễn phí không làm API AI miễn phí.
 
-Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục và hàng đợi có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
+Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục, hàng đợi và hồ sơ/quyền giáo viên có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Quy tắc này không áp dụng cho bản khai/credential giáo viên hoặc nhật ký tài khoản. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
+
+Migration chạy khi khởi tạo store; sau cập nhật 3.1 hãy khởi động lại Node. `/api/health` kiểm tra schema11/bảng cần thiết và trả version, không xác nhận AI hay hồ sơ giáo viên thật. Công cụ backup [operations](docs/v3/05-OPERATIONS-AND-SYNC.md) cũng yêu cầu schema11; không xóa migration history để chạy build cũ.
 
 ## Kiểm tra và minh chứng
 
@@ -66,9 +80,17 @@ pnpm test:regional-learning
 node tests/skill-evidence.cjs
 node scripts/test-ui.cjs --v3-learning
 node scripts/test-ui.cjs --v3-rag
+node scripts/test-ui.cjs --v3-sync
+node tests/teacher-api.cjs
+pnpm test:teacher-self
+pnpm test:teacher-admin
 ```
 
 Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoại AI thật local có báo cáo riêng, không thay OAuth/public hoặc kết quả học sinh. `pnpm services:check` gọi dịch vụ thật và có thể tính phí; không chạy lặp tự động. Kiểm tra bộ đề không bảo đảm mọi câu AI đều đúng. Thiết bị/micro/Zoom thật cần kiểm tra riêng.
+
+Hai lệnh UI giáo viên mở profile Edge riêng, dùng React/CSS của sản phẩm cùng hồ sơ/tài khoản/HTTP tổng hợp; không đăng nhập tài khoản thật hoặc cấp quyền giáo viên thật. `teacher-api.cjs` kiểm tra handler/quyền và SQLite tạm. `--v3-sync` kiểm tra DOM/IndexedDB/offline thật với HTTP fixture; không thay thử hai thiết bị hay sync public.
+
+Đợt source3.1 đã chạy `pnpm test` **600 kiểm tra PASS**; UI chạy riêng: admin giáo viên **31 +3 SSR**, form giáo viên **43 +4 SSR PASS**. [Report admin](docs/v3/qa-teacher-admin-report.json) · [Report form](docs/v3/qa-teacher-self-report.json) · [Bàn giao](docs/v3/00-HANDOFF.md). Không cộng các con số thành số người dùng hoặc tỷ lệ đúng AI; public3.1/teacher vẫn cần kết quả riêng sau triển khai.
 
 - [Kiểm tra ban đầu](docs/regional/01-INITIAL-AUDIT.md) · [Nghiệm thu](docs/regional/FINAL-REPORT.md)
 - [Cá nhân hóa/privacy/giá và UI](docs/regional/LEARNING-PRIVACY-VERIFICATION.md) · [Định vị có nguồn](docs/regional/PRODUCT-POSITIONING.md)
@@ -78,6 +100,6 @@ Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoạ
 
 ## Cấu trúc
 
-`app/`: trang/API; `components/lumio/`: giao diện; `components/admin/`: quản trị; `lib/tutor/`: chính sách/Toán; `lib/ai/`: router/grounding/contracts; `lib/ingestion/`: trích xuất; `lib/server/`: tài khoản/quyền/SQLite/credit/phiên; `lib/lumio/`: dữ liệu/i18n/logic học; `tests/`: kiểm tra; `docs/regional/`: minh chứng.
+`app/`: trang/API; `components/lumio/`: giao diện; `components/admin/`: quản trị/xét duyệt; `components/teachers/`: hồ sơ giáo viên; `lib/teachers/`: hợp đồng/danh mục; `lib/tutor/`: chính sách/Toán; `lib/ai/`: router/grounding/contracts; `lib/ingestion/`: trích xuất; `lib/server/`: tài khoản/quyền/SQLite/credit/phiên; `lib/lumio/`: dữ liệu/i18n/logic học; `tests/`: kiểm tra; `docs/regional/` và `docs/v3/`: minh chứng.
 
 Không dùng DeepSeek. Tên dịch vụ chỉ xuất hiện trong thiết lập/chính sách/quản trị kỹ thuật; công cụ học mang tên Lumio. Danh sách plugin hoặc schema tham khảo không đồng nghĩa mọi dịch vụ đã kết nối.

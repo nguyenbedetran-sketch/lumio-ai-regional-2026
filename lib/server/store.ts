@@ -11,6 +11,7 @@ import { createTutorStore } from "./tutor-core";
 import { createRuntimeV3Store } from "./runtime-v3-core";
 import { createRagStore } from "./rag-core";
 import { createSummaryJobStore } from "./job-core";
+import { createTeacherStore } from "./teacher-core";
 import { isPublicDemo } from "./public-demo";
 import { isCompetitionPreview } from "./competition-preview";
 import type {
@@ -680,6 +681,7 @@ export function createStore(
     ...createRuntimeV3Store({ db, now, stamp, transaction, getUser }),
     ...createRagStore({ db, now, stamp, transaction, getUser }),
     ...createSummaryJobStore({ db, now, stamp, transaction, getUser }),
+    ...createTeacherStore({ db, now, stamp, transaction, getUser, getMemberships, recordAudit }),
     close: () => db.close(),
     getUser,
     getUserByStorageKey,

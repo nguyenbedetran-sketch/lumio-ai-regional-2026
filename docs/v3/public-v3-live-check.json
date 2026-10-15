@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-15T07:43:00Z",
+  "url": "https://lumio-ai-demo.onrender.com/",
+  "version": "3.0.0-regional.1",
+  "deployedCommit": "28fbcdc67d22f2cb712b6a5451353fddca00d3ec",
+  "status": "PASS_WITH_LIMITS",
+  "scope": "Observed authenticated Chrome UI on actual Render Linux deployment, using two short authored mathematics fixtures. Not synthetic transport, not a student pilot or a general model accuracy benchmark.",
+  "checks": [
+    "Actual Google OAuth sign-in completed after a fresh retry; an earlier stale attempt returned AccessDenied.",
+    "Uploaded a valid authored two-page Vietnamese PDF; actual Linux document worker extracted 482 characters with page locations.",
+    "Indexed the authored text fixture (562 characters, five chunks) and the PDF fixture (two chunks), each revision1.",
+    "After separate external-AI consent, two real document embedding calls succeeded; both indexed documents displayed lexical plus semantic status.",
+    "A real hybrid query returned six excerpts from both documents, including the PDF page1 and page2 locations.",
+    "A tutor session selected both indexed documents and separate semantic-query consent. The source snapshot remained fixed across four tutor turns.",
+    "Observed server hint progress 0 to1 to2 to3; full solution stayed locked before3 valid hints and became available after3.",
+    "After the intentionally wrong learner result x=6, the tutor identified the division mistake and asked the learner to recompute or substitute, without supplying the final numeric answer in that hint.",
+    "Requested the full solution after the gate: x=5, with 3x=15, division by nonzero3 and substitution 3*5-6=9.",
+    "Citations displayed exact authored PDF quotes on pages1/2 and authored text paragraphs. Opened page2 quote matched the supplied text."
+  ],
+  "observedProviderRequests": { "documentEmbeddings": 2, "standaloneQueryEmbedding": 1, "tutorSnapshotQueryEmbedding": 1, "tutor": 4 },
+  "limits": [
+    "One short exercise and two tiny authored sources cannot establish general educational accuracy or production capacity.",
+    "The first tutor question contained free prose around the equation. The deliberately strict independent equation parser marked this case not supported; UI did not show a false verified badge. Mathematical answer was manually checked separately.",
+    "Hint2/3 repeated some wording between feedback and hint; pedagogy remains partial and has no independent teacher review.",
+    "A matching source quote does not prove the model's conclusion or every reasoning step.",
+    "Teacher addition3.1 was not deployed during this observation. Public teacher review is evaluated separately.",
+    "No real student outcomes, physical mobile device, realtime microphone, Facebook review or real payments were tested here."
+  ],
+  "screenshots": ["02_MinhChung_UI/Public-PDF-extracted.jpg", "02_MinhChung_UI/Public-RAG-hybrid-results.jpg", "02_MinhChung_UI/Public-RAG-tutor-citation.jpg"]
+}

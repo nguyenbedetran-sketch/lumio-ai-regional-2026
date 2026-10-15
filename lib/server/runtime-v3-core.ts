@@ -254,10 +254,13 @@ export function createRuntimeV3Store({
       "rag_snapshots",
       "summary_jobs",
       "summary_job_parts",
+      "teacher_applications",
+      "teacher_credentials",
+      "teacher_application_operations",
     ]) {
       db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
     }
-    return { ready: version === 10, schemaVersion: version };
+    return { ready: version === 11, schemaVersion: version };
   }
   return {
     acquireRuntimeAILease,

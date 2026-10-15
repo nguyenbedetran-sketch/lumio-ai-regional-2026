@@ -42,6 +42,27 @@ export default function PrivacyPage() {
         </p>
       </section>
       <section>
+        <h2>Hồ sơ đăng ký giáo viên</h2>
+        <p>
+          Khi chủ động đăng ký, bạn gửi tên tự khai, quốc gia, tỉnh/thành,
+          xã/phường hoặc khu vực tương đương, trường, cấp và môn dạy tới máy chủ
+          Lumio. Email công việc và liên kết công khai là tùy chọn. Hồ sơ chỉ
+          hiển thị cho chính tài khoản đó và quản trị viên có quyền xét duyệt;
+          không gửi tới dịch vụ AI. Không cung cấp căn cước, mật khẩu hoặc dữ
+          liệu học sinh trong biểu mẫu.
+        </p>
+        <p>
+          Việc duyệt hồ sơ là đánh giá thủ công trên thông tin tự khai, không
+          phải xác minh danh tính hay chứng nhận đang công tác tại trường.
+          Quyền giáo viên có thể bị thu hồi, không tự cấp quyền quản trị hoặc
+          truy cập dữ liệu học sinh. Hồ sơ, kết quả và thao tác xét duyệt lưu
+          riêng trong cơ sở dữ liệu; không áp dụng thời hạn bảy ngày của bản
+          đồng bộ học tập. Bản hiện tại chưa có nút tự xóa hồ sơ giáo viên;
+          xóa dữ liệu học trên trình duyệt không xóa hồ sơ này. Trên hosting
+          miễn phí, dữ liệu vẫn có thể mất khi dịch vụ được tạo lại.
+        </p>
+      </section>
+      <section>
         <h2>2. Thư viện và quá trình học</h2>
         <p>
           Tài liệu bạn thêm, tệp đính kèm, ghi chú, thẻ ghi nhớ và kết quả bài

@@ -1,0 +1,11 @@
+{
+  "version": "i18n-iso-countries@7.14.0",
+  "sourceUrl": "https://registry.npmjs.org/i18n-iso-countries/-/i18n-iso-countries-7.14.0.tgz",
+  "sourceRepository": "https://github.com/michaelwittig/node-i18n-iso-countries",
+  "archiveIntegrity": "sha512-nXHJZYtNrfsi1UQbyRqm3Gou431elgLjKl//CYlnBGt5aTWdRPH1PiS2T/p/n8Q8LnqYqzQJik3Q7mkwvLokeg==",
+  "archiveSha256": "bb418ebfb965789fcfbcce7dee59888d901ef64b03601da78b2e224cd6f5825c",
+  "license": "MIT",
+  "licensePath": "/data/licenses/i18n-iso-countries-MIT.txt",
+  "count": 249,
+  "scope": "ISO3166-1 alpha2 form assistance labels; source XK extension excluded; not identity, citizenship or teacher verification. Includes territories as well as countries."
+}
