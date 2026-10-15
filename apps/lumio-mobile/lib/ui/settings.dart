@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../core/models.dart';
 import '../core/motion.dart';
 import 'common.dart';
+import 'web_sync.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -197,8 +198,8 @@ class _SettingsPageState extends State<SettingsPage> {
           SectionTitle(
             context.tr('Kết nối tài khoản', 'Account connection'),
             subtitle: context.tr(
-              'Thư viện vẫn lưu trên thiết bị; đăng nhập chưa đồng bộ với web.',
-              'Library stays on this device; signing in does not sync it with the web.',
+              'Thư viện native vẫn riêng. Bản đồng bộ Web bên dưới cần bạn chủ động chọn.',
+              'The native library stays separate. The Web snapshot below is explicitly opt-in.',
             ),
           ),
           if (store.session != null)
@@ -409,6 +410,8 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
           ),
           SectionTitle(context.tr('Dữ liệu của bạn', 'Your data')),
+          WebSyncCard(store: store),
+          const SizedBox(height: 16),
           Surface(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,

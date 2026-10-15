@@ -39,6 +39,48 @@ export default function DataDeletionPage() {
         </p>
       </section>
       <section>
+        <h2>1a. Snapshot kỹ năng, bản đồng bộ và chỉ mục nguồn</h2>
+        <p>
+          Trong Đề xuất cho bạn, “Xóa snapshot kỹ năng” chỉ bỏ dữ liệu snapshot
+          dùng để tổng hợp bằng chứng kỹ năng khỏi thư viện của tài khoản trên
+          thiết bị này. Điểm quiz, đáp án đã chọn và học liệu vẫn còn. Tắt tính
+          hồ sơ không xóa snapshot; lần luyện mới có thể tạo bản ghi mới. Muốn
+          xóa cả kết quả gốc, hãy xóa học liệu liên quan hoặc dữ liệu trang web.
+          Những bản xuất/đồng bộ ở nơi khác cần được xử lý riêng.
+        </p>
+        <p>
+          Xóa thư viện cục bộ không tự xóa bản đồng bộ văn bản hoặc những học
+          liệu đã lập chỉ mục để tra cứu. Công cụ tra cứu cho phép xóa từng tài
+          liệu khỏi chỉ mục cùng các đoạn/vector liên quan; bản gốc trên thiết
+          bị vẫn giữ. Trong Cài đặt, công cụ đồng bộ có nút “Xóa bản máy chủ”:
+          nút này xóa bản đồng bộ và dấu vết thao tác chống trùng của tài khoản,
+          không xóa tài khoản, phiên gia sư hay sổ credit. Thiết bị khác phải
+          đối chiếu lại trước khi gửi dữ liệu. Tắt đồng bộ hoặc đăng xuất không
+          tự xóa bản máy chủ; yêu cầu xử lý dữ liệu khác theo hướng dẫn bên
+          dưới.
+        </p>
+        <p>
+          Bản đồng bộ có hạn 7 ngày từ lần ghi gần nhất; chỉ mục và snapshot
+          truy xuất có thời hạn 7 ngày. Hết hạn được kiểm tra/dọn khi truy cập,
+          chưa có lịch dọn nền. Máy chủ preview có thể reset sớm hơn; mất dữ
+          liệu tạm không phải quy trình xóa có xác nhận. Xóa bản trên server
+          không xóa tệp tải về, bản xuất hay bản còn trong trình duyệt/thiết bị
+          khác. Dữ liệu đã gửi cho dịch vụ AI phải xét chính sách của họ riêng.
+        </p>
+      </section>
+      <section>
+        <h2>1b. Tác vụ tóm tắt chạy nền</h2>
+        <p>
+          Trong bảng Tóm tắt chạy nền, chọn Hủy để ngừng xử lý tiếp, rồi dùng
+          Xóa với tác vụ đã dừng/hoàn tất để bỏ nội dung đầu vào, tiến độ và các
+          kết quả từng phần trên máy chủ. Xóa tác vụ không xóa bản tóm tắt bạn
+          đã lưu vào thư viện hoặc tải xuống. Yêu cầu AI đang gửi có thể đã được
+          dịch vụ bên ngoài tiếp nhận; thao tác không thu hồi nội dung khỏi nhà
+          cung cấp. Các tác vụ hết hiệu lực sau tối đa 7 ngày, dọn khi truy
+          cập/worker bảo trì; máy chủ preview có thể mất dữ liệu sớm hơn.
+        </p>
+      </section>
+      <section>
         <h2>2a. Xóa phiên gia sư trên máy chủ</h2>
         <p>
           Công cụ quản lý phiên gia sư cho phép tài khoản đang đăng nhập xem và

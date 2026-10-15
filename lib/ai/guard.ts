@@ -1,17 +1,46 @@
 import { getServerSession } from "next-auth";
 import { authOptions, providerStatus } from "../lumio/auth";
 import { AIError } from "./contracts";
-import { getUser, isFeatureEnabled } from "../server/store";
+import { getUser, getStore, isFeatureEnabled } from "../server/store";
 import { assertSameOrigin } from "../server/access";
 import { PlatformError } from "../server/types";
 import { requireMobile } from "../server/mobile-access";
 import { isDesktopPreview } from "../server/desktop-mode";
-import { acquireCompetitionQuota } from "../server/competition-preview";
-const limits = new Map<
-  string,
-  { minute: number; count: number; day: string; daily: number; active: number }
->();
+import { isCompetitionPreview } from "../server/competition-preview";
 export type AILease = (() => void) & { userId: string; sessionVersion: number };
+/** Server-only continuation of a persisted owned job. No HTTP credential or public bypass. */
+export function authorizeStoredAI(
+  userId: string,
+  sessionVersion: number,
+  voice = false,
+): AILease {
+  if (
+    isDesktopPreview() ||
+    process.env.LUMIO_AI_ENABLED !== "true" ||
+    !isFeatureEnabled("ai.enabled") ||
+    (voice && !isFeatureEnabled("ai.voice"))
+  )
+    throw new AIError("AI_DISABLED", 503);
+  const store = getStore(),
+    user = store.getUser(userId);
+  if (!user || user.disabled || user.sessionVersion !== sessionVersion)
+    throw new AIError("SESSION_REVOKED", 401);
+  const leaseId = store.acquireRuntimeAILease(
+    userId,
+    sessionVersion,
+    isCompetitionPreview(),
+  );
+  let released = false;
+  const release: AILease = () => {
+    if (!released) {
+      released = true;
+      store.releaseRuntimeAILease(leaseId);
+    }
+  };
+  release.userId = userId;
+  release.sessionVersion = sessionVersion;
+  return release;
+}
 export async function authorizeAI(
   req: Request,
   voice = false,
@@ -58,40 +87,10 @@ export async function authorizeAI(
   }
   // Every paid provider call must belong to a canonical account and credit ledger.
   if (!principal || !userId) throw new AIError("SIGN_IN_REQUIRED", 401);
-  const now = Date.now(),
-    day = new Date().toISOString().slice(0, 10);
-  if (limits.size > 1000)
-    for (const [key, value] of limits)
-      if (value.day !== day && value.active === 0) limits.delete(key);
-  const limit = limits.get(principal) || {
-    minute: now,
-    count: 0,
-    day,
-    daily: 0,
-    active: 0,
-  };
-  if (now - limit.minute > 60000) {
-    limit.minute = now;
-    limit.count = 0;
-  }
-  if (limit.day !== day) {
-    limit.day = day;
-    limit.daily = 0;
-  }
-  if (limit.count >= 15 || limit.daily >= 150 || limit.active >= 1)
-    throw new AIError("LOCAL_RATE_LIMIT", 429);
-  const releaseCompetition = acquireCompetitionQuota();
-  limit.count++;
-  limit.daily++;
-  limit.active++;
-  limits.set(principal, limit);
-  const release: AILease = () => {
-    releaseCompetition();
-    limit.active = Math.max(0, limit.active - 1);
-  };
-  release.userId = userId;
-  release.sessionVersion = sessionVersion;
-  return release;
+  // Transactional SQLite counters coordinate processes sharing this database.
+  // Separate machines still require a shared durable backend; free-host resets
+  // remain explicitly disclosed by the competition preview.
+  return authorizeStoredAI(userId, sessionVersion, voice);
 }
 export async function boundedBytes(
   req: Pick<Request, "body" | "headers">,

@@ -85,6 +85,7 @@ const vi = {
     quiz: "Tạo bài kiểm tra",
     speech: "Đọc văn bản",
     transcription: "Chép lời âm thanh",
+    index: "Vector nguồn / tìm ngữ nghĩa",
   },
   modeLabels: {
     quick: "Trả lời nhanh",
@@ -187,6 +188,7 @@ const en: Copy = {
     quiz: "Create a quiz",
     speech: "Read text aloud",
     transcription: "Transcribe audio",
+    index: "Source vectors / semantic search",
   },
   modeLabels: {
     quick: "Quick answer",
@@ -211,6 +213,7 @@ const zh: Copy = {
     quiz: "生成测验",
     speech: "朗读文字",
     transcription: "转写音频",
+    index: "来源向量 / 语义搜索",
   },
   modeLabels: {
     quick: "快速回答",
@@ -276,6 +279,7 @@ const ja: Copy = {
     quiz: "クイズを作成",
     speech: "文章を読み上げ",
     transcription: "音声を文字起こし",
+    index: "資料ベクトル / 意味検索",
   },
   modeLabels: {
     quick: "素早い回答",
@@ -341,6 +345,7 @@ const ko: Copy = {
     quiz: "퀴즈 만들기",
     speech: "텍스트 읽기",
     transcription: "음성 받아쓰기",
+    index: "자료 벡터 / 의미 검색",
   },
   modeLabels: {
     quick: "빠른 답변",

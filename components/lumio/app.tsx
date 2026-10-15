@@ -93,6 +93,12 @@ import { BillingPanel } from "./billing";
 import { billingCopy } from "../../lib/lumio/billing-copy";
 import { publicDemoCopy } from "../../lib/lumio/public-demo-copy";
 import { competitionCopy } from "../../lib/lumio/competition-copy";
+import { stripSkillEvidence } from "../../lib/lumio/skill-evidence";
+import { SyncPanel } from "./sync-panel";
+import { RAGManager } from "./rag-manager";
+import { normalizeSyncEnvelope, type SyncEnvelope } from "../../lib/sync/contracts";
+import { learningKey } from "../../lib/lumio/learning-engine";
+import { preferenceKey } from "../../lib/lumio/recommendations";
 const libraryConflictCopy = {
   vi: {
     title: "Thư viện đã thay đổi ở tab khác",
@@ -465,6 +471,16 @@ function Workspace({
     motion.mode,
   );
   const personalization = usePersonalization(profile.account);
+  const syncLocalSnapshot = useRef({
+    account: profile.account,
+    learning: learning.state,
+    preferences: personalization.state,
+  });
+  syncLocalSnapshot.current = {
+    account: profile.account,
+    learning: learning.state,
+    preferences: personalization.state,
+  };
   const lc = learningCopy[locale],
     conflictCopy = libraryConflictCopy[locale];
   const [isAdmin, setIsAdmin] = useState(false);
@@ -1219,6 +1235,7 @@ function Workspace({
               update={personalization.update}
               open={open}
               storageError={personalization.error}
+              onClearSkillEvidence={() => commit({...data,items:stripSkillEvidence(data.items)},data)}
             />
           ) : view === "billing" ? (
             <BillingPanel
@@ -1337,6 +1354,105 @@ function Workspace({
                 </section>
                 <div>
                   <AccountConnections locale={locale} />
+                  <SyncPanel
+                    key={`sync:${profile.account}`}
+                    account={profile.account}
+                    locale={locale}
+                    disabled={libraryConflict || status !== "saved" || !learning.ready || !!learning.error || personalization.error}
+                    value={{version:1,library:data,learning:learning.state,preferences:personalization.state}}
+                    onApply={async (incoming: SyncEnvelope) => {
+                      if (currentData.current !== data || blocked.current || pending.current)
+                        throw Error("SYNC_LOCAL_CHANGED");
+                      const observedLearning = JSON.stringify(learning.state),
+                        observedPreferences = JSON.stringify(personalization.state),
+                        savedLearningBefore = localStorage.getItem(learningKey(profile.account)),
+                        savedPreferencesBefore = localStorage.getItem(preferenceKey(profile.account));
+                      if (
+                        (savedLearningBefore !== null && JSON.stringify(parseLearning(JSON.parse(savedLearningBefore))) !== observedLearning) ||
+                        (savedPreferencesBefore !== null && JSON.stringify(parsePreferences(JSON.parse(savedPreferencesBefore))) !== observedPreferences)
+                      ) throw Error("SYNC_LOCAL_CHANGED");
+                      const sourceKey = (item: LearningItem) => JSON.stringify([
+                        item.kind, item.text, item.url, item.fileName, item.sourceEvidence,
+                      ]);
+                      const framedItems = data.items.filter(item => item.artifacts?.some(artifact => artifact.frames?.length));
+                      // Compare the same normalized, media-free artifact contract that
+                      // is sent to sync; a restored page claim is not a new frame source.
+                      const comparableFramed = framedItems.length ? normalizeSyncEnvelope({
+                        ...incoming,
+                        library: { ...data, items: framedItems },
+                      }).library.items : [];
+                      const sansFrames = (artifact: NonNullable<LearningItem["artifacts"]>[number]) => {
+                        const { frames, ...content } = artifact;
+                        return content;
+                      };
+                      // Sync never destroys a device-only attachment or attaches it to a changed source.
+                      for (const item of data.items.filter(i => i.blob || i.artifacts?.some(artifact => artifact.frames?.length))) {
+                        const next = incoming.library.items.find(i => i.id === item.id);
+                        if (!next || data.items.filter(i => i.id === item.id).length !== 1 || incoming.library.items.filter(i => i.id === item.id).length !== 1 || sourceKey(next) !== sourceKey(item))
+                          throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                        for (const artifact of item.artifacts || []) {
+                          if (!artifact.frames?.length) continue;
+                          const matches = next.artifacts?.filter(a => a.id === artifact.id) || [];
+                          const oldMatches = item.artifacts?.filter(a => a.id === artifact.id) || [];
+                          const expected = comparableFramed.find(i => i.id === item.id)?.artifacts?.find(a => a.id === artifact.id);
+                          if (matches.length !== 1 || oldMatches.length !== 1 || !expected || JSON.stringify(sansFrames(matches[0])) !== JSON.stringify(sansFrames(expected)))
+                            throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                        }
+                      }
+                      const nextLibrary = {
+                        ...incoming.library,
+                        items: incoming.library.items.map(item => ({
+                          ...item,
+                          blob: data.items.find(i => i.id === item.id)?.blob,
+                          ...(item.artifacts ? {
+                            artifacts: item.artifacts.map(artifact => {
+                              const old = data.items.find(i => i.id === item.id)?.artifacts?.find(a => a.id === artifact.id);
+                              return { ...sansFrames(artifact), ...(old?.frames?.length ? { frames: old.frames } : {}) };
+                            }),
+                          } : {}),
+                        })),
+                      };
+                      commit(nextLibrary, data);
+                      await saveQueue.current;
+                      if (blocked.current || pending.current || currentData.current !== nextLibrary)
+                        throw Error("SYNC_LOCAL_SAVE_FAILED");
+                      // Library persistence yields to focus completion and other-tab edits.
+                      // Recompare both the latest render and storage before restoring either.
+                      const latestLocal = syncLocalSnapshot.current;
+                      if (
+                        latestLocal.account !== profile.account ||
+                        JSON.stringify(latestLocal.learning) !== observedLearning ||
+                        JSON.stringify(latestLocal.preferences) !== observedPreferences ||
+                        localStorage.getItem(learningKey(profile.account)) !== savedLearningBefore ||
+                        localStorage.getItem(preferenceKey(profile.account)) !== savedPreferencesBefore
+                      ) throw Error("SYNC_LOCAL_CHANGED");
+                      const nextLearning = {
+                        ...incoming.learning,
+                        focus: latestLocal.learning.focus,
+                        alarm: latestLocal.learning.alarm,
+                        lastAlarmId: latestLocal.learning.lastAlarmId,
+                      };
+                      learning.update(nextLearning, true);
+                      try {
+                        if (
+                          JSON.stringify(parseLearning(JSON.parse(localStorage.getItem(learningKey(profile.account)) || "null"))) !==
+                          JSON.stringify(parseLearning(nextLearning))
+                        ) throw Error("SYNC_LOCAL_SAVE_FAILED");
+                      } catch { throw Error("SYNC_LOCAL_SAVE_FAILED"); }
+                      personalization.update(incoming.preferences, true);
+                      try {
+                        const saved = normalizeSyncEnvelope({
+                          version: 1,
+                          library: nextLibrary,
+                          learning: JSON.parse(localStorage.getItem(learningKey(profile.account)) || "null"),
+                          preferences: JSON.parse(localStorage.getItem(preferenceKey(profile.account)) || "null"),
+                        });
+                        if (JSON.stringify(saved) !== JSON.stringify(normalizeSyncEnvelope(incoming)))
+                          throw Error("SYNC_LOCAL_SAVE_FAILED");
+                      } catch { throw Error("SYNC_LOCAL_SAVE_FAILED"); }
+                    }}
+                  />
+                  <RAGManager key={`rag:${profile.account}:${spaceId}`} items={data.items} spaces={data.spaces} workspaceId={spaceId||"main"} locale={locale}/>
                   <section className="lm-panel">
                     <h3>{t.featureStatus}</h3>
                     {(
@@ -1737,7 +1853,7 @@ function Workspace({
             <a href="/terms">{lc.terms}</a>
             <a href="/data-deletion">{lc.deleteData}</a>
           </nav>
-          <span>v1.5 · {lc.localNote}</span>
+          <span>v3.0 · {lc.localNote}</span>
         </footer>
       </div>
       {add && (

@@ -51,6 +51,18 @@ async function main() {
   for (const provider of Object.values(await local.json()))
     assert.equal(new URL(provider.callbackUrl).origin, "http://localhost:3000");
   console.log("PASS localhost callbacks stay on localhost for Facebook");
+  await Promise.all(
+    Array.from({ length: 8 }, async (_, index) => {
+      const origin = index % 2 ? "http://localhost:3000" : base;
+      const response = await fetch(origin + "/api/auth/providers");
+      for (const provider of Object.values(await response.json())) {
+        assert.equal(new URL(provider.callbackUrl).origin, origin);
+      }
+    }),
+  );
+  console.log(
+    "PASS concurrent local OAuth requests retain their own approved origin",
+  );
 }
 main().catch((e) => {
   console.error(e.message);

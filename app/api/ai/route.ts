@@ -21,11 +21,29 @@ import {
 } from "../../../lib/server/tutor-core";
 import type { TutorState } from "../../../lib/tutor/types";
 import { verifySourceEvidence } from "../../../lib/server/source-evidence";
+import { embedTexts, embeddingStatus } from "../../../lib/rag/embeddings";
+import type { RagSnapshot } from "../../../lib/rag/types";
+import { executeSummaryInput } from "../../../lib/server/summary-execution";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   let release: AILease | undefined;
   let reservation: UsageReservation | undefined;
+  let embeddingReservation: UsageReservation | undefined;
+  let ragSnapshot: RagSnapshot | undefined;
+  const ragMetadata = () =>
+    ragSnapshot
+      ? {
+          rag: {
+            snapshotId: ragSnapshot.id,
+            mode: ragSnapshot.mode,
+            documents: ragSnapshot.documents.length,
+            hits: ragSnapshot.hits.length,
+            potentialConflict: ragSnapshot.potentialConflict,
+            expiresAt: ragSnapshot.expiresAt,
+          },
+        }
+      : {};
   let tutorLease: TutorTurnLease | undefined;
   const requestId = crypto.randomUUID(),
     startedAt = Date.now();
@@ -51,6 +69,121 @@ export async function POST(req: Request) {
       input.source,
       release.userId,
     );
+    task = input.task;
+    if (input.task === "summary") {
+      const result = await executeSummaryInput(
+        input,
+        { userId: release.userId, sessionVersion: release.sessionVersion },
+        { requestId, signal, telemetry: false },
+      );
+      recordAIUsage({
+        requestId,
+        userId: release.userId,
+        task,
+        provider: result.provider,
+        model: result.model,
+        status: "success",
+        ...result.usage,
+        latencyMs: Date.now() - startedAt,
+      });
+      const {
+        provider: _provider,
+        model: _model,
+        usage: _usage,
+        tutorReply: _tutorReply,
+        ...output
+      } = result;
+      return Response.json(
+        { ...output, requestId },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    if (input.ragScope) {
+      if (input.media || input.youtubeUrl)
+        throw new AIError("RAG_RAW_MEDIA_UNSUPPORTED");
+      if (input.tutorSessionId && !input.ragScope.snapshotId)
+        throw new AIError("RAG_SOURCE_CHANGED", 409);
+      const store = getStore(),
+        scope = input.ragScope;
+      if (scope.snapshotId)
+        ragSnapshot = store.ragReadSnapshot(
+          release.userId,
+          release.sessionVersion,
+          scope.snapshotId,
+          scope,
+        );
+      else {
+        const initial = store.ragSearch(
+          release.userId,
+          scope,
+          input.tutorProblem || input.question,
+        );
+        reservation = reserveUsage({
+          userId: release.userId,
+          sessionVersion: release.sessionVersion,
+          requestId,
+          task: input.task,
+          mode: input.mode,
+          kind: "text",
+        });
+        let embedding: { vector: number[]; model: string } | undefined;
+        if (scope.mode === "hybrid") {
+          if (scope.consent !== true) throw new AIError("RAG_CONSENT_REQUIRED");
+          store.ragRequireSemantic(
+            release.userId,
+            scope,
+            embeddingStatus().model,
+          );
+          embeddingReservation = reserveUsage({
+            userId: release.userId,
+            sessionVersion: release.sessionVersion,
+            requestId: requestId + "-embedding",
+            task: "index",
+            mode: "quick",
+            kind: "text",
+          });
+          const encoded = await embedTexts(
+            [input.tutorProblem || input.question],
+            fetch,
+            signal,
+          );
+          embedding = { vector: encoded.vectors[0], model: encoded.model };
+          recordAIUsage({
+            requestId: requestId + "-embedding",
+            userId: release.userId,
+            task: "index",
+            provider: "openai",
+            model: encoded.model,
+            status: "success",
+            inputTokens: encoded.totalTokens,
+            latencyMs: Date.now() - startedAt,
+          });
+        }
+        ragSnapshot = store.ragPrepareSnapshot(
+          release.userId,
+          release.sessionVersion,
+          scope,
+          input.tutorProblem || input.question,
+          embedding,
+        );
+        store.ragAssertDocuments(
+          release.userId,
+          release.sessionVersion,
+          scope.workspaceId,
+          initial.documents,
+        );
+        if (embedding)
+          store.ragRequireSemantic(
+            release.userId,
+            scope,
+            embedding.model,
+            release.sessionVersion,
+          );
+      }
+      input.source = ragSnapshot.source;
+      input.sourceEvidence = undefined;
+      input.ragContext = ragSnapshot;
+    }
     if (input.task === "chat") {
       tutorLease = getStore().prepareTutorTurn(
         release.userId,
@@ -78,7 +211,7 @@ export async function POST(req: Request) {
               ? "pdf"
               : "text";
     signal.throwIfAborted();
-    reservation = reserveUsage({
+    reservation ||= reserveUsage({
       userId: release.userId,
       sessionVersion: release.sessionVersion,
       requestId,
@@ -90,6 +223,7 @@ export async function POST(req: Request) {
         : undefined,
     });
     const result = await routeAI(input, fetch, signal);
+    if (ragSnapshot) getStore().ragAssertSnapshot(release.userId, ragSnapshot);
     signal.throwIfAborted();
     let tutor: TutorState | undefined;
     if (tutorLease && !result.tutorReply)
@@ -97,8 +231,17 @@ export async function POST(req: Request) {
     settleUsage({
       userId: release.userId,
       reservationId: reservation.reservationId,
+      additionalReservationIds: embeddingReservation
+        ? [embeddingReservation.reservationId]
+        : undefined,
       onSettled: tutorLease
         ? () => {
+            if (ragSnapshot)
+              getStore().ragAssertSnapshot(
+                release!.userId,
+                ragSnapshot,
+                release!.sessionVersion,
+              );
             tutor = getStore().commitTutorTurn(
               tutorLease!,
               result.tutorReply!,
@@ -133,6 +276,13 @@ export async function POST(req: Request) {
       { headers: { "Cache-Control": "no-store" } },
     );
   } catch (e) {
+    if (release && embeddingReservation)
+      try {
+        failUsage({
+          userId: release.userId,
+          reservationId: embeddingReservation.reservationId,
+        });
+      } catch {}
     if (release && reservation) {
       try {
         failUsage({
@@ -160,7 +310,7 @@ export async function POST(req: Request) {
       });
     if (e instanceof TutorLockedError)
       return Response.json(
-        { error: e.code, tutor: e.tutor, requestId },
+        { error: e.code, tutor: e.tutor, requestId, ...ragMetadata() },
         { status: 409, headers: { "Cache-Control": "no-store" } },
       );
     const response = failure(
@@ -189,6 +339,7 @@ export async function POST(req: Request) {
         return Response.json(
           {
             ...(await response.json()),
+            ...ragMetadata(),
             requestId,
             tutor: {
               sessionId,

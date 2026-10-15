@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-15",
+  "scope": "Source-only separate Web snapshot workspace; not full native library sync",
+  "analyze": {
+    "command": "flutter analyze --no-pub",
+    "exitCode": 0,
+    "issues": 0,
+    "observedOutput": "No issues found! (ran in 17.0s)"
+  },
+  "fullTests": {
+    "command": "flutter test --no-pub",
+    "exitCode": 0,
+    "passed": 71,
+    "observedOutput": "00:21 +71: All tests passed!",
+    "priorTests": 50,
+    "newCoreApiFileTests": 19,
+    "newWidgetTests": 2,
+    "testFiles": ["test/web_sync_test.dart", "test/web_sync_widget_test.dart"]
+  },
+  "coverage": [
+    "Web JSON preserves citations/source units/topic/difficulty/artifacts/skillEvidence during local roundtrip and notes-only edits",
+    "Native backup, unsupported versions, duplicate IDs, live focus timers and oversized UTF8 are rejected",
+    "Explicit opt-in; initialisation performs no upload or snapshot request",
+    "Pending operation is persisted before PUT; lost ACK uses identical idempotency key and body after restart",
+    "Local edits after lost ACK, both-side conflicts, known-base deletion and epoch reset",
+    "Account/session generation changes cannot apply an old response",
+    "Origin/account files and outboxes remain independent; disabled sync preserves data",
+    "Server deletion uses epoch/revision and retains local/native data",
+    "Canonical bearer and X-Lumio-User for GET/PUT/DELETE; redirect is not followed",
+    "File flush/backup recovery and refusal to overwrite corrupt state silently",
+    "Phone-width scope/retention/pairing copy and safe handling of invalid restored server"
+  ],
+  "synthetic": true,
+  "realProviderCalls": 0,
+  "newBackendIntegrationTest": "NOT TESTED: HTTP transport used mock responses; server contract has separate root-owned tests",
+  "androidDevice": "NOT TESTED",
+  "iosDevice": "NOT TESTED",
+  "newApkIpa": "NOT BUILT",
+  "fullNativeLearningSync": "PARTIAL: web snapshot and notes only; native LibraryData stays separate",
+  "notes": "No new dependency, paid service or database. Existing Flutter/Dart toolchain used. Model metadata preservation is not semantic verification of citations or learning efficacy. Server remains schema/owner authority."
+}

@@ -1,4 +1,4 @@
-# AI và đăng nhập - Lumio 2.0 khu vực
+# AI và đăng nhập - Lumio khu vực V2 + V3
 
 Khóa bí mật chỉ đặt ở máy chủ. Bộ code sạch không có API key, OAuth secret hoặc database; không có cấu hình thì AI/đăng nhập không tự mô phỏng thành công. Đã có báo cáo probe và hội thoại AI thật local trong `docs/regional`; chúng không thay kiểm tra OAuth/AI ở URL public. Trạng thái triển khai/nộp cuối xem [FINAL-REPORT.md](docs/regional/FINAL-REPORT.md), không suy ra từ hướng dẫn này.
 
@@ -19,6 +19,7 @@ Sao chép `.env.example` thành `.env.local` ở thư mục web. Chạy `pnpm au
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | OAuth Web client; bản khu vực cần Google login |
 | `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET` | Facebook login tùy chọn, chỉ bật khi đã cấu hình được |
 | `OPENAI_API_KEY`, `OPENAI_MODEL` | Gia sư/chat và suy luận |
+| `LUMIO_EMBEDDINGS_ENABLED`, `OPENAI_EMBEDDING_MODEL` | Embedding tùy chọn, mặc định tắt; cần đồng ý riêng trên từng thao tác |
 | `GEMINI_API_KEY`, `GEMINI_MODEL` | Học liệu/đa phương thức/tóm tắt |
 | `XAI_API_KEY`, `XAI_STT_MODEL`, `XAI_VOICE` | Đọc tiếng và chép lời; thiếu cấu hình thì khả năng tương ứng không sẵn sàng |
 | `LUMIO_ADMIN_EMAILS` | Email Google đã xác minh của người quản trị, đặt riêng; không dùng cờ admin từ trình duyệt |
@@ -72,12 +73,12 @@ node scripts/start-regional.cjs
 
 Starter từ chối nếu thiếu cờ preview, thiếu origin HTTPS, Google, khóa phiên hoặc core AI, hoặc nếu trộn với public-demo/desktop. Nó đặt đường dẫn SQLite riêng khi chưa có `LUMIO_DB_PATH`, giữ `LUMIO_ALLOW_LOCAL_DB_PRODUCTION=false`, không biến disk tạm thành bền vững. Dùng `pnpm dev` cho localhost HTTP; không tắt guard để ép starter production chạy như dev.
 
-**Dữ liệu có thể reset khi host ngủ/restart/deploy:** tài khoản, liên kết, ví/credit, audit và phiên gia sư nằm trên SQLite tạm. Đây không phải đồng bộ học liệu; local IndexedDB/localStorage vẫn là kho riêng theo origin/tài khoản. Giữ bản JSON và file gốc, không dùng bản thi làm nơi lưu duy nhất. Cơ chế PostgreSQL mới chỉ có schema tham khảo, chưa có adapter chạy thật. Production thông thường cần storage bền vững được kiểm tra, không dùng ngoại lệ thi làm giải pháp production.
+**Dữ liệu có thể reset khi host ngủ/restart/deploy:** tài khoản, liên kết, ví/credit, audit, phiên gia sư, bản sync/chỉ mục và tác vụ nằm trên SQLite tạm. V3 có bản sync văn bản opt-in; local IndexedDB/localStorage vẫn là kho riêng theo origin/tài khoản. Bản server tối đa 7 ngày, không chứa file gốc; không phải cam kết cloud bền vững. Giữ JSON/file gốc. PostgreSQL mới có schema tham khảo, chưa có adapter chạy thật. Production thông thường cần storage bền vững đã kiểm tra, không dùng ngoại lệ thi làm giải pháp production.
 
 ## 4. Hạn mức và credit
 
 - Mọi lần gọi AI cần tài khoản canonical, feature flag, quyền phù hợp và credit server. Giới hạn 15 lượt/phút, 150 lượt/ngày UTC và 1 đang chạy/tài khoản.
-- Chế độ khu vực thêm 200 lượt thử yêu cầu/ngày UTC và 3 đang chạy cho một instance, gồm các lượt đi qua guard rồi lỗi. Bộ đếm trong bộ nhớ, reset khi restart, chưa dùng chung nhiều instance; không phải ngân sách tiền tuyệt đối.
+- Chế độ khu vực thêm 200 lượt thử/ngày UTC và 3 đồng thời, gồm lượt đi qua guard rồi lỗi. V3 lưu cửa sổ/lease trong SQLite để process cùng tệp DB dùng chung; không tự bảo vệ nhiều máy có ổ riêng. Counter còn sau restart nếu DB còn, reset nếu DB mất; không phải ngân sách tiền tuyệt đối.
 - Free thử một lần 200 credit. Trong chế độ khu vực, các khả năng nâng cao có thể được mở thử cho Free nhưng vẫn trừ/giữ credit và hạn mức. Ngoại lệ đó không tạo gói mua trả phí.
 - Mỗi tác vụ/media/mode có định mức; video dài và đọc tiếng dài gồm nhiều lần gọi. Máy chủ dự giữ trước, quyết toán khi thành công, hoàn phần giữ khi lỗi; không gọi thẳng dịch vụ từ frontend để né giới hạn.
 
@@ -94,5 +95,9 @@ Xem [báo cáo nghiệm thu](docs/regional/FINAL-REPORT.md), các JSON `tutor-li
 Thông báo cạnh yêu cầu cho biết văn bản, media, URL hoặc hội thoại chuẩn bị gửi tới dịch vụ bên ngoài. Không chủ động gửi toàn bộ thư viện hoặc phản hồi đề xuất. Nội dung bạn tự nhập vẫn có thể chứa dữ liệu cá nhân; bỏ phần không cần thiết. Không hứa thay nhà cung cấp về lưu giữ/huấn luyện/xóa bản họ đã nhận.
 
 Phiên gia sư lưu đề tối đa 4.000 ký tự, tối đa 100 lượt, tiến trình và digest nguồn; không lưu file media gốc trong bảng phiên. Hết hiệu lực 7 ngày, dọn khi truy cập hoặc người dùng xóa phiên của mình. Chưa có lịch dọn nền hoặc xóa tài khoản đầy đủ. Log vận hành chỉ ghi metadata, không thiết kế lưu toàn học liệu/hội thoại; credit ledger không chứa thẻ thanh toán.
+
+V3: snapshot kỹ năng tính local, nhãn khó/kỹ năng chưa hiệu chuẩn; không gửi hồ sơ tới AI. Sync văn bản chỉ theo đồng ý, có xung đột/idempotency và xóa bản server, retention7 ngày. Chỉ mục RAG lưu văn bản/chunks/vị trí/vector nếu có tối đa 7 ngày; keyword trước, embedding mặc định tắt. Khi chủ động bật `LUMIO_EMBEDDINGS_ENABLED=true`, model mặc định của code là `text-embedding-3-small`; vẫn cần key server/quyền model và đồng ý riêng trước gửi tài liệu/câu truy vấn. Không có vector DB/dịch vụ mới.
+
+Tóm tắt chạy nền giữ immutable text/URL YouTube và kết quả từng phần tối đa 7 ngày, có consent/retry/cancel/delete. Worker chạy khi process còn thức, được khởi động lại khi chủ tài khoản truy cập; không bảo đảm luôn chạy trên free host. Cờ `LUMIO_BACKGROUND_JOBS_DISABLED=true` dùng để dừng khởi động worker khi bảo trì/thử nghiệm; không thay kiểm tra AI/credit/owner. Không ghi nội dung job vào log vận hành hoặc giả nhận hàng đợi tạm là lưu trữ bền vững.
 
 Không chia sẻ `.env.local`, `.data`, database, cookie, file xác thực hoặc callback log. Không ghi key vào `NEXT_PUBLIC_*`, URL hay lỗi gửi cho browser. Khi đóng gói, dùng source sạch và kiểm tra secrets. Mã Android 0.3/Windows 0.1 từ đợt trước không được build lại trong đợt web khu vực này.

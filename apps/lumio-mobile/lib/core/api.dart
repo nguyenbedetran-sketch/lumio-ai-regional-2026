@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
 import 'models.dart';
 import 'tutor_session.dart';
+import 'web_sync.dart';
 
 class ApiFailure implements Exception {
   const ApiFailure(this.code, {this.tutor});
@@ -177,6 +178,10 @@ class LumioApi {
         origin.toString(),
       );
   Future<Map<String, dynamic>> account() => json('GET', '/api/mobile/account');
+
+  /// A separate canonical web snapshot, never native LibraryData serialization.
+  WebSyncTransport webSync(String canonicalUserId) =>
+      _ApiWebSync(this, canonicalUserId);
   Future<void> revoke() async {
     await json('DELETE', '/api/mobile/account');
   }
@@ -235,4 +240,48 @@ class LumioApi {
     });
     return _send(request, audio: true);
   }
+}
+
+class _ApiWebSync implements WebSyncTransport {
+  _ApiWebSync(this.api, this.userId) {
+    if (userId.trim().isEmpty || userId.length > 200) {
+      throw const WebSyncFailure('INVALID_ACCOUNT');
+    }
+  }
+  final LumioApi api;
+  final String userId;
+  Future<Map<String, dynamic>> _request(
+    String method, [
+    Map<String, dynamic>? body,
+  ]) async {
+    final request = http.Request(method, api.endpoint('/api/sync'));
+    request.headers['X-Lumio-User'] = userId;
+    if (body != null) {
+      request.headers['Content-Type'] = 'application/json';
+      request.body = jsonEncode(body);
+    }
+    try {
+      final result = await api._send(request, limit: maxWebSyncBytes + 16384);
+      return object(jsonDecode(utf8.decode(result)));
+    } on ApiFailure catch (e) {
+      throw WebSyncFailure(e.code);
+    } on WebSyncFailure {
+      rethrow;
+    } catch (_) {
+      throw const WebSyncFailure('INVALID_RESPONSE');
+    }
+  }
+
+  @override
+  Future<Map<String, dynamic>> read() => _request('GET');
+  @override
+  Future<Map<String, dynamic>> write(Map<String, dynamic> body) =>
+      _request('PUT', body);
+  @override
+  Future<void> delete({required String epoch, required int revision}) async {
+    await _request('DELETE', {'epoch': epoch, 'revision': revision});
+  }
+
+  @override
+  void cancel() => api.cancel();
 }

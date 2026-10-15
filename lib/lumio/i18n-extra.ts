@@ -1,6 +1,7 @@
 import type { Messages } from "./i18n";
 export const extraZh: Partial<Messages> = {
-  localDetail: "文件和学习数据保存在此浏览器。社交登录不会启用云同步。",
+  localDetail:
+    "文件保存在此浏览器。登录不会自动同步；需要时在设置中主动同步文字快照。",
   authTitle: "从这里开启学习之旅。",
   authSub: "为你想理解的一切留出空间。",
   authHint: "Google/Facebook 登录需要 OAuth 应用凭据，与 AI 密钥不同。",
@@ -67,7 +68,7 @@ export const extraZh: Partial<Messages> = {
 };
 export const extraJa: Partial<Messages> = {
   localDetail:
-    "ファイルと学習データはこのブラウザに保存されます。ログインしてもクラウド同期は有効になりません。",
+    "ファイルはこのブラウザに保存されます。ログインで自動同期されません。必要なとき設定から文章の記録を同期してください。",
   authTitle: "ここから学びを始めよう。",
   authSub: "理解したいことのための、落ち着いた空間。",
   authHint:
@@ -148,7 +149,7 @@ export const extraJa: Partial<Messages> = {
 };
 export const extraKo: Partial<Messages> = {
   localDetail:
-    "파일과 학습 데이터는 이 브라우저에 저장됩니다. 소셜 로그인으로 클라우드 동기화가 켜지지는 않습니다.",
+    "파일은 이 브라우저에 저장됩니다. 로그인만으로 자동 동기화되지 않으며 필요할 때 설정에서 텍스트 스냅샷을 동기화하세요.",
   authTitle: "여기서 배움을 시작하세요.",
   authSub: "이해하고 싶은 모든 것을 위한 공간.",
   authHint:

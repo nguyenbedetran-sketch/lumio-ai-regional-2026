@@ -1,5 +1,5 @@
 import { AIError, type AIInput, type AIResult, record } from "../ai/contracts";
-import { mathReference, verifyMathCandidates } from "./math";
+import { mathReference, verifyMathSolution } from "./math";
 import type { TutorReply } from "./types";
 
 export function tutorInstructions(input: AIInput): string {
@@ -120,9 +120,10 @@ export function parseTutorResponse(
     const reference = mathReference(context.problem);
     if (reference && !Array.isArray(numbers))
       throw new AIError("MATH_CANDIDATES_REQUIRED", 502);
-    const verification = verifyMathCandidates(
+    const verification = verifyMathSolution(
       context.problem,
       (numbers || []) as number[],
+      solution,
     );
     if (verification.status === "inconsistent")
       throw new AIError("MATH_VERIFICATION_FAILED", 502);

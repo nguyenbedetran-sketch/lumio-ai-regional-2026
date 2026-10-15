@@ -8,6 +8,7 @@ node_modules/
 client_secret*.json
 oauth*.json
 .data/
+.backups/
 *.sqlite*
 .playwright-cli/
 tooling/supabase-config/

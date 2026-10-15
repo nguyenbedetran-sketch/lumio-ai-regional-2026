@@ -24,6 +24,17 @@ import { MathText } from "./math-text";
 import { SourceReferences } from "./source-references";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
 import {
+  createSkillEvidence,
+  type SkillDifficulty,
+} from "../../lib/lumio/skill-evidence";
+import {
+  skillById,
+  skillTaxonomy,
+  skillLabel,
+  type SkillId,
+} from "../../lib/lumio/skill-taxonomy";
+import { skillCopy } from "../../lib/lumio/skill-copy";
+import {
   answeredQuizScore,
   quizChoiceForKey,
   quizSnapshot,
@@ -52,6 +63,8 @@ export type QuizDrafts = {
   finished: boolean;
   session: Question[];
   answers: (number | null)[];
+  skillChoice?: SkillId;
+  difficultyChoice?: SkillDifficulty;
 };
 
 export function StudyFlipCard({
@@ -380,6 +393,13 @@ export function Quiz({
     [finished, setFinished] = useState(drafts?.finished ?? false),
     [session, setSession] = useState<Question[]>(drafts?.session ?? []),
     [answers, setAnswers] = useState<(number | null)[]>(drafts?.answers ?? []);
+  const [skillChoice, setSkillChoice] = useState<SkillId | undefined>(
+      drafts?.skillChoice,
+    ),
+    [difficultyChoice, setDifficultyChoice] = useState<SkillDifficulty>(
+      drafts?.difficultyChoice ?? "unknown",
+    );
+  const sc = skillCopy[locale];
   const c = studyV3Copy[locale],
     quizHelpId = useId(),
     questionRef = useRef<HTMLHeadingElement>(null),
@@ -406,6 +426,8 @@ export function Quiz({
         finished,
         session,
         answers,
+        skillChoice,
+        difficultyChoice,
       }),
     [
       adding,
@@ -420,6 +442,8 @@ export function Quiz({
       finished,
       session,
       answers,
+      skillChoice,
+      difficultyChoice,
       onDraft,
     ],
   );
@@ -479,6 +503,13 @@ export function Quiz({
             date: new Date().toISOString(),
             score: total,
             total: session.length,
+            skillEvidence: createSkillEvidence(
+              session,
+              answers,
+              item.attempts,
+              uid(),
+              { skillId: skillChoice, difficulty: difficultyChoice },
+            ),
             answers: session.flatMap((question, questionIndex) => {
               const choice = answers[questionIndex];
               if (choice === null || !Number.isInteger(choice)) return [];
@@ -796,6 +827,42 @@ export function Quiz({
           <p className="lm-help">
             {item.questions.length} {t.questionCount} · {t.manual}
           </p>
+          <fieldset className="lski-quiz-scope">
+            <legend>{sc.quizScope}</legend>
+            <label>
+              {sc.graph}
+              <select
+                value={skillChoice || ""}
+                onChange={(e) => setSkillChoice(skillById(e.target.value)?.id)}
+              >
+                <option value="">{sc.auto}</option>
+                {skillTaxonomy.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {skillLabel(s.id, locale)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              {sc.level}
+              <select
+                value={difficultyChoice}
+                onChange={(e) =>
+                  setDifficultyChoice(e.target.value as SkillDifficulty)
+                }
+              >
+                <option value="unknown">{sc.difficultyAuto}</option>
+                {(["beginner", "intermediate", "advanced"] as const).map(
+                  (d) => (
+                    <option key={d} value={d}>
+                      {sc[d]}
+                    </option>
+                  ),
+                )}
+              </select>
+            </label>
+            <p className="lm-help">{sc.quizHint}</p>
+          </fieldset>
           <button className="lm-button primary" onClick={start}>
             <ClipboardCheck size={17} />
             {t.startQuiz}

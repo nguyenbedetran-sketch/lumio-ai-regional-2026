@@ -8,6 +8,9 @@ import { PlatformError } from "./types";
 import { createBillingStore } from "./billing-core";
 import { createMobileStore } from "./mobile-core";
 import { createTutorStore } from "./tutor-core";
+import { createRuntimeV3Store } from "./runtime-v3-core";
+import { createRagStore } from "./rag-core";
+import { createSummaryJobStore } from "./job-core";
 import { isPublicDemo } from "./public-demo";
 import { isCompetitionPreview } from "./competition-preview";
 import type {
@@ -674,6 +677,9 @@ export function createStore(
     }),
     ...createMobileStore({ db, now, stamp, transaction, getUser, recordAudit }),
     ...createTutorStore({ db, now, stamp, transaction, getUser }),
+    ...createRuntimeV3Store({ db, now, stamp, transaction, getUser }),
+    ...createRagStore({ db, now, stamp, transaction, getUser }),
+    ...createSummaryJobStore({ db, now, stamp, transaction, getUser }),
     close: () => db.close(),
     getUser,
     getUserByStorageKey,

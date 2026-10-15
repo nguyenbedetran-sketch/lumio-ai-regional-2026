@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "checks": 23,
+  "passed": [
+    "Account-private index has a visible entry point",
+    "Server storage consent is required before indexing",
+    "Retention and optional external semantic processing are disclosed",
+    "Two selected local sources are indexed with explicit consent",
+    "Semantic indexing remains disabled before separate external consent",
+    "Semantic indexing is a separate explicit priced action",
+    "Search shows the verbatim retrieved excerpt and document name",
+    "Named-workspace selector excludes main-workspace sources and indexed copies",
+    "Index requests preserve the explicitly selected named workspace",
+    "Returning to main scope restores only its own indexed copies",
+    "Tutor scope lists only indexed sources and defaults to an explicit selected set",
+    "Tutor explains the immutable source snapshot across hints",
+    "Tutor discloses question, retrieved excerpts and canonical history sent to AI",
+    "RAG tutor sends selected scope and question, without open raw source/media",
+    "Tutor citations display the retrieved document rather than the open-source filename",
+    "Potential conflicting facts remain visible as an unverified warning",
+    "Follow-up sends the same snapshot and canonical tutor session",
+    "Reload restores source scope, snapshot, hints and multi-document citations",
+    "Changed or expired snapshot cannot restore old tutor context",
+    "No-evidence response has actionable copy and does not invent an answer",
+    "RAG scope and citation UI fit a phone viewport",
+    "No runtime errors through indexing, retrieval, tutor reuse, reload or expiry",
+    "No unexpected write escaped the isolated UI mocks"
+  ],
+  "errors": [],
+  "paidProviderRequests": 0,
+  "mockedAIRequests": 3,
+  "data": "Explicit synthetic browser fixtures only; real ACL/ledger/provider results are separate reports.",
+  "screenshots": [
+    "docs/v3/qa-rag-index-desktop.png",
+    "docs/v3/qa-rag-tutor-desktop.png",
+    "docs/v3/qa-rag-tutor-mobile.png"
+  ],
+  "browser": "msedge",
+  "tool": "@playwright/cli@0.1.21",
+  "checkedAt": "2026-10-15T06:46:02.373Z",
+  "mode": "isolated guest profile; UI-only sample data; no paid AI requests"
+}

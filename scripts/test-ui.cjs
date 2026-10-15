@@ -13,6 +13,8 @@ const readout = process.argv.includes("--readout");
 const regionalLearning = process.argv.includes("--regional-learning");
 const regionalSources = process.argv.includes("--regional-sources");
 const regionalTutor = process.argv.includes("--regional-tutor");
+const v3Learning = process.argv.includes("--v3-learning");
+const v3Rag = process.argv.includes("--v3-rag");
 if (
   [
     premium,
@@ -23,6 +25,8 @@ if (
     regionalLearning,
     regionalSources,
     regionalTutor,
+    v3Learning,
+    v3Rag,
   ].filter(Boolean).length > 1
 )
   throw new Error("Select one UI suite per isolated session.");
@@ -33,23 +37,27 @@ if (!["msedge", "chrome", "firefox", "webkit"].includes(browser))
 const session = `lumio-qa-${process.pid}-${Date.now()}`;
 const reportPath = path.join(
   root,
-  regionalTutor
-    ? "docs/regional/qa-regional-tutor-report.json"
-    : regionalSources
-    ? "docs/regional/qa-regional-sources-report.json"
-    : regionalLearning
-      ? "docs/regional/qa-regional-learning-report.json"
-      : readout
-        ? "docs/qa-readout-report.json"
-        : fullSummary
-          ? "docs/qa-full-summary-report.json"
-          : meeting
-            ? "docs/qa-meeting-report.json"
-            : premium
-              ? "docs/qa-premium-report.json"
-              : dashboard
-                ? "docs/qa-dashboard-v3-report.json"
-                : "docs/qa-command-report.json",
+  v3Rag
+    ? "docs/v3/qa-v3-rag-report.json"
+    : v3Learning
+      ? "docs/v3/qa-v3-learning-report.json"
+      : regionalTutor
+        ? "docs/regional/qa-regional-tutor-report.json"
+        : regionalSources
+          ? "docs/regional/qa-regional-sources-report.json"
+          : regionalLearning
+            ? "docs/regional/qa-regional-learning-report.json"
+            : readout
+              ? "docs/qa-readout-report.json"
+              : fullSummary
+                ? "docs/qa-full-summary-report.json"
+                : meeting
+                  ? "docs/qa-meeting-report.json"
+                  : premium
+                    ? "docs/qa-premium-report.json"
+                    : dashboard
+                      ? "docs/qa-dashboard-v3-report.json"
+                      : "docs/qa-command-report.json",
 );
 function saveReport(report) {
   fs.writeFileSync(reportPath, JSON.stringify(report, null, 2) + "\n");
@@ -83,30 +91,37 @@ try {
   call("open", "http://localhost:3000/", `--browser=${browser}`);
   const response = call(
     "run-code",
-    regionalTutor
-      ? "--filename=tests/regional-tutor.browser.js"
-      : regionalSources
-      ? "--filename=tests/regional-sources.browser.js"
-      : regionalLearning
-        ? "--filename=tests/regional-learning.browser.js"
-        : readout
-          ? "--filename=tests/readout.browser.js"
-          : fullSummary
-            ? "--filename=tests/full-summary.browser.js"
-            : meeting
-              ? "--filename=tests/meeting-capture.browser.js"
-              : premium
-                ? "--filename=tests/premium-v3.browser.js"
-                : dashboard
-                  ? "--filename=tests/dashboard-v3.browser.js"
-                  : "--filename=tests/command-menu.browser.js",
+    v3Rag
+      ? "--filename=tests/v3-rag.browser.js"
+      : v3Learning
+        ? "--filename=tests/v3-learning.browser.js"
+        : regionalTutor
+          ? "--filename=tests/regional-tutor.browser.js"
+          : regionalSources
+            ? "--filename=tests/regional-sources.browser.js"
+            : regionalLearning
+              ? "--filename=tests/regional-learning.browser.js"
+              : readout
+                ? "--filename=tests/readout.browser.js"
+                : fullSummary
+                  ? "--filename=tests/full-summary.browser.js"
+                  : meeting
+                    ? "--filename=tests/meeting-capture.browser.js"
+                    : premium
+                      ? "--filename=tests/premium-v3.browser.js"
+                      : dashboard
+                        ? "--filename=tests/dashboard-v3.browser.js"
+                        : "--filename=tests/command-menu.browser.js",
   );
   const result =
     typeof response.result === "string"
       ? JSON.parse(response.result)
       : response.result;
   if (!result || result.status !== "PASS")
-    throw new Error("UI test did not return a passing report.");
+    throw new Error(
+      "UI test did not return a passing report: " +
+        JSON.stringify(response).slice(0, 1800),
+    );
   const report = {
     ...result,
     browser,

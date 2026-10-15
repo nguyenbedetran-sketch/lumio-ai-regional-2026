@@ -2,6 +2,7 @@ import { LibraryState, emptyLibrary, LearningItem } from "./types";
 import { validateSummary, type StudyArtifact } from "../ai/summary";
 import { validateCoverage } from "../ai/full-summary";
 import { restoreReferences } from "../ai/grounding";
+import { parseSkillEvidence } from "./skill-evidence";
 const DB = "lumio-local-library-v2";
 export type LibrarySnapshot = { data: LibraryState; revision: number };
 export class LibraryConflictError extends Error {
@@ -390,6 +391,7 @@ export function importLibrary(raw: string): LibraryState {
             score: unknown;
             total: unknown;
             answers?: unknown;
+            skillEvidence?: unknown;
           }) => {
             if (
               !Number.isInteger(a.score) ||
@@ -434,6 +436,15 @@ export function importLibrary(raw: string): LibraryState {
               score: Number(a.score),
               total: Number(a.total),
               ...(answers ? { answers } : {}),
+              ...(a.skillEvidence === undefined
+                ? {}
+                : {
+                    skillEvidence: parseSkillEvidence(a.skillEvidence, {
+                      score: Number(a.score),
+                      total: Number(a.total),
+                      answers,
+                    }),
+                  }),
             };
           },
         ),

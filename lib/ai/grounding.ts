@@ -21,6 +21,8 @@ export type SourceSegment = SourceUnit & {
   seconds?: number;
 };
 export type SourceReference = {
+  /** Added only by the actor-owned server retrieval snapshot, never by model JSON. */
+  rag?: import("../rag/types").RagReferenceMetadata;
   segmentId: string;
   quote: string;
   start: number;

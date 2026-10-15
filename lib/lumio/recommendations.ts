@@ -28,6 +28,7 @@ export type Preferences = {
   feedback: Feedback[];
   controls?: RecommendationControls;
   outcomes?: RecommendationOutcome[];
+  skillTracking?: boolean;
 };
 export const emptyPreferences = (): Preferences => ({
   version: 1,
@@ -45,6 +46,8 @@ export function parsePreferences(raw: unknown): Preferences {
     !Array.isArray(p.feedback) ||
     p.feedback.length > 1000
   )
+    throw new Error("INVALID_PREFERENCES");
+  if (p.skillTracking !== undefined && typeof p.skillTracking !== "boolean")
     throw new Error("INVALID_PREFERENCES");
   const ids = new Set<string>();
   for (const f of p.feedback) {
@@ -101,6 +104,9 @@ export function parsePreferences(raw: unknown): Preferences {
   return {
     version: 1,
     enabled: p.enabled,
+    ...(p.skillTracking === undefined
+      ? {}
+      : { skillTracking: p.skillTracking }),
     feedback: p.feedback.map((f) => ({
       itemId: f.itemId,
       value: f.value,

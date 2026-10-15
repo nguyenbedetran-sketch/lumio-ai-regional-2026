@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-15T06:55:42.858Z",
+  "status": "PASS",
+  "scope": "Deployed Render V2 baseline browser verification; authored lesson only",
+  "url": "https://lumio-ai-demo.onrender.com/",
+  "commit": "2aaadeaeac7448a7759811e10a69f5103f7fb7df",
+  "oauth": {
+    "provider": "Google",
+    "result": "Returned to Lumio signed in through public callback; no cookie/auth code copied"
+  },
+  "tutor": {
+    "actualRequests": 4,
+    "problem": "3x - 6 = 9",
+    "hintCountsObserved": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "fullSolutionDisabledBeforeThree": true,
+    "fullSolutionEnabledAfterThree": true,
+    "answer": "x = 5",
+    "substitution": "3*5-6=9",
+    "sourceReferencesObserved": true
+  },
+  "readout": {
+    "actualRequests": 1,
+    "playback": {
+      "paused": false,
+      "currentTime": 18.338173,
+      "duration": 61.8,
+      "readyState": 4,
+      "error": null
+    },
+    "stoppedAfterCheck": true
+  },
+  "evidence": [
+    "public-v2-live-tutor.jpg",
+    "public-v2-live-answer.jpg",
+    "public-v2-audio-playing.jpg"
+  ],
+  "limitations": [
+    "V2 baseline, must check V3 deployed build separately",
+    "Browser media playback state confirms playback, not independent physical-speaker or microphone/Zoom compatibility",
+    "No real-student outcome or complete provider accuracy claim"
+  ]
+}

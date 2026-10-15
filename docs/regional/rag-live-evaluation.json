@@ -1,0 +1,163 @@
+{
+  "startedAt": "2026-10-15T06:28:38.724Z",
+  "status": "PARTIAL",
+  "requests": 2,
+  "maxRequests": 4,
+  "scope": "Authored six-chunk corpus and seven authored retrieval questions, no student data or OAuth. Retrieval ranking only; not generated-answer or learning-outcome accuracy.",
+  "configuration": {
+    "dimensions": 256,
+    "semanticThreshold": 0.35,
+    "rrfK": 60,
+    "topK": 3,
+    "promptVersion": "rag-embedding-v1"
+  },
+  "queries": [
+    {
+      "question": "nonzero divisor",
+      "expected": [
+        "equation"
+      ],
+      "lexical": [
+        "equation"
+      ],
+      "semantic": [
+        {
+          "id": "equation",
+          "score": 0.5387766888085953
+        }
+      ],
+      "hybrid": [
+        "equation"
+      ]
+    },
+    {
+      "question": "How can I keep both expressions equal while solving for an unknown?",
+      "expected": [
+        "equation"
+      ],
+      "lexical": [
+        "equation"
+      ],
+      "semantic": [
+        {
+          "id": "equation",
+          "score": 0.5771635442735424
+        }
+      ],
+      "hybrid": [
+        "equation"
+      ]
+    },
+    {
+      "question": "How do leaves make their own food?",
+      "expected": [
+        "plants"
+      ],
+      "lexical": [],
+      "semantic": [
+        {
+          "id": "plants",
+          "score": 0.5315104429175932
+        }
+      ],
+      "hybrid": [
+        "plants"
+      ]
+    },
+    {
+      "question": "What is the longest edge when the perpendicular sides are 6 and 8?",
+      "expected": [
+        "triangle"
+      ],
+      "lexical": [
+        "triangle",
+        "equation"
+      ],
+      "semantic": [
+        {
+          "id": "triangle",
+          "score": 0.534763914479398
+        }
+      ],
+      "hybrid": [
+        "triangle",
+        "equation"
+      ]
+    },
+    {
+      "question": "I forget a card repeatedly. When should it return?",
+      "expected": [
+        "recall"
+      ],
+      "lexical": [
+        "recall",
+        "equation"
+      ],
+      "semantic": [
+        {
+          "id": "recall",
+          "score": 0.5489525925839103
+        }
+      ],
+      "hybrid": [
+        "recall",
+        "equation"
+      ]
+    },
+    {
+      "question": "recorded boiling temperature",
+      "expected": [
+        "boiling-a",
+        "boiling-b"
+      ],
+      "lexical": [
+        "boiling-a",
+        "boiling-b"
+      ],
+      "semantic": [
+        {
+          "id": "boiling-a",
+          "score": 0.7804893743239059
+        },
+        {
+          "id": "boiling-b",
+          "score": 0.7676218945268068
+        }
+      ],
+      "hybrid": [
+        "boiling-a",
+        "boiling-b"
+      ]
+    },
+    {
+      "question": "Who won the football world cup in 1998?",
+      "expected": [],
+      "lexical": [],
+      "semantic": [],
+      "hybrid": []
+    }
+  ],
+  "model": "text-embedding-3-small",
+  "latencyMs": 6542,
+  "tokens": 210,
+  "metrics": {
+    "lexical": {
+      "recallAt3": 0.8333333333333334,
+      "mrrAt3": 0.8333333333333334,
+      "outOfCorpusFalsePositiveQueries": 0
+    },
+    "hybrid": {
+      "recallAt3": 1,
+      "mrrAt3": 1,
+      "outOfCorpusFalsePositiveQueries": 0
+    }
+  },
+  "limitations": [
+    "Small authored corpus; not a school-scale or teacher-reviewed benchmark.",
+    "The cosine threshold 0.35 is an initial heuristic, not calibrated confidence.",
+    "Hybrid can retrieve excerpts that do not contain an answer; retrieved excerpts must still be checked by the tutor and learner.",
+    "No claim about provider invoice cost, full-document comprehension, or student outcomes.",
+    "No vector database added; bounded in-process ranking over owner-scoped SQLite chunks."
+  ],
+  "finishedAt": "2026-10-15T06:28:45.285Z"
+}

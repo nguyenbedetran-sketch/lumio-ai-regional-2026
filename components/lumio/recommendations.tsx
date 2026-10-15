@@ -21,6 +21,7 @@ import {
   type RecommendationGoal,
 } from "../../lib/lumio/recommendations";
 import { recommendationCopy } from "../../lib/lumio/recommendation-copy";
+import { SkillEvidencePanel } from "./skill-evidence";
 export const personalCopy = {
   vi: {
     nav: "Đề xuất cho bạn",
@@ -180,6 +181,7 @@ export function Recommendations({
   locale,
   open,
   storageError,
+  onClearSkillEvidence,
 }: {
   items: LearningItem[];
   learning: LearningState;
@@ -188,6 +190,7 @@ export function Recommendations({
   locale: Locale;
   open: (i: LearningItem) => void;
   storageError: boolean;
+  onClearSkillEvidence?: () => void;
 }) {
   const c = personalCopy[locale];
   const rc = recommendationCopy[locale];
@@ -362,6 +365,15 @@ export function Recommendations({
       <p className="lm-help" role="status" aria-live="polite">
         {notice}
       </p>
+      <SkillEvidencePanel
+        items={items}
+        preferences={preferences}
+        update={update}
+        locale={locale}
+        open={open}
+        storageError={storageError}
+        onClearSkillEvidence={onClearSkillEvidence}
+      />
       <details className="lm-personal-details">
         <summary>
           <Sparkles size={16} />

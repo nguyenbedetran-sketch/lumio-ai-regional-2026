@@ -1,6 +1,6 @@
-# Lumio AI 2.0 - Bản dự thi vòng khu vực AI26A0048
+# Lumio AI - Bản khu vực AI26A0048, nâng cấp V2 + V3
 
-Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Đợt này nâng trực tiếp **web 2.0.0-regional.1**. Source Flutter/Dart Android 0.3 và Windows/Electron 0.1 được giữ riêng; **không build lại hoặc xác nhận tương thích mới trong đợt này**.
+Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Web được nâng từ baseline V2 lên các module V3 có giới hạn; version chính xác xem `package.json`, bằng chứng xem `docs/regional` và `docs/v3`. Các tệp cài Android 0.3/Windows 0.1 trước đó **không tự được cập nhật khi source thay đổi**, chưa có xác nhận APK/EXE hoặc thiết bị thật cho đợt này.
 
 Bản thi dùng hosting miễn phí, hạn mức và database tạm; chưa phải dịch vụ lưu trữ production. Có code không đồng nghĩa AI đã cấu hình, đã deploy hoặc đã nộp bài. Xem [báo cáo khu vực](docs/regional/FINAL-REPORT.md); nếu còn BẢN NHÁP thì trạng thái cuối chưa chốt.
 
@@ -28,6 +28,8 @@ Repository/ZIP không chứa `.env.local`, API/OAuth secret, `.data`, database, 
 - Thông báo dữ liệu trước yêu cầu AI, `/privacy`, `/data-deletion` và xóa phiên gia sư chính chủ. Không gửi key tới trình duyệt hoặc ghi toàn học liệu/hội thoại vào log vận hành.
 - Bảng giá **đề xuất**: Free 0đ/200 credit một lần; Plus 59.000đ/600 credit mỗi tháng, Premium 129.000đ/1.600, Pro 249.000đ/3.500. Năm dự kiến bằng 10 tháng. Có gói bổ sung minh họa; checkout khóa, không thu tiền hoặc cấp credit trả phí. [Chi tiết](docs/regional/PRICING-PROPOSAL.md).
 
+V3 bổ sung hồ sơ bằng chứng kỹ năng cục bộ, graph Toán nhỏ có tiên quyết khai báo, đề xuất theo lỗi/giãn cách/nhãn khó và mức bất định; một câu đúng không được coi thành thạo. Xem [phạm vi và kiểm thử](docs/v3/03-LEARNING-INTELLIGENCE.md). Trong Cài đặt có bản đồng bộ văn bản chủ động và chỉ mục tra cứu nhiều học liệu; không tự tải cả thư viện khi đăng nhập. Embedding ra ngoài mặc định tắt, cần cấu hình và đồng ý riêng. Tóm tắt chạy nền là đường riêng có consent: tối đa 120.000 ký tự hoặc 2 giờ YouTube /12 phần, lưu tiến độ trên server, có hủy/xóa; preview miễn phí không bảo đảm chạy liên tục. Các phần V3 không tự được tính PASS chỉ vì có source; xem báo cáo module và nghiệm thu cuối.
+
 Giữ source các chức năng trước: tóm tắt toàn bộ nguồn/video theo từng phần, chương/sơ đồ tư duy, đọc tiếng dài từng phần, thu âm cuộc họp có cấp quyền, focus có chuông, thống kê hoạt động, sáng/tối/5 ngôn ngữ/mobile, quản trị và liên kết Google/Facebook. Xem [tóm tắt](docs/WHOLE-MEDIA-SUMMARY.md), [đọc tiếng](docs/READ-ALOUD.md), [thu âm](docs/MEETING-CAPTURE.md). Không mặc nhiên coi mọi phần cứng đã được kiểm tra lại.
 
 ## Chọn đúng chế độ
@@ -46,9 +48,9 @@ node scripts/start-regional.cjs
 
 Lệnh cuối cần origin **HTTPS hợp lệ**, `LUMIO_COMPETITION_PREVIEW=true`, `LUMIO_PUBLIC_DEMO=false`, `LUMIO_AI_ENABLED=true`, Google OAuth, khóa phiên và AI phía server. Không thay `pnpm dev` để thử localhost HTTP. Nhập secret qua Environment của hosting, không commit vào YAML. Lệnh start từ chối cấu hình thiếu/xung đột; không tắt kiểm tra để ép chạy.
 
-Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang chạy/tài khoản. Chế độ khu vực thêm **200 lượt thử AI/ngày UTC và 3 đồng thời/instance**. Bộ đếm nằm trong bộ nhớ, reset khi restart; không phải ngân sách tiền tuyệt đối hay bộ đếm dùng chung nhiều instance. Credit được kiểm tra trước khi gọi, lỗi hoàn phần giữ. Hosting miễn phí không làm API AI miễn phí.
+Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang chạy/tài khoản. Chế độ khu vực thêm **200 lượt thử AI/ngày UTC và 3 đồng thời**. V3 lưu cửa sổ/lease vào SQLite: các process phải dùng chung đúng tệp DB; không bảo đảm nhiều máy có ổ riêng. Restart giữ counter nếu tệp DB còn; hosting reset DB thì counter cũng reset. Không phải ngân sách tiền tuyệt đối. Credit được kiểm tra trước khi gọi, lỗi hoàn phần giữ. Hosting miễn phí không làm API AI miễn phí.
 
-Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký và phiên gia sư có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư hết hiệu lực 7 ngày, dọn khi truy cập; host tạm có thể mất dữ liệu sớm hơn. Không bật cờ lưu trữ bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật hoặc đồng bộ học liệu đám mây.
+Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục và hàng đợi có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
 
 ## Kiểm tra và minh chứng
 
@@ -61,6 +63,9 @@ pnpm test:http
 pnpm test:regional-tutor
 pnpm test:regional-sources
 pnpm test:regional-learning
+node tests/skill-evidence.cjs
+node scripts/test-ui.cjs --v3-learning
+node scripts/test-ui.cjs --v3-rag
 ```
 
 Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoại AI thật local có báo cáo riêng, không thay OAuth/public hoặc kết quả học sinh. `pnpm services:check` gọi dịch vụ thật và có thể tính phí; không chạy lặp tự động. Kiểm tra bộ đề không bảo đảm mọi câu AI đều đúng. Thiết bị/micro/Zoom thật cần kiểm tra riêng.
@@ -69,7 +74,7 @@ Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoạ
 - [Cá nhân hóa/privacy/giá và UI](docs/regional/LEARNING-PRIVACY-VERIFICATION.md) · [Định vị có nguồn](docs/regional/PRODUCT-POSITIONING.md)
 - [Pilot tự nguyện](docs/regional/STUDENT-PILOT.md) · [Phiếu trống](docs/regional/PILOT-FEEDBACK.md) · [CSV trống](docs/regional/pilot-metrics.csv)
 
-**Thử nghiệm học sinh chưa thực hiện**, không có số người/điểm trước-sau giả. Báo cáo 1.x là lịch sử, không thay nghiệm thu 2.0. Chỉ dùng URL public/GitHub/Drive và trạng thái nộp đã được báo cáo cuối xác minh.
+**Thử nghiệm học sinh chưa thực hiện**, không có số người/điểm trước-sau giả. Báo cáo1.x và audit trước nâng cấp là lịch sử; không thay nghiệm thu V2+V3. Chỉ dùng URL public/GitHub/Drive và trạng thái nộp đã được báo cáo cuối xác minh.
 
 ## Cấu trúc
 

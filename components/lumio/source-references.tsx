@@ -117,7 +117,31 @@ export function SourceReferences({
   onOpenSource?: (reference?: SourceReference) => void;
 }) {
   const c = copies[locale],
-    refs = validateReferences(references, source, evidence);
+    refs = [
+      ...validateReferences(
+        references?.filter((r) => !r.rag),
+        source,
+        evidence,
+      ),
+      ...(references || []).filter(
+        (r) =>
+          r.rag &&
+          r.verification === "exact-excerpt" &&
+          typeof r.quote === "string" &&
+          r.quote.length >= 8 &&
+          r.quote.length <= 500 &&
+          /^[a-f0-9]{64}$/.test(r.rag.digest) &&
+          /^[a-f0-9-]{36}$/.test(r.rag.documentId) &&
+          /^[a-f0-9-]{36}$/.test(r.rag.snapshotId) &&
+          typeof r.rag.title === "string" &&
+          r.rag.title.length <= 200 &&
+          Number.isInteger(r.start) &&
+          Number.isInteger(r.end) &&
+          r.end - r.start === r.quote.length &&
+          Number.isInteger(r.paragraph) &&
+          r.paragraph > 0,
+      ),
+    ];
   const [blobURL, setBlobURL] = useState("");
   useEffect(() => {
     if (!item?.blob) {
@@ -129,6 +153,7 @@ export function SourceReferences({
     return () => URL.revokeObjectURL(url);
   }, [item?.blob]);
   function href(ref: SourceReference) {
+    if (ref.rag) return undefined;
     if (item?.kind === "pdf" && blobURL)
       return `${blobURL}${ref.page ? `#page=${ref.page}` : ""}`;
     try {
@@ -164,14 +189,15 @@ export function SourceReferences({
         <>
           {refs.map((ref) => (
             <details
-              key={`${ref.segmentId}:${ref.start}`}
+              key={`${ref.rag?.documentId || ""}:${ref.segmentId}:${ref.start}`}
               className={styles.reference}
               open={refs.length === 1}
             >
               <summary>
                 <Quote size={15} />
                 <span>
-                  {evidence?.filename ||
+                  {ref.rag?.title ||
+                    evidence?.filename ||
                     item?.fileName ||
                     item?.title ||
                     c.title}
@@ -191,7 +217,7 @@ export function SourceReferences({
                 <MathText text={ref.quote} inline />
               </blockquote>
               <div className={styles.actions}>
-                {onOpenSource && (
+                {onOpenSource && !ref.rag && (
                   <button
                     type="button"
                     className="lm-button"

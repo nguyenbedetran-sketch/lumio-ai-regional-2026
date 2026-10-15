@@ -1,5 +1,6 @@
 import type { StudyArtifact } from "../ai/summary";
 import type { SourceEvidence, SourceReference } from "../ai/grounding";
+import type { SkillAttemptEvidence } from "./skill-evidence";
 export type ContentKind = "text" | "pdf" | "image" | "audio" | "video" | "link";
 export type Flashcard = {
   id: string;
@@ -21,6 +22,7 @@ export type Attempt = {
   date: string;
   score: number;
   total: number;
+  skillEvidence?: SkillAttemptEvidence;
   answers?: {
     questionId: string;
     selected: number;

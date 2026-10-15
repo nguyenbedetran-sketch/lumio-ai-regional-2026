@@ -1,6 +1,8 @@
-# Lumio AI — ứng dụng Flutter 0.3.0+3
+# Lumio AI — mã nguồn Flutter 0.4.0+4
 
 Ứng dụng **native Flutter**, giao diện Material 3, không dùng WebView. Đây là bản Android debug để kiểm tra sản phẩm; chưa phát hành Google Play và chưa được kiểm tra trên điện thoại vật lý. Mã iOS có sẵn nhưng chưa build/ký trên macOS.
+
+**Mã nguồn nâng cấp V2 + V3 ngày 15/10/2026:** đã bổ sung tương thích phiên gia sư và thẻ Bản đồng bộ Web riêng. APK0.3 cũ không tự nhận các thay đổi này; đợt source này chưa build APK/IPA hoặc xác nhận Android/iPhone thật. Các kết quả build bên dưới là lịch sử đúng phiên bản được ghi.
 
 ## Mở và chạy code
 
@@ -28,7 +30,19 @@ APK nằm tại `build/app/outputs/flutter-apk/app-debug.apk`. Cài qua `adb ins
 
 Bản release **không gắn chứng thư debug**. Trước khi phát hành cần chủ sở hữu cấu hình khóa upload riêng, ký AAB, hoàn thiện chính sách dữ liệu và kiểm tra thiết bị; không đưa keystore hoặc mật khẩu vào source ZIP. iOS cần macOS, Xcode, signing và tài khoản Apple phù hợp.
 
-## Mới trong 0.3.0+3
+## Mới trong 0.4.0+4 — mã nguồn, chưa build APK/IPA mới
+
+### Bản đồng bộ Web riêng — V3, source-only
+
+Trong Cài đặt → Dữ liệu của bạn có **Bản đồng bộ Web**. Ghép tài khoản, đọc phạm vi rồi bật đồng ý và chọn Nhận / đồng bộ bản web. Công cụ giữ JSON web riêng theo origin/tài khoản; cho nhận danh sách, sửa ghi chú, xuất/nhập đúng bản web JSON, hàng đợi offline và xử lý xung đột. Chỉ sửa ghi chú của bản web, không chuyển toàn bộ trải nghiệm native thành bản web.
+
+**Thư viện native hiện tại vẫn riêng.** `LibraryData` và `StudyItem` có định dạng khác web; không tự đưa backup native vào `/api/sync`. Bản web giữ topic/difficulty, references/sourceEvidence, artifacts, từng đáp án/skillEvidence, không gian, lịch ôn và tùy chọn dưới dạng JSON; không dựng lại qua model native rồi làm mất trường. Nhãn nguồn/citation được giữ không có nghĩa app đã xác minh lại chúng; máy chủ vẫn kiểm tra schema/quyền và có thể loại trường không hỗ trợ hoặc vị trí chưa xác minh. Không có renderer/gia sư/quiz native đầy đủ cho bản web này.
+
+Khi sửa ghi chú rồi mạng lỗi, pending request và ID chống trùng được lưu trước khi gửi; mở lại/thử tiếp dùng cùng ID để đối chiếu ACK mất. Xung đột hoặc máy chủ reset dừng để bạn chọn, không âm thầm ghi đè theo giờ thiết bị. Xuất bản sao trước khi chọn ưu tiên local/server. Xóa bản máy chủ giữ bản web cục bộ/thư viện native, dừng pending cũ và tắt đồng ý. Tắt sync không xóa bản đã gửi; không có tác vụ AI tự động trong sync.
+
+Bản server tối đa7ngày từ lần ghi, có thể mất sớm trên free host. Không có PDF/ảnh/audio/video gốc hoặc đồng hồ focus đang chạy. Tệp snapshot/outbox cục bộ không chứa token/API key và không mã hóa nội dung học ở cấp app; token Lumio vẫn nằm trong secure storage riêng. Token/session/account đổi khi request đang chờ thì không apply response cũ vào account mới. Preview browser không dùng kho native này.
+
+Đây là phạm vi **PARTIAL** so với đồng bộ toàn bộ học tập native. Kiểm tra source/core/API mock/file/widget được ghi ở `test/web_sync_test.dart` và `test/web_sync_widget_test.dart`; không thay một lần ghép/sync trên điện thoại thật. Không có APK mới trong đợt này.
 
 ### Bản vá mã nguồn vòng khu vực — 15/10/2026
 
@@ -65,7 +79,7 @@ Phạm vi, kiểm tra và ảnh widget thật: [MOTION-UPGRADE.md](docs/MOTION-U
 
 ## Kết nối tài khoản và AI
 
-Không đặt API key hoặc OAuth secret trong app. App dùng token thiết bị lưu bằng `flutter_secure_storage`; thư viện học tách theo máy chủ và tài khoản, chưa đồng bộ đám mây.
+Không đặt API key hoặc OAuth secret trong app. App dùng token thiết bị lưu bằng `flutter_secure_storage`; thư viện native tách theo máy chủ/tài khoản và vẫn riêng. Thẻ Bản đồng bộ Web là snapshot riêng chủ động như phần V3 bên trên.
 
 1. Chạy/cấu hình backend Lumio hoặc dùng máy chủ HTTPS của bạn. Đăng nhập Google/Facebook **trên web**, mở `/mobile`, tạo mã ghép có hạn 5 phút.
 2. Trong app mở **Cài đặt → Kết nối tài khoản**, nhập đúng origin máy chủ (không thêm đường dẫn), dán mã ghép và xác nhận.
@@ -87,6 +101,7 @@ Các endpoint tích hợp:
 | `POST /api/mobile/pair/exchange` | Đổi mã một lần lấy token; `expiresAt` là Unix milliseconds |
 | `GET /api/mobile/account` | Tài khoản, hạn phiên, quyền tính năng và credit |
 | `DELETE /api/mobile/account` | Thu hồi thiết bị hiện tại |
+| `GET/PUT/DELETE /api/sync` | Snapshot web riêng, bearer Lumio + `X-Lumio-User` đúng canonical ID; epoch/revision/idempotency |
 | `POST /api/ai` | Chat/tóm tắt/cards/quiz theo hợp đồng backend Lumio |
 | `POST /api/voice` | Multipart âm thanh để chép lời hoặc JSON văn bản để đọc |
 
@@ -98,7 +113,7 @@ Các endpoint tích hợp:
 - Android backup/transfer tự động bị tắt để tránh sao chép token và dữ liệu tài khoản. Gỡ app có thể mất dữ liệu; nên xuất bản sao trước.
 - Ghi âm tối đa 120 giây, backend tối đa 8 MB; đọc tối đa 3.000 ký tự. Không tự gửi âm thanh ngay sau khi ghi. File ghi âm/phát lại là tệp tạm.
 - Chuông tập trung hoạt động khi app đang mở. Khi bị đưa nền/khóa màn hình, không cam kết báo đúng thời điểm; lúc mở lại app đối chiếu thời gian kết thúc và ghi nhận hoàn thành một lần. Chưa dùng foreground service hoặc exact alarm hệ điều hành.
-- Bản native hiện nhận văn bản; chưa nhập trực tiếp PDF/video/website như bản web. Chưa có push notification, thanh toán trong app, đăng nhập OAuth native trực tiếp hoặc đồng bộ thư viện web–điện thoại.
+- Bản native hiện nhận văn bản; chưa nhập trực tiếp PDF/video/website như bản web. Chưa có push notification, thanh toán trong app hoặc OAuth native trực tiếp. Bản Web riêng có sync có giới hạn; chưa hợp nhất thư viện/tiến độ native với web.
 - `flutter run -d chrome` chỉ là bản xem giao diện không lưu dữ liệu lâu dài và không ghép thiết bị. APK mới là luồng native có lưu tệp/secure storage/microphone.
 - AI có thể sai; đối chiếu nội dung và công thức với tài liệu gốc. Phạm vi hiển thị toán và khả năng truy cập được ghi trong `docs/MATH.md`.
 

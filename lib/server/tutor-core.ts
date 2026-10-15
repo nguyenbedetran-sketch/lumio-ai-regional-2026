@@ -40,6 +40,7 @@ export function tutorSourceDigest(input: AIInput) {
         input.media?.data,
         input.youtubeUrl,
         input.videoRange,
+        input.ragContext?.id,
       ]),
     )
     .digest("hex");

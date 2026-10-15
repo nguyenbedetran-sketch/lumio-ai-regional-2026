@@ -2,7 +2,7 @@ export type PlanId = "free" | "plus" | "premium" | "pro";
 export type BillingMode = "quick" | "think" | "deep" | "tutor";
 export type UsageKind = "text" | "image" | "pdf" | "audio" | "video";
 export type BillingTask =
-  "chat" | "summary" | "cards" | "quiz" | "speech" | "transcription";
+  "chat" | "summary" | "cards" | "quiz" | "speech" | "transcription" | "index";
 export interface ReserveUsageInput {
   userId: string;
   sessionVersion: number;
@@ -81,6 +81,7 @@ export const CREDIT_RATES = {
     quiz: 8,
     speech: 8,
     transcription: 12,
+    index: 2,
   },
   modes: { quick: 0, tutor: 2, think: 6, deep: 18 },
   kinds: { text: 0, image: 4, pdf: 8, audio: 12, video: 0 },

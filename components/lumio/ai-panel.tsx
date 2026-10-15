@@ -48,9 +48,16 @@ import { VideoDurationProbe } from "./video-duration-probe";
 import { AudioReadout } from "./audio-readout";
 import { OutboundDataNotice } from "./outbound-data-notice";
 import { SourceReferences, ContentQualityNotice } from "./source-references";
-import { TutorProgress, MathVerificationNotice, tutorUICopy } from "./tutor-progress";
+import {
+  TutorProgress,
+  MathVerificationNotice,
+  tutorUICopy,
+} from "./tutor-progress";
 import type { TutorState, MathVerification } from "../../lib/tutor/types";
 import type { SourceReference } from "../../lib/ai/grounding";
+import { RAGScopeSelector, ragError } from "./rag-manager";
+import { SummaryJobManager } from "./summary-job-manager";
+import { parseRagScope, type RagScope } from "../../lib/rag/types";
 function blobData(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -92,17 +99,35 @@ export function AIPanel({
     [error, setError] = useState(""),
     [result, setResult] = useState<AIResult | null>(null),
     [history, setHistory] = useState<
-      { role: "user" | "assistant"; text: string; references?:SourceReference[]; verification?:MathVerification }[]
+      {
+        role: "user" | "assistant";
+        text: string;
+        references?: SourceReference[];
+        verification?: MathVerification;
+      }[]
     >([]),
     [notice, setNotice] = useState("");
-  const [tutorState, setTutorState] = useState<TutorState|null>(null);
+  const [tutorState, setTutorState] = useState<TutorState | null>(null);
   const [restoringSession, setRestoringSession] = useState(true);
-  const tutorSlot = useRef<string|null>(null);
+  const tutorSlot = useRef<string | null>(null);
   const tutorSourceStamp = useRef("");
   const tutorCopy = tutorUICopy[locale];
+  const [ragScope, setRagScope] = useState<RagScope | undefined>();
+  const [ragWarning, setRagWarning] = useState(false);
+  const activeRag = task === "chat" && ragScope;
+  const ragSelectionKey = JSON.stringify(
+    ragScope
+      ? [ragScope.workspaceId, [...ragScope.documentIds].sort(), ragScope.mode]
+      : null,
+  );
   const extractedText = !!item.sourceEvidence && !!item.text.trim();
-  const needsDocumentExtraction = !!item.blob && /\.(docx|pptx)$/i.test(item.fileName||"") && !extractedText;
-  const sendRawMedia = !!item.blob && !extractedText && !needsDocumentExtraction;
+  const needsDocumentExtraction =
+    !activeRag &&
+    !!item.blob &&
+    /\.(docx|pptx)$/i.test(item.fileName || "") &&
+    !extractedText;
+  const sendRawMedia =
+    !activeRag && !!item.blob && !extractedText && !needsDocumentExtraction;
   const [mode, setMode] = useState<TutorMode>("tutor"),
     [difficulty, setDifficulty] =
       useState<AIInput["difficulty"]>("intermediate"),
@@ -123,43 +148,200 @@ export function AIPanel({
     const controller = new AbortController();
     let active = true;
     tutorSlot.current = null;
-    setTutorState(null); setHistory([]); setGuidance("hints"); setResult(null); setRestoringSession(true);
+    setTutorState(null);
+    setHistory([]);
+    setGuidance("hints");
+    setResult(null);
+    setRagWarning(false);
+    setRestoringSession(true);
     void (async () => {
       try {
-        const identityResponse = await fetch("/api/auth/session", {signal:controller.signal,cache:"no-store"});
-        const identity = identityResponse.ok ? await identityResponse.json() : null;
+        const response = await fetch("/api/auth/session", {
+          signal: controller.signal,
+          cache: "no-store",
+        });
+        const identity = response.ok ? await response.json() : null;
         if (!active || typeof identity?.userId !== "string") return;
         const slot = `lumio-tutor-v2:${identity.userId}:${item.id}:${language}`;
-        const mediaHash = item.blob ? Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",await item.blob.arrayBuffer()))).map(b=>b.toString(16).padStart(2,"0")).join("") : "";
-        const context = new TextEncoder().encode(JSON.stringify([item.text,item.url,item.fileName,mediaHash,useVideo,rangeStart,rangeEnd]));
-        const stamp = Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",context))).map(b=>b.toString(16).padStart(2,"0")).join("");
+        let saved: {
+          sessionId?: string;
+          stamp?: string;
+          ragScope?: RagScope;
+        } | null = null;
+        try {
+          saved = JSON.parse(localStorage.getItem(slot) || "null");
+        } catch {}
+        let restoredScope = ragScope;
+        try {
+          if (!restoredScope && saved?.ragScope)
+            restoredScope = parseRagScope(saved.ragScope);
+        } catch {
+          saved = null;
+        }
+        const mediaHash = item.blob
+          ? Array.from(
+              new Uint8Array(
+                await crypto.subtle.digest(
+                  "SHA-256",
+                  await item.blob.arrayBuffer(),
+                ),
+              ),
+            )
+              .map((b) => b.toString(16).padStart(2, "0"))
+              .join("")
+          : "";
+        const selection = restoredScope
+          ? [
+              restoredScope.workspaceId,
+              [...restoredScope.documentIds].sort(),
+              restoredScope.mode,
+            ]
+          : null;
+        const context = new TextEncoder().encode(
+          JSON.stringify([
+            item.text,
+            item.url,
+            item.fileName,
+            mediaHash,
+            useVideo,
+            rangeStart,
+            rangeEnd,
+            selection,
+          ]),
+        );
+        const stamp = Array.from(
+          new Uint8Array(await crypto.subtle.digest("SHA-256", context)),
+        )
+          .map((b) => b.toString(16).padStart(2, "0"))
+          .join("");
         if (!active) return;
-        tutorSlot.current = slot; tutorSourceStamp.current = stamp;
-        let saved: {sessionId?:string;stamp?:string}|null = null;
-        try {saved=JSON.parse(localStorage.getItem(slot)||"null");} catch {}
-        if (!saved?.sessionId || saved.stamp!==stamp) return;
-        const response=await fetch(`/api/tutor/session?sessionId=${encodeURIComponent(saved.sessionId)}`,{signal:controller.signal,cache:"no-store"});
+        tutorSlot.current = slot;
+        tutorSourceStamp.current = stamp;
+        if (!saved?.sessionId || saved.stamp !== stamp) {
+          if (saved?.sessionId)
+            try {
+              localStorage.removeItem(slot);
+            } catch {}
+          return;
+        }
+        if (!ragScope && restoredScope) {
+          setRagScope(restoredScope);
+          return;
+        }
+        if (saved.ragScope?.snapshotId) {
+          const check = await fetch(
+            `/api/rag/documents?snapshotId=${encodeURIComponent(saved.ragScope.snapshotId)}`,
+            { signal: controller.signal, cache: "no-store" },
+          );
+          if (!active) return;
+          if (!check.ok) {
+            try {
+              localStorage.removeItem(slot);
+            } catch {}
+            setRagScope((old) =>
+              old ? { ...old, snapshotId: undefined } : undefined,
+            );
+            setNotice(ragError("RAG_SOURCE_CHANGED", locale === "vi"));
+            return;
+          }
+          const data = await check.json();
+          if (!active) return;
+          setRagScope(saved.ragScope);
+          setRagWarning(data.snapshot?.potentialConflict === true);
+        }
+        const restored = await fetch(
+          `/api/tutor/session?sessionId=${encodeURIComponent(saved.sessionId)}`,
+          { signal: controller.signal, cache: "no-store" },
+        );
         if (!active) return;
-        if (!response.ok) {try {localStorage.removeItem(slot);} catch {} setNotice(tutorCopy.expired);return;}
-        const session=await response.json();
+        if (!restored.ok) {
+          try {
+            localStorage.removeItem(slot);
+          } catch {}
+          setNotice(tutorCopy.expired);
+          return;
+        }
+        const session = await restored.json();
         if (!active || !Array.isArray(session.turns)) return;
         setTutorState(session as TutorState);
-        setHistory(session.turns.slice(-100).flatMap((turn:{student:string;assistant:string;references?:SourceReference[];verification?:MathVerification})=>[
-          {role:"user" as const,text:turn.student},
-          {role:"assistant" as const,text:turn.assistant,references:turn.references,verification:turn.verification},
-        ]));
-      } catch { /* Session IDs are only a convenience; server ownership remains authoritative. */ }
-      finally {if(active)setRestoringSession(false);}
+        setHistory(
+          session.turns
+            .slice(-100)
+            .flatMap(
+              (turn: {
+                student: string;
+                assistant: string;
+                references?: SourceReference[];
+                verification?: MathVerification;
+              }) => [
+                { role: "user" as const, text: turn.student },
+                {
+                  role: "assistant" as const,
+                  text: turn.assistant,
+                  references: turn.references,
+                  verification: turn.verification,
+                },
+              ],
+            ),
+        );
+      } catch {
+      } finally {
+        if (active) setRestoringSession(false);
+      }
     })();
-    return ()=>{active=false;controller.abort();abort.current?.abort();};
-  },[item.id,item.text,item.url,item.blob,item.fileName,language,useVideo,rangeStart,rangeEnd]);
-  function rememberTutor(state:TutorState) {
+    return () => {
+      active = false;
+      controller.abort();
+      abort.current?.abort();
+    };
+  }, [
+    item.id,
+    item.text,
+    item.url,
+    item.blob,
+    item.fileName,
+    language,
+    useVideo,
+    rangeStart,
+    rangeEnd,
+    ragSelectionKey,
+  ]);
+  function rememberTutor(state: TutorState, retrieval?: AIResult["rag"]) {
     setTutorState(state);
-    if (tutorSlot.current) try {localStorage.setItem(tutorSlot.current,JSON.stringify({sessionId:state.sessionId,stamp:tutorSourceStamp.current}));} catch {}
+    const nextScope = ragScope
+      ? {
+          ...ragScope,
+          snapshotId: retrieval?.snapshotId || ragScope.snapshotId,
+        }
+      : undefined;
+    if (nextScope) setRagScope(nextScope);
+    if (retrieval) setRagWarning(retrieval.potentialConflict);
+    if (tutorSlot.current)
+      try {
+        localStorage.setItem(
+          tutorSlot.current,
+          JSON.stringify({
+            sessionId: state.sessionId,
+            stamp: tutorSourceStamp.current,
+            ragScope: nextScope,
+          }),
+        );
+      } catch {}
   }
   function newTutorProblem() {
-    if (tutorSlot.current) try {localStorage.removeItem(tutorSlot.current);} catch {}
-    setTutorState(null);setHistory([]);setResult(null);setQuestion("");setGuidance("hints");setError("");setNotice("");
+    if (tutorSlot.current)
+      try {
+        localStorage.removeItem(tutorSlot.current);
+      } catch {}
+    setRagScope((old) => (old ? { ...old, snapshotId: undefined } : undefined));
+    setRagWarning(false);
+    setTutorState(null);
+    setHistory([]);
+    setResult(null);
+    setQuestion("");
+    setGuidance("hints");
+    setError("");
+    setNotice("");
   }
   const [scope, setScope] = useState<"whole" | "range">("whole"),
     [detectedDuration, setDetectedDuration] = useState<number | null>(null),
@@ -174,7 +356,8 @@ export function AIPanel({
     result?: AIResult;
   } | null>(null);
   const hasVideo =
-      !!(useVideo && video) || (item.kind === "video" && !!item.blob),
+      !activeRag &&
+      (!!(useVideo && video) || (item.kind === "video" && !!item.blob)),
     startSeconds = parseClock(rangeStart),
     endSeconds = parseClock(rangeEnd);
   const rangeValid =
@@ -247,7 +430,7 @@ export function AIPanel({
     return () => abort.current?.abort();
   }, []);
   const capability =
-    sendRawMedia || (useVideo && video)
+    sendRawMedia || (!activeRag && useVideo && video)
       ? "media"
       : task === "summary"
         ? "summary"
@@ -255,7 +438,13 @@ export function AIPanel({
   const enabled = !!config?.capabilities?.[capability];
   const blocked = busy || readoutActive || restoringSession;
   async function generate() {
-    if (locked.current || reading.current || restoringSession || needsDocumentExtraction) return;
+    if (
+      locked.current ||
+      reading.current ||
+      restoringSession ||
+      needsDocumentExtraction
+    )
+      return;
     setError("");
     setNotice("");
     if (needsRange && !rangeValid) {
@@ -279,41 +468,48 @@ export function AIPanel({
       setError(full.truncated);
       return;
     }
-    if (item.text.length > 200000 || (sendRawMedia && (item.blob?.size || 0) > 6 * 1024 * 1024)) {
+    if (
+      item.text.length > 200000 ||
+      (sendRawMedia && (item.blob?.size || 0) > 6 * 1024 * 1024)
+    ) {
       setError(a.tooLarge);
       return;
     }
     setBusy(true);
     locked.current = true;
     abort.current = new AbortController();
-    const requestSlot = tutorSlot.current, requestStamp = tutorSourceStamp.current;
+    const requestSlot = tutorSlot.current,
+      requestStamp = tutorSourceStamp.current;
     try {
-      const media = sendRawMedia && item.blob
-        ? {
-            mimeType: (
-              item.blob.type || (item.kind === "pdf" ? "application/pdf" : "")
-            ).split(";")[0],
-            data: await blobData(item.blob),
-          }
-        : undefined;
+      const media =
+        sendRawMedia && item.blob
+          ? {
+              mimeType: (
+                item.blob.type || (item.kind === "pdf" ? "application/pdf" : "")
+              ).split(";")[0],
+              data: await blobData(item.blob),
+            }
+          : undefined;
       const input: AIInput = {
         task,
         question,
-        source: item.text,
-        sourceEvidence: item.sourceEvidence,
+        source: activeRag ? "" : item.text,
+        sourceEvidence: activeRag ? undefined : item.sourceEvidence,
+        ragScope: activeRag || undefined,
         language,
         media,
         // The server loads the canonical tutor history; no duplicate browser transcript is sent.
         history: [],
         tutorSessionId: task === "chat" ? tutorState?.sessionId : undefined,
-        tutorProblem: task === "chat" && !tutorState ? question.trim() : undefined,
+        tutorProblem:
+          task === "chat" && !tutorState ? question.trim() : undefined,
         mode: task === "chat" ? mode : "quick",
         difficulty,
         guidance,
         presentation,
         mathStyle,
         goal,
-        youtubeUrl: useVideo && video ? video : undefined,
+        youtubeUrl: !activeRag && useVideo && video ? video : undefined,
         videoRange: selectedRange,
       };
       async function requestAI(
@@ -331,8 +527,16 @@ export function AIPanel({
           throw new Error("PROVIDER_ERROR");
         const body = await response.json();
         if (body.tutor && task === "chat") {
-          if (itemRef.current.id!==item.id || itemRef.current.text!==item.text || itemRef.current.url!==item.url || itemRef.current.blob!==item.blob || requestSlot!==tutorSlot.current || requestStamp!==tutorSourceStamp.current) throw new Error("SOURCE_CHANGED");
-          rememberTutor(body.tutor);
+          if (
+            itemRef.current.id !== item.id ||
+            itemRef.current.text !== item.text ||
+            itemRef.current.url !== item.url ||
+            itemRef.current.blob !== item.blob ||
+            requestSlot !== tutorSlot.current ||
+            requestStamp !== tutorSourceStamp.current
+          )
+            throw new Error("SOURCE_CHANGED");
+          rememberTutor(body.tutor, body.rag);
         }
         if (!response.ok) throw new Error(body.error || "PROVIDER_ERROR");
         return body as AIResult;
@@ -436,7 +640,12 @@ export function AIPanel({
             [
               ...h,
               { role: "user", text: question },
-              { role: "assistant", text: r.text, references:r.references, verification:r.verification },
+              {
+                role: "assistant",
+                text: r.text,
+                references: r.references,
+                verification: r.verification,
+              },
             ].slice(-200) as typeof h,
         );
         setQuestion("");
@@ -466,12 +675,23 @@ export function AIPanel({
         setError(
           e instanceof Error && e.message === "SOURCE_CHANGED"
             ? full.sourceChanged
-            : e instanceof Error && e.message === "TUTOR_LOCKED" ? tutorCopy.rule
-            : e instanceof Error && ["TUTOR_CONTEXT_CHANGED","TUTOR_SESSION_EXPIRED","TUTOR_SESSION_NOT_FOUND"].includes(e.message) ? tutorCopy.expired
-            : aiErrorMessage(
-                e instanceof Error ? e.message : "PROVIDER_ERROR",
-                locale,
-              ),
+            : e instanceof Error && e.message === "TUTOR_LOCKED"
+              ? tutorCopy.rule
+              : e instanceof Error && (e.message.startsWith("RAG_")||e.message.startsWith("EMBEDDING"))
+                ? ragError(e.message, locale === "vi")
+                : e instanceof Error && e.message === "INVALID_RAG_OUTPUT"
+                  ? ragError(e.message, locale === "vi")
+                  : e instanceof Error &&
+                      [
+                        "TUTOR_CONTEXT_CHANGED",
+                        "TUTOR_SESSION_EXPIRED",
+                        "TUTOR_SESSION_NOT_FOUND",
+                      ].includes(e.message)
+                    ? tutorCopy.expired
+                    : aiErrorMessage(
+                        e instanceof Error ? e.message : "PROVIDER_ERROR",
+                        locale,
+                      ),
         );
     } finally {
       locked.current = false;
@@ -562,10 +782,49 @@ export function AIPanel({
       <div className="lm-source-chip">
         <BookOpen size={15} />
         <span>
-          {copy.source} <strong>{item.title}</strong>
+          {activeRag
+            ? locale === "vi"
+              ? "Đang đối chiếu"
+              : "Comparing indexed sources"
+            : copy.source}{" "}
+          <strong>
+            {activeRag
+              ? `${ragScope.documentIds.length} ${locale === "vi" ? "học liệu đã chọn" : "selected sources"}`
+              : item.title}
+          </strong>
         </span>
       </div>
-      {needsDocumentExtraction && <div className="lm-soft-notice" role="status"><BookOpen size={20}/><div><p>{tutorCopy.extract}</p>{onOpenSource&&<button className="lm-button" onClick={onOpenSource}>{learning.source}<ArrowUpRight size={15}/></button>}</div></div>}
+      {task === "summary" && (
+        <details className="lm-panel" style={{ marginBlock: 16 }}>
+          <summary>
+            {locale === "vi"
+              ? "Tùy chọn: tóm tắt chạy nền, có thể tiếp tục"
+              : "Optional: resumable background summary"}
+          </summary>
+          <SummaryJobManager
+            key={`${item.id}:${language}`}
+            locale={language}
+            title={item.title}
+            source={item.text}
+            clientItemId={item.id}
+            youtubeUrl={video || undefined}
+          />
+        </details>
+      )}
+      {needsDocumentExtraction && (
+        <div className="lm-soft-notice" role="status">
+          <BookOpen size={20} />
+          <div>
+            <p>{tutorCopy.extract}</p>
+            {onOpenSource && (
+              <button className="lm-button" onClick={onOpenSource}>
+                {learning.source}
+                <ArrowUpRight size={15} />
+              </button>
+            )}
+          </div>
+        </div>
+      )}
       {item.kind === "link" && !item.text && !video && (
         <div className="lm-soft-notice">
           <BookOpen size={20} />
@@ -720,11 +979,22 @@ export function AIPanel({
       )}
       {task === "chat" && (
         <div className="lm-tutor-settings">
-          <TutorProgress locale={locale} state={tutorState} disabled={blocked} restoring={restoringSession} onNew={newTutorProblem} onUnlock={()=>{
-            if (!tutorState?.canUnlock) return;
-            setGuidance("full");
-            setQuestion(locale==="vi"?"Mình đã thử các gợi ý. Hãy trình bày lời giải đầy đủ, có điều kiện và kiểm tra kết quả.":"I have worked through the hints. Please show the complete solution with conditions and a result check.");
-          }}/>
+          <TutorProgress
+            locale={locale}
+            state={tutorState}
+            disabled={blocked}
+            restoring={restoringSession}
+            onNew={newTutorProblem}
+            onUnlock={() => {
+              if (!tutorState?.canUnlock) return;
+              setGuidance("full");
+              setQuestion(
+                locale === "vi"
+                  ? "Mình đã thử các gợi ý. Hãy trình bày lời giải đầy đủ, có điều kiện và kiểm tra kết quả."
+                  : "I have worked through the hints. Please show the complete solution with conditions and a result check.",
+              );
+            }}
+          />
           <div
             className="lm-tutor-modes"
             role="group"
@@ -789,7 +1059,10 @@ export function AIPanel({
                   }
                 >
                   <option value="hints">{learning.hint}</option>
-                  <option value="full" disabled={!tutorState?.canUnlock}>{learning.full}{!tutorState?.canUnlock?" 🔒":""}</option>
+                  <option value="full" disabled={!tutorState?.canUnlock}>
+                    {learning.full}
+                    {!tutorState?.canUnlock ? " 🔒" : ""}
+                  </option>
                 </select>
               </label>
               <label>
@@ -859,8 +1132,82 @@ export function AIPanel({
           ))}
         </div>
       )}
-      {task==="chat"&&history.length>0&&<section className="lm-tutor-conversation" aria-label={tutorCopy.history} data-tutor-history><h4>{tutorCopy.history}</h4>{history.map((turn,index)=><article className={`lm-tutor-message ${turn.role}`} key={index}><small>{turn.role==="user"?tutorCopy.you:tutorCopy.tutor}</small><MathText text={turn.text}/>{turn.role==="assistant"&&<><SourceReferences references={turn.references} source={item.text} evidence={item.sourceEvidence} item={item} locale={locale} onOpenSource={onOpenSource}/><MathVerificationNotice verification={turn.verification} locale={locale}/></>}</article>)}</section>}
-      {enabled && <OutboundDataNotice locale={locale} action={task==="cards"?"flashcards":task} sourceCharacters={item.text.length} questionCharacters={question.trim().length} historyMessages={task==="chat"?history.length:0} tutorSession={task==="chat"} mediaKind={sendRawMedia&&["image","pdf","audio","video"].includes(item.kind)?item.kind as "image"|"pdf"|"audio"|"video":undefined} videoUrl={!!(useVideo&&video)}/>}
+      {task === "chat" && (
+        <RAGScopeSelector
+          workspaceId={item.spaceId || "main"}
+          locale={locale}
+          value={ragScope}
+          disabled={blocked}
+          onChange={(value) => {
+            newTutorProblem();
+            setRagScope(value);
+          }}
+        />
+      )}
+      {activeRag && (
+        <p className="lm-soft-notice" role="note">
+          {locale === "vi"
+            ? "Câu hỏi, các đoạn truy xuất trong nguồn đã chọn và lịch sử bài hiện tại được gửi tới dịch vụ AI bên ngoài. Không gửi tệp gốc hoặc toàn bộ kho nguồn. Trích dẫn khớp nguồn không chứng minh câu trả lời đúng."
+            : "Your question, retrieved excerpts from selected sources and this exercise history are sent to an external AI service. Original files and the whole index are not sent. Matching citations do not prove the answer is correct."}
+        </p>
+      )}
+      {ragWarning && (
+        <p className="lm-soft-notice" role="status">
+          {locale === "vi"
+            ? "Có thể có dữ kiện số mâu thuẫn trong các đoạn truy xuất. Hãy đối chiếu từng nguồn; chưa có xác minh ngữ nghĩa tự động."
+            : "Retrieved excerpts may contain conflicting numeric facts. Compare each source; this is not automatic semantic verification."}
+        </p>
+      )}
+      {task === "chat" && history.length > 0 && (
+        <section
+          className="lm-tutor-conversation"
+          aria-label={tutorCopy.history}
+          data-tutor-history
+        >
+          <h4>{tutorCopy.history}</h4>
+          {history.map((turn, index) => (
+            <article className={`lm-tutor-message ${turn.role}`} key={index}>
+              <small>
+                {turn.role === "user" ? tutorCopy.you : tutorCopy.tutor}
+              </small>
+              <MathText text={turn.text} />
+              {turn.role === "assistant" && (
+                <>
+                  <SourceReferences
+                    references={turn.references}
+                    source={item.text}
+                    evidence={item.sourceEvidence}
+                    item={item}
+                    locale={locale}
+                    onOpenSource={onOpenSource}
+                  />
+                  <MathVerificationNotice
+                    verification={turn.verification}
+                    locale={locale}
+                  />
+                </>
+              )}
+            </article>
+          ))}
+        </section>
+      )}
+      {enabled && !activeRag && (
+        <OutboundDataNotice
+          locale={locale}
+          action={task === "cards" ? "flashcards" : task}
+          sourceCharacters={item.text.length}
+          questionCharacters={question.trim().length}
+          historyMessages={task === "chat" ? history.length : 0}
+          tutorSession={task === "chat"}
+          mediaKind={
+            sendRawMedia &&
+            ["image", "pdf", "audio", "video"].includes(item.kind)
+              ? (item.kind as "image" | "pdf" | "audio" | "video")
+              : undefined
+          }
+          videoUrl={!!(useVideo && video)}
+        />
+      )}
       <div className="lm-composer">
         {task === "chat" ? (
           <textarea
@@ -1011,24 +1358,35 @@ export function AIPanel({
           <small>
             <Sparkles size={14} /> {copy.answer}
           </small>
-          {task!=="chat"&&<MathText
-            text={
-              result.cards
-                ? result.cards
-                    .map((c, i) => `${i + 1}. ${c.front}\n${c.back}`)
-                    .join("\n\n")
-                : result.questions
-                  ? result.questions
-                      .map(
-                        (q, i) =>
-                          `${i + 1}. ${q.prompt}\n${q.options.join(" / ")}\n${t.correct}: ${q.options[q.correct]}\n${q.explanation}`,
-                      )
+          {task !== "chat" && (
+            <MathText
+              text={
+                result.cards
+                  ? result.cards
+                      .map((c, i) => `${i + 1}. ${c.front}\n${c.back}`)
                       .join("\n\n")
-                  : result.text
-            }
-          />}
-          {task!=="chat"&&<SourceReferences references={result.references} source={item.text} evidence={item.sourceEvidence} item={item} locale={locale} onOpenSource={onOpenSource}/>}
-          <ContentQualityNotice quality={result.quality} locale={locale}/>
+                  : result.questions
+                    ? result.questions
+                        .map(
+                          (q, i) =>
+                            `${i + 1}. ${q.prompt}\n${q.options.join(" / ")}\n${t.correct}: ${q.options[q.correct]}\n${q.explanation}`,
+                        )
+                        .join("\n\n")
+                    : result.text
+              }
+            />
+          )}
+          {task !== "chat" && (
+            <SourceReferences
+              references={result.references}
+              source={item.text}
+              evidence={item.sourceEvidence}
+              item={item}
+              locale={locale}
+              onOpenSource={onOpenSource}
+            />
+          )}
+          <ContentQualityNotice quality={result.quality} locale={locale} />
           <p className="lm-help">{a.review}</p>
           <button
             className="lm-button"
@@ -1049,7 +1407,15 @@ export function AIPanel({
         (config?.capabilities?.transcription && item.kind === "audio")) && (
         <div className="lm-voice-inline">
           <div className="lm-row">
-            {config.capabilities.transcription && item.kind==="audio"&&item.blob&&<OutboundDataNotice locale={locale} action="transcription" mediaKind="audio"/>}
+            {config.capabilities.transcription &&
+              item.kind === "audio" &&
+              item.blob && (
+                <OutboundDataNotice
+                  locale={locale}
+                  action="transcription"
+                  mediaKind="audio"
+                />
+              )}
             {config.capabilities.transcription &&
               item.kind === "audio" &&
               item.blob && (

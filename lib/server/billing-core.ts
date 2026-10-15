@@ -347,18 +347,62 @@ export function createBillingStore(ctx: Context) {
   const settleUsage = (input: {
     userId: string;
     reservationId: string;
+    additionalReservationIds?: string[];
     onSettled?: () => void;
-  }) =>
-    transaction(() => {
+  }) => {
+    const additional =
+      input.additionalReservationIds === undefined
+        ? []
+        : input.additionalReservationIds;
+    if (
+      !Array.isArray(additional) ||
+      additional.length > 4 ||
+      additional.some(
+        (id) => typeof id !== "string" || !/^[\w-]{1,100}$/.test(id),
+      ) ||
+      new Set(additional).size !== additional.length ||
+      additional.includes(input.reservationId)
+    )
+      throw new PlatformError("INVALID_RESERVATION_GROUP");
+    return transaction(() => {
+      if (additional.length) {
+        const find = db.prepare(
+          "SELECT status FROM billing_reservations WHERE id=? AND user_id=?",
+        );
+        const primary = find.get(input.reservationId, input.userId),
+          others = additional.map((id) => find.get(id, input.userId));
+        if (!primary || others.some((row) => !row))
+          throw new PlatformError("BILLING_RESERVATION_NOT_FOUND", 404);
+        if (primary.status === "settled") {
+          if (others.some((row) => row!.status !== "settled"))
+            throw new PlatformError("BILLING_GROUP_FINALIZED", 409);
+          return { status: "settled", changed: false };
+        }
+        if (
+          primary.status !== "reserved" ||
+          others.some((row) => row!.status !== "reserved")
+        )
+          throw new PlatformError("BILLING_GROUP_FINALIZED", 409);
+      }
       const result = finalize(
         input.userId,
         input.reservationId,
         "settled",
         "Đã sử dụng credits cho kết quả AI.",
       );
-      if (result.changed && result.status === "settled") input.onSettled?.();
+      if (result.changed && result.status === "settled") {
+        for (const id of additional)
+          finalize(
+            input.userId,
+            id,
+            "settled",
+            "Đã sử dụng credits cho xử lý ngữ nghĩa cùng yêu cầu.",
+          );
+        input.onSettled?.();
+      }
       return result;
     });
+  };
   const failUsage = (input: { userId: string; reservationId: string }) =>
     transaction(() =>
       finalize(

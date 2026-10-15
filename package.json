@@ -1,13 +1,13 @@
 {
   "name": "lumio-ai",
-  "version": "2.0.0-regional.1",
+  "version": "3.0.0-regional.1",
   "private": true,
   "scripts": {
     "dev": "node preview.cjs",
     "build": "next build",
     "typecheck": "tsc --noEmit",
     "start": "next start",
-    "test": "node tests/core.cjs && node tests/ingestion.cjs && node tests/learning.cjs && node tests/library-concurrency.cjs && node tests/recommendations.cjs && node tests/admin.cjs && node tests/auth-security.cjs && node tests/metadata.cjs && node tests/billing.cjs && node tests/ai-billing.cjs && node tests/public-demo.cjs && node tests/mobile.cjs && node tests/voice.cjs && node tests/mobile-ai.cjs && node tests/command-menu.cjs && node tests/supabase-mcp.cjs && node tests/motion-policy.cjs && node tests/dashboard-insights.cjs && node tests/study-v3.cjs && node tests/meeting-capture.cjs && node tests/desktop.cjs && node tests/full-summary.cjs && node tests/readout.cjs && node tests/source-grounding.cjs && node tests/tutor.cjs && node tests/tutor-api.cjs && node tests/regional-preview.cjs",
+    "test": "node tests/core.cjs && node tests/ingestion.cjs && node tests/learning.cjs && node tests/library-concurrency.cjs && node tests/recommendations.cjs && node tests/admin.cjs && node tests/auth-security.cjs && node tests/metadata.cjs && node tests/billing.cjs && node tests/ai-billing.cjs && node tests/public-demo.cjs && node tests/mobile.cjs && node tests/voice.cjs && node tests/mobile-ai.cjs && node tests/command-menu.cjs && node tests/supabase-mcp.cjs && node tests/motion-policy.cjs && node tests/dashboard-insights.cjs && node tests/study-v3.cjs && node tests/meeting-capture.cjs && node tests/desktop.cjs && node tests/full-summary.cjs && node tests/readout.cjs && node tests/source-grounding.cjs && node tests/tutor.cjs && node tests/tutor-api.cjs && node tests/regional-preview.cjs && node tests/math-exact.cjs && node tests/runtime-sync.cjs && node tests/rag.cjs && node tests/rag-api.cjs && node tests/summary-jobs.cjs && node tests/skill-evidence.cjs && node tests/operations.cjs && node tests/billing-group.cjs && node tests/sync-http.cjs && node tests/sync-client-faults.cjs",
     "test:http": "node tests/http.cjs && node tests/admin-http.cjs && node tests/preview.cjs && node tests/billing-http.cjs && node tests/source-http.cjs",
     "test:public-demo": "node tests/public-demo.cjs",
     "test:public-demo:http": "node tests/public-demo-http.cjs",
@@ -26,7 +26,9 @@
     "test:readout": "node scripts/test-ui.cjs --readout",
     "test:regional-tutor": "node scripts/test-ui.cjs --regional-tutor",
     "test:regional-sources": "node scripts/test-ui.cjs --regional-sources",
-    "test:regional-learning": "node scripts/test-ui.cjs --regional-learning"
+    "test:regional-learning": "node scripts/test-ui.cjs --regional-learning",
+    "test:v3-learning": "node scripts/test-ui.cjs --v3-learning",
+    "test:v3-rag": "node scripts/test-ui.cjs --v3-rag"
   },
   "engines": {
     "node": ">=24.0.0 <25"

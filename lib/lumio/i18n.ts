@@ -36,7 +36,7 @@ const en = {
   learn: "What are you learning today?",
   local: "Saved on this browser",
   localDetail:
-    "Your files and learning data stay in this browser. Social sign-in does not enable cloud sync.",
+    "Files stay in this browser. Signing in does not sync automatically; choose a text snapshot in Settings when you want to sync.",
   guest: "Local workspace",
   signIn: "Sign in",
   signOut: "Sign out",
@@ -242,7 +242,7 @@ const vi: Messages = {
   learn: "Hôm nay bạn muốn học điều gì?",
   local: "Lưu trên trình duyệt này",
   localDetail:
-    "Tệp và dữ liệu học lưu trên trình duyệt. Đăng nhập mạng xã hội chưa bật đồng bộ đám mây.",
+    "Tệp lưu trên trình duyệt. Đăng nhập không tự đồng bộ; chủ động chọn bản văn bản trong Cài đặt khi cần.",
   guest: "Không gian local",
   signIn: "Đăng nhập",
   signOut: "Đăng xuất",

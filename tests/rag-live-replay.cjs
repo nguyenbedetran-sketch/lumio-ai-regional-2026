@@ -1,0 +1,8 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {load}=require('./source-grounding.cjs'),{lexicalRank,cosine,hybridRank}=load('lib/rag/retrieval.ts');
+const directory=path.join(__dirname,'../docs/regional'),data=JSON.parse(fs.readFileSync(path.join(directory,'rag-live-vectors.json'),'utf8')),report=JSON.parse(fs.readFileSync(path.join(directory,'rag-live-evaluation.json'),'utf8'));
+assert.equal(data.model,'text-embedding-3-small');assert.equal(data.dimensions,256);assert.equal(report.requests,2);
+for(const item of [...data.corpus,...data.queries]){assert.equal(item.vector.length,256);assert.ok(item.vector.every(Number.isFinite));assert.ok(Math.abs(cosine(item.vector,item.vector)-1)<1e-12);}
+const rows=data.corpus.map((d,i)=>({id:'s'+(i+1),text:d.text,start:0,end:d.text.length,paragraph:1,chunkId:d.id,documentId:d.id,documentTitle:d.id,documentDigest:'authored-fixture',documentRevision:1,score:0}));
+data.queries.forEach((query,i)=>{const lexical=lexicalRank(rows,query.text),semantic=rows.map((r,j)=>({...r,score:cosine(data.corpus[j].vector,query.vector)})).filter(r=>r.score>=0.35).sort((a,b)=>b.score-a.score),hybrid=hybridRank(lexical,semantic);assert.deepEqual(lexical.slice(0,3).map(r=>r.chunkId),report.queries[i].lexical);assert.deepEqual(hybrid.slice(0,3).map(r=>r.chunkId),report.queries[i].hybrid);});
+console.log('PASS Actual saved provider vectors validate and replay all seven lexical/hybrid rankings without new API calls.');

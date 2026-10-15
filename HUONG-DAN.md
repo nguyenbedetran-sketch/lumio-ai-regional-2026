@@ -1,4 +1,4 @@
-# Mở code và dùng Lumio AI 2.0 khu vực
+# Mở code và dùng Lumio AI khu vực V2 + V3
 
 Đây là hướng dẫn bản web dự thi AI26A0048. Kết quả public/GitHub/Drive/nộp bài xem trong [báo cáo cuối](docs/regional/FINAL-REPORT.md); tài liệu này không tự xác nhận đã deploy hoặc đã nộp. Báo cáo còn BẢN NHÁP nghĩa là trạng thái cuối chưa chốt.
 
@@ -25,12 +25,18 @@ Công cụ local dùng được không cần key. Google/Facebook và AI chỉ h
 
 Thư viện, file, ghi chú, quiz, lịch học/ôn và phản hồi lưu theo tài khoản trong trình duyệt. JSON không chứa PDF/ảnh/audio/video gốc hoặc tệp chuông riêng: giữ các tệp đó riêng. Nhập JSON không tăng ví credit hoặc cấp quyền server. Không xóa dữ liệu trình duyệt trước khi sao lưu.
 
+V3 có công cụ đồng bộ trong Cài đặt: chỉ gửi bản văn bản/ghi chú/thẻ/quiz/tiến độ/tùy chọn khi bạn bật đồng ý và thao tác. Đăng nhập không tự sync; bản máy chủ giữ tối đa 7 ngày và có thể mất sớm trên host miễn phí. Khi xung đột, xuất bản sao rồi chọn thay đổi cần giữ; không bấm ghi đè khi chưa hiểu bản nào mới. “Xóa bản máy chủ” không xóa thư viện cục bộ hoặc sổ credit. Tắt sync không xóa bản đã gửi.
+
 ## 3. Học từ tài liệu
 
 1. Thêm văn bản/tệp hoặc đọc website, xem lại trước khi lưu. Với PDF/DOCX/PPTX được hỗ trợ, chuẩn bị văn bản trích xuất trước khi hỏi để có vị trí nguồn; ảnh/PDF quét hoặc công thức Office phức tạp có thể chưa trích xuất được. Khi báo không hỗ trợ, dùng văn bản/ảnh rõ phù hợp thay vì coi quá trình đó đã thành công.
 2. Mở tài liệu → Studio học tập. Tạo tóm tắt, thẻ, bài luyện tập hoặc hỏi Lumio bằng dữ liệu đã chọn. AI chỉ gọi sau thao tác của bạn; có thể tốn credit và phí dịch vụ của chủ dự án.
 3. Tóm tắt mặc định toàn bộ nguồn có sẵn. Video được chia tuần tự thành phần 10 phút theo thời lượng đã xác nhận, giữ chương và mốc gốc; có hủy/tiếp tục trong trang đang mở. Giới hạn lập kế hoạch 12 giờ không bảo đảm đủ quota/credit hay thành công trên dịch vụ. Chỉ lưu bản toàn bộ khi mọi phần thành công. Phụ đề/văn bản chỉ bao phủ phần bạn cung cấp. [Chi tiết](docs/WHOLE-MEDIA-SUMMARY.md).
 4. Mở phần nguồn cạnh câu trả lời/quiz/thẻ để xem đoạn trích và trang/mục/slide khi xác định được. Nguồn khớp chưa chứng minh toàn bộ lời giải đúng. Nếu hiện chưa xác định vị trí, hãy kiểm tra tài liệu gốc; không dùng số trang/thời gian AI tự đoán.
+
+Tra cứu nhiều học liệu là chức năng chủ động riêng: lập chỉ mục phần văn bản được trích xuất và chọn tài liệu để tìm. Chỉ mục lưu trên máy chủ 7 ngày, xóa riêng với bản local. Tìm từ khóa không cần embeddings; tìm kết hợp/embedding chỉ chạy khi chủ dự án bật và bạn đồng ý gửi đoạn/câu truy vấn ra ngoài. Không coi phần trích xuất lỗi/ảnh scan là đã đọc đầy đủ.
+
+“Tóm tắt chạy nền” khác chế độ toàn video trong trang: cần đồng ý lưu nội dung/kết quả trên server và gửi từng phần tới AI, tối đa 120.000 ký tự hoặc 2 giờ YouTube /12 phần. Có tiến độ, thử lại giới hạn, hủy/xóa và tải Markdown. Máy chủ ngủ/reset có thể ngắt/mất hàng đợi; phần đang gửi có thể đã được dịch vụ AI nhận. Không bắt đầu video dài khi chưa xem credit cần dùng.
 
 ## 4. Gia sư và lời giải
 
@@ -43,6 +49,7 @@ Khi đủ điều kiện, nút Xem lời giải đầy đủ cho phép xem các 
 - Lật thẻ, tự đánh giá mức ghi nhớ, làm quiz và xem giải thích/nguồn. Lịch ôn điều chỉnh theo kết quả thực; điểm quiz không phải mức thành thạo toàn môn.
 - Đề xuất cho bạn cho chọn chủ đề, độ khó và mục tiêu. Mở Vì sao có đề xuất này? để xem số câu đúng/sai, lịch ôn và metadata hỗ trợ. Lượt thích thể hiện sở thích; tự đánh giá hữu ích sau học là dữ liệu riêng.
 - Có thể tắt cá nhân hóa hoặc Xóa phản hồi đã lưu. Xóa phản hồi giữ học liệu, quiz, lịch sử và tùy chọn; tắt không tự xóa dữ liệu. Xử lý đề xuất trên thiết bị, chưa có kết quả thử nghiệm học sinh thật.
+- Trong quiz, có thể chọn kỹ năng chung/độ khó cho lần luyện nếu mọi câu thực sự cùng phạm vi; nếu không, giữ nhãn riêng từng câu. Bằng chứng theo từng kỹ năng cho biết số câu khác nhau, ngày/giãn cách và mức bất định; dữ liệu cũ thiếu snapshot không bị gán nhãn giả. Graph chỉ có 7 kỹ năng Toán khai báo, chưa là cả chương trình. Một câu đúng luôn chưa đủ để coi thành thạo. Có tắt riêng và Xóa snapshot kỹ năng, giữ điểm quiz/đáp án. [Giải thích](docs/v3/03-LEARNING-INTELLIGENCE.md).
 - Phòng tập trung có chuông mặc định/tệp riêng, âm lượng và nghe thử. Giữ trang mở; máy ngủ có thể làm chuông trễ. Chuỗi ngày học tính từ hoạt động học hợp lệ, không chỉ đăng nhập.
 
 ## 6. Giọng nói và họp
@@ -69,11 +76,11 @@ node scripts/start-regional.cjs
 
 Lệnh cuối cần origin HTTPS và đủ env server; không chạy như localhost HTTP thông thường. Dùng `render-regional.yaml`, không nhầm `render.yaml` UI-only cũ. Cấu hình trong [AI-SETUP.md](AI-SETUP.md). Root triển khai và kiểm tra URL thực tế riêng, không coi build local là public đã hoạt động.
 
-Render Free là host tạm: tài khoản, liên kết, credit, nhật ký và phiên gia sư có thể reset sau ngủ/restart/deploy; học liệu trình duyệt là kho riêng. Giới hạn AI: 15/phút, 150/ngày UTC và 1 đang chạy/tài khoản; bản khu vực thêm 200 lượt thử/ngày UTC và 3 đang chạy/instance. Bộ đếm reset khi restart. Không nhập thông tin quan trọng chỉ giữ duy nhất trên bản thi.
+Render Free là host tạm: tài khoản, liên kết, credit, nhật ký, phiên gia sư, sync/chỉ mục và tác vụ có thể reset sau ngủ/restart/deploy; học liệu trình duyệt là kho riêng. Giới hạn AI: 15/phút, 150/ngày UTC và 1 đang chạy/tài khoản; bản khu vực thêm 200 lượt thử/ngày UTC và 3 đồng thời. V3 counter/lease nằm trong SQLite dùng chung; chỉ giữ qua restart khi tệp DB còn, không tự dùng chung nhiều máy có ổ riêng. Không nhập thông tin quan trọng chỉ giữ duy nhất trên bản thi.
 
 ## 9. Android/Dart và Windows
 
-Nếu cần viết app điện thoại, mở dự án Flutter/Dart riêng, bắt đầu từ `lib/main.dart` và README mobile; cần Flutter/Android SDK theo hướng dẫn dự án đó. Đây vẫn là mã Android 0.3 từ đợt trước, iPhone chưa hoàn tất. Windows 0.1 ở dự án Electron riêng, local preview và dữ liệu riêng; không tự đồng bộ phiên web. Đợt 2.0 này **không build APK/EXE mới và không xác nhận lại chúng**. Để thử tính năng khu vực mới, ưu tiên web trên trình duyệt máy tính/điện thoại.
+Nếu cần viết app điện thoại, mở dự án Flutter/Dart riêng, bắt đầu từ `lib/main.dart` và README mobile; cần Flutter/Android SDK theo hướng dẫn dự án đó. Các file cài Android 0.3/Windows 0.1 cũ chưa được build lại/xác nhận mới. Sửa source không cập nhật file cài đã tải. Khả năng sync native cần xem README mobile và kết quả kiểm tra riêng, không suy ra từ việc web đã có API. iPhone/device thật chưa được xác nhận. Để thử phần khu vực mới đã kiểm tra browser, ưu tiên web trên máy tính/điện thoại.
 
 ## 10. Lỗi thường gặp
 

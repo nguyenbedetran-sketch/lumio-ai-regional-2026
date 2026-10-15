@@ -14,6 +14,7 @@ export const reserveUsage = (input: ReserveUsageInput) =>
 export const settleUsage = (input: {
   userId: string;
   reservationId: string;
+  additionalReservationIds?: string[];
   onSettled?: () => void;
 }) => getStore().settleUsage(input);
 export const failUsage = (input: { userId: string; reservationId: string }) =>

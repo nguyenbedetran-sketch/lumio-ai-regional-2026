@@ -17,6 +17,26 @@ export type MathVerification = {
   candidates?: { value: number; valid: boolean; reason?: string }[];
   conditions?: string[];
   complete?: boolean;
+  /** Optional V3 fields; older saved turns and mobile clients remain valid. */
+  scope?: {
+    candidates: "exact" | "approximate_only" | "not_supported";
+    domain: "checked" | "partial" | "not_supported";
+    completeness: "proved" | "incomplete" | "not_supported" | "not_requested";
+    steps: "exact" | "inconsistent" | "partial" | "not_checked";
+    arithmetic: "exact" | "inconsistent" | "partial" | "not_checked";
+    reasoning: "not_checked";
+  };
+  explicitSteps?: {
+    from: string;
+    to: string;
+    status: "equivalent" | "not_equivalent" | "not_supported";
+    method: "exact_rational_polynomial";
+    note: string;
+  }[];
+  calculations?: {
+    equation: string;
+    status: "exact" | "invalid" | "unknown";
+  }[];
   note: string;
 };
 export type TutorReply = {

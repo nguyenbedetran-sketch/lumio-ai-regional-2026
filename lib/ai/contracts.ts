@@ -1,4 +1,5 @@
 import { youtubeURL } from "../ingestion/youtube";
+import { parseRagScope, type RagScope, type RagSnapshot } from "../rag/types";
 import { validateSummary, type StudySummary } from "./summary";
 import { MATH_STYLES, type MathStyle } from "./math-style";
 import type {
@@ -37,6 +38,9 @@ export type AIInput = {
   tutorSessionId?: string;
   tutorProblem?: string;
   tutorContext?: TutorContext;
+  ragScope?: RagScope;
+  /** Trusted server snapshot; ignored from incoming JSON. */
+  ragContext?: RagSnapshot;
 };
 export type AIResult = {
   provider: AIProviderName;
@@ -49,6 +53,14 @@ export type AIResult = {
   summary?: StudySummary;
   references?: SourceReference[];
   quality?: ContentQuality;
+  rag?: {
+    snapshotId: string;
+    mode: "lexical" | "hybrid";
+    documents: number;
+    hits: number;
+    potentialConflict: boolean;
+    expiresAt: string;
+  };
   usage?: {
     inputTokens?: number;
     outputTokens?: number;
@@ -81,6 +93,15 @@ export const record = (value: unknown): Record<string, unknown> => {
 };
 export function validateInput(raw: unknown): AIInput {
   const v = record(raw);
+  let ragScope: RagScope | undefined;
+  if (v.ragScope !== undefined) {
+    try {
+      ragScope = parseRagScope(v.ragScope);
+    } catch {
+      throw new AIError("INVALID_RAG_SCOPE");
+    }
+    if (v.task !== "chat") throw new AIError("INVALID_RAG_SCOPE");
+  }
   if (!["chat", "summary", "cards", "quiz"].includes(String(v.task)))
     throw new AIError("INVALID_TASK");
   const text = (x: unknown, max: number) => {
@@ -200,6 +221,7 @@ export function validateInput(raw: unknown): AIInput {
     history,
     tutorSessionId,
     tutorProblem,
+    ragScope,
   };
 }
 export function chooseProvider(input: AIInput): "openai" | "gemini" {

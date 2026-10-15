@@ -47,7 +47,9 @@ export default function PrivacyPage() {
           Tài liệu bạn thêm, tệp đính kèm, ghi chú, thẻ ghi nhớ và kết quả bài
           luyện tập được lưu trên trình duyệt của thiết bị này bằng IndexedDB.
           Kế hoạch, lịch ôn và phiên tập trung được lưu cục bộ theo tài khoản.
-          Hiện chưa có đồng bộ thư viện giữa các thiết bị.
+          Đăng nhập không tự đưa toàn bộ thư viện lên máy chủ. Bản V3 có công cụ
+          đồng bộ bản văn bản theo yêu cầu, cần thao tác chủ động như mô tả dưới
+          đây.
         </p>
         <p>
           Chuỗi ngày học, lịch sử hoạt động và phản hồi Hợp với tôi / Ít đề xuất
@@ -65,11 +67,48 @@ export default function PrivacyPage() {
           không xóa học liệu. Tắt cá nhân hóa không tự xóa dữ liệu đã lưu.
         </p>
         <p>
+          Hồ sơ kỹ năng mới chỉ tổng hợp snapshot quiz của tài khoản hiện tại:
+          kỹ năng/độ khó được khai báo, phiên bản câu hỏi, lựa chọn đúng/sai và
+          dấu hiệu câu từng làm. Kết quả chọn lần đầu trong app không bảo đảm
+          người học chưa nhận hỗ trợ ở nơi khác. Lịch sử cũ thiếu snapshot không
+          được điền giả; lượt thích và streak không đo năng lực. Nhãn diễn giải
+          có mức bất định và ngưỡng thử nghiệm, chưa được xác thực trên học
+          sinh. Bạn có thể tắt riêng tính hồ sơ hoặc chọn “Xóa snapshot kỹ năng”
+          trong Đề xuất cho bạn. Nút này giữ điểm quiz và lịch sử đáp án, chỉ
+          xóa snapshot của thư viện trên thiết bị; bản đã xuất hoặc đồng bộ ở
+          nơi khác cần xử lý riêng.
+        </p>
+        <p>
           Xóa dữ liệu trang web trong trình duyệt có thể làm mất dữ liệu học
           tập. Bản xuất JSON của thư viện không bao gồm tệp PDF, ảnh, audio hoặc
           video gốc. Bản sao có chứa tóm tắt, sơ đồ tư duy và những khung hình
           video nhỏ mà bạn chủ động chụp và lưu trong bản tóm tắt. Hãy giữ các
           tệp gốc riêng nếu cần sao lưu.
+        </p>
+      </section>
+      <section>
+        <h2>2a. Bản đồng bộ theo yêu cầu</h2>
+        <p>
+          Khi chủ động gửi bản đồng bộ, văn bản học liệu, ghi chú, thẻ, quiz,
+          kết quả học, snapshot kỹ năng, lịch ôn và tùy chọn cá nhân hóa có thể
+          được lưu trên máy chủ Lumio để tài khoản của bạn lấy lại. Bản này
+          không chứa tệp PDF/ảnh/audio/video gốc, token đăng nhập, khóa API, bộ
+          đếm tập trung đang chạy hoặc tệp chuông riêng. Hãy xem phạm vi trước
+          khi chọn gửi; tắt cá nhân hóa không tự xóa bản đồng bộ đã lưu.
+        </p>
+        <p>
+          Bản đồng bộ có thời hạn 7 ngày tính từ lần ghi thành công gần nhất.
+          Hết hạn được kiểm tra/dọn khi truy cập, chưa phải lịch xóa nền. Máy
+          chủ preview dùng cơ sở dữ liệu tạm nên có thể mất dữ liệu sớm hơn khi
+          khởi động lại hoặc triển khai. Xung đột cần được xử lý trước khi ghi
+          tiếp; không dùng bản thử nghiệm làm bản sao lưu duy nhất. Thư viện cục
+          bộ và bản đồng bộ là hai nơi lưu riêng, không tự xóa lẫn nhau.
+        </p>
+        <p>
+          Bạn có thể chọn “Xóa bản máy chủ” trong công cụ đồng bộ để bỏ bản đồng
+          bộ của tài khoản và tắt gửi tiếp trên thiết bị này. Dữ liệu cục bộ,
+          phiên gia sư, chỉ mục nguồn và sổ credit vẫn là các phần riêng. Những
+          thiết bị khác phải đối chiếu lại trước khi gửi thay đổi.
         </p>
       </section>
       <section>
@@ -115,6 +154,50 @@ export default function PrivacyPage() {
           khoản của dịch vụ; Lumio không cam kết thay họ về huấn luyện hoặc lưu
           giữ. Không gửi thông tin nhạy cảm của trẻ em hoặc của người khác khi
           không cần cho bài học.
+        </p>
+      </section>
+      <section>
+        <h2>3a. Tra cứu nhiều học liệu</h2>
+        <p>
+          Lập chỉ mục là thao tác chủ động có thông báo riêng: tên và phần văn
+          bản đã trích xuất của những học liệu bạn chọn, vị trí nguồn, mã kiểm
+          tra và các đoạn chia nhỏ được lưu trên máy chủ Lumio theo tài khoản và
+          không gian. Đây không phải tải lên tệp gốc hay xác nhận đã đọc những
+          trang/ảnh chưa trích xuất được. Các tài liệu chỉ mục, vector nếu có và
+          bản chụp đoạn truy xuất có thời hạn 7 ngày; dọn khi truy cập. Preview
+          có thể đặt lại dữ liệu sớm hơn. Bạn có thể xóa từng tài liệu đã lập
+          chỉ mục trong công cụ tra cứu; việc đó không xóa bản gốc cục bộ.
+        </p>
+        <p>
+          Tra cứu từ khóa chạy trên máy chủ Lumio. Chỉ khi bạn đồng ý riêng với
+          tạo embedding/tìm kiếm kết hợp và tính năng được bật, đoạn văn bản
+          hoặc câu truy vấn tương ứng mới được gửi tới OpenAI để tạo vector.
+          Vector không phải dữ liệu đã ẩn danh và có thể thể hiện nội dung học.
+          Phần nguồn được truy xuất có thể tiếp tục được gửi đến dịch vụ AI khi
+          bạn dùng nó để đặt câu hỏi/tạo nội dung. Không gửi toàn bộ thư viện
+          hoặc thông tin hồ sơ đăng nhập theo mặc định. Chính sách lưu giữ của
+          nhà cung cấp bên ngoài vẫn áp dụng; xóa tại Lumio không bảo đảm xóa
+          ngay những dữ liệu họ đã tiếp nhận.
+        </p>
+      </section>
+      <section>
+        <h2>3b. Tóm tắt chạy nền</h2>
+        <p>
+          Khi bạn đồng ý riêng rồi đưa vào hàng đợi, máy chủ lưu tên, văn bản
+          hiện tại hoặc URL YouTube và thời lượng bạn khai báo, ngôn ngữ, mã
+          kiểm tra nguồn, tiến độ và kết quả tóm tắt từng phần. Không lưu tệp âm
+          thanh/video/PDF gốc trong hàng đợi này. Nội dung đầu vào và kết quả
+          giữ tối đa 7 ngày; dọn khi truy cập hoặc khi worker bảo trì, chưa phải
+          bảo đảm xóa đúng một thời điểm khi máy chủ đang ngủ.
+        </p>
+        <p>
+          Khi tác vụ chạy, từng phần cần thiết được gửi tới dịch vụ AI. Phần lỗi
+          có thể tự thử lại tối đa 3 lần; bạn đã đồng ý việc gửi này khi tạo tác
+          vụ. Có thể hủy xử lý tiếp hoặc xóa tác vụ đã dừng/hoàn tất trong bảng
+          quản lý. Yêu cầu đang gửi có thể đã được nhà cung cấp tiếp nhận;
+          hủy/xóa tại Lumio không thu hồi dữ liệu đã gửi ra ngoài. Hosting miễn
+          phí có thể ngủ/reset và mất hàng đợi, nên không cam kết xử lý liên tục
+          hoặc lưu bền vững. Hãy tải kết quả/bản sao khi cần giữ lâu.
         </p>
       </section>
       <section>
