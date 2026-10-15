@@ -13,7 +13,7 @@ oauth*.json
 .playwright-cli/
 tooling/supabase-config/
 
-# Source-only mobile/desktop companions; generated artifacts stay local.
+# Source companions: generated artifacts remain local.
 apps/**/build/
 apps/**/.dart_tool/
 apps/**/.gradle/

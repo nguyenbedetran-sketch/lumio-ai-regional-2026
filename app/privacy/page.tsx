@@ -63,6 +63,45 @@ export default function PrivacyPage() {
         </p>
       </section>
       <section>
+        <h2>Không gian giáo viên và lớp học</h2>
+        <p>
+          Khi tạo hoặc tham gia lớp, Lumio lưu tổ chức, lớp, tên hiển thị tài
+          khoản, phân công giáo viên, nhóm, học liệu, giáo án, câu hỏi, bài
+          giao, bài làm, điểm và nhận xét trong cơ sở dữ liệu máy chủ. Đây là
+          dữ liệu riêng với thư viện IndexedDB và bản đồng bộ bảy ngày. Chỉ
+          dùng dữ liệu cần thiết; không nhập căn cước, thông tin sức khỏe hay
+          thông tin gia đình của học sinh. Mã mời lớp có hạn và chỉ cấp quyền
+          học sinh của lớp đó, không cấp quyền giáo viên hoặc quản trị.
+        </p>
+        <p>
+          Giáo viên xem lớp được phân công; quản trị tổ chức xem phạm vi tổ
+          chức mình. Học sinh xem bài được giao, học liệu đã chia sẻ và bài
+          làm của chính mình. Điểm tự chấm là bản tạm dành cho giáo viên;
+          học sinh chỉ nhận điểm và đáp án sau bước xác nhận, công bố. Nhật
+          ký ghi thao tác thay đổi quyền lớp, chấm và công bố bằng mã đối
+          tượng, không cố ý chép nội dung bài làm vào nhật ký. Quyền quản trị
+          hệ thống không tự động cho phép đọc mọi lớp hoặc thư viện cá nhân.
+        </p>
+        <p>
+          Công cụ AI giáo viên chỉ gửi sau khi bạn xác nhận xử lý bên ngoài:
+          chủ đề, khối lớp, mục tiêu, độ khó và các đoạn học liệu bạn chọn.
+          Gợi ý nhận xét chỉ dùng đoạn không nhận dạng do giáo viên tự nhập,
+          không tự đính kèm danh sách lớp, email, tên học sinh hoặc toàn bộ
+          bài làm. Bộ phát hiện thông tin riêng tư có giới hạn; giáo viên
+          vẫn phải loại bỏ dữ liệu cá nhân trước khi gửi. Nguồn trích dẫn
+          khớp không có nghĩa toàn bộ nội dung AI chính xác; giáo viên phải
+          kiểm tra bản nháp trước khi giao bài hoặc công bố nhận xét.
+        </p>
+        <p>
+          Dữ liệu lớp chưa có thời hạn xóa tự động. Lưu trữ/đóng lớp không
+          đồng nghĩa xóa toàn bộ bài làm và nhật ký; liên hệ người phụ trách
+          để xử lý yêu cầu dữ liệu. Bản xuất CSV hoặc bản in PDF là bản sao
+          riêng mà người tải phải bảo quản. Hosting miễn phí vẫn có thể làm
+          mất dữ liệu máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính
+          thức hoặc bản sao duy nhất.
+        </p>
+      </section>
+      <section>
         <h2>2. Thư viện và quá trình học</h2>
         <p>
           Tài liệu bạn thêm, tệp đính kèm, ghi chú, thẻ ghi nhớ và kết quả bài

@@ -2,6 +2,10 @@ import { runtimeV3Migration } from "./runtime-v3-schema";
 import { ragMigration } from "./rag-schema";
 import { summaryJobMigration } from "./job-schema";
 import { teacherMigration } from "./teacher-schema";
+import {
+  teachingMigration,
+  teachingPreferencesMigration,
+} from "./teaching-schema";
 export const migrations = [
   {
     version: 1,
@@ -153,6 +157,8 @@ ALTER TABLE tutor_turns ADD COLUMN needs_clarification INTEGER NOT NULL DEFAULT 
   ragMigration,
   summaryJobMigration,
   teacherMigration,
+  teachingMigration,
+  teachingPreferencesMigration,
 ];
 
 export const flagDefinitions = [

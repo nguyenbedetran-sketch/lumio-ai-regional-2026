@@ -41,6 +41,8 @@ export type AIInput = {
   ragScope?: RagScope;
   /** Trusted server snapshot; ignored from incoming JSON. */
   ragContext?: RagSnapshot;
+  /** Server-only teacher credential flow. validateInput never copies this from client JSON. */
+  teachingContext?: { kind: "lesson" | "questions" | "feedback" | "assistant" };
 };
 export type AIResult = {
   provider: AIProviderName;

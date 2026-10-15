@@ -1,10 +1,10 @@
-# Lumio AI - Bản khu vực AI26A0048, V2 + V3.1
+# Lumio AI 3.2 — Teacher Workspace · AI26A0048
 
-Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Source web hiện tại **3.1.0-regional.1**, SQLite migration **1–11**; V3.1 thêm hồ sơ và xét duyệt giáo viên trên các module V3 có giới hạn. Bằng chứng xem `docs/regional` và `docs/v3`. Các tệp cài Android 0.3/Windows 0.1 trước đó **không tự được cập nhật khi source thay đổi**, chưa có xác nhận APK/EXE hoặc thiết bị thật cho đợt này.
+Source web hiện tại **3.2.0-teacher.1**, SQLite migrations **1–13**. Không viết lại hệ thống: Teacher Workspace mở rộng từ hồ sơ/quyền giáo viên của3.1, dùng cùng tài khoản, SQLite, AI Router, credit và nguồn. Có lớp/nhóm/mã mời/đồng giảng viên, giáo án và học liệu, ngân hàng câu hỏi, giao–nộp–chấm–công bố, phân tích kết quả đã công bố, thông báo/lịch, báo cáo và tùy chọn giáo viên. Các module học cá nhân từ V2/V3 vẫn được giữ. Mở [hướng dẫn3.2](TEACHER-WORKSPACE.md), [kế hoạch/audit và báo cáo thực tế](docs/teacher-workspace). APK/IPA/EXE và thử nghiệm người học thật không được tự coi là đã cập nhật hoặc xác nhận theo source web.
 
 Bản thi dùng hosting miễn phí, hạn mức và database tạm; chưa phải dịch vụ lưu trữ production. Public3.1 đã kiểm tra tại [lumio-ai-demo.onrender.com](https://lumio-ai-demo.onrender.com/): runtime **`6eabc3219f9298676bdd29ae0ee15a91b9593288`**, health200, Google OAuth thật, form/queue giáo viên và bốn lượt tutor; [AI](docs/v3/public-v31-live-check.json), [teacher](docs/v3/public-v31-teacher-check.json), [HTTP](docs/v3/public-v31-http-check.json). Không có hồ sơ hay quyết định giáo viên thật. **Cổng đã ghi nhận lần nộp số 1 lúc 15:05:41 ngày 15/10/2026 (UTC+7)**; [biên nhận và hai URL đã đối chiếu](docs/regional/REGIONAL-SUBMISSION-RECEIPT.json). Không nộp lần thứ hai khi cập nhật tài liệu/tệp tải tại cùng URL.
 
-Tài liệu được cập nhật sau phép thử public. Các commit doc-only trong HEAD source/tài liệu bàn giao không làm đổi runtime trên; report Render gắn hash runtime, không mặc nhiên gắn HEAD mới nhất. Xem [báo cáo khu vực](docs/regional/FINAL-REPORT.md) để đối chiếu gói/GitHub/Drive và trạng thái nộp.
+Đoạn trên là lịch sử public3.1 và biên nhận lần1; không chứng minh Teacher Workspace3.2 đã triển khai/được kiểm tra. Căn cứ mới nằm ở `docs/teacher-workspace`: báo cáo phải phân biệt handler/DB thật trong môi trường riêng, phiên tổng hợp, transport giả, provider thật và public. Hash runtime của lần thử được ghi riêng; không mặc nhiên là HEAD tài liệu. Xem [báo cáo khu vực trước](docs/regional/FINAL-REPORT.md) khi cần đối chiếu hồ sơ3.1.
 
 ## Mở code
 
@@ -40,7 +40,7 @@ Sau đăng nhập, mở **Dành cho giáo viên** trên thanh bên hoặc `/teac
 
 Hồ sơ gửi lên luôn **chờ duyệt**. `/admin` → **Xét duyệt giáo viên** dành cho `ADMIN`/`SUPER_ADMIN`, có lọc/tìm/sắp xếp và ghi lý do trước duyệt/từ chối/thu hồi. `DEV` không xem hồ sơ này. Người phụ trách cấu hình `LUMIO_ADMIN_EMAILS` riêng ở server bằng email Google quản trị đã xác minh rồi đăng nhập lại; không nhập quyền admin từ trình duyệt. Admin không tự duyệt hồ sơ của mình. Không cần key hay dịch vụ xác minh trả phí mới cho module này.
 
-Quyền giáo viên là credential riêng do admin xét **bản khai**, không phải xác minh danh tính/công tác chính thức; API luôn trả `identityVerified:false`. Nó không đổi USER thành ADMIN, không tạo tổ chức hoặc quyền đọc dữ liệu học sinh. **Lớp học, giao bài và phân tích học sinh chưa triển khai.**
+Quyền giáo viên là credential riêng do admin xét **bản khai**, không phải xác minh danh tính/công tác chính thức; API luôn trả `identityVerified:false`. Nó không đổi USER thành ADMIN và không tự cấp quyền đọc dữ liệu học sinh. Teacher Workspace 3.2 có lớp, giao–nộp–chấm–công bố và phân tích kết quả; mỗi thao tác còn kiểm tư cách thành viên tổ chức và phân công lớp. Xem phạm vi và giới hạn trong [nghiệm thu](docs/teacher-workspace/ACCEPTANCE.md).
 
 Hồ sơ/credential giáo viên không nằm trong sync/thư viện local và **không tự hết hạn sau bảy ngày, chưa có endpoint tự xóa hồ sơ**. Xóa dữ liệu trình duyệt/snapshot không xóa bản khai server; liên hệ người phụ trách dự án để xử lý. DB và backup có thể chứa thông tin khai báo riêng, không đưa vào GitHub/minh chứng. Render Free có thể mất cả hồ sơ và quyền. [Backend/27 kiểm tra](docs/v3/08-TEACHER-BACKEND.md) · [Nguồn danh mục](docs/v3/09-LOCATION-DATA.md).
 
@@ -66,7 +66,7 @@ Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang ch�
 
 Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục, hàng đợi và hồ sơ/quyền giáo viên có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Quy tắc này không áp dụng cho bản khai/credential giáo viên hoặc nhật ký tài khoản. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
 
-Migration chạy khi khởi tạo store; sau cập nhật 3.1 hãy khởi động lại Node. `/api/health` kiểm tra schema11/bảng cần thiết và trả version, không xác nhận AI hay hồ sơ giáo viên thật. Công cụ backup [operations](docs/v3/05-OPERATIONS-AND-SYNC.md) cũng yêu cầu schema11; không xóa migration history để chạy build cũ.
+Migration chạy khi khởi tạo store; sau cập nhật3.2 hãy khởi động lại Node. `/api/health` kiểm tra schema13/các bảng cần thiết và trả version, không xác nhận AI hay hồ sơ giáo viên thật. Công cụ backup `scripts/database-snapshot.cjs` hiện yêu cầu schema13, bao gồm dữ liệu giảng dạy; bản ghi chú operations3.1 là lịch sử schema11. Không xóa migration history để chạy build cũ.
 
 ## Kiểm tra và minh chứng
 

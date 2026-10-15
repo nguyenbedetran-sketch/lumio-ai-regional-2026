@@ -48,6 +48,7 @@ import {
   Wallet,
   Smartphone,
   GraduationCap,
+  Users,
 } from "lucide-react";
 import { catalogs, languages, Locale, Messages } from "../../lib/lumio/i18n";
 import {
@@ -977,7 +978,12 @@ function Workspace({
           )}
           <a className="lm-nav-single" href="/teacher">
             <GraduationCap size={17} />
-            {locale === "vi" ? "Dành cho giáo viên" : "For teachers"}
+            {locale === "vi" ? "Không gian giáo viên" : "Teacher workspace"}
+            <ArrowUpRight size={14} />
+          </a>
+          <a className="lm-nav-single" href="/classroom">
+            <Users size={17} />
+            {locale === "vi" ? "Lớp học của tôi" : "My classroom"}
             <ArrowUpRight size={14} />
           </a>
           <div className="lm-local-card">

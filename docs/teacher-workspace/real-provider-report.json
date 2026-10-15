@@ -1,0 +1,98 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-15T16:03:00.583Z",
+  "version": "3.2.0-teacher.1",
+  "scope": "Two explicit teacher generation requests to actual configured providers, compiled local Next server and isolated SQLite. Synthetic authenticated owner, authored Vietnamese source. Not Google OAuth, real school/student or public deployment testing.",
+  "requests": [
+    {
+      "kind": "lesson",
+      "httpStatus": 200,
+      "error": null,
+      "latencyMs": 11556,
+      "quality": {
+        "status": "review-required",
+        "blocked": false,
+        "structuralChecks": true,
+        "sourceSupport": "mixed",
+        "math": "not-checked",
+        "issues": [
+          {
+            "code": "MISSING_REFERENCE",
+            "path": "sections.1.references",
+            "severity": "review",
+            "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+          },
+          {
+            "code": "MISSING_REFERENCE",
+            "path": "sections.3.references",
+            "severity": "review",
+            "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+          },
+          {
+            "code": "MISSING_REFERENCE",
+            "path": "sections.4.references",
+            "severity": "review",
+            "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+          },
+          {
+            "code": "SEMANTIC_REVIEW_REQUIRED",
+            "path": "",
+            "severity": "review",
+            "message": "Giáo viên cần đối chiếu nội dung, độ tuổi, nguồn, đáp án và cách diễn đạt trước khi sử dụng. Trích dẫn khớp không chứng minh mọi khẳng định đúng."
+          }
+        ],
+        "teacherReviewRequired": true,
+        "publication": "draft-only"
+      }
+    },
+    {
+      "kind": "questions",
+      "httpStatus": 200,
+      "error": null,
+      "latencyMs": 7726,
+      "quality": {
+        "status": "review-required",
+        "blocked": false,
+        "structuralChecks": true,
+        "sourceSupport": "exact-excerpts",
+        "math": "not-checked",
+        "issues": [
+          {
+            "code": "SEMANTIC_REVIEW_REQUIRED",
+            "path": "",
+            "severity": "review",
+            "message": "Giáo viên cần đối chiếu nội dung, độ tuổi, nguồn, đáp án và cách diễn đạt trước khi sử dụng. Trích dẫn khớp không chứng minh mọi khẳng định đúng."
+          }
+        ],
+        "teacherReviewRequired": true,
+        "publication": "draft-only"
+      }
+    }
+  ],
+  "checks": [
+    "lesson returned a review-required draft; same UUID rejected409 without retransmission",
+    "questions returned a review-required draft; same UUID rejected409 without retransmission",
+    "No lesson/question auto-saved; reservations settled once and no held credit remains."
+  ],
+  "providerRequests": [
+    {
+      "host": "api.openai.com",
+      "path": "/v1/responses",
+      "status": 200,
+      "latencyMs": 11397
+    },
+    {
+      "host": "api.openai.com",
+      "path": "/v1/responses",
+      "status": 200,
+      "latencyMs": 7664
+    }
+  ],
+  "semanticAccuracy": "PARTIAL: teacher review remains required; this is not a broad benchmark.",
+  "credit": {
+    "available": 184,
+    "reserved": 0,
+    "trial": 200
+  },
+  "completedAt": "2026-10-15T16:03:21.962Z"
+}

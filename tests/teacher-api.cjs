@@ -1024,11 +1024,11 @@ const fingerprint = () =>
       },
     );
     await check(
-      "Schema11 readiness requires every teacher table, not only a recorded migration number",
+      "Current schema readiness requires every teacher table, not only a recorded migration number",
       () => {
         assert.deepEqual(store.runtimeHealth(), {
           ready: true,
-          schemaVersion: 11,
+          schemaVersion: 13,
         });
         const brokenPath = path.join(folder, "missing-teacher-table.sqlite"),
           broken = platform.createStore(brokenPath),

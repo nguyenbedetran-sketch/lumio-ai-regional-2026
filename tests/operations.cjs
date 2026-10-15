@@ -56,7 +56,7 @@ const user = store.ensureIdentity({
 check(
   "Readiness queries current schema and required tables without provider calls",
   () => {
-    assert.deepEqual(store.runtimeHealth(), { ready: true, schemaVersion: 11 });
+    assert.deepEqual(store.runtimeHealth(), { ready: true, schemaVersion: 13 });
   },
 );
 const backup = path.join(folder, "backup.sqlite"),
@@ -65,7 +65,7 @@ check(
   "Read-only source backup includes committed WAL data and verifies checksum/integrity",
   () => {
     const result = snapshot(file, backup);
-    assert.equal(result.schemaVersion, 11);
+    assert.equal(result.schemaVersion, 13);
     assert.equal(result.integrity, "ok");
     assert.match(result.sha256, /^[a-f0-9]{64}$/);
     const copy = platform.createStore(backup);
@@ -120,7 +120,7 @@ check(
   },
 );
 check(
-  "Readiness rejects a missing retrieval snapshot table even when migration 11 remains recorded",
+  "Readiness rejects a missing retrieval snapshot table even when migration 13 remains recorded",
   () => {
     const filename = path.join(folder, "missing-rag.sqlite"),
       broken = platform.createStore(filename),
@@ -129,7 +129,7 @@ check(
     assert.equal(
       db.prepare("SELECT max(version) version FROM schema_migrations").get()
         .version,
-      11,
+      13,
     );
     db.close();
     assert.throws(() => broken.runtimeHealth(), /no such table: rag_snapshots/);

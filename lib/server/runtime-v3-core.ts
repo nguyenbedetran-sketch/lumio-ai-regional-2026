@@ -257,10 +257,25 @@ export function createRuntimeV3Store({
       "teacher_applications",
       "teacher_credentials",
       "teacher_application_operations",
+      "teaching_organizations",
+      "teaching_classes",
+      "teaching_class_teachers",
+      "teaching_enrollments",
+      "teaching_groups",
+      "teaching_group_members",
+      "teaching_invites",
+      "teaching_content",
+      "teaching_assignments",
+      "teaching_assignment_targets",
+      "teaching_submissions",
+      "teaching_announcements",
+      "teaching_events",
+      "teaching_operations",
+      "teaching_preferences",
     ]) {
       db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
     }
-    return { ready: version === 11, schemaVersion: version };
+    return { ready: version === 13, schemaVersion: version };
   }
   return {
     acquireRuntimeAILease,

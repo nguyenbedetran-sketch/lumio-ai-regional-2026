@@ -26,10 +26,10 @@
     "Queue search is bounded literal SQL, paginated and excludes optional work email from search",
     "Submission rate is bounded; valid idempotent replay still works after the daily limit",
     "Optional evidence is never fetched, credentials are rejected, and no real minor learning data enters teacher views",
-    "Schema11 readiness requires every teacher table, not only a recorded migration number",
+    "Current schema readiness requires every teacher table, not only a recorded migration number",
     "Two SQLite store instances resolve competing admin decisions by revision, without duplicate credentials",
     "A disabled or session-revoked approved account cannot use the canonical teacher privilege check"
   ],
-  "checkedAt": "2026-10-15T07:38:41.617Z",
+  "checkedAt": "2026-10-15T15:59:01.727Z",
   "fixture": "Synthetic teacher declarations only; actual Request/Response handlers and isolated SQLite. No real OAuth, teacher verification, student data or network/provider calls."
 }

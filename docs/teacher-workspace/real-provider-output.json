@@ -1,0 +1,212 @@
+{
+  "scope": "Two explicit teacher generation requests to actual configured providers, compiled local Next server and isolated SQLite. Synthetic authenticated owner, authored Vietnamese source. Not Google OAuth, real school/student or public deployment testing.",
+  "outputs": [
+    {
+      "kind": "lesson",
+      "source": "Phương trình bậc nhất một ẩn có dạng ax + b = 0, trong đó a khác 0. Muốn giải, ta có thể cộng hoặc trừ cùng một số ở hai vế, rồi chia hai vế cho cùng một số khác 0.\n\nVí dụ: 3x - 6 = 9. Cộng 6 vào hai vế được 3x = 15. Chia hai vế cho 3, ta được x = 5. Thay lại: 3 × 5 - 6 = 9, đúng.\n\nKhi học sinh thử x = 6, thay lại vế trái bằng 12, không bằng 9. Cần kiểm tra phép chuyển vế và phép chia trước khi kết luận. Một câu trả lời đúng chưa chứng minh đã thành thạo mọi phương trình.",
+      "result": {
+        "kind": "lesson",
+        "draft": {
+          "classId": null,
+          "title": "Phương trình bậc nhất một ẩn — DRAFT bài giảng",
+          "topic": "Phương trình bậc nhất một ẩn",
+          "grade": "Lớp 8",
+          "objectives": [
+            "Hiểu dạng chung của phương trình bậc nhất một ẩn và điều kiện a ≠ 0.",
+            "Sử dụng các biến đổi tương đương (cộng/trừ, nhân/chia số khác 0) để giải phương trình.",
+            "Kiểm tra nghiệm bằng thay vào phương trình ban đầu."
+          ],
+          "sections": [
+            {
+              "title": "Prior knowledge (Kiến thức tiền đề)",
+              "body": "Học sinh cần biết phép cộng, trừ, nhân, chia các số thực và nguyên tắc thực hiện cùng một phép toán ở hai vế của một phương trình. Nhắc lại rằng không được chia cho 0 và phải giữ điều kiện a ≠ 0 khi xác định phương trình bậc nhất.",
+              "references": [
+                {
+                  "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                  "quote": "Phương trình bậc nhất một ẩn có dạng ax + b = 0, trong đó a khác 0. Muốn giải, ta có thể cộng hoặc trừ cùng một số ở hai vế, rồi chia hai vế cho cùng một số khác 0.",
+                  "paragraph": 1
+                }
+              ]
+            },
+            {
+              "title": "Goal (Mục tiêu bài học)",
+              "body": "Sau bài học, học sinh sẽ giải được phương trình bậc nhất dạng ax + b = 0 bằng biến đổi tương đương và kiểm chứng nghiệm bằng phép thay vào biểu thức ban đầu.",
+              "references": []
+            },
+            {
+              "title": "Worked example (Ví dụ có hướng dẫn) — điều kiện và kiểm tra",
+              "body": "Bài toán: Giải phương trình 3x - 6 = 9. Bước 1: Cộng 6 hai vế để đưa về dạng chứa hệ số x: 3x = 15. Bước 2: Chia cả hai vế cho 3 (không chia cho 0): x = 5. Kiểm tra: Thay x = 5 vào vế trái: 3 × 5 - 6 = 15 - 6 = 9, bằng vế phải, nên nghiệm đúng. Chú ý điều kiện trước khi chia: hệ số trước x khác 0.",
+              "references": [
+                {
+                  "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                  "quote": "Ví dụ: 3x - 6 = 9. Cộng 6 vào hai vế được 3x = 15. Chia hai vế cho 3, ta được x = 5. Thay lại: 3 × 5 - 6 = 9, đúng.",
+                  "paragraph": 2
+                },
+                {
+                  "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                  "quote": "Phương trình bậc nhất một ẩn có dạng ax + b = 0, trong đó a khác 0. Muốn giải, ta có thể cộng hoặc trừ cùng một số ở hai vế, rồi chia hai vế cho cùng một số khác 0.",
+                  "paragraph": 1
+                }
+              ]
+            },
+            {
+              "title": "Guided practice (Luyện tập có hướng dẫn)",
+              "body": "Cho hai phương trình để thảo luận và giải bước-by-bước cùng giáo viên: a) 4x + 2 = 18 — yêu cầu nêu các phép biến đổi tương đương và kiểm tra nghiệm. b) -2x + 5 = 1 — lưu ý khi nhân/chia dấu âm. Giáo viên yêu cầu học sinh viết từng bước và đối chiếu kết quả.",
+              "references": []
+            },
+            {
+              "title": "Independent practice (Luyện tập độc lập)",
+              "body": "Giao 2 bài để học sinh làm tự luận: 1) 5x - 10 = 0. 2) 7x + 14 = 28. Yêu cầu trình bày đầy đủ các bước biến đổi tương đương, nêu rõ các phép toán thực hiện ở cả hai vế và kiểm tra nghiệm bằng thay.",
+              "references": []
+            },
+            {
+              "title": "Exit check (Kiểm tra kết thúc nhanh)",
+              "body": "Learning check: Học sinh trả lời và nộp 1) Viết dạng tổng quát của phương trình bậc nhất một ẩn và nêu điều kiện. 2) Giải nhanh phương trình 3x + 9 = 0 và kiểm chứng. Lưu ý: nếu học sinh chỉ nêu nghiệm nhưng không kiểm tra thay vào phương trình, ghi chú là chưa chứng tỏ thành thạo (theo nguồn). Giáo viên ghi nhận bất kỳ học sinh nào bỏ qua bước kiểm tra.",
+              "references": [
+                {
+                  "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                  "quote": "Khi học sinh thử x = 6, thay lại vế trái bằng 12, không bằng 9. Cần kiểm tra phép chuyển vế và phép chia trước khi kết luận. Một câu trả lời đúng chưa chứng minh đã thành thạo mọi phương trình.",
+                  "paragraph": 3
+                }
+              ]
+            }
+          ],
+          "sourceIds": [
+            "c3c3f0d7-dafa-4340-ad83-b0b4946269c9"
+          ]
+        },
+        "quality": {
+          "status": "review-required",
+          "blocked": false,
+          "structuralChecks": true,
+          "sourceSupport": "mixed",
+          "math": "not-checked",
+          "issues": [
+            {
+              "code": "MISSING_REFERENCE",
+              "path": "sections.1.references",
+              "severity": "review",
+              "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+            },
+            {
+              "code": "MISSING_REFERENCE",
+              "path": "sections.3.references",
+              "severity": "review",
+              "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+            },
+            {
+              "code": "MISSING_REFERENCE",
+              "path": "sections.4.references",
+              "severity": "review",
+              "message": "Chưa có trích đoạn khớp cho phần nội dung này."
+            },
+            {
+              "code": "SEMANTIC_REVIEW_REQUIRED",
+              "path": "",
+              "severity": "review",
+              "message": "Giáo viên cần đối chiếu nội dung, độ tuổi, nguồn, đáp án và cách diễn đạt trước khi sử dụng. Trích dẫn khớp không chứng minh mọi khẳng định đúng."
+            }
+          ],
+          "teacherReviewRequired": true,
+          "publication": "draft-only"
+        },
+        "sourceBasis": {
+          "mode": "saved-sources",
+          "materials": [
+            {
+              "id": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+              "title": "Bài tự soạn để kiểm tra: phương trình bậc nhất",
+              "revision": 1
+            }
+          ],
+          "verifiedClaims": false
+        },
+        "requestId": "7fff273e-d863-42fd-8cca-36769b419fe6"
+      }
+    },
+    {
+      "kind": "questions",
+      "source": "Phương trình bậc nhất một ẩn có dạng ax + b = 0, trong đó a khác 0. Muốn giải, ta có thể cộng hoặc trừ cùng một số ở hai vế, rồi chia hai vế cho cùng một số khác 0.\n\nVí dụ: 3x - 6 = 9. Cộng 6 vào hai vế được 3x = 15. Chia hai vế cho 3, ta được x = 5. Thay lại: 3 × 5 - 6 = 9, đúng.\n\nKhi học sinh thử x = 6, thay lại vế trái bằng 12, không bằng 9. Cần kiểm tra phép chuyển vế và phép chia trước khi kết luận. Một câu trả lời đúng chưa chứng minh đã thành thạo mọi phương trình.",
+      "result": {
+        "kind": "questions",
+        "draft": [
+          {
+            "classId": null,
+            "prompt": "Giải phương trình 3x - 6 = 9 bằng các phép biến đổi tương đương. Giá trị nào sau đây là nghiệm?",
+            "kind": "mcq",
+            "choices": [
+              "x = 3",
+              "x = 4",
+              "x = 5",
+              "x = 6"
+            ],
+            "correctIndex": 2,
+            "explanation": "Cộng 6 vào hai vế: 3x = 15. Chia hai vế cho 3: x = 5. Thay lại để kiểm tra: 3×5 - 6 = 9, nên x = 5 là nghiệm đúng.",
+            "maxPoints": 1,
+            "topic": "Phương trình bậc nhất một ẩn",
+            "difficulty": "basic",
+            "references": [
+              {
+                "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                "quote": "Ví dụ: 3x - 6 = 9. Cộng 6 vào hai vế được 3x = 15. Chia hai vế cho 3, ta được x = 5. Thay lại: 3 × 5 - 6 = 9, đúng.",
+                "paragraph": 2
+              }
+            ]
+          },
+          {
+            "classId": null,
+            "prompt": "Nếu học sinh thử x = 6 vào phương trình 3x - 6 = 9, kết luận nào sau đây là đúng?",
+            "kind": "mcq",
+            "choices": [
+              "x = 6 là nghiệm của phương trình",
+              "x = 6 không phải nghiệm vì vế trái trở thành 12, không bằng 9",
+              "Không thể biết được nếu không chia cả hai vế cho 3",
+              "x = 6 là nghiệm thay cho x = 5"
+            ],
+            "correctIndex": 1,
+            "explanation": "Thay x = 6 vào vế trái: 3×6 - 6 = 18 - 6 = 12, khác 9, nên x = 6 không phải nghiệm. Việc kiểm tra nghiệm bằng thay lại là cần thiết trước khi kết luận.",
+            "maxPoints": 1,
+            "topic": "Phương trình bậc nhất một ẩn",
+            "difficulty": "basic",
+            "references": [
+              {
+                "materialId": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+                "quote": "Khi học sinh thử x = 6, thay lại vế trái bằng 12, không bằng 9. Cần kiểm tra phép chuyển vế và phép chia trước khi kết luận. Một câu trả lời đúng chưa chứng minh đã thành thạo mọi phương trình.",
+                "paragraph": 3
+              }
+            ]
+          }
+        ],
+        "quality": {
+          "status": "review-required",
+          "blocked": false,
+          "structuralChecks": true,
+          "sourceSupport": "exact-excerpts",
+          "math": "not-checked",
+          "issues": [
+            {
+              "code": "SEMANTIC_REVIEW_REQUIRED",
+              "path": "",
+              "severity": "review",
+              "message": "Giáo viên cần đối chiếu nội dung, độ tuổi, nguồn, đáp án và cách diễn đạt trước khi sử dụng. Trích dẫn khớp không chứng minh mọi khẳng định đúng."
+            }
+          ],
+          "teacherReviewRequired": true,
+          "publication": "draft-only"
+        },
+        "sourceBasis": {
+          "mode": "saved-sources",
+          "materials": [
+            {
+              "id": "c3c3f0d7-dafa-4340-ad83-b0b4946269c9",
+              "title": "Bài tự soạn để kiểm tra: phương trình bậc nhất",
+              "revision": 1
+            }
+          ],
+          "verifiedClaims": false
+        },
+        "requestId": "e20966db-a619-4241-be8d-69c12d73c009"
+      }
+    }
+  ]
+}

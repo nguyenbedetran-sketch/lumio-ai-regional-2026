@@ -106,6 +106,19 @@ export default function DataDeletionPage() {
         </p>
       </section>
       <section>
+        <h2>Dữ liệu lớp học và giảng dạy</h2>
+        <p>
+          Xóa thư viện hoặc dữ liệu trình duyệt không xóa lớp, bài giao, bài
+          làm, điểm hay hồ sơ giáo viên trong cơ sở dữ liệu máy chủ. Đóng
+          lớp, thu hồi mã mời hoặc xóa một bản nháp cũng không xóa mọi dữ
+          liệu liên quan. Nếu cần xử lý dữ liệu lớp hoặc tài khoản học sinh,
+          liên hệ giáo viên/người quản lý tổ chức và người phụ trách dự án
+          để xác định quyền sở hữu, phạm vi và các bản xuất cần xử lý. Hiện
+          chưa có quy trình tự động hoàn tất yêu cầu xóa toàn bộ lớp và
+          nhật ký; không xem việc host miễn phí reset là xác nhận đã xóa.
+        </p>
+      </section>
+      <section>
         <h2>3. Yêu cầu xử lý tài khoản máy chủ</h2>
         <p>
           Liên hệ người phụ trách dự án qua kênh đã mời bạn dùng thử. Nêu rõ yêu

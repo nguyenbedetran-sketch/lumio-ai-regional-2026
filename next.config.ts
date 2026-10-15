@@ -17,7 +17,7 @@ export default function config(phase: string): NextConfig {
       const privateHeaders = [
         { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
       ];
-      return ["/", "/admin/:path*", "/api/:path*", "/preview-mobile.html"].map(
+      return ["/", "/admin/:path*", "/teacher/:path*", "/classroom/:path*", "/api/:path*", "/preview-mobile.html"].map(
         (source) => ({ source, headers: privateHeaders }),
       );
     },

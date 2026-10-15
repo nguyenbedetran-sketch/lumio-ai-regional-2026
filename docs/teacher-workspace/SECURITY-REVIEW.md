@@ -1,0 +1,25 @@
+# Review bảo mật độc lập, phạm vi mã Teacher Workspace
+
+Ngày: 15/10/2026. Review đọc `lib/server/teaching-core.ts`, contracts/validation/schema, source-evidence, teacher-access, route teaching/generate/export và đường trả state sau mutation. Không sửa module backend trong review này. Line là snapshot source lúc review, có thể đổi khi backend định dạng/sửa. Đây không phải pentest hay chứng nhận bảo mật production.
+
+## Finding và mức giảm thiểu
+
+**P2 ban đầu đã giảm thiểu — Dung lượng tổng/bulk state.** Bản đầu đọc toàn bộ `data_json` và trả state sau mọi mutation, với 500 content rows/org và tối đa 100k ký tự/source/lesson nhưng chưa có tổng byte. Rủi ro parse/stringify hàng chục MB là phân tích mã, **không phải OOM đã quan sát**. Backend đã thêm `assertBudgets` (`teaching-core.ts:239`) và gọi trong cùng transaction trước audit/state (`:1951`): active content **2 MiB/org**, communications **256 KiB/org**, tổng content/communications/assignment snapshots/submission answers+grades+feedback **8 MiB/org**, đo UTF-8 bằng SQLite BLOB length. Vượt ngân sách rollback với `TEACHING_STORAGE_LIMIT`/413; update được tính trên dữ liệu hiện thời nên không cộng đôi bản cũ. `backend-api-report.json` ghi test ngân sách riêng, không cộng vào 24 case AI. Vẫn chưa có pagination/lazy detail, load test toàn trường hoặc quota toàn host; metadata lớp/nhóm còn theo giới hạn số hàng. Vì vậy đây là giảm thiểu cho bản thi, không chứng nhận khả năng scale production.
+
+**PARTIAL — Replay/recovery đầu ra generation; chặn tính credit lặp đã được bổ sung.** Client phải gửi UUIDv4 và giữ ID khi payload không đổi; backend namespace UUID theo tài khoản và dùng uniqueness của ledger hiện có. Retry sau khi kết thúc trả 409; request đồng thời có thể bị AI lease chặn 429 trước khi tới ledger. Cả hai đều không gọi/tính credit lần thứ hai, đã có test SQLite thật. Hai tài khoản dùng cùng UUID không xung đột ledger/telemetry. Vẫn chưa có receipt output để phục hồi draft đã mất; UUID mới là yêu cầu AI mới có thể mất credit. Không gọi cơ chế này là replay kết quả hay đồng bộ draft bền vững.
+
+## Phần đã đọc, không thấy lỗi lộ chéo trong các nhánh này
+
+- `scope` yêu cầu membership tổ chức canonical, role hợp lệ và credential staff; SUPER_ADMIN không tự được đọc tổ chức chưa tham gia. `classFor` ràng buộc org và phân công giáo viên/enrollment học sinh, không chỉ dựa orgId từ body.
+- `contentFor` chặn tài liệu lớp không được phân công; tài liệu toàn tổ chức của đồng nghiệp cần quyền tổ chức admin, giáo viên thường chỉ đọc global item của mình. Material proof được xác minh lần lưu; giữ proof cũ chỉ cho text không đổi và proof giống bản DB, không gắn proof đó lên văn bản mới.
+- `references` nạp material bằng quyền actor, so revision, rebuild quote/paragraph/page/slide/time từ text/evidence DB. Không công nhận locator từ model. Quote khớp vẫn không chứng minh nội dung nguồn đúng.
+- Enrollments không hoạt động không qua `classFor`; bỏ membership xóa quyền phân công/nhóm và vô hiệu enrollment. Join bằng invite không tự khôi phục enrollment đã thu hồi; restore là hành động staff có quyền lớp. Group targeting kiểm người đang active và snapshot recipients khi issue; thay nhóm sau issue không tự thêm người vào bài đã giao.
+- Assignment giữ snapshot câu hỏi, review + issue kiểm bank status/revision và QA; sửa bank không đổi assignment đã phát. Student phải là recipient đang có quyền lớp mới xem/nộp. Answer payload không có điểm/role cho client tự đặt.
+- Bulk GET và POST state: student không có bank questions; trước khi bài của chính họ được công bố điểm, assignment questions dùng whitelist bỏ correctIndex/modelAnswer/explanation/rubric/references. Submission chưa công bố bỏ autoScore/grades/score/feedback và che trạng thái graded. Chỉ giữ bài nộp của chính student.
+- Export gọi cùng bộ lọc state, student chỉ có hàng published của mình. JSON/CSV chỉ xuất metadata điểm theo quyền, không có answer key/rubric hoặc raw câu trả lời. CSV quote mọi cell và chặn các ký tự công thức đầu cell; source tên/title được trim. Không tuyên bố đã kiểm trên mọi phiên bản Excel.
+- JSON lỗi chỉ code/requestId, không có SQL, raw input, source/đáp án/token. Invite GET không trả plaintext/hash; recover code chỉ cho receipt của actor còn quyền lớp và invite còn hiệu lực; audit không ghi mã invite hoặc bài làm/điểm/nội dung.
+- Generation assertion chạy lại quyền/credential/session/source/preference AI ở settlement. **Đã có test SQLite thật** cho source-edit/credential-revoke/session-revoke/AI-disable/cancel và refund; không mock assertion này. Transaction lồng trước đó đã được bỏ. Provider transport trong test vẫn là fixture, không gọi thật.
+
+## Chưa được review/chưa thể suy ra
+
+Không có pentest độc lập, load test toàn trường, hành vi mọi browser/CSV client, diễn tập mất host, retention/xóa forensic, hai thiết bị thật, xác minh danh tính/công tác giáo viên, dữ liệu học sinh thật hoặc đánh giá ngữ nghĩa mô hình. Không tuyên bố đã chạy lại mọi baseline test từ review đọc mã này. Bản public đã nộp V3.1 khác source workspace đang phát triển.

@@ -16,7 +16,7 @@ function inspect(filename) {
       .prepare("SELECT version FROM schema_migrations ORDER BY version")
       .all()
       .map((r) => Number(r.version));
-    if (versions.length !== 11 || versions.some((v, i) => v !== i + 1))
+    if (versions.length !== 13 || versions.some((v, i) => v !== i + 1))
       throw Error("SCHEMA_NOT_SUPPORTED");
     for (const table of [
       "users",
@@ -41,9 +41,24 @@ function inspect(filename) {
       "teacher_applications",
       "teacher_credentials",
       "teacher_application_operations",
+      "teaching_organizations",
+      "teaching_classes",
+      "teaching_class_teachers",
+      "teaching_enrollments",
+      "teaching_groups",
+      "teaching_group_members",
+      "teaching_invites",
+      "teaching_content",
+      "teaching_assignments",
+      "teaching_assignment_targets",
+      "teaching_submissions",
+      "teaching_announcements",
+      "teaching_events",
+      "teaching_operations",
+      "teaching_preferences",
     ])
       db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
-    return { integrity: "ok", schemaVersion: 11 };
+    return { integrity: "ok", schemaVersion: 13 };
   } finally {
     db.close();
   }
