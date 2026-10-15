@@ -1,0 +1,266 @@
+/* Lumio 1.4 shell. Short, finite motion; the resting UI is always visible. */
+.lumio {
+  --lm-shadow-soft: 0 8px 28px rgb(25 48 39 / 5%);
+  --lm-ease: cubic-bezier(0.2, 0.75, 0.2, 1);
+}
+.lumio .lm-sidebar {
+  box-shadow: 0 16px 45px rgb(16 37 30 / 12%);
+  scrollbar-width: thin;
+  scrollbar-color: #476158 transparent;
+}
+.lumio .lm-sidebar .lm-nav button,
+.lumio .lm-sidebar .lm-nav-single {
+  position: relative;
+  border: 1px solid transparent;
+}
+.lumio .lm-sidebar .lm-nav button.active,
+.lumio .lm-sidebar .lm-nav-single.active {
+  border-color: #466353;
+  background: linear-gradient(100deg, #304b43, #293f3c);
+  box-shadow: inset 3px 0 0 #d4f4aa;
+}
+.lumio .lm-sidebar .lm-nav button > svg,
+.lumio .lm-sidebar .lm-nav-single > svg {
+  flex-shrink: 0;
+}
+.lumio .lm-topbar {
+  min-height: 82px;
+  gap: 14px;
+}
+.lumio .lm-breadcrumb {
+  font-weight: 600;
+  letter-spacing: -0.15px;
+  min-width: 0;
+}
+.lumio .lm-topbar :is(select, .lc-command-trigger) {
+  box-shadow: 0 2px 8px rgb(20 43 33 / 3%);
+}
+.lumio .lm-content {
+  padding-top: 24px;
+}
+.lumio .lm-content-card {
+  border-radius: 20px;
+  box-shadow: var(--lm-shadow-soft);
+  overflow: hidden;
+  position: relative;
+  isolation: isolate;
+}
+.lumio .lm-card-preview {
+  border-radius: 0;
+}
+.lumio .lm-content-card .lm-card-details {
+  padding: 18px;
+}
+.lumio .lm-content-card .lm-card-details h3 {
+  line-height: 1.55;
+  font-size: 13px;
+  font-weight: 600;
+}
+.lumio .lm-content-card .lm-card-kind {
+  border: 1px solid rgb(255 255 255 / 42%);
+  backdrop-filter: blur(8px);
+}
+.lumio .lm-content-card .lm-card-favorite {
+  min-width: 36px;
+  min-height: 36px;
+}
+.lumio .lm-panel {
+  box-shadow: var(--lm-shadow-soft);
+  border-radius: 22px;
+}
+.lumio .lm-settings-grid > .lm-panel {
+  align-self: start;
+}
+.lumio .lm-field :is(input, select, textarea) {
+  border-radius: 13px;
+  min-height: 46px;
+}
+.lumio :is(button, input, select, textarea, a):focus-visible {
+  outline: 3px solid var(--lm-accent);
+  outline-offset: 3px;
+}
+.lumio .lm-button {
+  border-radius: 12px;
+  min-height: 44px;
+}
+.lumio .lm-overlay {
+  background: rgb(12 28 25 / 52%);
+  backdrop-filter: blur(9px);
+}
+.lumio .lm-dialog {
+  border-radius: 25px;
+  border: 1px solid var(--lm-line);
+  box-shadow: 0 26px 100px rgb(8 27 20 / 22%);
+  animation: none;
+}
+.lumio .lm-dialog-head {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--lm-line);
+  margin-bottom: 20px;
+}
+.lumio .lm-dialog-head h2 {
+  letter-spacing: -0.5px;
+}
+.lumio .lm-footer {
+  line-height: 1.7;
+}
+.lumio .lm-toast {
+  border-radius: 15px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  box-shadow: 0 10px 38px rgb(7 28 21 / 20%);
+}
+.lm-motion-setting {
+  padding-top: 16px;
+  border-top: 1px solid var(--lm-line);
+  margin: 20px 0;
+}
+.lm-motion-setting .lm-field > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.lm-motion-setting .lm-help {
+  margin-top: 8px;
+  line-height: 1.7;
+}
+.lm-motion-preview {
+  min-height: 66px;
+  padding: 14px 18px;
+  margin-top: 14px;
+  border: 1px solid var(--lm-line);
+  background: var(--lm-tint);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  overflow: hidden;
+}
+.lm-motion-preview i {
+  display: block;
+  height: 25px;
+  width: 12px;
+  background: #7862ed;
+  border-radius: 6px;
+}
+.lm-motion-preview i:nth-child(2) {
+  height: 36px;
+  background: #a6c489;
+}
+.lm-motion-preview i:nth-child(3) {
+  height: 20px;
+  background: #366d61;
+}
+.lm-motion-preview span {
+  color: var(--lm-text);
+  font-size: 12px;
+  font-weight: 650;
+  margin-left: 6px;
+  letter-spacing: 0.5px;
+}
+@keyframes lm-preview-settle {
+  from {
+    transform: translateY(12px) scaleY(0.65);
+  }
+  to {
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] .lm-motion-preview i {
+    animation: lm-preview-settle 450ms var(--lm-ease) both;
+  }
+  html[data-motion="full"] .lm-motion-preview i:nth-child(2) {
+    animation-delay: 70ms;
+  }
+  html[data-motion="full"] .lm-motion-preview i:nth-child(3) {
+    animation-delay: 130ms;
+  }
+  .lumio
+    :is(
+      .lm-content-card,
+      .lm-button,
+      .lm-nav button,
+      .lm-nav-single,
+      .lm-icon
+    ) {
+    transition:
+      transform 220ms var(--lm-ease),
+      box-shadow 220ms var(--lm-ease),
+      border-color 160ms,
+      background-color 160ms;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html[data-motion="full"] .lumio .lm-content-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgb(25 48 39 / 10%);
+  }
+  html[data-motion="full"] .lumio .lm-button:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+  html[data-motion="full"] .lumio .lm-button:not(:disabled):active {
+    transform: translateY(0) scale(0.98);
+  }
+}
+html[data-motion="off"] .lumio *,
+html[data-motion="off"] .lumio *::before,
+html[data-motion="off"] .lumio *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+html[data-motion="subtle"]
+  .lumio
+  :is(.lm-content-card, .lm-button, .lm-icon):hover {
+  transform: none;
+}
+html[data-motion="subtle"]
+  .lumio
+  :is(
+    .lm-content > *,
+    .lm-card-grid > *,
+    .lm-overlay,
+    .lm-dialog,
+    .lm-hero-logo,
+    .lm-hero-satellite
+  ) {
+  animation: none !important;
+}
+html[data-motion="subtle"] .lumio .lm-motion-preview i {
+  animation: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lumio *,
+  .lumio *::before,
+  .lumio *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (max-width: 780px) {
+  .lumio .lm-topbar {
+    min-height: 68px;
+  }
+  .lumio .lm-content {
+    padding-top: 18px;
+  }
+  .lumio .lm-dialog {
+    border-radius: 22px;
+  }
+  .lumio .lm-card-details {
+    padding: 14px;
+  }
+}
+@media (max-width: 420px) {
+  .lumio .lm-topbar {
+    gap: 8px;
+  }
+  .lumio .lm-topbar .lm-row {
+    gap: 7px;
+  }
+  .lumio .lm-breadcrumb {
+    font-size: 11px;
+    max-width: 104px;
+  }
+}

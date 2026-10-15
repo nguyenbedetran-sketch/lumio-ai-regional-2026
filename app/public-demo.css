@@ -1,0 +1,36 @@
+.lm-public-demo-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 4px 28px 0;
+  padding: 16px 18px;
+  border: 1px solid var(--lm-accent);
+  border-radius: 14px;
+  color: var(--lm-text);
+  background: var(--lm-tint);
+}
+.lm-public-demo-banner > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+  color: var(--lm-accent);
+}
+.lm-public-demo-banner > div {
+  min-width: 0;
+}
+.lm-public-demo-banner strong {
+  display: block;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.lm-public-demo-banner p {
+  margin: 5px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+@media (max-width: 640px) {
+  .lm-public-demo-banner {
+    margin: 4px 14px 0;
+    padding: 13px;
+    gap: 9px;
+  }
+}

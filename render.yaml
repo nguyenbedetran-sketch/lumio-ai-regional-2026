@@ -1,0 +1,22 @@
+# Public competition demo only. No database, accounts, provider credentials or charges.
+services:
+  - type: web
+    name: lumio-ai-demo
+    runtime: node
+    plan: free
+    buildCommand: npx --yes pnpm@11.19.0 install --frozen-lockfile --prod=false && npx --yes pnpm@11.19.0 build
+    startCommand: node scripts/start-public-demo.cjs
+    healthCheckPath: /api/config
+    envVars:
+      - key: NODE_VERSION
+        value: 24.19.0
+      - key: NODE_ENV
+        value: production
+      - key: LUMIO_PUBLIC_DEMO
+        value: "true"
+      - key: LUMIO_AI_ENABLED
+        value: "false"
+      - key: LUMIO_PUBLIC_INDEXING
+        value: "false"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"

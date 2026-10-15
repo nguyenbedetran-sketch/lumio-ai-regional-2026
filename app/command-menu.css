@@ -1,0 +1,373 @@
+.lc-command-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--lm-line);
+  border-radius: 13px;
+  background: var(--lx-card, var(--lm-bg));
+  color: var(--lm-muted);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.16s,
+    color 0.16s,
+    background-color 0.16s;
+}
+.lc-command-trigger:hover {
+  color: var(--lm-text);
+  border-color: var(--lm-accent);
+  background: var(--lm-tint);
+}
+.lc-command-trigger kbd {
+  margin-left: 8px;
+  font-size: 10px;
+  opacity: 0.8;
+}
+.lc-command-trigger:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.lc-command-trigger:focus-visible,
+.lc-command-panel button:focus-visible,
+.lc-command-scope summary:focus-visible {
+  outline: 3px solid var(--lm-accent);
+  outline-offset: 3px;
+}
+.lc-command-dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--lm-text);
+  font: inherit;
+  overflow: hidden;
+}
+.lc-command-dialog::backdrop {
+  background: transparent;
+}
+.lc-command-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgb(8 24 21 / 48%);
+  backdrop-filter: blur(5px);
+}
+.lc-command-stage {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  overflow-y: auto;
+  padding: min(11vh, 90px) 20px 24px;
+  overscroll-behavior: contain;
+}
+.lc-command-panel {
+  width: min(100%, 660px);
+  min-width: 0;
+  position: relative;
+  border: 1px solid var(--lm-line);
+  border-radius: 24px;
+  background: var(--lx-card, var(--lm-bg));
+  box-shadow: 0 30px 110px rgb(0 0 0 / 25%);
+  overflow: hidden;
+}
+.lc-command-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 19px 0 23px;
+  gap: 12px;
+}
+.lc-command-heading h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--lm-muted);
+  line-height: 1.5;
+}
+.lc-command-panel button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
+  padding: 7px;
+  border: 0;
+  background: transparent;
+  border-radius: 9px;
+  color: var(--lm-muted);
+  cursor: pointer;
+  font: inherit;
+}
+.lc-command-panel button:hover {
+  color: var(--lm-text);
+  background: var(--lm-tint);
+}
+.lc-command-field {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 22px;
+  min-height: 63px;
+  border-bottom: 1px solid var(--lm-line);
+  color: var(--lm-accent);
+}
+.lc-command-field [cmdk-input] {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--lm-text);
+  padding: 16px 0;
+  font: inherit;
+  font-size: 17px;
+  line-height: 1.4;
+  box-shadow: none;
+}
+.lc-command-field [cmdk-input]::placeholder {
+  color: var(--lm-muted);
+  opacity: 0.8;
+}
+.lc-command-field:focus-within {
+  border-bottom-color: var(--lm-accent);
+}
+.lc-command-list {
+  max-height: min(49dvh, 430px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 12px 13px;
+  scroll-padding-block: 10px;
+}
+.lc-command-list [cmdk-group-heading] {
+  padding: 13px 11px 7px;
+  color: var(--lm-muted);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.lc-command-list [cmdk-item] {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-height: 47px;
+  padding: 8px 11px;
+  border-radius: 11px;
+  cursor: pointer;
+  color: var(--lm-text);
+  transition: background-color 0.12s;
+  scroll-margin-block: 10px;
+}
+.lc-command-list [cmdk-item][aria-selected="true"] {
+  background: var(--lm-tint);
+  outline: 1px solid var(--lm-line);
+  outline-offset: -1px;
+}
+.lc-command-icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 29px;
+  height: 29px;
+  color: var(--lm-muted);
+}
+.lc-command-source {
+  color: var(--lm-accent);
+  background: var(--lm-soft, var(--lm-bg));
+  border-radius: 8px;
+}
+.lc-command-item-text {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lc-command-item-text > span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lc-command-item-text small {
+  display: block;
+  color: var(--lm-muted);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+.lc-command-enter {
+  flex-shrink: 0;
+  color: var(--lm-muted);
+  opacity: 0;
+}
+[cmdk-item][aria-selected="true"] .lc-command-enter {
+  opacity: 1;
+}
+.lc-command-empty {
+  padding: 30px 18px;
+  display: grid;
+  justify-items: center;
+  gap: 12px;
+  color: var(--lm-muted);
+  text-align: center;
+}
+.lc-command-empty strong {
+  color: var(--lm-text);
+  font-size: 15px;
+}
+.lc-command-empty p {
+  max-width: 330px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.lc-command-library-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 14px 11px 4px;
+  margin: 0;
+  color: var(--lm-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.lc-command-library-empty svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.lc-command-more {
+  color: var(--lm-muted);
+  font-size: 12px;
+  margin: 12px 11px 0;
+}
+.lc-command-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  padding: 13px 22px 15px;
+  border-top: 1px solid var(--lm-line);
+  background: var(--lm-soft, var(--lm-bg));
+}
+.lc-command-hints {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: var(--lm-muted);
+  font-size: 10px;
+}
+.lc-command-hints > span {
+  white-space: nowrap;
+}
+.lc-command-hints kbd {
+  display: inline-flex;
+  min-width: 17px;
+  height: 19px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--lm-line);
+  border-radius: 4px;
+  background: var(--lx-card, var(--lm-bg));
+  font: inherit;
+  font-size: 10px;
+  margin-right: 2px;
+  padding: 0 3px;
+}
+.lc-command-privacy {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  color: var(--lm-muted);
+}
+.lc-command-scope {
+  width: 100%;
+  color: var(--lm-muted);
+  font-size: 11px;
+}
+.lc-command-scope summary {
+  cursor: pointer;
+  width: fit-content;
+  border-radius: 3px;
+}
+.lc-command-scope p {
+  margin: 8px 0 0;
+  max-width: 540px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.lc-command-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+@media (max-width: 700px) {
+  .lc-command-trigger {
+    justify-content: center;
+    padding: 9px;
+  }
+  .lc-command-trigger > span,
+  .lc-command-trigger > kbd {
+    display: none;
+  }
+  .lc-command-stage {
+    padding: max(15px, env(safe-area-inset-top)) 12px
+      max(15px, env(safe-area-inset-bottom));
+  }
+  .lc-command-panel {
+    border-radius: 19px;
+  }
+  .lc-command-heading {
+    padding: 12px 12px 0 17px;
+  }
+  .lc-command-field {
+    margin-inline: 16px;
+    gap: 9px;
+    min-height: 58px;
+  }
+  .lc-command-field [cmdk-input] {
+    font-size: 16px;
+  }
+  .lc-command-list {
+    max-height: min(56dvh, 450px);
+    padding-inline: 7px;
+  }
+  .lc-command-footer {
+    padding: 12px 17px;
+    gap: 10px;
+  }
+  .lc-command-hints {
+    display: none;
+  }
+  .lc-command-privacy {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lc-command-trigger,
+  .lc-command-list [cmdk-item] {
+    transition: none;
+  }
+}

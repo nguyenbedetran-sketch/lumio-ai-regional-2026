@@ -1,0 +1,57 @@
+{
+  "name": "lumio-ai",
+  "version": "2.0.0-regional.1",
+  "private": true,
+  "scripts": {
+    "dev": "node preview.cjs",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "start": "next start",
+    "test": "node tests/core.cjs && node tests/ingestion.cjs && node tests/learning.cjs && node tests/library-concurrency.cjs && node tests/recommendations.cjs && node tests/admin.cjs && node tests/auth-security.cjs && node tests/metadata.cjs && node tests/billing.cjs && node tests/ai-billing.cjs && node tests/public-demo.cjs && node tests/mobile.cjs && node tests/voice.cjs && node tests/mobile-ai.cjs && node tests/command-menu.cjs && node tests/supabase-mcp.cjs && node tests/motion-policy.cjs && node tests/dashboard-insights.cjs && node tests/study-v3.cjs && node tests/meeting-capture.cjs && node tests/desktop.cjs && node tests/full-summary.cjs && node tests/readout.cjs && node tests/source-grounding.cjs && node tests/tutor.cjs && node tests/tutor-api.cjs && node tests/regional-preview.cjs",
+    "test:http": "node tests/http.cjs && node tests/admin-http.cjs && node tests/preview.cjs && node tests/billing-http.cjs && node tests/source-http.cjs",
+    "test:public-demo": "node tests/public-demo.cjs",
+    "test:public-demo:http": "node tests/public-demo-http.cjs",
+    "start:public-demo": "node scripts/start-public-demo.cjs",
+    "services:setup": "node scripts/connect-services.cjs",
+    "services:check": "node scripts/check-services.cjs",
+    "auth:check": "node scripts/setup-auth.cjs",
+    "auth:setup": "node scripts/setup-auth.cjs --init",
+    "design:audit": "node scripts/design-audit.cjs",
+    "mcp:supabase": "node scripts/setup-supabase-mcp.cjs",
+    "test:ui": "node scripts/test-ui.cjs",
+    "test:ux": "node scripts/test-ui.cjs --premium",
+    "test:dashboard": "node scripts/test-ui.cjs --dashboard",
+    "test:meeting": "node scripts/test-ui.cjs --meeting",
+    "test:full-summary": "node scripts/test-ui.cjs --full-summary",
+    "test:readout": "node scripts/test-ui.cjs --readout",
+    "test:regional-tutor": "node scripts/test-ui.cjs --regional-tutor",
+    "test:regional-sources": "node scripts/test-ui.cjs --regional-sources",
+    "test:regional-learning": "node scripts/test-ui.cjs --regional-learning"
+  },
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
+  "dependencies": {
+    "cmdk": "1.1.1",
+    "fflate": "0.8.3",
+    "htmlparser2": "10.1.0",
+    "katex": "0.18.2",
+    "lucide-react": "0.468.0",
+    "motion": "13.4.4",
+    "next": "15.5.27",
+    "next-auth": "4.24.15",
+    "react": "19.1.8",
+    "react-dom": "19.1.8",
+    "unpdf": "1.8.1"
+  },
+  "devDependencies": {
+    "@playwright/cli": "0.1.21",
+    "@types/katex": "0.16.7",
+    "@types/node": "22.19.0",
+    "@types/react": "19.1.16",
+    "@types/react-dom": "19.1.9",
+    "prettier": "^3.9.8",
+    "skillui": "1.3.4",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,0 +1,23 @@
+node_modules/
+.next/
+.next-dev/
+*.tsbuildinfo
+.env*
+!.env.example
+.pnpm-store/
+client_secret*.json
+oauth*.json
+.data/
+*.sqlite*
+.playwright-cli/
+tooling/supabase-config/
+
+# Source-only mobile/desktop companions; generated artifacts stay local.
+apps/**/build/
+apps/**/.dart_tool/
+apps/**/.gradle/
+apps/**/dist/
+apps/**/bundle/
+apps/**/local.properties
+apps/**/key.properties
+apps/**/.flutter-plugins-dependencies

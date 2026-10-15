@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "checks": 20,
+  "passed": [
+    "Input receives focus",
+    "Opening and cancelling preserves notes",
+    "Escape restores editor focus",
+    "Accent-insensitive source title search",
+    "Search finds note content",
+    "Empty query results",
+    "Enter selects destination and closes dialog",
+    "Cancelling palette preserves voice draft",
+    "Existing modal owns shortcut",
+    "Palette fits 375px viewport",
+    "No mobile horizontal overflow",
+    "Normal entrance reaches visible final state",
+    "Reduced motion has no running panel animation",
+    "Reduced motion keeps panel stationary",
+    "Live reduced-motion change preserves query",
+    "Live reduced-motion change preserves focus",
+    "English search UI available",
+    "Palette follows dark-theme background",
+    "No background control receives Tab focus while dialog stays modal: [{\"tag\":\"SUMMARY\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"BODY\",\"role\":null,\"inside\":false,\"modal\":true,\"documentFocused\":false},{\"tag\":\"BUTTON\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"INPUT\",\"role\":\"combobox\",\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"SUMMARY\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"BODY\",\"role\":null,\"inside\":false,\"modal\":true,\"documentFocused\":false},{\"tag\":\"SUMMARY\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"INPUT\",\"role\":\"combobox\",\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"BUTTON\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"BODY\",\"role\":null,\"inside\":false,\"modal\":true,\"documentFocused\":false},{\"tag\":\"SUMMARY\",\"role\":null,\"inside\":true,\"modal\":true,\"documentFocused\":true},{\"tag\":\"INPUT\",\"role\":\"combobox\",\"inside\":true,\"modal\":true,\"documentFocused\":true}]",
+    "No runtime or hydration errors (0)"
+  ],
+  "focusSequence": [
+    {
+      "tag": "SUMMARY",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "BODY",
+      "role": null,
+      "inside": false,
+      "modal": true,
+      "documentFocused": false
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "INPUT",
+      "role": "combobox",
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "SUMMARY",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "BODY",
+      "role": null,
+      "inside": false,
+      "modal": true,
+      "documentFocused": false
+    },
+    {
+      "tag": "SUMMARY",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "INPUT",
+      "role": "combobox",
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "BUTTON",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "BODY",
+      "role": null,
+      "inside": false,
+      "modal": true,
+      "documentFocused": false
+    },
+    {
+      "tag": "SUMMARY",
+      "role": null,
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    },
+    {
+      "tag": "INPUT",
+      "role": "combobox",
+      "inside": true,
+      "modal": true,
+      "documentFocused": true
+    }
+  ],
+  "browser": "msedge",
+  "tool": "@playwright/cli@0.1.21",
+  "checkedAt": "2026-10-03T02:45:43.118Z",
+  "mode": "isolated guest profile; UI-only sample data; no paid AI requests"
+}

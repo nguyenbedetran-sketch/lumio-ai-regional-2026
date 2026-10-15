@@ -1,0 +1,120 @@
+.lm-mobile-page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 24px 80px;
+  color: var(--text, #243d39);
+}
+.lm-mobile-page > header {
+  position: relative;
+  padding: 70px 0 48px;
+  overflow: hidden;
+}
+.lm-mobile-page h1 {
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 1.12;
+  letter-spacing: -0.05em;
+  margin: 18px 0;
+}
+.lm-mobile-page h1 em {
+  font-style: normal;
+  color: #50865a;
+}
+.lm-mobile-page header p {
+  max-width: 640px;
+  line-height: 1.8;
+  color: var(--muted, #657970);
+}
+.lm-mobile-hero-icon {
+  position: absolute;
+  right: 40px;
+  top: 76px;
+  width: 140px;
+  height: 140px;
+  opacity: 0.1;
+  transform: rotate(15deg);
+}
+.lm-mobile-columns {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+.lm-mobile-columns h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 21px;
+}
+.lm-mobile-columns ol {
+  padding-left: 22px;
+  line-height: 1.8;
+}
+.lm-mobile-columns li {
+  margin: 12px 0;
+}
+.lm-mobile-columns .lm-help {
+  line-height: 1.8;
+}
+.lm-pair-code {
+  margin: 22px 0;
+  padding: 20px;
+  border-radius: 18px;
+  background: #eaf3e7;
+  color: #183827;
+  display: grid;
+  gap: 12px;
+}
+.lm-pair-code input {
+  width: 100%;
+  min-width: 0;
+  font: 13px monospace;
+  padding: 12px;
+  border: 1px solid #b4d2b6;
+  border-radius: 9px;
+  background: #fff;
+  color: #163823;
+}
+.lm-device-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid #7e95782b;
+}
+.lm-device-row > div {
+  flex: 1;
+  min-width: 0;
+}
+.lm-device-row strong {
+  overflow-wrap: anywhere;
+}
+.lm-device-row small {
+  display: block;
+  margin-top: 7px;
+  opacity: 0.65;
+}
+.lm-mobile-page .lm-primary {
+  min-height: 44px;
+}
+.lm-mobile-page .lm-button {
+  min-height: 42px;
+}
+@media (max-width: 700px) {
+  .lm-mobile-columns {
+    grid-template-columns: 1fr;
+  }
+  .lm-mobile-page {
+    padding: 20px 16px 50px;
+  }
+  .lm-mobile-page > header {
+    padding: 40px 0 28px;
+  }
+  .lm-mobile-hero-icon {
+    right: 0;
+    top: 30px;
+    width: 110px;
+    height: 110px;
+  }
+  .lm-mobile-columns .lm-panel {
+    padding: 22px;
+  }
+}

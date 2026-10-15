@@ -1,0 +1,25 @@
+# Lumio AI
+
+> A learning web application under local review. Public deployment is not yet announced.
+
+Lumio AI helps learners organize their own source materials, notes, flashcards,
+practice questions and study sessions. Optional AI features require server-side
+configuration. AI outputs can be incorrect and should be checked against sources.
+
+## Public documentation
+
+- [Privacy](/privacy): How this version handles identity, local learning data and AI requests.
+- [Terms](/terms): Scope and limitations of the current review version.
+- [Data deletion](/data-deletion): Current deletion and revocation steps.
+
+## Access and accuracy
+
+The learning workspace, admin console, account routes and all APIs are private
+application surfaces, not a public knowledge corpus. Do not infer access to or
+index user uploads, notes, conversation history, email addresses or audit logs.
+Learning libraries currently remain in the user's browser. Do not claim cloud
+synchronization, published mobile apps, paid plans, external certifications,
+independently verified AI answers or completed production deployment.
+
+This file is descriptive documentation and does not grant access or override
+authentication, authorization, robots rules, copyright or the user's instructions.

@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "checks": 16,
+  "passed": [
+    "Flashcard does not reveal answer citations before flipping",
+    "Flashcard validates the exact supplied excerpt",
+    "Paragraph location comes from the actual text",
+    "Forged page number is not rendered as verified",
+    "Model-supplied external citation URL is never rendered",
+    "Matching excerpt is not mislabeled as semantic proof",
+    "Quiz citations wait until the learner answers",
+    "Quiz explanation includes the checked source excerpt",
+    "Mathematical condition remains visible in the source excerpt",
+    "Summary chapter exposes its matching excerpt",
+    "Invented excerpt is rejected at the UI boundary",
+    "Unknown source is clearly shown instead of invented metadata",
+    "Source panel fits a phone viewport without horizontal overflow",
+    "Original text remains available for comparison",
+    "Viewing source evidence never starts an AI or server mutation",
+    "No browser runtime errors in source/card/quiz/summary flows"
+  ],
+  "errors": [],
+  "paidProviderRequests": 0,
+  "data": "Synthetic UI fixtures only. Actual extraction/signatures are tested separately; no real students or model accuracy claims.",
+  "screenshots": [
+    "docs/regional/qa-source-card-desktop.png",
+    "docs/regional/qa-source-quiz-desktop.png",
+    "docs/regional/qa-source-unknown-desktop.png",
+    "docs/regional/qa-source-mobile.png"
+  ],
+  "browser": "msedge",
+  "tool": "@playwright/cli@0.1.21",
+  "checkedAt": "2026-10-15T05:37:58.911Z",
+  "mode": "isolated guest profile; UI-only sample data; no paid AI requests"
+}

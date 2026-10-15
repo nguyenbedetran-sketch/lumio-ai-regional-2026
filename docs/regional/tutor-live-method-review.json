@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:48:46.405Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 4,
+  "calls": 4,
+  "realProviderCalls": true,
+  "providerRequests": 4,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "wrong-first",
+      "problem": "Giải phương trình x/3 + 2 = 5",
+      "reference": [
+        9
+      ],
+      "referenceCheck": "9/3+2=5",
+      "scenario": "Sai bước đầu: chuyển vế sai dấu.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          }
+        },
+        {
+          "student": "Giải phương trình x/3 + 2 = 5",
+          "http": 200,
+          "durationMs": 2731,
+          "text": "Để tìm x, trước hết đưa các hạng chứa x về một phía: trừ 2 từ hai vế, sau đó nhân cả hai vế với 3 để khử mẫu và tìm giá trị của x.\n\nBạn hãy thực hiện bước đầu: trừ 2 từ cả hai vế của phương trình và viết phương trình mới được không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "46f7d9fb-a25d-469d-b70b-24ad70e71c3e"
+        },
+        {
+          "student": "Em chuyển 2 sang bên phải thành cộng 2.",
+          "http": 200,
+          "durationMs": 3842,
+          "text": "Em đã chuyển 2 sang bên phải nhưng giữ dấu +; thực ra khi chuyển vế thì dấu phải đổi. Hãy sửa lại theo quy tắc đổi dấu.\n\nKhi đưa một hạng từ vế này sang vế kia, phải đổi dấu của hạng đó: nếu hạng là +2 thì khi chuyển sang vế đối diện phải đổi thành -2 (không phải +2).\n\nViết phương trình sau khi em chuyển đúng hạng 2 sang vế phải (ghi biểu thức mới, không tính tiếp được không)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "abea60c6-cb91-4163-bced-79f457c85948"
+        },
+        {
+          "student": "Em trừ 2 ở hai vế rồi nhân 3.",
+          "http": 200,
+          "durationMs": 6200,
+          "text": "Phương pháp của em (trừ 2 rồi nhân 3) là đúng; nhớ nhân toàn bộ mỗi vế khi khử mẫu để không bỏ sót tổ hợp số nào.\n\nSau khi đã trừ 2 khỏi cả hai vế, bước tiếp theo là nhân cả hai vế với 3 để khử mẫu; khi nhân phải nhân toàn bộ mỗi vế, không chỉ phần tử chứa x.\n\nHãy viết phương trình thu được sau khi em trừ 2 ở hai vế rồi nhân cả hai vế với 3 (ghi biểu thức mới, chưa giải tiếp)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "27c24686-1589-45bb-9c2e-a2962933192a"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4691,
+          "text": "Đề bài\nGiải phương trình \\(\\dfrac{x}{3}+2=5\\).\n\nĐiều kiện\nMẫu số là 3 khác 0 nên biểu thức xác định với mọi x; không có hạn chế thêm về miền xác định.\n\nLời giải\nBước 1: Trừ 2 hai vế để đưa các hạng chứa x về một phía:\n\\[\n\\dfrac{x}{3}+2-2=5-2\n\\]\nSuy ra\n\\[\n\\dfrac{x}{3}=3\n\\]\nBước 2: Nhân cả hai vế với 3 để khử mẫu (nhân toàn bộ mỗi vế):\n\\[\n3\\cdot\\dfrac{x}{3}=3\\cdot 3\n\\]\nSuy ra\n\\[\nx=9\n\\]\n\nKiểm tra\nThay \\(x=9\\) vào phương trình ban đầu:\n\\[\n\\dfrac{9}{3}+2=3+2=5\n\\]\nTích hợp đúng vế phải là 5, nên nghiệm thoả mãn.\n\nKết luận\nPhương trình có nghiệm duy nhất là \\(x=9\\).\n\nGhi chú: Các bước đã thực hiện là hợp lệ vì phép trừ và phép nhân cả hai vế cho cùng một số không làm thay đổi tập nghiệm; điều kiện mẫu khác 0 đã được kiểm tra.",
+          "verification": {
+            "status": "verified",
+            "equation": "x/3 + 2 = 5",
+            "candidates": [
+              {
+                "value": 9,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "3 != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "4911cfc9-f973-4c7f-95cb-a3c39e6749a2"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      }
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "partial": 0,
+    "fail": 0
+  },
+  "finishedAt": "2026-10-15T05:49:03.908Z"
+}

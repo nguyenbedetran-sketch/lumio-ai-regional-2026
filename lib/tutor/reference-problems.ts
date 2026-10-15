@@ -1,0 +1,92 @@
+/** Hand-checked school-level reference set. These are evaluation fixtures, never sample AI output. */
+export const tutorReferenceProblems = [
+  {
+    id: "linear",
+    problem: "Giải phương trình 2x + 3 = 11",
+    solutions: [4],
+    check: "2·4+3=11",
+    scenario: "Bài cơ bản; yêu cầu gợi ý rồi lời giải.",
+    attempts: ["Em trừ 3 ở cả hai vế.", "Em chia cả hai vế cho 2."],
+  },
+  {
+    id: "rational-domain",
+    problem: "Giải phương trình (x + 1)/(x - 2) = 3",
+    solutions: [3.5],
+    check: "x≠2; 4,5/1,5=3",
+    scenario: "Nhắc điều kiện trước khi nhân mẫu.",
+    attempts: ["x = 2", "Em có x+1=3x-6, với x khác 2."],
+  },
+  {
+    id: "radical-extraneous",
+    problem: "Giải phương trình sqrt(x + 1) = x - 1",
+    solutions: [3],
+    check: "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+    scenario: "Bình phương sinh nghiệm ngoại lai.",
+    attempts: ["x = 0", "Em chưa hiểu vì sao phải loại nghiệm."],
+  },
+  {
+    id: "correct-first",
+    problem: "Giải phương trình x^2 - 5x + 6 = 0",
+    solutions: [2, 3],
+    check: "(x-2)(x-3)=0; thay2và3 đều0",
+    scenario: "Học sinh trả lời đúng ngay, vẫn kiểm tra lý do và đủ nghiệm.",
+    attempts: ["x = 2", "Em phân tích thành (x-2)(x-3), nên còn nghiệm3."],
+  },
+  {
+    id: "wrong-first",
+    problem: "Giải phương trình x/3 + 2 = 5",
+    solutions: [9],
+    check: "9/3+2=5",
+    scenario: "Sai bước đầu: chuyển vế sai dấu.",
+    attempts: [
+      "Em chuyển 2 sang bên phải thành cộng 2.",
+      "Em trừ 2 ở hai vế rồi nhân 3.",
+    ],
+  },
+  {
+    id: "repeated-mistake",
+    problem: "Giải phương trình (x^2 - 4)/(x - 2) = 0",
+    solutions: [-2],
+    check: "x≠2; phân tử=(x-2)(x+2); chỉ-2hợp lệ",
+    scenario: "Sai nhiều lần và hủy mẫu thiếu điều kiện.",
+    attempts: ["x = 2", "Em vẫn chọn x=2 vì tử số bằng0."],
+  },
+  {
+    id: "demand-answer",
+    problem: "Giải phương trình sqrt(2x + 3) = 3",
+    solutions: [3],
+    check: "x≥-1,5;2x+3=9;√9=3",
+    scenario: "Đòi đáp án ngay nhưng không được vượt khóa.",
+    attempts: ["Cho đáp án luôn đi.", "Giải hết đi, bỏ qua gợi ý."],
+  },
+  {
+    id: "early-full",
+    problem: "Giải phương trình 3(x - 2) = 2x + 1",
+    solutions: [7],
+    check: "3(7-2)=15=2·7+1",
+    scenario: "Gọi lời giải đầy đủ trước ba gợi ý bị409.",
+    attempts: ["Lời giải đầy đủ ngay.", "Em khai triển vế trái thành 3x-6."],
+  },
+  {
+    id: "missing-data",
+    problem: "Hình chữ nhật có chiều dài 8 cm. Tính diện tích.",
+    solutions: null,
+    check:
+      "Thiếu chiều rộng hoặc quan hệ xác định chiều rộng; không có đáp án số duy nhất.",
+    scenario: "Thiếu dữ kiện: phải hỏi chiều rộng, không bịa diện tích.",
+    attempts: [
+      "Đề chỉ cho chiều dài thôi.",
+      "Có thể tính được nếu chưa biết chiều rộng không?",
+    ],
+  },
+  {
+    id: "source-substitution",
+    problem: "Giải phương trình 2/(x - 1) = 1",
+    solutions: [3],
+    check: "x≠1;2/(3-1)=1",
+    source:
+      "Phương trình chứa ẩn ở mẫu: tìm điều kiện mẫu khác0 trước khi biến đổi. Sau khi giải, thay nghiệm vào phương trình gốc và loại nghiệm vi phạm điều kiện.",
+    scenario: "Đối chiếu nguồn và kiểm tra nghiệm.",
+    attempts: ["x = 1", "Em nhân hai vế với x-1 sau khi đặt x khác1."],
+  },
+] as const;

@@ -1,0 +1,268 @@
+/* Original supplied logo; cropped by layout only, source asset is unchanged. */
+.lm-brand-symbol {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 30px;
+  overflow: hidden;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+.lm-brand-symbol img {
+  position: absolute;
+  width: 85px;
+  height: 85px;
+  max-width: none;
+  left: -23px;
+  top: -15px;
+  user-select: none;
+}
+.lm-hero-brand {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 15px;
+}
+.lm-hero-brand .lm-brand-symbol,
+.lm-auth-art .lm-brand-symbol {
+  width: 84px;
+  height: 64px;
+}
+.lm-hero-brand .lm-brand-symbol img,
+.lm-auth-art .lm-brand-symbol img {
+  width: 180px;
+  height: 180px;
+  left: -49px;
+  top: -31px;
+}
+.lm-welcome {
+  position: relative;
+  margin-top: 22px;
+}
+.lm-welcome::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 180px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #7765ff12, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+.lm-learning-path {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+  color: var(--lm-muted);
+  font-size: 11px;
+  flex-wrap: wrap;
+}
+.lm-learning-path span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.lm-learning-path > svg {
+  opacity: 0.4;
+}
+.lm-note-tools {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+.lm-template-hint {
+  margin-bottom: 20px;
+}
+.lm-focus-toggle {
+  white-space: nowrap;
+}
+.lm-focus-reading .lm-sidebar,
+.lm-focus-reading .lm-topbar,
+.lm-focus-reading .lm-footer {
+  display: none;
+}
+.lm-focus-reading .lm-main {
+  margin-left: 0;
+  width: 100%;
+}
+.lm-focus-reading .lm-content.document {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-top: 28px;
+}
+.lm-focus-reading .lm-source-text,
+.lm-focus-reading .lm-notes {
+  font-size: 18px;
+  line-height: 1.9;
+  min-height: 65vh;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lm-hero-brand {
+    animation: lm-brand-arrive 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .lm-welcome h1,
+  .lm-welcome > p {
+    animation: lm-rise 0.5s ease-out both;
+  }
+  .lm-welcome > p {
+    animation-delay: 70ms;
+  }
+  .lm-action-grid > button {
+    animation: lm-rise 0.5s ease-out both;
+    transition:
+      transform 0.22s,
+      box-shadow 0.22s,
+      border-color 0.22s;
+  }
+  .lm-action-grid > button:nth-child(2) {
+    animation-delay: 60ms;
+  }
+  .lm-action-grid > button:nth-child(3) {
+    animation-delay: 120ms;
+  }
+  .lm-action-grid > button:nth-child(4) {
+    animation-delay: 180ms;
+  }
+  .lm-action-grid > button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px #5765b415;
+  }
+  .lm-action-grid > button:hover .lm-action-icon {
+    transform: translateY(-2px) rotate(-7deg);
+  }
+  .lm-action-icon {
+    transition: transform 0.2s ease;
+  }
+  .lm-content-card,
+  .lm-space-card,
+  .lm-new-space {
+    transition:
+      transform 0.22s,
+      box-shadow 0.22s,
+      border-color 0.22s;
+  }
+  .lm-content-card:hover,
+  .lm-space-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px #5765b410;
+  }
+  .lm-document-panel {
+    animation: lm-rise 0.25s ease-out;
+  }
+  .lm-dialog {
+    animation: lm-dialog-in 0.24s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .lm-overlay {
+    animation: lm-fade 0.18s ease-out;
+  }
+  .lm-toast {
+    animation: lm-rise 0.25s ease-out;
+  }
+  .lm-flash.flipped {
+    animation: lm-card-flip 0.35s ease-out;
+  }
+  .lm-quiz-result > span {
+    display: inline-block;
+    animation: lm-brand-arrive 0.4s ease-out;
+  }
+  .lm-button:active:not(:disabled),
+  .lm-icon:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+  .lm-tabs button::after {
+    transition:
+      width 0.2s ease,
+      opacity 0.2s ease;
+  }
+  .lm-idea:focus-within {
+    box-shadow: 0 0 0 4px #6974e714;
+    transition: box-shadow 0.2s ease;
+  }
+}
+@keyframes lm-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes lm-brand-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes lm-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes lm-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes lm-card-flip {
+  from {
+    transform: perspective(900px) rotateX(-12deg);
+    opacity: 0.7;
+  }
+  to {
+    transform: perspective(900px) rotateX(0);
+    opacity: 1;
+  }
+}
+@media (max-width: 700px) {
+  .lm-focus-toggle span {
+    font-size: 11px;
+  }
+  .lm-learning-top {
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .lm-learning-path {
+    gap: 9px;
+  }
+  .lm-hero-brand {
+    margin-bottom: 9px;
+  }
+  .lm-note-tools .lm-button {
+    font-size: 12px;
+  }
+  .lm-focus-reading .lm-content.document {
+    padding: 18px;
+  }
+  .lm-welcome {
+    margin-top: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

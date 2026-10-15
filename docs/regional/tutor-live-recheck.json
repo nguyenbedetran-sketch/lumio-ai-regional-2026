@@ -1,0 +1,336 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:40:39.642Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 8,
+  "calls": 8,
+  "realProviderCalls": true,
+  "providerRequests": 8,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "correct-first",
+      "problem": "Giải phương trình x^2 - 5x + 6 = 0",
+      "reference": [
+        2,
+        3
+      ],
+      "referenceCheck": "(x-2)(x-3)=0; thay2và3 đều0",
+      "scenario": "Học sinh trả lời đúng ngay, vẫn kiểm tra lý do và đủ nghiệm.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "794e3a5a-49f5-4976-a4fa-d2503cd493cd",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:40:39.678Z"
+          }
+        },
+        {
+          "student": "Giải phương trình x^2 - 5x + 6 = 0",
+          "http": 200,
+          "durationMs": 3424,
+          "text": "Đây là phương trình bậc hai chuẩn với hệ số a = 1 (không bằng 0), vì vậy có thể giải bằng cách phân tích nhân tử hoặc công thức nghiệm. Trước khi tiếp tục, hãy kiểm tra xem các hệ số cho phép dùng các phương pháp đó.\n\nHãy thử phân tích nhân tử: bạn tìm hai số thực (c và d) sao cho c + d = -5 và c·d = 6 là gì?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "794e3a5a-49f5-4976-a4fa-d2503cd493cd",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:40:39.678Z"
+          },
+          "requestId": "5e3a4ce7-4b12-450d-9634-1662d7dc4024"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 6724,
+          "text": "Giá trị x = 2 bạn đưa là một nghiệm hợp lệ (thay vào biểu thức cho 0). Bước tiếp theo là tìm nghiệm thứ hai; đừng quên kiểm tra nó bằng cách thay vào phương trình.\n\nNếu x=2 là một nghiệm thì đa thức x^2 - 5x + 6 chia hết cho (x-2). Thực hiện phép chia đa thức để tìm thừa số bậc nhất còn lại; nghiệm thứ hai là nghiệm của thừa số đó.\n\nBạn muốn thực hiện phép chia đa thức x^2-5x+6 cho (x-2) hay dùng quan hệ Viète (tổng và tích nghiệm) để tìm nghiệm còn lại?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "794e3a5a-49f5-4976-a4fa-d2503cd493cd",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:40:39.678Z"
+          },
+          "requestId": "be33e568-86df-4632-80cf-fbbc0703ecce"
+        },
+        {
+          "student": "Em phân tích thành (x-2)(x-3), nên còn nghiệm3.",
+          "http": 200,
+          "durationMs": 6918,
+          "text": "Đúng — phân tích (x-2)(x-3) cho đa thức ban đầu, nên nghiệm còn lại bạn nêu là chính xác. Hãy thực hiện phép nhân để kiểm chứng.\n\nTheo định lí Viète cho phương trình bậc hai ax^2+bx+c=0 với a=1: tổng hai nghiệm là -b (ở đây 5) và tích là c (ở đây 6). Nếu một nghiệm đã biết là 2, nghiệm còn lại phải tương thích với các giá trị tổng/tích đó.\n\nBạn có thể nhân (x-2)(x-3) ra và so sánh với đa thức x^2-5x+6 để kiểm tra phân tích của bạn chứ?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "794e3a5a-49f5-4976-a4fa-d2503cd493cd",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:40:39.678Z"
+          },
+          "requestId": "2e627a33-df88-45b9-8023-381b4758e37d"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 5337,
+          "text": "Given:\n\n- Phương trình: \\(x^2-5x+6=0\\)\n\nGoal:\n\n- Tìm tất cả nghiệm thực của phương trình.\n\nFormula/Ý tưởng:\n\n- Đây là phương trình bậc hai với hệ số \\(a=1,b=-5,c=6\\). Có thể giải bằng phân tích nhân tử hoặc bằng công thức nghiệm. Ngoài ra, định lí Viète cho biết tổng hai nghiệm là \\(-b/a\\) và tích là \\(c/a\\).\n\nSteps:\n\n1) Thử phân tích nhân tử: ta cần hai số \\(p,q\\) sao cho \\(p+q=-5\\) và \\(p\\cdot q=6\\). Các cặp chia 6 là (1,6),(2,3) với dấu; chọn \\(p=-2,q=-3\\) thỏa \\(-2+(-3)=-5\\) và \\((-2)(-3)=6\\).\n\n2) Do đó đa thức có thể phân tích thành \\((x-2)(x-3)\\). Kiểm tra: \\((x-2)(x-3)=x^2-3x-2x+6=x^2-5x+6\\).\n\n3) Giải phương trình bằng nhân tử: \\((x-2)(x-3)=0\\) nên \\(x-2=0\\) hoặc \\(x-3=0\\), suy ra \\(x=2\\) hoặc \\(x=3\\).\n\nCheck (kiểm tra nghiệm):\n\n- Thay \\(x=2\\): \\(2^2-5\\cdot2+6=4-10+6=0\\) — thỏa.\n- Thay \\(x=3\\): \\(3^2-5\\cdot3+6=9-15+6=0\\) — thỏa.\n\nConclusion:\n\n- Tập nghiệm thực là \\(\\{2,3\\}\\). Độ không chắc chắn: rất thấp vì các phép toán là đại số sơ cấp và đã được kiểm tra bằng thay nghiệm.",
+          "verification": {
+            "status": "verified",
+            "equation": "x^2 - 5x + 6 = 0",
+            "candidates": [
+              {
+                "value": 2,
+                "valid": true
+              },
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "794e3a5a-49f5-4976-a4fa-d2503cd493cd",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:40:39.678Z"
+          },
+          "requestId": "707bb24f-4e5e-48cc-8ff2-c9b3591d849a"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true
+      }
+    },
+    {
+      "id": "repeated-mistake",
+      "problem": "Giải phương trình (x^2 - 4)/(x - 2) = 0",
+      "reference": [
+        -2
+      ],
+      "referenceCheck": "x≠2; phân tử=(x-2)(x+2); chỉ-2hợp lệ",
+      "scenario": "Sai nhiều lần và hủy mẫu thiếu điều kiện.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "55905117-a905-4d6f-8f1e-079b07d3aa8d",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:41:02.100Z"
+          }
+        },
+        {
+          "student": "Giải phương trình (x^2 - 4)/(x - 2) = 0",
+          "http": 200,
+          "durationMs": 4231,
+          "text": "Lưu ý điều kiện xác định: mẫu số không được bằng 0 nên x ≠ 2. Nhận dạng nhân tử: x^2 - 4 có thể viết thành tích hai nhánh; rút gọn biểu thức khi x ≠ 2 để đơn giản phương trình.\n\nSau khi nhân tử và rút gọn dưới điều kiện x ≠ 2, biểu thức bên trái còn bằng gì (viết biểu thức mới)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "55905117-a905-4d6f-8f1e-079b07d3aa8d",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:41:02.100Z"
+          },
+          "requestId": "5bff0381-bb0d-4d94-a76c-fa7d89f0676d"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 6846,
+          "text": "Lỗi ở chỗ bạn chọn x = 2 nhưng khi thay vào biểu thức gốc, mẫu số bằng 0 nên biểu thức không xác định; do đó x = 2 không thể là nghiệm.\n\nTrước khi chấp nhận một giá trị x, luôn kiểm tra điều kiện xác định của biểu thức ban đầu: nếu mẫu số bằng 0 thì giá trị đó không hợp lệ và không thể là nghiệm của phương trình.\n\nBạn có đồng ý rằng x = 2 không hợp lệ vì làm cho mẫu số bằng 0 không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "55905117-a905-4d6f-8f1e-079b07d3aa8d",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:41:02.100Z"
+          },
+          "requestId": "0044d94a-ad8f-4569-bf1b-dc8ca42c95aa"
+        },
+        {
+          "student": "Em vẫn chọn x=2 vì tử số bằng0.",
+          "http": 200,
+          "durationMs": 4648,
+          "text": "Bạn đã sai khi chọn x = 2 vì thay vào mẫu số làm mẫu bằng 0 nên biểu thức gốc không xác định; do đó không thể là nghiệm.\n\nNếu tại một giá trị x0 cả tử và mẫu đều bằng 0 thì biểu thức phân thức không xác định tại x0 (điều này khác với việc chỉ có tử bằng 0). Để nghiệm của phương trình phân thức, biểu thức phải xác định và bằng 0, tức là tử = 0 nhưng mẫu ≠ 0.\n\nTìm các nghiệm của phương trình tử số x^2 - 4 = 0 rồi cho biết trong các nghiệm đó, giá trị nào thỏa điều kiện xác định x ≠ 2?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "55905117-a905-4d6f-8f1e-079b07d3aa8d",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:41:02.100Z"
+          },
+          "requestId": "7239408a-27f7-4635-91cd-f59a0fca3b54"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 3786,
+          "text": "Given: \nPhương trình \n\\(\\dfrac{x^2-4}{x-2}=0.\\)\n\nGoal: Tìm tất cả nghiệm thực của phương trình, kèm điều kiện xác định và bước kiểm tra.\n\nĐiều kiện xác định: Mẫu số không được bằng 0 nên x \\(\\neq 2\\).\n\nPhân tích (nhận dạng nhân tử và rút gọn):\n- Ta có \\(x^2-4=(x-2)(x+2)\\).\n- Khi x \\(\\neq 2\\), phân thức có thể viết lại và rút gọn thành \\(x+2\\):\n  \\[\\dfrac{x^2-4}{x-2}=\\dfrac{(x-2)(x+2)}{x-2}=x+2.\\]\n\nGiải phương trình đã rút gọn (dưới điều kiện x \\(\\neq 2\\)):\n- Giải \\(x+2=0\\) ta được \\(x=-2\\).\n\nKiểm tra nghiệm trong phương trình gốc và điều kiện xác định:\n- Với x = -2, mẫu số x-2 = -4 \\(\\neq 0\\), nên biểu thức gốc xác định.\n- Thay x = -2 vào vế trái: \\(\\dfrac{(-2)^2-4}{-2-2}=\\dfrac{4-4}{-4}=\\dfrac{0}{-4}=0\\). Kết quả đúng bằng 0.\n\nKết luận: \n- Tập nghiệm thực của phương trình là \\(\\{ -2\\}\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "(x^2 - 4)/(x - 2) = 0",
+            "candidates": [
+              {
+                "value": -2,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "(x-2) != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "55905117-a905-4d6f-8f1e-079b07d3aa8d",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:41:02.100Z"
+          },
+          "requestId": "e60fc33d-7361-48c7-9cab-e5a65e970207"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true
+      }
+    }
+  ],
+  "summary": {
+    "pass": 2,
+    "partial": 0,
+    "fail": 0
+  },
+  "finishedAt": "2026-10-15T05:41:21.622Z"
+}

@@ -1,0 +1,1013 @@
+{
+  "status": "PARTIAL",
+  "startedAt": "2026-10-15T05:49:50.831Z",
+  "maximumProviderRequests": 6,
+  "actualProviderRequests": 6,
+  "fixture": {
+    "authored": true,
+    "studentData": false,
+    "source": "# Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả\n\nVới phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.\n\nBiểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.\n\nXét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.\n\nPhương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.\n\nMột tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².\n\nKhi học từ tài liệu này, hãy phân biệt điều kiện xác định, bước biến đổi và kết luận. Một phép thử số chỉ kiểm tra ứng viên đó; không tự chứng minh rằng đã tìm đủ tất cả nghiệm.",
+    "expectedFacts": [
+      {
+        "id": "linear",
+        "fact": "2x+3=11 has x=4; substituting gives 11",
+        "reference": "x = 4"
+      },
+      {
+        "id": "domain",
+        "fact": "(x²−1)/(x−1) requires x≠1 even after cancellation",
+        "reference": "Không được bỏ điều kiện"
+      },
+      {
+        "id": "extraneous",
+        "fact": "(x²−1)/(x−1)=2 has no solution, x=1 is excluded",
+        "reference": "Phương trình vô nghiệm"
+      },
+      {
+        "id": "radical",
+        "fact": "sqrt(x+1)=3 requires x≥−1 and yields checked x=8",
+        "reference": "x = 8"
+      },
+      {
+        "id": "geometry",
+        "fact": "Right triangle legs6cm8cm: hypotenuse10cm, area24cm²",
+        "reference": "24 cm²"
+      }
+    ],
+    "visionEquation": "2x + 3 = 11"
+  },
+  "scope": "Actual routeAI, structured validators and citation matching. This CLI does not exercise OAuth, authenticated HTTP, billing, tutor unlock or student learning outcomes.",
+  "requestLog": [
+    {
+      "number": 1,
+      "task": "summary",
+      "provider": "gemini",
+      "startedAt": "2026-10-15T05:49:50.838Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:50:14.923Z"
+    },
+    {
+      "number": 2,
+      "task": "cards",
+      "provider": "openai",
+      "startedAt": "2026-10-15T05:50:14.933Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:50:26.597Z"
+    },
+    {
+      "number": 3,
+      "task": "quiz",
+      "provider": "openai",
+      "startedAt": "2026-10-15T05:50:26.784Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:50:39.430Z"
+    },
+    {
+      "number": 4,
+      "task": "vision",
+      "provider": "gemini",
+      "startedAt": "2026-10-15T05:50:39.647Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:50:52.805Z"
+    },
+    {
+      "number": 5,
+      "task": "vision",
+      "provider": "gemini",
+      "startedAt": "2026-10-15T05:52:19.275Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:52:23.222Z"
+    },
+    {
+      "number": 6,
+      "task": "quiz",
+      "provider": "openai",
+      "startedAt": "2026-10-15T05:57:30.866Z",
+      "httpStatus": 200,
+      "finishedAt": "2026-10-15T05:57:42.572Z"
+    }
+  ],
+  "results": [
+    {
+      "task": "summary",
+      "status": "PASS",
+      "meaning": "Actual provider response parsed and structural checks passed; semantic review remains separate.",
+      "startedAt": "2026-10-15T05:49:50.833Z",
+      "finishedAt": "2026-10-15T05:50:14.931Z",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.8-flash",
+        "text": "# Ôn tập Toán 9: Giữ điều kiện và kiểm tra kết quả\n\nTài liệu hệ thống hóa các kiến thức trọng tâm trong chương trình Toán 9 bao gồm giải phương trình bậc nhất, rút gọn phân thức đại số, giải phương trình chứa căn thức bậc hai và ứng dụng định lý Pythagore trong hình học. Điểm cốt lõi được nhấn mạnh xuyên suốt bài học là người học cần xác định chính xác điều kiện xác định, duy trì điều kiện trong mọi bước biến đổi, loại bỏ các nghiệm ngoại lai không thỏa mãn điều kiện và kiểm tra lại kết quả với phương trình ban đầu.\n\n- Giải phương trình bậc nhất cơ bản qua các phép biến đổi tương đương và thay nghiệm vào phương trình để kiểm tra.\n- Không được bỏ qua điều kiện xác định sau khi rút gọn phân thức đại số.\n- Phương trình phân thức có thể xuất hiện nghiệm bị loại nếu giá trị tìm được vi phạm điều kiện ban đầu.\n- Sau khi bình phương hai vế để giải phương trình chứa căn, bắt buộc phải thử lại vào phương trình ban đầu.\n- Phân biệt rõ ràng giữa đơn vị đo độ dài cạnh và đơn vị đo diện tích tam giác.\n- Một phép thử số chỉ kiểm tra ứng viên tìm được, không tự chứng minh đã tìm đủ mọi nghiệm.\n\n## 1. Giải phương trình bậc nhất cơ bản\n\nPhương pháp giải phương trình bậc nhất một ẩn qua việc trừ hai vế và chia cho hệ số khác không, sau đó thử lại để kết luận nghiệm.\n\n- Xét phương trình \\(2x + 3 = 11\\), trừ cả hai vế cho 3 ta thu được \\(2x = 8\\).\n- Vì hệ số 2 khác 0, chia hai vế cho 2 thu được \\(x = 4\\).\n- Thay lại vào phương trình gốc: \\(2 \\cdot 4 + 3 = 11\\) (đúng).\n- Kết luận nghiệm của phương trình là \\(x = 4\\).\n\n## 2. Điều kiện xác định và rút gọn biểu thức\n\nQuy tắc giữ nguyên điều kiện xác định khi phân tích và rút gọn biểu thức chứa biến ở mẫu.\n\n- Biểu thức \\(\\frac{x^2 - 1}{x - 1}\\) yêu cầu điều kiện xác định là \\(x \\neq 1\\).\n- Phân tích tử thức thành nhân tử: \\(x^2 - 1 = (x - 1)(x + 1)\\).\n- Biểu thức chỉ bằng \\(x + 1\\) khi kèm theo điều kiện \\(x \\neq 1\\).\n- Tuyệt đối không được bỏ điều kiện xác định sau khi đã rút gọn.\n\n## 3. Giải phương trình phân thức và loại nghiệm ngoại lai\n\nCách nhận biết nghiệm ngoại lai không thỏa mãn điều kiện xác định và đưa ra kết luận chính xác về tập nghiệm.\n\n- Xét phương trình \\(\\frac{x^2 - 1}{x - 1} = 2\\) với điều kiện ban đầu \\(x \\neq 1\\).\n- Rút gọn biểu thức trong điều kiện đã có, dẫn đến phương trình \\(x + 1 = 2\\).\n- Giải ra giá trị ứng viên \\(x = 1\\).\n- Giá trị \\(x = 1\\) bị loại vì vi phạm điều kiện ban đầu \\(x \\neq 1\\).\n- Phương trình vô nghiệm, không được kết luận \\(x = 1\\) là nghiệm.\n\n## 4. Phương trình chứa căn thức bậc hai\n\nQuy trình giải phương trình chứa căn bậc hai, từ đặt điều kiện, bình phương hai vế cho đến thử lại kết quả.\n\n- Phương trình \\(\\sqrt{x + 1} = 3\\) có điều kiện xác định là \\(x \\ge -1\\).\n- Bình phương cả hai vế: \\(x + 1 = 9\\), suy ra \\(x = 8\\).\n- Thử lại vào biểu thức căn: \\(\\sqrt{8 + 1} = \\sqrt{9} = 3\\) (thỏa mãn).\n- Sau phép biến đổi bình phương, bắt buộc phải kiểm tra lại nghiệm với phương trình ban đầu.\n\n## 5. Định lý Pythagore và tính toán hình học\n\nỨng dụng định lý Pythagore tính cạnh huyền tam giác vuông, tính diện tích và phân biệt rõ ràng giữa các đơn vị đo.\n\n- Cho tam giác vuông có hai cạnh góc vuông lần lượt là \\(6\\text{ cm}\\) và \\(8\\text{ cm}\\).\n- Áp dụng định lý Pythagore tính cạnh huyền: \\(c = \\sqrt{6^2 + 8^2} = 10\\text{ cm}\\).\n- Tính diện tích tam giác vuông: \\(S = \\frac{1}{2} \\cdot 6 \\cdot 8 = 24\\text{ cm}^2\\).\n- Cần phân biệt rõ đơn vị độ dài (\\(10\\text{ cm}\\)) với đơn vị diện tích (\\(24\\text{ cm}^2\\)).\n\n## 6. Nguyên tắc kiểm tra và kết luận trong giải toán\n\nLưu ý phương pháp luận khi giải toán: phân biệt các giai đoạn làm bài và bản chất của việc thử số.\n\n- Phải phân biệt rõ ràng giữa điều kiện xác định, bước biến đổi và kết luận cuối cùng.\n- Phép thử số vào phương trình chỉ có tác dụng kiểm tra ứng viên cụ thể đó.\n- Phép thử số không tự chứng minh rằng người giải đã tìm đủ tất cả các nghiệm.",
+        "usage": {
+          "inputTokens": 1136,
+          "outputTokens": 2651,
+          "totalTokens": 4734
+        },
+        "summary": {
+          "title": "Ôn tập Toán 9: Giữ điều kiện và kiểm tra kết quả",
+          "overview": "Tài liệu hệ thống hóa các kiến thức trọng tâm trong chương trình Toán 9 bao gồm giải phương trình bậc nhất, rút gọn phân thức đại số, giải phương trình chứa căn thức bậc hai và ứng dụng định lý Pythagore trong hình học. Điểm cốt lõi được nhấn mạnh xuyên suốt bài học là người học cần xác định chính xác điều kiện xác định, duy trì điều kiện trong mọi bước biến đổi, loại bỏ các nghiệm ngoại lai không thỏa mãn điều kiện và kiểm tra lại kết quả với phương trình ban đầu.",
+          "keyPoints": [
+            "Giải phương trình bậc nhất cơ bản qua các phép biến đổi tương đương và thay nghiệm vào phương trình để kiểm tra.",
+            "Không được bỏ qua điều kiện xác định sau khi rút gọn phân thức đại số.",
+            "Phương trình phân thức có thể xuất hiện nghiệm bị loại nếu giá trị tìm được vi phạm điều kiện ban đầu.",
+            "Sau khi bình phương hai vế để giải phương trình chứa căn, bắt buộc phải thử lại vào phương trình ban đầu.",
+            "Phân biệt rõ ràng giữa đơn vị đo độ dài cạnh và đơn vị đo diện tích tam giác.",
+            "Một phép thử số chỉ kiểm tra ứng viên tìm được, không tự chứng minh đã tìm đủ mọi nghiệm."
+          ],
+          "chapters": [
+            {
+              "title": "Giải phương trình bậc nhất cơ bản",
+              "summary": "Phương pháp giải phương trình bậc nhất một ẩn qua việc trừ hai vế và chia cho hệ số khác không, sau đó thử lại để kết luận nghiệm.",
+              "bullets": [
+                "Xét phương trình \\(2x + 3 = 11\\), trừ cả hai vế cho 3 ta thu được \\(2x = 8\\).",
+                "Vì hệ số 2 khác 0, chia hai vế cho 2 thu được \\(x = 4\\).",
+                "Thay lại vào phương trình gốc: \\(2 \\cdot 4 + 3 = 11\\) (đúng).",
+                "Kết luận nghiệm của phương trình là \\(x = 4\\)."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s2",
+                  "quote": "Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.",
+                  "start": 52,
+                  "end": 196,
+                  "paragraph": 2,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            },
+            {
+              "title": "Điều kiện xác định và rút gọn biểu thức",
+              "summary": "Quy tắc giữ nguyên điều kiện xác định khi phân tích và rút gọn biểu thức chứa biến ở mẫu.",
+              "bullets": [
+                "Biểu thức \\(\\frac{x^2 - 1}{x - 1}\\) yêu cầu điều kiện xác định là \\(x \\neq 1\\).",
+                "Phân tích tử thức thành nhân tử: \\(x^2 - 1 = (x - 1)(x + 1)\\).",
+                "Biểu thức chỉ bằng \\(x + 1\\) khi kèm theo điều kiện \\(x \\neq 1\\).",
+                "Tuyệt đối không được bỏ điều kiện xác định sau khi đã rút gọn."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s3",
+                  "quote": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.",
+                  "start": 198,
+                  "end": 358,
+                  "paragraph": 3,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            },
+            {
+              "title": "Giải phương trình phân thức và loại nghiệm ngoại lai",
+              "summary": "Cách nhận biết nghiệm ngoại lai không thỏa mãn điều kiện xác định và đưa ra kết luận chính xác về tập nghiệm.",
+              "bullets": [
+                "Xét phương trình \\(\\frac{x^2 - 1}{x - 1} = 2\\) với điều kiện ban đầu \\(x \\neq 1\\).",
+                "Rút gọn biểu thức trong điều kiện đã có, dẫn đến phương trình \\(x + 1 = 2\\).",
+                "Giải ra giá trị ứng viên \\(x = 1\\).",
+                "Giá trị \\(x = 1\\) bị loại vì vi phạm điều kiện ban đầu \\(x \\neq 1\\).",
+                "Phương trình vô nghiệm, không được kết luận \\(x = 1\\) là nghiệm."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s4",
+                  "quote": "Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.",
+                  "start": 360,
+                  "end": 598,
+                  "paragraph": 4,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            },
+            {
+              "title": "Phương trình chứa căn thức bậc hai",
+              "summary": "Quy trình giải phương trình chứa căn bậc hai, từ đặt điều kiện, bình phương hai vế cho đến thử lại kết quả.",
+              "bullets": [
+                "Phương trình \\(\\sqrt{x + 1} = 3\\) có điều kiện xác định là \\(x \\ge -1\\).",
+                "Bình phương cả hai vế: \\(x + 1 = 9\\), suy ra \\(x = 8\\).",
+                "Thử lại vào biểu thức căn: \\(\\sqrt{8 + 1} = \\sqrt{9} = 3\\) (thỏa mãn).",
+                "Sau phép biến đổi bình phương, bắt buộc phải kiểm tra lại nghiệm với phương trình ban đầu."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s5",
+                  "quote": "Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.",
+                  "start": 600,
+                  "end": 802,
+                  "paragraph": 5,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            },
+            {
+              "title": "Định lý Pythagore và tính toán hình học",
+              "summary": "Ứng dụng định lý Pythagore tính cạnh huyền tam giác vuông, tính diện tích và phân biệt rõ ràng giữa các đơn vị đo.",
+              "bullets": [
+                "Cho tam giác vuông có hai cạnh góc vuông lần lượt là \\(6\\text{ cm}\\) và \\(8\\text{ cm}\\).",
+                "Áp dụng định lý Pythagore tính cạnh huyền: \\(c = \\sqrt{6^2 + 8^2} = 10\\text{ cm}\\).",
+                "Tính diện tích tam giác vuông: \\(S = \\frac{1}{2} \\cdot 6 \\cdot 8 = 24\\text{ cm}^2\\).",
+                "Cần phân biệt rõ đơn vị độ dài (\\(10\\text{ cm}\\)) với đơn vị diện tích (\\(24\\text{ cm}^2\\))."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s6",
+                  "quote": "Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².",
+                  "start": 804,
+                  "end": 1002,
+                  "paragraph": 6,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            },
+            {
+              "title": "Nguyên tắc kiểm tra và kết luận trong giải toán",
+              "summary": "Lưu ý phương pháp luận khi giải toán: phân biệt các giai đoạn làm bài và bản chất của việc thử số.",
+              "bullets": [
+                "Phải phân biệt rõ ràng giữa điều kiện xác định, bước biến đổi và kết luận cuối cùng.",
+                "Phép thử số vào phương trình chỉ có tác dụng kiểm tra ứng viên cụ thể đó.",
+                "Phép thử số không tự chứng minh rằng người giải đã tìm đủ tất cả các nghiệm."
+              ],
+              "timestampKind": "none",
+              "references": [
+                {
+                  "segmentId": "s7",
+                  "quote": "Khi học từ tài liệu này, hãy phân biệt điều kiện xác định, bước biến đổi và kết luận. Một phép thử số chỉ kiểm tra ứng viên đó; không tự chứng minh rằng đã tìm đủ tất cả nghiệm.",
+                  "start": 1004,
+                  "end": 1181,
+                  "paragraph": 7,
+                  "verification": "exact-excerpt",
+                  "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+                }
+              ]
+            }
+          ],
+          "mindMap": {
+            "nodes": [
+              {
+                "id": "root",
+                "label": "Ôn tập Toán 9",
+                "detail": "Giữ điều kiện xác định và kiểm tra kết quả"
+              },
+              {
+                "id": "linear",
+                "label": "Phương trình bậc nhất",
+                "detail": "Giải 2x + 3 = 11, nghiệm x = 4",
+                "chapterIndex": 0
+              },
+              {
+                "id": "rational",
+                "label": "Biểu thức phân thức",
+                "detail": "Điều kiện x ≠ 1 khi rút gọn (x² - 1)/(x - 1)",
+                "chapterIndex": 1
+              },
+              {
+                "id": "reject",
+                "label": "Loại nghiệm ngoại lai",
+                "detail": "Ứng viên x = 1 bị loại, phương trình vô nghiệm",
+                "chapterIndex": 2
+              },
+              {
+                "id": "radical",
+                "label": "Phương trình chứa căn",
+                "detail": "√(x + 1) = 3 với x ≥ -1, nghiệm x = 8",
+                "chapterIndex": 3
+              },
+              {
+                "id": "pythagore",
+                "label": "Định lý Pythagore",
+                "detail": "Cạnh huyền 10 cm, diện tích 24 cm²",
+                "chapterIndex": 4
+              },
+              {
+                "id": "principles",
+                "label": "Nguyên tắc kết luận",
+                "detail": "Phân biệt điều kiện, biến đổi và thử số",
+                "chapterIndex": 5
+              }
+            ],
+            "edges": [
+              {
+                "source": "root",
+                "target": "linear",
+                "label": "Đại số cơ bản"
+              },
+              {
+                "source": "root",
+                "target": "rational",
+                "label": "Phân thức"
+              },
+              {
+                "source": "rational",
+                "target": "reject",
+                "label": "Đối chiếu ĐKXĐ"
+              },
+              {
+                "source": "root",
+                "target": "radical",
+                "label": "Căn thức"
+              },
+              {
+                "source": "root",
+                "target": "pythagore",
+                "label": "Hình học"
+              },
+              {
+                "source": "root",
+                "target": "principles",
+                "label": "Phương pháp luận"
+              }
+            ]
+          }
+        },
+        "quality": {
+          "status": "review-required",
+          "structuralChecks": true,
+          "citedItems": 6,
+          "totalItems": 6,
+          "issues": [
+            "semantic-review"
+          ]
+        }
+      },
+      "referenceAudit": [
+        {
+          "index": 0,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 1,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 2,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 3,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 4,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 5,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        }
+      ]
+    },
+    {
+      "task": "cards",
+      "status": "PASS",
+      "meaning": "Actual provider response parsed and structural checks passed; semantic review remains separate.",
+      "startedAt": "2026-10-15T05:50:14.932Z",
+      "finishedAt": "2026-10-15T05:50:26.780Z",
+      "provider": "openai",
+      "model": "gpt-5-mini",
+      "output": {
+        "provider": "openai",
+        "model": "gpt-5-mini",
+        "text": "{\n  \"cards\": [\n    {\n      \"front\": \"Giải phương trình tuyến tính: 2x + 3 = 11 — nghiệm là gì? (Giữ bước và kiểm tra)\",\n      \"back\": \"Bước: trừ 3 hai vế → 2x = 8. Vì 2 ≠ 0, chia hai vế cho 2 → x = 4. Kiểm tra bằng thay lại: 2·4 + 3 = 11. Kết luận: x = 4 là nghiệm.\\n\\nReferences: [{\\\"segmentId\\\":\\\"s2\\\",\\\"quote\\\":\\\"Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.\\\"}]\"\n    },\n    {\n      \"front\": \"Rút gọn biểu thức (x² − 1)/(x − 1): khi nào nó bằng x + 1? (Điều kiện xác định)\",\n      \"back\": \"Điều kiện xác định: x ≠ 1. Vì x² − 1 = (x − 1)(x + 1), sau khi rút gọn biểu thức bằng x + 1 chỉ khi thỏa điều kiện ban đầu x ≠ 1. Không được loại bỏ điều kiện sau khi rút gọn.\\n\\nReferences: [{\\\"segmentId\\\":\\\"s3\\\",\\\"quote\\\":\\\"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.\\\"}]\"\n    },\n    {\n      \"front\": \"Giải phương trình (x² − 1)/(x − 1) = 2 — có nghiệm không? (Giữ điều kiện, loại nghiệm)\",\n      \"back\": \"Điều kiện: x ≠ 1. Rút gọn được x + 1 = 2 ⇒ ứng viên x = 1, nhưng x = 1 bị loại vì không thỏa điều kiện ban đầu. Kết luận: phương trình vô nghiệm.\\n\\nReferences: [{\\\"segmentId\\\":\\\"s4\\\",\\\"quote\\\":\\\"Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.\\\"}]\"\n    },\n    {\n      \"front\": \"Giải √(x + 1) = 3 — ghi điều kiện, phép biến đổi và kiểm tra nghiệm\",\n      \"back\": \"Điều kiện: x ≥ −1. Bình phương hai vế: x + 1 = 9 ⇒ x = 8. Phải thử lại vào phương trình ban đầu: √(8 + 1) = 3, nên x = 8 thỏa. Ghi nhớ: sau phép bình phương luôn phải kiểm tra nghiệm.\\n\\nReferences: [{\\\"segmentId\\\":\\\"s5\\\",\\\"quote\\\":\\\"Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.\\\"}]\"\n    },\n    {\n      \"front\": \"Tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm — cạnh huyền và diện tích? (Phân biệt đơn vị)\",\n      \"back\": \"Định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài (10 cm) với diện tích (24 cm²).\\n\\nReferences: [{\\\"segmentId\\\":\\\"s6\\\",\\\"quote\\\":\\\"Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².\\\"}]\"\n    }\n  ]\n}",
+        "usage": {
+          "inputTokens": 965,
+          "outputTokens": 1601,
+          "cachedTokens": 0,
+          "totalTokens": 2566
+        },
+        "cards": [
+          {
+            "front": "Giải phương trình tuyến tính: 2x + 3 = 11 — nghiệm là gì? (Giữ bước và kiểm tra)",
+            "back": "Bước: trừ 3 hai vế → 2x = 8. Vì 2 ≠ 0, chia hai vế cho 2 → x = 4. Kiểm tra bằng thay lại: 2·4 + 3 = 11. Kết luận: x = 4 là nghiệm.\n\nReferences: [{\"segmentId\":\"s2\",\"quote\":\"Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.\"}]"
+          },
+          {
+            "front": "Rút gọn biểu thức (x² − 1)/(x − 1): khi nào nó bằng x + 1? (Điều kiện xác định)",
+            "back": "Điều kiện xác định: x ≠ 1. Vì x² − 1 = (x − 1)(x + 1), sau khi rút gọn biểu thức bằng x + 1 chỉ khi thỏa điều kiện ban đầu x ≠ 1. Không được loại bỏ điều kiện sau khi rút gọn.\n\nReferences: [{\"segmentId\":\"s3\",\"quote\":\"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.\"}]"
+          },
+          {
+            "front": "Giải phương trình (x² − 1)/(x − 1) = 2 — có nghiệm không? (Giữ điều kiện, loại nghiệm)",
+            "back": "Điều kiện: x ≠ 1. Rút gọn được x + 1 = 2 ⇒ ứng viên x = 1, nhưng x = 1 bị loại vì không thỏa điều kiện ban đầu. Kết luận: phương trình vô nghiệm.\n\nReferences: [{\"segmentId\":\"s4\",\"quote\":\"Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.\"}]"
+          },
+          {
+            "front": "Giải √(x + 1) = 3 — ghi điều kiện, phép biến đổi và kiểm tra nghiệm",
+            "back": "Điều kiện: x ≥ −1. Bình phương hai vế: x + 1 = 9 ⇒ x = 8. Phải thử lại vào phương trình ban đầu: √(8 + 1) = 3, nên x = 8 thỏa. Ghi nhớ: sau phép bình phương luôn phải kiểm tra nghiệm.\n\nReferences: [{\"segmentId\":\"s5\",\"quote\":\"Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.\"}]"
+          },
+          {
+            "front": "Tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm — cạnh huyền và diện tích? (Phân biệt đơn vị)",
+            "back": "Định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài (10 cm) với diện tích (24 cm²).\n\nReferences: [{\"segmentId\":\"s6\",\"quote\":\"Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².\"}]"
+          }
+        ],
+        "quality": {
+          "status": "review-required",
+          "structuralChecks": true,
+          "citedItems": 0,
+          "totalItems": 5,
+          "issues": [
+            "missing-source",
+            "semantic-review"
+          ]
+        }
+      },
+      "referenceAudit": [
+        {
+          "index": 0,
+          "matchingReferences": 0,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 1,
+          "matchingReferences": 0,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 2,
+          "matchingReferences": 0,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 3,
+          "matchingReferences": 0,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 4,
+          "matchingReferences": 0,
+          "unmatchedModelLocationsAccepted": false
+        }
+      ],
+      "currentValidatorOutput": {
+        "cards": [
+          {
+            "front": "Giải phương trình tuyến tính: 2x + 3 = 11 — nghiệm là gì? (Giữ bước và kiểm tra)",
+            "back": "Bước: trừ 3 hai vế → 2x = 8. Vì 2 ≠ 0, chia hai vế cho 2 → x = 4. Kiểm tra bằng thay lại: 2·4 + 3 = 11. Kết luận: x = 4 là nghiệm.",
+            "references": [
+              {
+                "segmentId": "s2",
+                "quote": "Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.",
+                "start": 52,
+                "end": 196,
+                "paragraph": 2,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "front": "Rút gọn biểu thức (x² − 1)/(x − 1): khi nào nó bằng x + 1? (Điều kiện xác định)",
+            "back": "Điều kiện xác định: x ≠ 1. Vì x² − 1 = (x − 1)(x + 1), sau khi rút gọn biểu thức bằng x + 1 chỉ khi thỏa điều kiện ban đầu x ≠ 1. Không được loại bỏ điều kiện sau khi rút gọn.",
+            "references": [
+              {
+                "segmentId": "s3",
+                "quote": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.",
+                "start": 198,
+                "end": 358,
+                "paragraph": 3,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "front": "Giải phương trình (x² − 1)/(x − 1) = 2 — có nghiệm không? (Giữ điều kiện, loại nghiệm)",
+            "back": "Điều kiện: x ≠ 1. Rút gọn được x + 1 = 2 ⇒ ứng viên x = 1, nhưng x = 1 bị loại vì không thỏa điều kiện ban đầu. Kết luận: phương trình vô nghiệm.",
+            "references": [
+              {
+                "segmentId": "s4",
+                "quote": "Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.",
+                "start": 360,
+                "end": 598,
+                "paragraph": 4,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "front": "Giải √(x + 1) = 3 — ghi điều kiện, phép biến đổi và kiểm tra nghiệm",
+            "back": "Điều kiện: x ≥ −1. Bình phương hai vế: x + 1 = 9 ⇒ x = 8. Phải thử lại vào phương trình ban đầu: √(8 + 1) = 3, nên x = 8 thỏa. Ghi nhớ: sau phép bình phương luôn phải kiểm tra nghiệm.",
+            "references": [
+              {
+                "segmentId": "s5",
+                "quote": "Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.",
+                "start": 600,
+                "end": 802,
+                "paragraph": 5,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "front": "Tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm — cạnh huyền và diện tích? (Phân biệt đơn vị)",
+            "back": "Định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài (10 cm) với diện tích (24 cm²).",
+            "references": [
+              {
+                "segmentId": "s6",
+                "quote": "Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².",
+                "start": 804,
+                "end": 1002,
+                "paragraph": 6,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          }
+        ],
+        "quality": {
+          "status": "review-required",
+          "structuralChecks": true,
+          "citedItems": 5,
+          "totalItems": 5,
+          "issues": [
+            "semantic-review"
+          ]
+        }
+      },
+      "parserCorrection": {
+        "status": "PASS",
+        "initialMatchingCitationItems": 0,
+        "currentMatchingCitationItems": 5,
+        "mode": "Offline revalidation of the SAME saved actual provider response; no extra generation",
+        "report": "content-offline-revalidation.json"
+      }
+    },
+    {
+      "task": "vision",
+      "status": "PASS",
+      "meaning": "Actual image response received. Transcription accuracy requires the separate review below.",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.8-flash",
+        "text": "Phương trình trong ảnh là:\n\n\\[ 2x + 3 = 11 \\]",
+        "usage": {
+          "inputTokens": 1361,
+          "outputTokens": 19,
+          "totalTokens": 1444
+        }
+      },
+      "fixtureImage": "content-vision-equation-fixture.png"
+    },
+    {
+      "task": "quiz",
+      "status": "PASS",
+      "meaning": "Actual provider response parsed and structural checks passed; semantic review remains separate.",
+      "startedAt": "2026-10-15T05:57:30.862Z",
+      "finishedAt": "2026-10-15T05:57:42.718Z",
+      "provider": "openai",
+      "model": "gpt-5-mini",
+      "output": {
+        "provider": "openai",
+        "model": "gpt-5-mini",
+        "text": "{\n  \"questions\": [\n    {\n      \"prompt\": \"Giải phương trình 2x + 3 = 11 theo bài học: nghiệm nào sau đây đúng?\",\n      \"options\": [\n        \"x = 4\",\n        \"x = 8\",\n        \"x = 1\",\n        \"Vô nghiệm\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Theo đoạn, trừ 3 hai vế được 2x = 8, vì 2 ≠ 0 chia cho 2 được x = 4. Sau đó thay lại vào phương trình để kiểm tra: 2·4 + 3 = 11, nên nghiệm là x = 4.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Phương trình tuyến tính\",\n      \"references\": [\n        {\n          \"segmentId\": \"s2\",\n          \"quote\": \"Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định nào theo bài học?\",\n      \"options\": [\n        \"x ≠ 1\",\n        \"x ≥ −1\",\n        \"x > 0\",\n        \"Không có điều kiện\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Bài học nêu rõ biểu thức này có điều kiện xác định x ≠ 1 vì mẫu số không được bằng 0.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Điều kiện xác định\",\n      \"references\": [\n        {\n          \"segmentId\": \"s3\",\n          \"quote\": \"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Xét phương trình (x² − 1)/(x − 1) = 2. Sau khi rút gọn ta được ứng viên x = 1. Theo bài học, kết luận nào đúng?\",\n      \"options\": [\n        \"Phương trình vô nghiệm vì x = 1 bị loại do điều kiện\",\n        \"x = 1 là nghiệm hợp lệ\",\n        \"Có hai nghiệm x = 1 và x = −1\",\n        \"Phải bình phương để tìm nghiệm\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Bài học chỉ ra rằng dù rút gọn được x + 1 = 2 cho ứng viên x = 1, nhưng giá trị này bị loại vì không thỏa điều kiện x ≠ 1, nên phương trình vô nghiệm.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Phương trình dạng phân thức\",\n      \"references\": [\n        {\n          \"segmentId\": \"s4\",\n          \"quote\": \"Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Phương trình √(x + 1) = 3 theo bài học có điều kiện và nghiệm nào sau đây?\",\n      \"options\": [\n        \"Điều kiện x ≥ −1, nghiệm x = 8 thỏa\",\n        \"Điều kiện x ≠ 1, nghiệm x = 1 thỏa\",\n        \"Không có điều kiện, nghiệm x = 3\",\n        \"Điều kiện x > 0, nghiệm x = −8\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Đoạn nêu điều kiện x ≥ −1. Bình phương hai vế cho x + 1 = 9 nên x = 8. Thử lại: √(8 + 1) = 3, nên x = 8 thỏa.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Phương trình chứa căn\",\n      \"references\": [\n        {\n          \"segmentId\": \"s5\",\n          \"quote\": \"Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Một tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm. Theo bài học, nhận xét nào đúng?\",\n      \"options\": [\n        \"Cạnh huyền c = 10 cm và diện tích S = 24 cm²\",\n        \"Cạnh huyền c = 14 cm và diện tích S = 48 cm²\",\n        \"Cạnh huyền c = 10 cm và diện tích S = 24 cm\",\n        \"Diện tích là 10 cm²\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Đoạn dùng định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Lưu ý đơn vị: độ dài 10 cm khác diện tích 24 cm².\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Hình học – Pythagore\",\n      \"references\": [\n        {\n          \"segmentId\": \"s6\",\n          \"quote\": \"Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².\"\n        }\n      ]\n    }\n  ],\n  \"references\": [\n    {\n      \"segmentId\": \"s1\",\n      \"quote\": \"# Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả\"\n    },\n    {\n      \"segmentId\": \"s7\",\n      \"quote\": \"Khi học từ tài liệu này, hãy phân biệt điều kiện xác định, bước biến đổi và kết luận. Một phép thử số chỉ kiểm tra ứng viên đó; không tự chứng minh rằng đã tìm đủ tất cả nghiệm.\"\n    }\n  ]\n}",
+        "usage": {
+          "inputTokens": 1071,
+          "outputTokens": 1708,
+          "cachedTokens": 0,
+          "totalTokens": 2779
+        },
+        "questions": [
+          {
+            "prompt": "Giải phương trình 2x + 3 = 11 theo bài học: nghiệm nào sau đây đúng?",
+            "options": [
+              "x = 4",
+              "x = 8",
+              "x = 1",
+              "Vô nghiệm"
+            ],
+            "correct": 0,
+            "explanation": "Theo đoạn, trừ 3 hai vế được 2x = 8, vì 2 ≠ 0 chia cho 2 được x = 4. Sau đó thay lại vào phương trình để kiểm tra: 2·4 + 3 = 11, nên nghiệm là x = 4.",
+            "topic": "Phương trình tuyến tính",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s2",
+                "quote": "Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.",
+                "start": 52,
+                "end": 196,
+                "paragraph": 2,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định nào theo bài học?",
+            "options": [
+              "x ≠ 1",
+              "x ≥ −1",
+              "x > 0",
+              "Không có điều kiện"
+            ],
+            "correct": 0,
+            "explanation": "Bài học nêu rõ biểu thức này có điều kiện xác định x ≠ 1 vì mẫu số không được bằng 0.",
+            "topic": "Điều kiện xác định",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s3",
+                "quote": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1.",
+                "start": 198,
+                "end": 253,
+                "paragraph": 3,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Xét phương trình (x² − 1)/(x − 1) = 2. Sau khi rút gọn ta được ứng viên x = 1. Theo bài học, kết luận nào đúng?",
+            "options": [
+              "Phương trình vô nghiệm vì x = 1 bị loại do điều kiện",
+              "x = 1 là nghiệm hợp lệ",
+              "Có hai nghiệm x = 1 và x = −1",
+              "Phải bình phương để tìm nghiệm"
+            ],
+            "correct": 0,
+            "explanation": "Bài học chỉ ra rằng dù rút gọn được x + 1 = 2 cho ứng viên x = 1, nhưng giá trị này bị loại vì không thỏa điều kiện x ≠ 1, nên phương trình vô nghiệm.",
+            "topic": "Phương trình dạng phân thức",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s4",
+                "quote": "Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.",
+                "start": 360,
+                "end": 598,
+                "paragraph": 4,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Phương trình √(x + 1) = 3 theo bài học có điều kiện và nghiệm nào sau đây?",
+            "options": [
+              "Điều kiện x ≥ −1, nghiệm x = 8 thỏa",
+              "Điều kiện x ≠ 1, nghiệm x = 1 thỏa",
+              "Không có điều kiện, nghiệm x = 3",
+              "Điều kiện x > 0, nghiệm x = −8"
+            ],
+            "correct": 0,
+            "explanation": "Đoạn nêu điều kiện x ≥ −1. Bình phương hai vế cho x + 1 = 9 nên x = 8. Thử lại: √(8 + 1) = 3, nên x = 8 thỏa.",
+            "topic": "Phương trình chứa căn",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s5",
+                "quote": "Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn.",
+                "start": 600,
+                "end": 734,
+                "paragraph": 5,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Một tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm. Theo bài học, nhận xét nào đúng?",
+            "options": [
+              "Cạnh huyền c = 10 cm và diện tích S = 24 cm²",
+              "Cạnh huyền c = 14 cm và diện tích S = 48 cm²",
+              "Cạnh huyền c = 10 cm và diện tích S = 24 cm",
+              "Diện tích là 10 cm²"
+            ],
+            "correct": 0,
+            "explanation": "Đoạn dùng định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Lưu ý đơn vị: độ dài 10 cm khác diện tích 24 cm².",
+            "topic": "Hình học – Pythagore",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s6",
+                "quote": "Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².",
+                "start": 804,
+                "end": 1002,
+                "paragraph": 6,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          }
+        ],
+        "quality": {
+          "status": "review-required",
+          "structuralChecks": true,
+          "citedItems": 5,
+          "totalItems": 5,
+          "issues": [
+            "semantic-review"
+          ]
+        }
+      },
+      "referenceAudit": [
+        {
+          "index": 0,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 1,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 2,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 3,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 4,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        }
+      ]
+    }
+  ],
+  "manualReview": {
+    "status": "PASS_FOR_AUTHORED_SAMPLE",
+    "reviewer": "Codex content review against independently authored worked reference; not a teacher review or student trial",
+    "reviewedAt": "2026-10-15T05:59:44.846594+00:00",
+    "semanticAccuracyClaim": false,
+    "scope": "Only the four final outputs generated in this authored fixture. No general model-accuracy or learning-effectiveness claim.",
+    "checks": [
+      {
+        "task": "summary",
+        "status": "PASS",
+        "items": 6,
+        "matchingExcerptItems": 6,
+        "review": "All six chapters retain the five authored mathematical facts and the checking/completeness limitation. x=4; exclusion x!=1; no solution for the rational equation; radical condition x>=-1 and checked x=8; hypotenuse10cm and area24cm² are correct. Mind-map details agree."
+      },
+      {
+        "task": "cards",
+        "status": "PASS_AFTER_PARSER_CORRECTION",
+        "items": 5,
+        "matchingExcerptItems": 5,
+        "review": "All five mathematical backs agree with the authored reference. Conditions x!=1 and x>=-1, excluded candidate x=1, and length/area units are preserved. Original output incorrectly placed JSON References in back strings; current validator extracts only exact validated JSON citations and strips metadata, tested offline on this same output."
+      },
+      {
+        "task": "quiz",
+        "status": "PASS_FOR_FINAL_RESPONSE",
+        "items": 5,
+        "matchingExcerptItems": 5,
+        "review": "Final five selected options and explanations were checked individually against the source; each question has one correct choice. The earlier unsupported blanket statement about dividing by an unknown x is absent after adding the explicit nonzero-divisor instruction."
+      },
+      {
+        "task": "vision",
+        "status": "PASS_FOR_FINAL_TRANSCRIPTION",
+        "items": 1,
+        "review": "The corrected 1200px authored image visibly contains 2x + 3 = 11 and the actual multimodal response transcribes it exactly, without an unsolicited solution. Original too-small canvas and uncertain model response are preserved, not scored as transcription accuracy."
+      }
+    ],
+    "initialIssuesAndFixes": [
+      {
+        "issue": "Flashcard references were emitted as JSON text inside the back field; parsed citation coverage0/5.",
+        "resolution": "Explicit separate references schema + narrowly bounded suffix normalization with exact quote validation. Current offline replay of actual response has5/5 citations. Original response remains in output."
+      },
+      {
+        "issue": "Initial quiz Q1 explanation claimed dividing by unknown x was meaningless. This is a misleading generalization; divisor must be nonzero.",
+        "resolution": "Added explicit mathematical instruction and used the sixth/final provider request to regenerate only the quiz. Manually reviewed the final5 explanations; incorrect generalization absent. Original quiz retained in priorQuizResponses."
+      },
+      {
+        "issue": "Initial authored image canvas clipped the equation.",
+        "resolution": "Preserved image/response, corrected canvas bounds, viewed image, then made one vision-only retry. The initial model correctly expressed uncertainty about the damaged input."
+      }
+    ],
+    "remainingLimitations": [
+      "All five correct quiz choices are still first (index0). The answers are mathematically correct, but answer-position diversity and assessment quality need further improvement; this sample should not be used as a secure test.",
+      "Only one small authored Grade9 review source and one equation image were evaluated. No claim across arbitrary textbooks, scan quality, videos, subjects or models.",
+      "Review was performed by the coding agent, not an independent teacher. No student participants, pre/post test, retention or learning-gain evidence exists.",
+      "An exact excerpt validates provenance, not logical entailment. No independent general semantic verifier exists for summaries/cards/quizzes."
+    ]
+  },
+  "finishedAt": "2026-10-15T05:57:42.719Z",
+  "note": "Actual provider requests6/6; final sample reviewed with no observed mathematical error after corrections. Overall PARTIAL because scope is narrow, quiz answer positions are unbalanced, and there is no independent teacher/student study. Initial defects retained transparently.",
+  "priorVisionResponses": [
+    {
+      "task": "vision",
+      "status": "PASS",
+      "meaning": "Actual image response received. Transcription accuracy requires the separate review below.",
+      "provider": "gemini",
+      "model": "gemini-3.8-flash",
+      "output": {
+        "provider": "gemini",
+        "model": "gemini-3.8-flash",
+        "text": "Ký tự đầu tiên không thể đọc chính xác do hình ảnh bị nhiễu và biến dạng nét (có dạng tương tự chữ \\(Ж\\) hoặc ký tự \\(x\\) chồng lên \\(1\\)).\n\nPhần còn lại của phương trình đọc được là:\n\\[ [?] + 3 = 1 \\]",
+        "usage": {
+          "inputTokens": 1340,
+          "outputTokens": 65,
+          "totalTokens": 2188
+        }
+      },
+      "fixtureImage": "content-vision-equation-fixture-initial-clipped.png",
+      "assessment": "Initial fixture canvas was too narrow and clipped characters. This response is preserved as an input-quality/uncertainty observation, not a transcription accuracy score."
+    }
+  ],
+  "visionCorrection": {
+    "reason": "Corrected authored fixture canvas bounds before a single explicit vision-only retry.",
+    "priorCallsStillCounted": true
+  },
+  "priorQuizResponses": [
+    {
+      "task": "quiz",
+      "status": "PASS",
+      "meaning": "Actual provider response parsed and structural checks passed; semantic review remains separate.",
+      "startedAt": "2026-10-15T05:50:26.783Z",
+      "finishedAt": "2026-10-15T05:50:39.620Z",
+      "provider": "openai",
+      "model": "gpt-5-mini",
+      "output": {
+        "provider": "openai",
+        "model": "gpt-5-mini",
+        "text": "{\n  \"questions\": [\n    {\n      \"prompt\": \"Với phương trình 2x + 3 = 11, bước nào là hợp lệ và cho nghiệm x = 4?\",\n      \"options\": [\n        \"Trừ 3 ở cả hai vế rồi chia cho 2\",\n        \"Chia cả hai vế cho x rồi cộng 3\",\n        \"Nhân cả hai vế với 2 rồi cộng 3\",\n        \"Rút gọn 2x + 3 thành x + 4\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Theo đoạn nguồn, ta trừ 3 ở cả hai vế được 2x = 8, vì 2 ≠ 0 nên chia cho 2 được x = 4; sau đó thay lại để kiểm tra. (Không thực hiện các phép vô nghĩa như chia cho x khi x chưa biết.)\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Phương trình tuyến tính\",\n      \"references\": [\n        {\n          \"segmentId\": \"s2\",\n          \"quote\": \"Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định nào trước khi rút gọn?\",\n      \"options\": [\n        \"x ≠ 1\",\n        \"x ≠ 0\",\n        \"x > 1\",\n        \"Không có điều kiện\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Nguồn nêu rõ điều kiện xác định là x ≠ 1. Sau đó dùng phân tích nhân tử để rút gọn nhưng phải giữ điều kiện ban đầu.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Điều kiện xác định\",\n      \"references\": [\n        {\n          \"segmentId\": \"s3\",\n          \"quote\": \"Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Xét phương trình (x² − 1)/(x − 1) = 2. Sau khi rút gọn thu được x + 1 = 2 với ứng viên x = 1. Tại sao phương trình này vô nghiệm?\",\n      \"options\": [\n        \"Vì x = 1 không thỏa điều kiện ban đầu x ≠ 1\",\n        \"Vì x = 1 không làm x + 1 = 2\",\n        \"Vì rút gọn sai, biểu thức không thể rút gọn\",\n        \"Vì phương trình luôn đúng với mọi x\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Nguồn chỉ rõ sau khi rút gọn ta nhận x = 1 nhưng phải loại vì vi phạm điều kiện x ≠ 1; do đó phương trình vô nghiệm.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Rút gọn và loại nghiệm\",\n      \"references\": [\n        {\n          \"segmentId\": \"s4\",\n          \"quote\": \"Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Phương trình √(x + 1) = 3 có điều kiện nào và nghiệm nào hợp lệ theo nguồn?\",\n      \"options\": [\n        \"Điều kiện x ≥ −1; nghiệm x = 8\",\n        \"Điều kiện x > 0; nghiệm x = 8\",\n        \"Không có điều kiện; nghiệm x = 8\",\n        \"Điều kiện x ≥ −1; nghiệm x = −8\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Nguồn nói rõ điều kiện x ≥ −1. Bình phương cho x + 1 = 9 nên x = 8; kiểm tra lại thỏa phương trình ban đầu, nên nghiệm là x = 8.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Phương trình chứa căn\",\n      \"references\": [\n        {\n          \"segmentId\": \"s5\",\n          \"quote\": \"Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.\"\n        }\n      ]\n    },\n    {\n      \"prompt\": \"Một tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm. Theo đoạn nguồn, giá trị nào sau đây là đúng?\",\n      \"options\": [\n        \"Cạnh huyền c = 10 cm và diện tích S = 24 cm²\",\n        \"Cạnh huyền c = 14 cm và diện tích S = 24 cm²\",\n        \"Cạnh huyền c = 10 cm và diện tích S = 48 cm²\",\n        \"Cạnh huyền c = 6 cm và diện tích S = 8 cm²\"\n      ],\n      \"correct\": 0,\n      \"explanation\": \"Nguồn dùng định lý Pythagore: c = √(6² + 8²) = 10 cm và diện tích S = (1/2)·6·8 = 24 cm²; cần phân biệt đơn vị độ dài và diện tích.\",\n      \"difficulty\": \"beginner\",\n      \"topic\": \"Hình học cơ bản\",\n      \"references\": [\n        {\n          \"segmentId\": \"s6\",\n          \"quote\": \"Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².\"\n        }\n      ]\n    }\n  ],\n  \"references\": [\n    {\n      \"segmentId\": \"s7\",\n      \"quote\": \"Khi học từ tài liệu này, hãy phân biệt điều kiện xác định, bước biến đổi và kết luận. Một phép thử số chỉ kiểm tra ứng viên đó; không tự chứng minh rằng đã tìm đủ tất cả nghiệm.\"\n    }\n  ]\n}",
+        "usage": {
+          "inputTokens": 1016,
+          "outputTokens": 2019,
+          "cachedTokens": 0,
+          "totalTokens": 3035
+        },
+        "questions": [
+          {
+            "prompt": "Với phương trình 2x + 3 = 11, bước nào là hợp lệ và cho nghiệm x = 4?",
+            "options": [
+              "Trừ 3 ở cả hai vế rồi chia cho 2",
+              "Chia cả hai vế cho x rồi cộng 3",
+              "Nhân cả hai vế với 2 rồi cộng 3",
+              "Rút gọn 2x + 3 thành x + 4"
+            ],
+            "correct": 0,
+            "explanation": "Theo đoạn nguồn, ta trừ 3 ở cả hai vế được 2x = 8, vì 2 ≠ 0 nên chia cho 2 được x = 4; sau đó thay lại để kiểm tra. (Không thực hiện các phép vô nghĩa như chia cho x khi x chưa biết.)",
+            "topic": "Phương trình tuyến tính",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s2",
+                "quote": "Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.",
+                "start": 52,
+                "end": 196,
+                "paragraph": 2,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định nào trước khi rút gọn?",
+            "options": [
+              "x ≠ 1",
+              "x ≠ 0",
+              "x > 1",
+              "Không có điều kiện"
+            ],
+            "correct": 0,
+            "explanation": "Nguồn nêu rõ điều kiện xác định là x ≠ 1. Sau đó dùng phân tích nhân tử để rút gọn nhưng phải giữ điều kiện ban đầu.",
+            "topic": "Điều kiện xác định",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s3",
+                "quote": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.",
+                "start": 198,
+                "end": 358,
+                "paragraph": 3,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Xét phương trình (x² − 1)/(x − 1) = 2. Sau khi rút gọn thu được x + 1 = 2 với ứng viên x = 1. Tại sao phương trình này vô nghiệm?",
+            "options": [
+              "Vì x = 1 không thỏa điều kiện ban đầu x ≠ 1",
+              "Vì x = 1 không làm x + 1 = 2",
+              "Vì rút gọn sai, biểu thức không thể rút gọn",
+              "Vì phương trình luôn đúng với mọi x"
+            ],
+            "correct": 0,
+            "explanation": "Nguồn chỉ rõ sau khi rút gọn ta nhận x = 1 nhưng phải loại vì vi phạm điều kiện x ≠ 1; do đó phương trình vô nghiệm.",
+            "topic": "Rút gọn và loại nghiệm",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s4",
+                "quote": "Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.",
+                "start": 360,
+                "end": 598,
+                "paragraph": 4,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Phương trình √(x + 1) = 3 có điều kiện nào và nghiệm nào hợp lệ theo nguồn?",
+            "options": [
+              "Điều kiện x ≥ −1; nghiệm x = 8",
+              "Điều kiện x > 0; nghiệm x = 8",
+              "Không có điều kiện; nghiệm x = 8",
+              "Điều kiện x ≥ −1; nghiệm x = −8"
+            ],
+            "correct": 0,
+            "explanation": "Nguồn nói rõ điều kiện x ≥ −1. Bình phương cho x + 1 = 9 nên x = 8; kiểm tra lại thỏa phương trình ban đầu, nên nghiệm là x = 8.",
+            "topic": "Phương trình chứa căn",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s5",
+                "quote": "Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.",
+                "start": 600,
+                "end": 802,
+                "paragraph": 5,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          },
+          {
+            "prompt": "Một tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm. Theo đoạn nguồn, giá trị nào sau đây là đúng?",
+            "options": [
+              "Cạnh huyền c = 10 cm và diện tích S = 24 cm²",
+              "Cạnh huyền c = 14 cm và diện tích S = 24 cm²",
+              "Cạnh huyền c = 10 cm và diện tích S = 48 cm²",
+              "Cạnh huyền c = 6 cm và diện tích S = 8 cm²"
+            ],
+            "correct": 0,
+            "explanation": "Nguồn dùng định lý Pythagore: c = √(6² + 8²) = 10 cm và diện tích S = (1/2)·6·8 = 24 cm²; cần phân biệt đơn vị độ dài và diện tích.",
+            "topic": "Hình học cơ bản",
+            "difficulty": "beginner",
+            "references": [
+              {
+                "segmentId": "s6",
+                "quote": "Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².",
+                "start": 804,
+                "end": 1002,
+                "paragraph": 6,
+                "verification": "exact-excerpt",
+                "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+              }
+            ]
+          }
+        ],
+        "quality": {
+          "status": "review-required",
+          "structuralChecks": true,
+          "citedItems": 5,
+          "totalItems": 5,
+          "issues": [
+            "semantic-review"
+          ]
+        }
+      },
+      "referenceAudit": [
+        {
+          "index": 0,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 1,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 2,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 3,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        },
+        {
+          "index": 4,
+          "matchingReferences": 1,
+          "unmatchedModelLocationsAccepted": false
+        }
+      ],
+      "assessment": "Manual review found a false blanket statement that dividing by an unknown x is meaningless. Correct rule requires nonzero divisor. Answer indices and five source excerpts were correct; original response retained."
+    }
+  ],
+  "quizCorrection": {
+    "reason": "Added explicit nonzero-divisor mathematical instruction, followed by one explicit final live quiz call.",
+    "priorCallsStillCounted": true
+  }
+}

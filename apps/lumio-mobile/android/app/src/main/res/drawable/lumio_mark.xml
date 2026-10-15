@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Code-native LM silhouette based on the supplied Lumio logo. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="800" android:viewportHeight="800">
+    <group android:translateX="-253" android:translateY="-35">
+        <path android:pathData="M393,257 C437,257 471,305 471,351 L471,510 C471,544 482,556 515,556 L591,556 C625,554 651,577 651,605 C651,630 628,645 600,645 L483,645 C414,645 359,604 359,531 L359,294 C359,271 374,257 393,257 Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear" android:startX="360" android:startY="270" android:endX="590" android:endY="640"><item android:offset="0" android:color="#3199FF"/><item android:offset="1" android:color="#254DF5"/></gradient></aapt:attr>
+        </path>
+        <path android:pathData="M503,382 L605,473 L605,547 L503,547 Z" android:fillColor="#2E60F3"/>
+        <path android:pathData="M781,450 L882,409 L882,590 C882,658 781,658 781,590 Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear" android:startX="790" android:startY="421" android:endX="880" android:endY="639"><item android:offset="0" android:color="#4536C9"/><item android:offset="1" android:color="#7559FF"/></gradient></aapt:attr>
+        </path>
+        <path android:pathData="M503,386 C498,350 524,320 555,320 C577,320 593,329 615,350 L691,421 L779,344 C822,304 879,316 882,366 L882,421 C849,407 829,424 803,449 L730,518 C705,545 681,546 659,529 L503,390 Z">
+            <aapt:attr name="android:fillColor"><gradient android:type="linear" android:startX="510" android:startY="390" android:endX="878" android:endY="392"><item android:offset="0" android:color="#637EFF"/><item android:offset="1" android:color="#754BFA"/></gradient></aapt:attr>
+        </path>
+        <path android:pathData="M891,227 C896,227 901,256 912,266 C923,278 946,280 946,286 C946,291 924,296 914,306 C903,317 899,344 892,344 C887,344 883,319 872,307 C861,295 838,294 838,286 C838,280 860,277 871,265 C881,254 886,227 891,227 Z" android:fillColor="#775CFF"/>
+    </group>
+</vector>

@@ -1,0 +1,355 @@
+.ls-studio {
+  padding: 5px 0 15px;
+}
+.ls-studio-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 10px 0 22px;
+}
+.ls-studio-header h2 {
+  font-size: 27px;
+  line-height: 1.3;
+  letter-spacing: -0.8px;
+  font-weight: 620;
+  margin: 7px 0 10px;
+}
+.ls-studio-header p {
+  font-size: 12px;
+  max-width: 540px;
+  line-height: 1.8;
+}
+.ls-studio-emblem {
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  background: var(--lm-tint);
+  border: 1px solid var(--lm-line);
+  color: var(--lm-accent);
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+.ls-source {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 10px;
+  color: var(--lm-muted);
+  padding: 12px 0 23px;
+}
+.ls-source strong {
+  font-weight: 500;
+  color: var(--lm-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ls-generator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 13px;
+}
+.ls-generator {
+  border: 1px solid var(--lm-line);
+  border-radius: 17px;
+  background: var(--lx-card);
+  min-height: 168px;
+  padding: 21px 19px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.ls-generator:not(:disabled):hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px #27412309;
+  border-color: #adc29c;
+  background: var(--lx-paper);
+}
+.ls-generator:disabled {
+  opacity: 0.5;
+}
+.ls-generator-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: #e9efe1;
+  color: #829765;
+  margin-bottom: 19px;
+}
+.ls-generator.cards .ls-generator-icon {
+  background: #f4ecd8;
+  color: #ad9564;
+}
+.ls-generator.quiz .ls-generator-icon {
+  background: #e7edf6;
+  color: #7993b6;
+}
+.ls-generator.notes .ls-generator-icon {
+  background: #f0e7e4;
+  color: #b48e82;
+}
+.ls-generator.audio .ls-generator-icon {
+  background: #eae6f3;
+  color: #9b8cb6;
+}
+.ls-generator.lesson .ls-generator-icon {
+  background: #e0eee7;
+  color: #79a08b;
+}
+.ls-generator.video .ls-generator-icon {
+  background: #f0e4e7;
+  color: #b88b99;
+}
+.ls-generator > strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 620;
+  line-height: 1.4;
+  margin-bottom: 7px;
+}
+.ls-generator > small {
+  display: block;
+  font-size: 10px;
+  color: var(--lm-muted);
+  line-height: 1.7;
+  max-width: 180px;
+}
+.ls-generator > svg {
+  position: absolute;
+  right: 17px;
+  top: 23px;
+  color: #aebca3;
+}
+.ls-workbench {
+  margin-top: 25px;
+  padding: 28px;
+  border: 1px solid var(--lm-line);
+  background: var(--lx-paper);
+  border-radius: 19px;
+}
+.ls-workbench-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 25px;
+}
+.ls-workbench-heading h3 {
+  font-size: 22px;
+  letter-spacing: -0.6px;
+  line-height: 1.35;
+  margin: 7px 0 10px;
+}
+.ls-workbench-heading p {
+  font-size: 12px;
+  line-height: 1.8;
+  max-width: 630px;
+}
+.ls-workbench textarea {
+  width: 100%;
+  background: var(--lx-card);
+  border: 1px solid var(--lm-line);
+  border-radius: 13px;
+  font-size: 13px;
+  line-height: 1.9;
+  padding: 18px;
+}
+.ls-workbench .lm-field {
+  font-size: 12px;
+}
+.ls-audio-controls {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ls-audio-controls .lm-field {
+  margin-bottom: 0;
+}
+.ls-audio-controls > small {
+  font-size: 10px;
+  color: var(--lm-muted);
+  margin-bottom: 13px;
+}
+.ls-audio-controls .lm-button {
+  margin-left: auto;
+  font-size: 12px;
+}
+.ls-audio-controls .lm-button + .lm-button {
+  margin-left: 0;
+}
+.ls-disclosure {
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--lm-muted);
+  margin: 16px 0 21px;
+  max-width: 700px;
+}
+.ls-audio-result {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 17px;
+  background: var(--lx-card);
+  border: 1px solid var(--lm-line);
+  border-radius: 14px;
+  margin: 20px 0;
+  color: var(--lm-accent);
+}
+.ls-audio-result audio {
+  min-width: 0;
+  flex: 1;
+  height: 40px;
+}
+.ls-audio-result .lm-button {
+  font-size: 11px;
+}
+.ls-plan-editor {
+  min-height: 330px;
+  margin-bottom: 22px;
+}
+.ls-loading {
+  animation: ls-spin 1s linear infinite;
+}
+@keyframes ls-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+[data-theme="dark"] .ls-generator-icon {
+  background: #3a482e;
+  color: #b2c79c;
+}
+[data-theme="dark"] .ls-generator.cards .ls-generator-icon {
+  background: #4a4431;
+  color: #c8b884;
+}
+[data-theme="dark"] .ls-generator.quiz .ls-generator-icon {
+  background: #334657;
+  color: #a1c1dd;
+}
+[data-theme="dark"] .ls-generator.notes .ls-generator-icon {
+  background: #4c3b35;
+  color: #d3aca0;
+}
+[data-theme="dark"] .ls-generator.audio .ls-generator-icon {
+  background: #3f3b50;
+  color: #b9a8d4;
+}
+[data-theme="dark"] .ls-generator.lesson .ls-generator-icon {
+  background: #324b40;
+  color: #9ac3ab;
+}
+[data-theme="dark"] .ls-generator.video .ls-generator-icon {
+  background: #4b3940;
+  color: #d3a5b2;
+}
+@media (max-width: 1100px) {
+  .ls-generator-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .ls-studio-header {
+    gap: 13px;
+    flex-direction: column;
+  }
+  .ls-studio-emblem {
+    width: 49px;
+    height: 49px;
+    border-radius: 16px;
+  }
+  .ls-studio-header h2 {
+    font-size: 24px;
+    letter-spacing: -0.6px;
+    max-width: 300px;
+  }
+  .ls-studio-header p {
+    font-size: 11px;
+  }
+  .ls-generator-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ls-generator {
+    min-height: 158px;
+    padding: 17px 14px;
+    border-radius: 14px;
+  }
+  .ls-generator-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 11px;
+    margin-bottom: 15px;
+  }
+  .ls-generator-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .ls-generator > strong {
+    font-size: 12px;
+  }
+  .ls-generator > small {
+    font-size: 9px;
+  }
+  .ls-generator > svg {
+    width: 14px;
+    height: 14px;
+    right: 13px;
+    top: 18px;
+  }
+  .ls-workbench {
+    padding: 19px 15px;
+    margin: 23px -3px 0;
+    border-radius: 16px;
+  }
+  .ls-workbench-heading h3 {
+    font-size: 20px;
+  }
+  .ls-workbench-heading p {
+    font-size: 11px;
+  }
+  .ls-workbench textarea {
+    padding: 14px;
+    font-size: 13px;
+  }
+  .ls-audio-controls {
+    gap: 13px;
+  }
+  .ls-audio-controls .lm-button {
+    margin-left: 0;
+    width: 100%;
+  }
+  .ls-audio-result {
+    flex-wrap: wrap;
+    padding: 14px;
+    gap: 12px;
+  }
+  .ls-audio-result > svg {
+    display: none;
+  }
+  .ls-audio-result audio {
+    width: 100%;
+    flex-basis: 100%;
+  }
+  .ls-audio-result .lm-button {
+    width: 100%;
+  }
+  .ls-source {
+    font-size: 9px;
+  }
+  .ls-plan-editor {
+    min-height: 360px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ls-loading {
+    animation: none;
+  }
+  .ls-generator {
+    transition: none;
+  }
+}

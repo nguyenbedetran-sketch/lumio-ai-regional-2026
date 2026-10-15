@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:35:27.112Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 4,
+  "calls": 2,
+  "realProviderCalls": true,
+  "providerRequests": 2,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "radical-extraneous",
+      "problem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "74fbaac5-6484-41a4-a5a7-264996974abc",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:35:27.167Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "durationMs": 3389,
+          "text": "Nhận thấy vế trái là căn bậc hai nên trước hết xác định miền xác định và điều kiện để vế phải hợp lệ; sau đó có thể bình phương hai vế nhưng phải kiểm tra nghiệm từ điều kiện ban đầu để loại nghiệm ngoại lai.\n\nTheo bạn, miền xác định của phương trình là gì (tức những giá trị x thoả mãn cả biểu thức dưới dấu căn và dấu bằng của vế phải)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "74fbaac5-6484-41a4-a5a7-264996974abc",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:35:27.167Z"
+          },
+          "requestId": "fa4c18ac-0ac2-45a9-8d25-cd003a668fe7"
+        },
+        {
+          "student": "x = 0",
+          "http": 502,
+          "durationMs": 4423,
+          "error": "INVALID_TUTOR_OUTPUT",
+          "requestId": "c3ac38cf-367e-476c-9ec9-9c1fdd97dc22",
+          "rejectedProviderText": "{\n  \"hint\": \"Lưu ý: căn bậc hai cho kết quả không âm. Do đó trước khi bình phương cần thêm điều kiện cho vế phải sao cho nó không âm, sau đó mới bình phương hai vế và kiểm tra nghiệm thu được với điều kiện ban đầu.\",\n  \"question\": \"Hãy thay x = 0 vào cả hai vế của phương trình và tính giá trị vế trái và vế phải. Kết quả có bằng nhau không? Giải thích ngắn vì sao x = 0 có (không) thỏa phương trình.\",\n  \"feedback\": \"Bạn đề xuất x = 0 nhưng khi thay vào phương trình, vế trái là sqrt(0+1)=1 còn vế phải là 0-1=-1, nên không khớp. Lỗi là bỏ qua việc so sánh giá trị sau khi thay nghiệm vào phương trình gốc.\",\n  \"misconception\": \"Có thể bạn nghĩ căn bậc hai có thể cho giá trị âm; thực tế sqrt(...) luôn không âm, nên phải đảm bảo vế phải cũng không âm trước khi bình phương.\",\n  \"step\": \"Tiếp theo, hãy xác định điều kiện từ tính không âm của căn là x+1>=0 và từ điều kiện sqrt(...)>=0 suy ra x-1>=0; kết hợp các điều kiện này rồi mới thực hiện bình phương.\",\n  \"references\": []\n}"
+        }
+      ],
+      "status": "FAIL",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": false
+      },
+      "error": "INVALID_TUTOR_OUTPUT"
+    }
+  ],
+  "summary": {
+    "pass": 0,
+    "partial": 0,
+    "fail": 1
+  },
+  "finishedAt": "2026-10-15T05:35:34.991Z"
+}

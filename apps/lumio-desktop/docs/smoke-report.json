@@ -1,0 +1,115 @@
+{
+  "status": "PASS",
+  "version": "0.1.0",
+  "checks": [
+    {
+      "name": "Native BrowserWindow loaded hydrated Lumio workspace",
+      "passed": true
+    },
+    {
+      "name": "Trusted fixed loopback origin",
+      "passed": true
+    },
+    {
+      "name": "Isolated metadata preload loaded",
+      "passed": true
+    },
+    {
+      "name": "Renderer Node access disabled",
+      "passed": true
+    },
+    {
+      "name": "Sandbox and context isolation enabled",
+      "passed": true
+    },
+    {
+      "name": "Offline config has no embedded social credentials",
+      "passed": true
+    },
+    {
+      "name": "Camera permission is denied without recording",
+      "passed": true
+    },
+    {
+      "name": "Pinned Electron display permission shape reaches denied synthetic probe",
+      "passed": true
+    },
+    {
+      "name": "Native display request preserves original gesture and owned top frame",
+      "passed": true
+    },
+    {
+      "name": "Inactive display request cannot pass native capture authority",
+      "passed": true
+    },
+    {
+      "name": "Native Stop menu event crosses isolated preload",
+      "passed": true
+    },
+    {
+      "name": "Hydrated workspace remains visible after entry motion",
+      "passed": true
+    },
+    {
+      "name": "No runtime or hydration errors during native workspace load",
+      "passed": true
+    },
+    {
+      "name": "Native voice room exposes local system capture with microphone off by default",
+      "passed": true
+    },
+    {
+      "name": "Actual capture button handles native permission denial and returns to idle",
+      "passed": true
+    },
+    {
+      "name": "Native voice page remains visible after entry animation",
+      "passed": true
+    },
+    {
+      "name": "Bundled backend process stopped after window exit",
+      "passed": true
+    },
+    {
+      "name": "Loopback listener released after window exit",
+      "passed": true
+    },
+    {
+      "name": "Refuses an occupied foreign loopback service",
+      "passed": true
+    }
+  ],
+  "captureAttempted": false,
+  "systemPermissionProbe": {
+    "permission": "media",
+    "mediaTypes": []
+  },
+  "permissionPipelineProbed": true,
+  "permissionProbeCount": 3,
+  "finalDisplayProbe": {
+    "userGesture": true,
+    "audioRequested": true,
+    "videoRequested": true,
+    "trusted": true,
+    "deniedWithoutCapture": true
+  },
+  "displayWithGesture": {
+    "userGesture": true,
+    "audioRequested": true,
+    "videoRequested": true,
+    "trusted": true,
+    "deniedWithoutCapture": true
+  },
+  "displayWithoutGesture": {
+    "userGesture": false,
+    "audioRequested": true,
+    "videoRequested": true,
+    "trusted": false,
+    "deniedWithoutCapture": true
+  },
+  "backendPid": 28676,
+  "occupiedPortProbe": {
+    "expectedRejection": true,
+    "code": "PORT_BUSY"
+  }
+}

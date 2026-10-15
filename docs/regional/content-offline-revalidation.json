@@ -1,0 +1,99 @@
+{
+  "status": "PASS",
+  "checks": 8,
+  "checkedAt": "2026-10-15T05:58:39.368Z",
+  "actualProviderResponse": true,
+  "providerRequests": 0,
+  "sourceReport": "content-live-evaluation.json",
+  "initialStructuredCitationCount": 0,
+  "currentValidatedCitationCount": 5,
+  "normalizedResult": {
+    "cards": [
+      {
+        "front": "Giải phương trình tuyến tính: 2x + 3 = 11 — nghiệm là gì? (Giữ bước và kiểm tra)",
+        "back": "Bước: trừ 3 hai vế → 2x = 8. Vì 2 ≠ 0, chia hai vế cho 2 → x = 4. Kiểm tra bằng thay lại: 2·4 + 3 = 11. Kết luận: x = 4 là nghiệm.",
+        "references": [
+          {
+            "segmentId": "s2",
+            "quote": "Với phương trình 2x + 3 = 11, trừ 3 ở cả hai vế được 2x = 8. Vì 2 khác 0, chia hai vế cho 2 được x = 4. Thay lại: 2·4 + 3 = 11. Nghiệm là x = 4.",
+            "start": 52,
+            "end": 196,
+            "paragraph": 2,
+            "verification": "exact-excerpt",
+            "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+          }
+        ]
+      },
+      {
+        "front": "Rút gọn biểu thức (x² − 1)/(x − 1): khi nào nó bằng x + 1? (Điều kiện xác định)",
+        "back": "Điều kiện xác định: x ≠ 1. Vì x² − 1 = (x − 1)(x + 1), sau khi rút gọn biểu thức bằng x + 1 chỉ khi thỏa điều kiện ban đầu x ≠ 1. Không được loại bỏ điều kiện sau khi rút gọn.",
+        "references": [
+          {
+            "segmentId": "s3",
+            "quote": "Biểu thức (x² − 1)/(x − 1) có điều kiện xác định x ≠ 1. Do x² − 1 = (x − 1)(x + 1), biểu thức bằng x + 1 chỉ khi x ≠ 1. Không được bỏ điều kiện sau khi rút gọn.",
+            "start": 198,
+            "end": 358,
+            "paragraph": 3,
+            "verification": "exact-excerpt",
+            "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+          }
+        ]
+      },
+      {
+        "front": "Giải phương trình (x² − 1)/(x − 1) = 2 — có nghiệm không? (Giữ điều kiện, loại nghiệm)",
+        "back": "Điều kiện: x ≠ 1. Rút gọn được x + 1 = 2 ⇒ ứng viên x = 1, nhưng x = 1 bị loại vì không thỏa điều kiện ban đầu. Kết luận: phương trình vô nghiệm.",
+        "references": [
+          {
+            "segmentId": "s4",
+            "quote": "Xét phương trình (x² − 1)/(x − 1) = 2. Điều kiện x ≠ 1. Sau khi rút gọn trong điều kiện đã có, x + 1 = 2 cho ứng viên x = 1. Giá trị này bị loại vì không thỏa điều kiện ban đầu. Phương trình vô nghiệm, không được kết luận x = 1 là nghiệm.",
+            "start": 360,
+            "end": 598,
+            "paragraph": 4,
+            "verification": "exact-excerpt",
+            "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+          }
+        ]
+      },
+      {
+        "front": "Giải √(x + 1) = 3 — ghi điều kiện, phép biến đổi và kiểm tra nghiệm",
+        "back": "Điều kiện: x ≥ −1. Bình phương hai vế: x + 1 = 9 ⇒ x = 8. Phải thử lại vào phương trình ban đầu: √(8 + 1) = 3, nên x = 8 thỏa. Ghi nhớ: sau phép bình phương luôn phải kiểm tra nghiệm.",
+        "references": [
+          {
+            "segmentId": "s5",
+            "quote": "Phương trình √(x + 1) = 3 có điều kiện x ≥ −1. Bình phương hai vế được x + 1 = 9, nên x = 8. Thử lại √(8 + 1) = 3, nên x = 8 thỏa mãn. Sau phép bình phương phải kiểm tra nghiệm với phương trình ban đầu.",
+            "start": 600,
+            "end": 802,
+            "paragraph": 5,
+            "verification": "exact-excerpt",
+            "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+          }
+        ]
+      },
+      {
+        "front": "Tam giác vuông có hai cạnh góc vuông 6 cm và 8 cm — cạnh huyền và diện tích? (Phân biệt đơn vị)",
+        "back": "Định lý Pythagore: c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài (10 cm) với diện tích (24 cm²).",
+        "references": [
+          {
+            "segmentId": "s6",
+            "quote": "Một tam giác vuông có hai cạnh góc vuông dài 6 cm và 8 cm. Định lý Pythagore cho cạnh huyền c = √(6² + 8²) = 10 cm. Diện tích S = (1/2)·6·8 = 24 cm². Cần phân biệt độ dài 10 cm với diện tích 24 cm².",
+            "start": 804,
+            "end": 1002,
+            "paragraph": 6,
+            "verification": "exact-excerpt",
+            "heading": "Ôn tập Toán 9: giữ điều kiện và kiểm tra kết quả"
+          }
+        ]
+      }
+    ],
+    "quality": {
+      "status": "review-required",
+      "structuralChecks": true,
+      "citedItems": 5,
+      "totalItems": 5,
+      "issues": [
+        "semantic-review"
+      ]
+    }
+  },
+  "explanation": "Saved actual provider output had explicit References JSON inside back strings. The updated validator extracts only valid JSON references with exact matching quotes, strips that metadata suffix, and preserves mathematical answer text. This is offline parser revalidation, not a new provider generation or independent semantic proof."
+}

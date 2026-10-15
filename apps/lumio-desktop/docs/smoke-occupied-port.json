@@ -1,0 +1,7 @@
+{
+  "status": "FAIL",
+  "version": "0.1.0",
+  "checks": [],
+  "captureAttempted": false,
+  "error": "PORT_BUSY"
+}

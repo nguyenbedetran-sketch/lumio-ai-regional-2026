@@ -1,0 +1,73 @@
+.lm-account-heading {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+.lm-account-heading > svg {
+  color: var(--lm-accent);
+  margin-top: 4px;
+}
+.lm-connection-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--lm-line);
+}
+.lm-connection-row > div {
+  flex: 1;
+  min-width: 0;
+}
+.lm-connection-row small {
+  display: block;
+  font-size: 11px;
+  color: var(--lm-muted);
+  overflow-wrap: anywhere;
+}
+.lm-connection-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--lm-line);
+  border-radius: 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+.lm-connection-icon.google {
+  color: #4285f4;
+}
+.lm-connection-icon.facebook {
+  background: #1877f2;
+  color: white;
+  border-color: #1877f2;
+}
+.lm-connection-linked {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #348566;
+  font-size: 12px;
+}
+.lm-connection-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 20px 0;
+}
+.lm-connection-row .lm-button {
+  font-size: 12px;
+  padding: 8px 12px;
+}
+@media (max-width: 500px) {
+  .lm-connection-row {
+    flex-wrap: wrap;
+  }
+  .lm-connection-row .lm-button {
+    margin-left: 52px;
+  }
+  .lm-connection-linked {
+    font-size: 11px;
+  }
+}

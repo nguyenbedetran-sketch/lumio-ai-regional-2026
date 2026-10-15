@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": 7,
+  "passed": [
+    "Actual HTTP handler extracts and signs a two-page PDF without provider calls",
+    "Missing authentication rejects before extraction",
+    "Cross-origin and cross-site requests are rejected",
+    "Invalid file bytes and invalid base64 cannot become extraction success",
+    "Worker errors disclose only a code, never document contents",
+    "Rate limit is enforced per authenticated fixture account",
+    "Concurrent extraction is denied before creating a second worker"
+  ],
+  "fixtureAuth": true,
+  "actualHTTP": true,
+  "actualExtraction": true,
+  "providerRequests": 0,
+  "studentData": false,
+  "checkedAt": "2026-10-15T05:58:10.499Z"
+}

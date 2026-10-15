@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:29:01.164Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 8,
+  "calls": 6,
+  "realProviderCalls": true,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "linear",
+      "problem": "Giải phương trình 2x + 3 = 11",
+      "reference": [
+        4
+      ],
+      "referenceCheck": "2·4+3=11",
+      "scenario": "Bài cơ bản; yêu cầu gợi ý rồi lời giải.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "154cfe9c-1e9d-4abe-b555-cb9b14197c8e",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:29:01.203Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 2x + 3 = 11",
+          "http": 200,
+          "durationMs": 7137,
+          "text": "Mình chưa thấy bước làm trước đó; nếu bạn đã thử rồi, dán phương trình sau khi trừ 3 để mình kiểm tra và giúp tiếp tục.\n\nĐể giải phương trình tuyến tính dạng ax + b = c, hãy cô lập x. Bắt đầu bằng cách loại bỏ hằng số +3 bằng phép toán ngược (trừ 3) trên cả hai vế để giữ phương trình cân bằng.\n\nHãy thực hiện phép trừ 3 trên cả hai vế của phương trình 2x + 3 = 11 và viết phương trình mới bạn được là gì?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "154cfe9c-1e9d-4abe-b555-cb9b14197c8e",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:29:01.203Z"
+          },
+          "requestId": "43a6d4a2-95fc-4165-b550-f88a3ad8df48"
+        },
+        {
+          "student": "Em trừ 3 ở cả hai vế.",
+          "http": 200,
+          "durationMs": 8940,
+          "text": "Việc em trừ 3 ở cả hai vế là đúng — đó là bước hợp lý. Bước tiếp theo là chia cả hai vế cho 2 để tìm x; nhưng trước hết hãy cho mình thấy phương trình sau khi trừ 3.\n\nSau khi loại bỏ hằng số, bước tiếp theo là cô lập x bằng cách chia cả hai vế cho hệ số của x (ở đây là 2).\n\nSau khi em trừ 3 ở cả hai vế của 2x + 3 = 11, phương trình mới em được là gì? Viết phương trình đó ra.",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "154cfe9c-1e9d-4abe-b555-cb9b14197c8e",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:29:01.203Z"
+          },
+          "requestId": "0b5c408c-8390-4515-a9be-e3cf7da9264f"
+        },
+        {
+          "student": "Em chia cả hai vế cho 2.",
+          "http": 200,
+          "durationMs": 11768,
+          "text": "Mình chưa thấy kết quả cụ thể của em. Nếu em bỏ qua bước trừ 3 hoặc chia trước khi trừ thì đó là sai — gửi hai biểu thức để mình kiểm tra tiếp.\n\nKiểm tra phép trừ 3: khi trừ 3 khỏi cả hai vế của 2x + 3 = 11, phép tính ở vế phải là 11 - 3 = 8. Viết phương trình sau bước trừ đó trước khi thực hiện phép chia.\n\nHãy viết chính xác phương trình sau khi em trừ 3 và sau khi em chia cả hai vế cho 2 (ví dụ: “sau trừ 3: …”, “sau chia 2: …”).",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "154cfe9c-1e9d-4abe-b555-cb9b14197c8e",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:29:01.203Z"
+          },
+          "requestId": "58195504-ce3a-42e7-b82b-0c0a7d911d66"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 6393,
+          "text": "Given (Cho): Phương trình tuyến tính bậc nhất\n\nMục tiêu: Tìm x sao cho\n\n\\(2x + 3 = 11\\)\n\nCông thức / Ý tưởng: Để giải phương trình dạng \\(ax + b = c\\) với \\(a \\neq 0\\), ta cô lập \\(x\\) bằng các phép toán nghịch đảo: trừ hằng số ở hai vế rồi chia cho hệ số của \\(x\\).\n\nCác bước:\n1) Trừ 3 hai vế để loại bỏ hằng số +3:\n   \\(2x + 3 - 3 = 11 - 3\\) nên được\n   \\(2x = 8\\).\n2) Chia cả hai vế cho 2 (hệ số của x):\n   \\(x = \\dfrac{8}{2} = 4\\).\n\nKiểm tra: Thay nghiệm \\(x = 4\\) vào phương trình ban đầu:\n\\(2\\cdot 4 + 3 = 8 + 3 = 11\\), đúng bằng vế phải, vậy nghiệm thỏa.\n\nKết luận: Nghiệm thực duy nhất là \\(x = 4\\).\n\nGhi chú về độ chắc chắn: Tôi khá chắc (độ tin cậy cao) vì phương trình là một phương trình tuyến tính với hệ số của \\(x\\) khác 0, nên chỉ có một nghiệm thực duy nhất và ta đã kiểm tra bằng thay lại vào phương trình.",
+          "verification": {
+            "status": "verified",
+            "equation": "2x + 3 = 11",
+            "candidates": [
+              {
+                "value": 4,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "154cfe9c-1e9d-4abe-b555-cb9b14197c8e",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:29:01.203Z"
+          },
+          "requestId": "660c6cf3-537b-466a-9f0c-29b42d5fff27"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true
+      }
+    },
+    {
+      "id": "radical-extraneous",
+      "problem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "72f09611-13f6-4c6a-b04a-28b488dbb280",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:29:35.456Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "durationMs": 7217,
+          "text": "Không thấy bước làm của bạn. Nếu bạn đã bình phương, hãy kiểm tra các nghiệm thu được có thỏa điều kiện miền (không âm) hay không; bỏ qua điều kiện này là lỗi thường gặp.\n\nXác định miền trước: cần x+1 ≥ 0. Vì căn bậc hai cho kết quả không âm, vế phải cũng phải ≥ 0. Bình phương hai vế là bước hợp lý để thu được phương trình bậc hai, nhưng sau đó phải kiểm tra nghiệm có thỏa miền hay không (loại nghiệm ngoại lai).\n\nBạn đã tìm miền xác định chưa? Hãy cho biết miền của x và viết phương trình thu được sau khi bình phương cả hai vế.",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "72f09611-13f6-4c6a-b04a-28b488dbb280",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:29:35.456Z"
+          },
+          "requestId": "aebaeea4-8f2d-4791-928d-1932d97c8a9e"
+        },
+        {
+          "student": "x = 0",
+          "http": 502,
+          "durationMs": 12573,
+          "error": "INCOMPLETE_RESPONSE",
+          "requestId": "7f3f118b-0969-401f-95b1-a63d977983c0"
+        }
+      ],
+      "status": "FAIL",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": false
+      },
+      "error": "INCOMPLETE_RESPONSE"
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "partial": 0,
+    "fail": 1
+  },
+  "finishedAt": "2026-10-15T05:29:55.253Z"
+}

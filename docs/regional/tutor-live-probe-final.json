@@ -1,0 +1,243 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:34:07.709Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 8,
+  "calls": 6,
+  "realProviderCalls": true,
+  "providerRequests": 6,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "linear",
+      "problem": "Giải phương trình 2x + 3 = 11",
+      "reference": [
+        4
+      ],
+      "referenceCheck": "2·4+3=11",
+      "scenario": "Bài cơ bản; yêu cầu gợi ý rồi lời giải.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "85bf1d36-30c9-49a2-8cff-b64917b5ca33",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:34:07.738Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 2x + 3 = 11",
+          "http": 200,
+          "durationMs": 4067,
+          "text": "Để tìm x, hãy 'đảo' tuần tự các phép toán: trước hết loại bỏ +3 bằng cách trừ 3 ở cả hai vế, rồi loại bỏ hệ số 2 trước x bằng cách chia hai vế cho 2. Đừng tính kết quả cuối cùng ngay — thực hiện từng bước.\n\nSau khi trừ 3 ở cả hai vế của phương trình 2x + 3 = 11, bạn thu được phương trình nào?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "85bf1d36-30c9-49a2-8cff-b64917b5ca33",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:34:07.738Z"
+          },
+          "requestId": "f21baaf5-f48a-48db-a0e5-86041624ed60"
+        },
+        {
+          "student": "Em trừ 3 ở cả hai vế.",
+          "http": 200,
+          "durationMs": 6234,
+          "text": "Hành động trừ 3 là đúng, nhưng em nên viết rõ phương trình sau khi rút gọn. Vế trái trở thành 2x; hãy tính 11 − 3 và ghi phương trình mới (viết kết quả số vào vế phải).\n\nKhi trừ 3 ở cả hai vế, rút gọn vế trái (2x + 3 − 3) và tính số ở vế phải (11 − 3). Viết kết quả dưới dạng một phương trình mới trước khi tiếp tục bước tiếp theo.\n\nViết phương trình thu được sau khi em trừ 3 ở cả hai vế của 2x + 3 = 11.",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "85bf1d36-30c9-49a2-8cff-b64917b5ca33",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:34:07.738Z"
+          },
+          "requestId": "75a48d4f-d060-45df-b6e8-301ed9166f02"
+        },
+        {
+          "student": "Em chia cả hai vế cho 2.",
+          "http": 200,
+          "durationMs": 6718,
+          "text": "Em nói đã chia cả hai vế nhưng chưa ghi phương trình kết quả. Có thể em chia chỉ hệ số trước x mà quên chia vế phải; hãy viết biểu thức sau phép chia để kiểm tra.\n\nKhi chia cả hai vế cho cùng một số, hãy viết rõ phép chia trên cả vế trái và vế phải (không chỉ 'chia x'). Viết phương trình mới sau phép chia để kiểm tra xem em đã chia đúng cả hai vế chưa.\n\nSau khi em chia cả hai vế cho 2, em viết phương trình mới đó là gì? (Hãy ghi rõ vế trái và vế phải sau khi chia.)",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "85bf1d36-30c9-49a2-8cff-b64917b5ca33",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:34:07.738Z"
+          },
+          "requestId": "9e92153d-5d90-4234-aa53-46cef30504f1"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4185,
+          "text": "Given:\nPhương trình: \\(2x + 3 = 11\\).\n\nGoal:\nTìm tất cả nghiệm thực của phương trình.\n\nFormula:\nÁp dụng các phép biến đổi tương đương: trừ cùng một số ở cả hai vế, chia cả hai vế cho cùng một số khác 0.\n\nSteps:\n1) Trừ 3 ở cả hai vế để loại bỏ số hạng tự do: \\(2x + 3 - 3 = 11 - 3\\). Rút gọn vế trái và tính vế phải: \\(2x = 8\\).\n2) Chia cả hai vế cho 2 để tách \\(x\\): \\(x = \\dfrac{8}{2} = 4\\).\n\nKiểm tra:\nThay nghiệm tìm được \\(x=4\\) vào phương trình ban đầu: trái: \\(2\\cdot 4 + 3 = 8 + 3 = 11\\), phải: \\(11\\). Vì hai vế bằng nhau, \\(x=4\\) là nghiệm đúng.\n\nConclusion:\nNghiệm của phương trình là \\(x=4\\).\n\nGhi chú về quá trình học: em đã đúng khi thực hiện hai bước (trừ 3 rồi chia cho 2) nhưng cần viết rõ phương trình sau mỗi bước: sau khi trừ 3 được \\(2x=8\\), sau khi chia cho 2 được \\(x=4\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "2x + 3 = 11",
+            "candidates": [
+              {
+                "value": 4,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "85bf1d36-30c9-49a2-8cff-b64917b5ca33",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:34:07.738Z"
+          },
+          "requestId": "49ff1fc3-2643-48d1-85a1-c3e387c774b8"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true
+      }
+    },
+    {
+      "id": "radical-extraneous",
+      "problem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "b0d642d6-c001-4398-915c-7ee8feaf501e",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:34:28.957Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "durationMs": 4543,
+          "text": "Bạn chưa gửi bước giải nào để tôi xem và nhận xét. Vui lòng cho bước bạn đã làm (hoặc nghiệm bạn tìm được) để tôi chỉ ra lỗi nếu có hoặc xác nhận đúng.\n\nNhớ kiểm tra miền xác định trước khi biến đổi: biểu thức căn và vế phải cần thỏa điều kiện nào? Sau đó có thể bình phương hai vế nhưng cần kiểm tra nghiệm sinh ra để loại nghiệm ngoại lai.\n\nBạn đã xét miền xác định của phương trình chưa? Hãy cho biết điều kiện về x để cả hai vế đều xác định và hợp lý (viết bất đẳng thức cụ thể).",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b0d642d6-c001-4398-915c-7ee8feaf501e",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:34:28.957Z"
+          },
+          "requestId": "77a73d73-93ed-400d-8af6-1c2ddc19cebd"
+        },
+        {
+          "student": "x = 0",
+          "http": 502,
+          "durationMs": 3172,
+          "error": "INVALID_TUTOR_OUTPUT",
+          "requestId": "891c48ca-83df-4d84-bf96-a1491560ae54",
+          "rejectedProviderText": "{\n  \"hint\": \"Nhớ rằng vế trái là căn bậc hai cho giá trị không âm, nên trước hết phải có điều kiện khiến vế phải cũng không âm. Sau khi xác định miền, bạn có thể bình phương hai vế nhưng phải kiểm tra lại nghiệm thu được bằng cách thay vào phương trình ban đầu.\",\n  \"question\": \"Khi thay x = 0 vào phương trình, giá trị hai vế là bao nhiêu? Việc đó có thỏa phương trình không?\",\n  \"feedback\": \"Sai ở bước kiểm tra nghiệm: thay x = 0 ta có √(0+1)=1 nhưng 0-1=-1, hai vế không bằng nhau. Ngoài ra bạn bỏ qua miền xác định: vì căn ra số ≥0 nên cần x-1 ≥ 0 ⇒ x ≥ 1.\"\n}"
+        }
+      ],
+      "status": "FAIL",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": false
+      },
+      "error": "INVALID_TUTOR_OUTPUT"
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "partial": 0,
+    "fail": 1
+  },
+  "finishedAt": "2026-10-15T05:34:36.677Z"
+}

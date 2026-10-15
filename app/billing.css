@@ -1,0 +1,445 @@
+.lm-billing-hero {
+  text-align: center;
+  padding: 36px 0 30px;
+  max-width: 760px;
+  margin: auto;
+}
+.lm-billing-hero h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: -1.8px;
+  line-height: 1.15;
+  margin: 17px 0;
+}
+.lm-billing-hero > p {
+  color: var(--lm-muted);
+  line-height: 1.7;
+}
+.lm-billing-badge {
+  display: inline-flex;
+  align-items: flex-start;
+  text-align: left;
+  gap: 9px;
+  font-size: 12px;
+  line-height: 1.7;
+  background: #a3bd7220;
+  padding: 12px 17px;
+  border-radius: 14px;
+  margin-top: 12px;
+}
+.lm-billing-badge svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.lm-billing-wallet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 26px;
+  border: 1px solid var(--lm-line, #deded2);
+  border-radius: 22px;
+  background: var(--lm-panel, #fff);
+  margin-top: 15px;
+}
+.lm-billing-wallet > div {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+.lm-billing-wallet span {
+  font-size: 12px;
+  color: var(--lm-muted);
+}
+.lm-billing-wallet strong {
+  display: block;
+  font-size: 26px;
+  line-height: 1.5;
+  color: var(--lm-text, #24332d);
+  letter-spacing: -0.8px;
+}
+.lm-billing-ledger {
+  font-size: 12px;
+  color: var(--lm-muted);
+  line-height: 1.7;
+  padding: 0 8px;
+}
+.lm-billing-interval {
+  display: flex;
+  width: fit-content;
+  margin: 32px auto 26px;
+  border: 1px solid var(--lm-line, #ddd);
+  border-radius: 50px;
+  padding: 5px;
+  gap: 4px;
+}
+.lm-billing-interval button {
+  border: 0;
+  border-radius: 40px;
+  background: none;
+  padding: 10px 23px;
+  color: inherit;
+  cursor: pointer;
+  font-size: 13px;
+}
+.lm-billing-interval button[aria-pressed="true"] {
+  background: #d3f3a9;
+  color: #243a23;
+}
+.lm-pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 15px;
+}
+.lm-plan {
+  position: relative;
+  border: 1px solid var(--lm-line, #ddd);
+  background: var(--lm-panel, #fff);
+  border-radius: 24px;
+  padding: 25px 22px;
+  display: flex;
+  flex-direction: column;
+  animation: lm-personal-enter 0.45s both;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+.lm-plan:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 40px #16272310;
+}
+.lm-plan.featured {
+  border-color: #a9ba80;
+  background: linear-gradient(150deg, #f3f9e9, #f5f6ef);
+  box-shadow: 0 0 0 4px #b8d68918;
+}
+.lm-plan-symbol {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: #9cb77320;
+  display: grid;
+  place-items: center;
+  color: #53693c;
+}
+.lm-plan h2 {
+  font-size: 23px;
+  letter-spacing: -0.7px;
+  margin: 20px 0 12px;
+}
+.lm-plan-price {
+  font-size: clamp(18px, 1.8vw, 25px);
+  letter-spacing: -0.8px;
+  line-height: 1.3;
+  min-height: 32px;
+}
+.lm-plan > p {
+  font-size: 11px;
+  line-height: 1.7;
+  min-height: 38px;
+  color: var(--lm-muted);
+  margin-bottom: 20px;
+}
+.lm-plan ul,
+.lm-checkout-review ul {
+  list-style: none;
+  padding: 22px 0 20px;
+  border-top: 1px solid var(--lm-line, #ddd);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+}
+.lm-plan li,
+.lm-checkout-review li {
+  font-size: 12px;
+  line-height: 1.6;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.lm-plan li svg,
+.lm-checkout-review li svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: #6c8c47;
+}
+.lm-plan > .lm-button {
+  justify-content: space-between;
+  margin-top: auto;
+  font-size: 12px;
+}
+.lm-pricing-preview-notice {
+  margin: 24px 0;
+  padding: 18px 20px;
+  border: 1px solid var(--lm-line);
+  border-radius: 16px;
+  background: var(--lm-panel);
+  font-size: 13px;
+  line-height: 1.8;
+}
+.lm-pricing-preview-notice strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lm-pricing-preview-notice p {
+  margin: 8px 0 0;
+  color: var(--lm-muted);
+}
+.lm-plan-price-period {
+  font-size: 11px;
+  color: var(--lm-muted);
+  margin-top: 8px;
+}
+.lm-credit-packs > button > small {
+  grid-column: 2;
+  font-size: 10px;
+  color: var(--lm-muted);
+}
+.lm-billing-section {
+  margin-top: 34px;
+}
+.lm-billing-section h2,
+.lm-billing-manage h2 {
+  font-size: 22px;
+  letter-spacing: -0.6px;
+}
+.lm-billing-section > p,
+.lm-billing-manage p {
+  font-size: 13px;
+  color: var(--lm-muted);
+  line-height: 1.8;
+}
+.lm-credit-packs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+.lm-credit-packs > button {
+  display: grid;
+  grid-template-columns: 44px 1fr 20px;
+  gap: 6px 15px;
+  align-items: center;
+  text-align: left;
+  background: var(--lm-panel, #fff);
+  border: 1px solid var(--lm-line, #ddd);
+  padding: 22px;
+  border-radius: 19px;
+  color: inherit;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.lm-credit-packs > button:hover {
+  border-color: #9eb07d;
+}
+.lm-credit-orb {
+  grid-row: 1/4;
+  background: #a3adcd20;
+  color: #8377c7;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+}
+.lm-credit-packs strong {
+  font-size: 15px;
+}
+.lm-credit-packs > button > span:not(.lm-credit-orb) {
+  grid-column: 2;
+  font-size: 11px;
+  color: var(--lm-muted);
+}
+.lm-credit-packs b {
+  grid-column: 2;
+  font-size: 12px;
+  font-weight: 500;
+}
+.lm-credit-packs > button > svg {
+  grid-column: 3;
+  grid-row: 1/4;
+}
+.lm-billing-table {
+  overflow: auto;
+  border: 1px solid var(--lm-line, #ddd);
+  border-radius: 18px;
+  margin: 18px 0 12px;
+}
+.lm-billing-table table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 550px;
+  text-align: left;
+  font-size: 12px;
+}
+.lm-billing-table th {
+  font-weight: 500;
+  color: var(--lm-muted);
+  padding: 17px 20px;
+  background: #8d9e8710;
+}
+.lm-billing-table td {
+  padding: 16px 20px;
+  border-top: 1px solid var(--lm-line, #ddd);
+}
+.lm-billing-table td small {
+  display: block;
+  color: var(--lm-muted);
+  margin-top: 5px;
+}
+.lm-billing-table > p {
+  padding: 25px;
+  color: var(--lm-muted);
+  font-size: 13px;
+}
+.lm-billing-table .is-positive {
+  color: #3b865b;
+}
+.lm-billing-manage {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+}
+.lm-credit-calculator {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  padding: 18px 0 4px;
+}
+.lm-credit-calculator label {
+  display: grid;
+  gap: 7px;
+  font-size: 12px;
+  color: var(--lm-muted);
+  max-width: 190px;
+}
+.lm-credit-calculator select,
+.lm-credit-calculator input {
+  padding: 10px;
+  border: 1px solid var(--lm-line, #ddd);
+  border-radius: 10px;
+  color: inherit;
+  background: var(--lm-panel, #fff);
+  min-width: 120px;
+  width: 100%;
+}
+.lm-credit-calculator output {
+  font-size: 27px;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+.lm-credit-calculator output span {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--lm-muted);
+}
+.lm-checkout-review > h2 {
+  font-size: 30px;
+  margin: 20px 0 10px;
+}
+.lm-checkout-review > strong {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 22px;
+}
+.lm-checkout-review p {
+  line-height: 1.7;
+  font-size: 13px;
+  color: var(--lm-muted);
+}
+.lm-checkout-review > .lm-button {
+  width: 100%;
+  justify-content: center;
+  margin: 10px 0;
+}
+.lm-billing-admin {
+  border-style: dashed;
+}
+[data-theme="dark"] .lm-plan,
+[data-theme="dark"] .lm-billing-wallet,
+[data-theme="dark"] .lm-credit-packs > button,
+[data-theme="dark"] .lm-credit-calculator input,
+[data-theme="dark"] .lm-credit-calculator select {
+  background: #1e2d28;
+}
+[data-theme="dark"] .lm-plan.featured {
+  background: linear-gradient(150deg, #2d3c2a, #25342c);
+  border-color: #708b52;
+}
+[data-theme="dark"] .lm-billing-wallet strong {
+  color: #e8f0df;
+}
+[data-theme="dark"] .lm-plan-symbol {
+  color: #c4dfa1;
+}
+[data-theme="dark"] .lm-billing-table .is-positive {
+  color: #addd8e;
+}
+@media (max-width: 1100px) {
+  .lm-pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .lm-credit-packs {
+    grid-template-columns: 1fr;
+  }
+  .lm-billing-wallet {
+    flex-wrap: wrap;
+  }
+  .lm-plan-price {
+    font-size: 25px;
+  }
+}
+@media (max-width: 600px) {
+  .lm-pricing-grid {
+    grid-template-columns: 1fr;
+  }
+  .lm-billing-hero {
+    text-align: left;
+    padding-top: 20px;
+  }
+  .lm-billing-hero h1 {
+    letter-spacing: -1px;
+  }
+  .lm-billing-wallet {
+    padding: 20px;
+    gap: 20px;
+  }
+  .lm-billing-wallet > div {
+    flex: 1;
+    min-width: 90px;
+  }
+  .lm-billing-wallet > .lm-button {
+    width: 100%;
+    justify-content: center;
+  }
+  .lm-billing-wallet strong {
+    font-size: 22px;
+  }
+  .lm-plan {
+    padding: 25px;
+  }
+  .lm-credit-calculator label {
+    max-width: none;
+    flex: 1;
+  }
+  .lm-billing-manage > .lm-row {
+    flex-wrap: wrap;
+  }
+  .lm-checkout-review {
+    min-width: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lm-plan {
+    animation: none;
+    transition: none;
+  }
+  .lm-plan:hover {
+    transform: none;
+  }
+}

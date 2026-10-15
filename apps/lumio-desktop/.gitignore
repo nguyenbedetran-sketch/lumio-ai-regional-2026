@@ -1,0 +1,7 @@
+node_modules/
+bundle/
+dist/
+.smoke-data/
+*.log
+*.env
+*.sqlite*

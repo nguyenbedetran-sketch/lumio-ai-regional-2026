@@ -1,0 +1,175 @@
+.screen {
+  min-height: 100dvh;
+  background:
+    radial-gradient(ellipse at 50% 22%, #e9e6ff 0, transparent 50%), #f8f9ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 95px 22px 35px;
+  color: #293049;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.brand {
+  position: absolute;
+  top: 28px;
+  left: 36px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-weight: 720;
+  font-size: 22px;
+  letter-spacing: -0.7px;
+}
+.brand svg {
+  color: #7360d5;
+}
+.brand span {
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: #8272d5;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+.orbit {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 290px;
+  height: 215px;
+  margin-bottom: 25px;
+  border: 1px solid #d8d3f0;
+  border-radius: 50%;
+  transform: rotate(-15deg);
+}
+.orbit:after {
+  content: "";
+  position: absolute;
+  inset: 25px -20px;
+  border: 1px dashed #d9d4ee;
+  border-radius: 50%;
+  transform: rotate(40deg);
+}
+.orbit > span {
+  font-size: 115px;
+  font-weight: 620;
+  letter-spacing: -9px;
+  color: #8475c8;
+  line-height: 1;
+  transform: rotate(15deg);
+  text-shadow: 0 9px 0 #cfc8ec50;
+}
+.orbit svg {
+  position: absolute;
+  right: -6px;
+  top: 29px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 9px;
+  box-sizing: content-box;
+  color: #7463bf;
+  box-shadow: 0 7px 30px #8d7bc22e;
+  transform: rotate(15deg);
+}
+.orbit i {
+  position: absolute;
+  bottom: 24px;
+  left: 3px;
+  width: 13px;
+  height: 13px;
+  border: 3px solid #fbfaff;
+  box-shadow: 0 0 0 1px #b8adda;
+  background: #b7ace3;
+  border-radius: 50%;
+}
+.message > span {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #8476ba;
+  font-weight: 650;
+}
+.message h1 {
+  font-size: 34px;
+  line-height: 1.28;
+  font-weight: 620;
+  letter-spacing: -1px;
+  margin: 13px 0 18px;
+}
+.message p {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #7b8298;
+}
+.primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 20px;
+  border-radius: 10px;
+  background: #6c58c8;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 550;
+  margin: 27px 0 23px;
+  box-shadow: 0 6px 20px #7260c728;
+}
+.primary:hover {
+  background: #5945b2;
+  transform: translateY(-2px);
+}
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+  align-items: center;
+  font-size: 11px;
+  color: #858ba1;
+}
+.links a:hover {
+  color: #6c58c8;
+}
+.screen > small {
+  margin-top: 55px;
+  color: #989daf;
+  font-size: 10px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .orbit svg {
+    animation: drift 4s ease-in-out infinite;
+  }
+  @keyframes drift {
+    50% {
+      transform: translateY(-7px) rotate(10deg);
+    }
+  }
+}
+@media (max-width: 520px) {
+  .brand {
+    top: 23px;
+    left: 24px;
+    font-size: 21px;
+  }
+  .orbit {
+    width: 235px;
+    height: 180px;
+  }
+  .orbit > span {
+    font-size: 93px;
+  }
+  .orbit svg {
+    width: 31px;
+    height: 31px;
+    right: -8px;
+  }
+  .message h1 {
+    font-size: 28px;
+  }
+  .message p {
+    font-size: 12px;
+  }
+  .screen > small {
+    margin-top: 40px;
+  }
+}

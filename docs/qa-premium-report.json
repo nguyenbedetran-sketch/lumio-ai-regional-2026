@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "checks": 25,
+  "passed": [
+    "Empty workspace offers a real start action",
+    "New learner has zero activity and unknown accuracy",
+    "Reading size is saved without document data",
+    "Flashcard flips and exposes answer state",
+    "Flashcard state survives study tab changes",
+    "Card editor draft survives a tab change",
+    "Wrong answer has explicit feedback and correct option",
+    "Quiz progress counts a submitted answer",
+    "Active quiz survives a study tab change",
+    "Result ring reports the actual incorrect score",
+    "Incorrect result opens answer review",
+    "Completed result survives a tab change",
+    "Motion off persists across reload",
+    "Motion control shows saved preference",
+    "Subtle palette fades without travel",
+    "OS reduced motion overrides without deleting chosen preference",
+    "Restoring OS preference restores full mode",
+    "Reading comfort restores after reload",
+    "Reduced motion disables 3D rotation while answer remains usable",
+    "Study fits a 375px phone without horizontal overflow",
+    "Dashboard fits a 375px phone without overflow",
+    "Dark dashboard follows the saved theme",
+    "UI QA made no paid AI or voice requests",
+    "Unavailable storage keeps motion usable and reports session-only setting",
+    "No runtime or hydration errors (0)"
+  ],
+  "errors": [],
+  "screenshots": [
+    "qa-premium-desktop.png",
+    "qa-premium-quiz.png",
+    "qa-premium-study-mobile.png",
+    "qa-premium-mobile.png",
+    "qa-premium-dark.png"
+  ],
+  "browser": "msedge",
+  "tool": "@playwright/cli@0.1.21",
+  "checkedAt": "2026-10-03T12:39:02.180Z",
+  "mode": "isolated guest profile; UI-only sample data; no paid AI requests"
+}

@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:32:42.936Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 8,
+  "calls": 3,
+  "realProviderCalls": true,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "linear",
+      "problem": "Giải phương trình 2x + 3 = 11",
+      "reference": [
+        4
+      ],
+      "referenceCheck": "2·4+3=11",
+      "scenario": "Bài cơ bản; yêu cầu gợi ý rồi lời giải.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "a2dd6fd3-b820-4162-8f45-724fd54b107a",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:32:42.968Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 2x + 3 = 11",
+          "http": 502,
+          "durationMs": 4667,
+          "error": "INVALID_TUTOR_OUTPUT",
+          "requestId": "11b02b14-2df3-464d-8650-47590077fb4a"
+        }
+      ],
+      "status": "FAIL",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": false
+      },
+      "error": "INVALID_TUTOR_OUTPUT"
+    },
+    {
+      "id": "radical-extraneous",
+      "problem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "4ac26245-5624-4a63-968b-c1c60e7f7f16",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:32:47.646Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "durationMs": 4803,
+          "text": "Bạn chưa gửi bước làm để kiểm tra. Lỗi hay gặp là quên điều kiện x+1≥0 và x-1≥0 hoặc quên kiểm nghiệm lại nghiệm sau khi bình phương.\n\nXét miền xác định trước: cần x+1 ≥ 0 và vế phải x-1 phải không âm trước khi bình phương. Sau khi xác định miền, bình phương hai vế để loại dấu căn rồi kiểm tra lại nghiệm thu được xem có thoả miền ban đầu không (loại nghiệm ngoại lai).\n\nBạn đã xác định miền xác định chưa? Hãy cho biết điều kiện về x và viết phương trình thu được sau khi bình phương hai vế.",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "unlocated-media",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "4ac26245-5624-4a63-968b-c1c60e7f7f16",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:32:47.646Z"
+          },
+          "requestId": "8fa007c6-454a-4823-b7eb-13b1a3a5d1a8"
+        },
+        {
+          "student": "x = 0",
+          "http": 502,
+          "durationMs": 8172,
+          "error": "INVALID_TUTOR_OUTPUT",
+          "requestId": "70e9ddd0-4ddf-40c8-a226-641eb485edaa"
+        }
+      ],
+      "status": "FAIL",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": false
+      },
+      "error": "INVALID_TUTOR_OUTPUT"
+    }
+  ],
+  "summary": {
+    "pass": 0,
+    "partial": 0,
+    "fail": 2
+  },
+  "finishedAt": "2026-10-15T05:33:00.628Z"
+}

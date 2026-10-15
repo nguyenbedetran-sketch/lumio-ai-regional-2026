@@ -1,0 +1,1721 @@
+{
+  "schema": 1,
+  "reviewedAt": "2026-10-15T05:50:38.683Z",
+  "reviewer": "AI-assisted engineering review; not an independent teacher assessment",
+  "sourceRuns": [
+    "tutor-live-final.json",
+    "tutor-live-correct-prose.json",
+    "tutor-live-method-review.json"
+  ],
+  "singleCleanTenCaseRun": false,
+  "runOutcome": "The ten-case final run had9 accepted paths and1 safe false-positive rejection. That case passed after a focused fix/recheck. A second focused recheck assessed method wording.",
+  "selectedRunsProviderRequests": 46,
+  "technicalOutcome": "10 reference scenarios have a recorded accepted path across final+focused rechecks;9 numeric full solutions independently checked; underdetermined exercise stayed locked",
+  "pedagogyOutcome": "PARTIAL",
+  "studentTrial": "NOT TESTED",
+  "independentTeacherReview": "NOT TESTED",
+  "limitations": [
+    "Numeric verification does not prove every narrative step.",
+    "Some hints still describe more than one operation.",
+    "Missing-data conversation can repeat clarification instead of concluding earlier.",
+    "Leak detection is bounded; natural-language answer leakage cannot be ruled out for every exercise.",
+    "Local route evaluation injects authprincipal; OAuth and public deployment require separate evidence."
+  ],
+  "cases": [
+    {
+      "id": "linear",
+      "problem": "Giải phương trình 2x + 3 = 11",
+      "reference": [
+        4
+      ],
+      "referenceCheck": "2·4+3=11",
+      "scenario": "Bài cơ bản; yêu cầu gợi ý rồi lời giải.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "9e4a8db2-9d1f-4328-b90b-bb7678d83e98",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:44:27.938Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 2x + 3 = 11",
+          "http": 200,
+          "durationMs": 5158,
+          "text": "Đây là phương trình bậc nhất. Để tìm x, dùng phép ngược của các phép toán: trước hết loại bỏ hằng số bằng cách trừ 3 cả hai vế để cô lập biểu thức chứa x; sau đó chia cả hai vế cho 2 để ra x.\n\nBạn hãy thực hiện bước 'trừ 3 cả hai vế' và viết biểu thức thu được là gì?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "9e4a8db2-9d1f-4328-b90b-bb7678d83e98",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:44:27.938Z"
+          },
+          "requestId": "34e1ba78-89c8-48f8-bf9b-1eaaa9ed1194"
+        },
+        {
+          "student": "Em trừ 3 ở cả hai vế.",
+          "http": 200,
+          "durationMs": 6516,
+          "text": "Bạn làm đúng khi trừ 3 cả hai vế. Nhớ tính 11 - 3 để biết vế phải trở thành bao nhiêu trước khi chia cho 2.\n\nKhi thực hiện phép trừ 3 ở cả hai vế, hãy tập trung vào phép tính 11 - 3 để biết vế phải thế nào sau khi loại bỏ hằng số.\n\nSau khi đã trừ 3 cả hai vế, hãy chia cả hai vế cho 2. Viết biểu thức thu được sau khi chia cả hai vế cho 2 là gì?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "9e4a8db2-9d1f-4328-b90b-bb7678d83e98",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:44:27.938Z"
+          },
+          "requestId": "ec403812-bc1a-4a66-b70f-2ec4f608b96b"
+        },
+        {
+          "student": "Em chia cả hai vế cho 2.",
+          "http": 200,
+          "durationMs": 5138,
+          "text": "Bạn đã thực hiện đúng thao tác: chia cả hai vế cho 2 là hợp lệ. Đảm bảo tính đúng 11 - 3 trước khi chia.\n\nSau khi trừ 3, ta có phương trình 2x = 11 - 3. Chia cả hai vế cho 2 cho phép viết x dưới dạng (11 - 3)/2.\n\nHãy tính giá trị của biểu thức (11 - 3)/2 và viết kết quả là bao nhiêu?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "9e4a8db2-9d1f-4328-b90b-bb7678d83e98",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:44:27.938Z"
+          },
+          "requestId": "ac193fa5-60ab-4b82-9f61-07822931566c"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4307,
+          "text": "Given:\nPhương trình bậc nhất: \\(2x+3=11\\).\n\nGoal:\nTìm tất cả nghiệm thực của phương trình trên.\n\nFormula (ý tưởng giải):\nĐối với phương trình dạng \\(ax+b=c\\) với \\(a\\neq0\\), ta thực hiện các phép toán ngược: trừ \\(b\\) cả hai vế rồi chia cho \\(a\\).\n\nSteps:\n1) Trừ 3 cả hai vế để cô lập biểu thức chứa \\(x\\):\n   \\(2x+3-3=11-3\\) nên thu được \\(2x=8\\).\n2) Chia cả hai vế cho 2 (vì hệ số của \\(x\\) là 2 và khác 0):\n   \\(x=\\dfrac{8}{2}=4\\).\n\nCheck (kiểm tra):\nThay lại vào phương trình ban đầu: \\(2\\cdot 4+3=8+3=11\\), đúng bằng vế phải là 11, nên nghiệm thỏa mãn.\n\nConclusion:\nNghiệm thực duy nhất của phương trình là \\(x=4\\). Tôi không sử dụng công cụ kiểm tra độc lập; đây là phép tính đại số trực tiếp theo các bước chuẩn.",
+          "verification": {
+            "status": "verified",
+            "equation": "2x + 3 = 11",
+            "candidates": [
+              {
+                "value": 4,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "9e4a8db2-9d1f-4328-b90b-bb7678d83e98",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:44:27.938Z"
+          },
+          "requestId": "7d3ce8c2-87d1-4cd9-8a2c-e5b2c7cc990c"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Không đưa giá trị nghiệm trước mở khóa; có lúc một đoạn gợi ý nêu cả trừ và chia, còn rộng hơn một thao tác. Lời giải cuối có đủ thế nghiệm."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "rational-domain",
+      "problem": "Giải phương trình (x + 1)/(x - 2) = 3",
+      "reference": [
+        3.5
+      ],
+      "referenceCheck": "x≠2; 4,5/1,5=3",
+      "scenario": "Nhắc điều kiện trước khi nhân mẫu.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "236a8929-b76b-483e-831b-96a8c66d6f1c",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:44:49.075Z"
+          }
+        },
+        {
+          "student": "Giải phương trình (x + 1)/(x - 2) = 3",
+          "http": 200,
+          "durationMs": 3134,
+          "text": "Trước khi làm đại số, xác định miền giá trị hợp lệ: biểu thức có mẫu (x−2) nên phải loại trừ x=2. Sau khi ghi rõ điều kiện này, có thể nhân cả hai vế của phương trình với (x−2) để loại mẫu và tiếp tục giải phương trình bậc nhất thu được.\n\nBạn có đồng ý rằng x ≠ 2 không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "236a8929-b76b-483e-831b-96a8c66d6f1c",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:44:49.075Z"
+          },
+          "requestId": "4f826dac-2682-47c9-9b7b-cf372197b42d"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 4004,
+          "text": "Sai sót: bạn chọn x = 2 nhưng giá trị này làm mẫu bằng 0 nên biểu thức ban đầu không xác định; do đó x = 2 không được chấp nhận.\n\nGiá trị x = 2 làm mẫu (x−2) = 0, khiến biểu thức trái vế không xác định; vì thế x = 2 không thể là nghiệm hợp lệ của phương trình. Bước hữu ích tiếp theo là loại mẫu bằng cách nhân cả hai vế với (x−2) khi đã loại trừ x=2.\n\nBạn có thể thực hiện phép nhân cả hai vế với (x−2) (với điều kiện x≠2) và viết phương trình bậc nhất thu được không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "236a8929-b76b-483e-831b-96a8c66d6f1c",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:44:49.075Z"
+          },
+          "requestId": "f56ef105-59f0-46ac-a00c-d971e75b4b1a"
+        },
+        {
+          "student": "Em có x+1=3x-6, với x khác 2.",
+          "http": 200,
+          "durationMs": 4370,
+          "text": "Đúng: biểu thức x + 1 = 3x − 6 với điều kiện x ≠ 2 là bước trung gian hợp lệ. Không được chọn x = 2 vì làm mẫu bằng 0. Bây giờ cần quy về dạng ax = b trước khi chia.\n\nĐể giải phương trình bậc nhất, gom các hạng chứa x về một phía và các hằng số về phía kia rồi chia cho hệ số của x. Việc này không liên quan tới điều kiện x ≠ 2 nữa vì bạn đã loại trừ nó.\n\nNếu từ x + 1 = 3x − 6 em thực hiện phép trừ x ở cả hai vế, rồi thu gọn, em sẽ viết được phương trình nào tiếp theo?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "236a8929-b76b-483e-831b-96a8c66d6f1c",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:44:49.075Z"
+          },
+          "requestId": "eed4096c-62f4-475c-9ec7-31677334556b"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 5329,
+          "text": "Given: Phương trình \\(\\dfrac{x+1}{x-2}=3\\).\nGoal: Tìm mọi nghiệm thực của phương trình.\nĐiều kiện: Mẫu số không được bằng 0, nên phải có \\(x\\neq2\\).\nBước 1 (khử mẫu): Vì đã loại trừ \\(x=2\\), nhân hai vế với \\(x-2\\) được phép, ta được phương trình bậc nhất\n\\(x+1=3(x-2)\\).\nBước 2 (khai triển và gom về một phía): Khai triển vế phải: \\(x+1=3x-6\\).\nGom các hạng chứa \\(x\\) về một phía và hằng số về phía kia: trừ \\(x\\) cả hai vế và cộng 6 cả hai vế,\n\\(1+6=3x-x\\) suy ra \\(7=2x\\).\nBước 3 (chia hệ số): Chia cả hai vế cho 2: \\(x=\\dfrac{7}{2}=3.5\\).\nKiểm tra: Thay lại vào biểu thức ban đầu, với \\(x=3.5\\) mẫu \\(x-2=1.5\\neq0\\) nên hợp lệ. Tính hai vế: trái \\(\\dfrac{3.5+1}{3.5-2}=\\dfrac{4.5}{1.5}=3\\), đúng bằng vế phải.\nConclusion: Phương trình có đúng một nghiệm thực là \\(x=\\dfrac{7}{2}\\) (tương đương 3.5). Không có sự mâu thuẫn hay nghiệm phụ do điều kiện mẫu.",
+          "verification": {
+            "status": "verified",
+            "equation": "(x + 1)/(x - 2) = 3",
+            "candidates": [
+              {
+                "value": 3.5,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "(x-2) != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "236a8929-b76b-483e-831b-96a8c66d6f1c",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:44:49.075Z"
+          },
+          "requestId": "0db55543-c585-49c2-bb4d-476c9678baf5"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Phát hiện x=2 làm mẫu0, giữ điều kiện và giải đúng7/2. Một số gợi ý nêu lộ trình khử mẫu rồi giải thay vì chỉ một bước nhỏ."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "radical-extraneous",
+      "problem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "a9e2ff00-ba35-449c-add4-a1568209c36a",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:45:05.927Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "durationMs": 2966,
+          "text": "Trước khi xử lý, hãy xét điều kiện để căn bậc hai xác định và để vế phải có nghĩa: cần x+1≥0 và đồng thời x-1≥0. Kết luận nhanh về miền giá trị hợp lệ cho x sẽ giúp tránh nghiệm spuriuos khi bình phương.\n\nHãy xác định miền nghiệm thỏa hai điều kiện trên, rồi bình phương cả hai vế. Viết phương trình thu được sau khi bình phương (chỉ viết phương trình, không giải tiếp).",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "a9e2ff00-ba35-449c-add4-a1568209c36a",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:45:05.927Z"
+          },
+          "requestId": "f4d358fc-9222-419f-aa38-9c1745c5ebfb"
+        },
+        {
+          "student": "x = 0",
+          "http": 200,
+          "durationMs": 5857,
+          "text": "Lỗi là bạn chọn x=0 mà không thỏa điều kiện x-1≥0 (vế phải âm khi x=0) và thay vào cho thấy hai vế không bằng nhau.\n\nThay nhanh x=0 vào phương trình: vế trái \u0010 sqrt(0+1)=1, vế phải = -1, nên hai vế khác nhau và x=0 không thỏa. Ngoài ra, kiểm tra điều kiện xác định cho phương trình trước khi thử nghiệm là cần thiết.\n\nBạn đã kiểm tra điều kiện xác định (x+1\u0000≥0 và x-1\u0000≥0) trước khi thử x=0 chứ?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "a9e2ff00-ba35-449c-add4-a1568209c36a",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:45:05.927Z"
+          },
+          "requestId": "12c521bc-8809-45c0-b5a0-db06bc179797"
+        },
+        {
+          "student": "Em chưa hiểu vì sao phải loại nghiệm.",
+          "http": 200,
+          "durationMs": 7540,
+          "text": "Bạn đã chọn x=0 nhưng đó là lỗi: x=0 không thỏa điều kiện vế phải ≥0 (x-1≥0), và thay trực tiếp cho thấy LHS=1, RHS=-1 nên không hợp lệ.\n\nKhi bình phương cả hai vế của phương trình bạn có thể mất thông tin về dấu: phép bình phương làm mất dấu âm/ dương nên có thể sinh nghiệm ngoại lai. Do đó sau khi tìm nghiệm của phương trình đã bình phương, phải thay lại vào phương trình gốc và loại những nghiệm khiến hai vế không bằng nhau (ví dụ khi vế phải âm nhưng vế trái là căn không âm).\n\nSau khi bạn bình phương hai vế và được một phương trình bậc hai, bạn sẽ kiểm tra tính hợp lệ của nghiệm tìm được trong phương trình gốc bằng cách nào cụ thể?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "a9e2ff00-ba35-449c-add4-a1568209c36a",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:45:05.927Z"
+          },
+          "requestId": "8ea4505e-d525-4c21-a85e-adf5b53edba2"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4854,
+          "text": "Given:\nĐiều kiện xác định: x+1\\ge 0 và x-1\\ge 0 nên x\\ge 1.\n\nGoal:\nGiải phương trình \\(\\sqrt{x+1}=x-1\\) trên tập số thực.\n\nFormula:\nBình phương hai vế (với điều kiện phía trên) để loại căn:\n\\(x+1=(x-1)^2\\).\n\nSteps:\n1) Từ \\(x+1=(x-1)^2\\) suy ra\n\\(x+1=x^2-2x+1\\) nên\n\\(0=x^2-3x\\) hay \\(x(x-3)=0\\).\n2) Giải: nghiệm của phương trình đã bình phương là \\(x=0\\) hoặc \\(x=3\\).\n3) Tuy nhiên phải về lại điều kiện xác định ban đầu (x\\ge 1). Do đó \\(x=0\\) bị loại vì không thỏa điều kiện (vế phải âm khi x=0), chỉ còn \\(x=3\\).\n\nCheck:\nThay \\(x=3\\) vào phương trình gốc: LHS = \\(\\sqrt{3+1}=\\sqrt{4}=2\\), RHS = \\(3-1=2\\). Hai vế bằng nhau, nên \\(x=3\\) thỏa phương trình gốc.\n\nConclusion:\nNghiệm thực duy nhất là \\(x=3\\).\n\nGhi chú về độ chắc chắn: Không còn nghiệm ngoại lai nào khác sau khi kiểm tra điều kiện xác định và thay lại vào phương trình gốc.",
+          "verification": {
+            "status": "verified",
+            "equation": "sqrt(x + 1) = x - 1",
+            "candidates": [
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "(x+1) >= 0",
+              "(x-1) >= 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "a9e2ff00-ba35-449c-add4-a1568209c36a",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:45:05.927Z"
+          },
+          "requestId": "39368edf-1112-4f5e-8add-5a9db5da5b02"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PASS",
+        "note": "Loại x=0 bằng đối chiếu hai vế và dấu; lời giải đầy đủ giữ x≥1, loại nghiệm ngoại lai, thế x=3 đúng. Bản ghi cũ có ký tự điều khiển định dạng; parser đã lọc và có kiểm tra hồi quy."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "correct-first",
+      "problem": "Giải phương trình x^2 - 5x + 6 = 0",
+      "reference": [
+        2,
+        3
+      ],
+      "referenceCheck": "(x-2)(x-3)=0; thay2và3 đều0",
+      "scenario": "Học sinh trả lời đúng ngay, vẫn kiểm tra lý do và đủ nghiệm.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          }
+        },
+        {
+          "student": "Giải phương trình x^2 - 5x + 6 = 0",
+          "http": 200,
+          "durationMs": 3802,
+          "text": "Đây là một phương trình bậc hai vì hệ số của x^2 khác 0; xác định các hệ số a, b, c sẽ là bước đầu cần thiết trước khi áp dụng công thức nghiệm hoặc phân tích thành nhân tử.\n\nBạn có thể cho biết các hệ số a, b, c của phương trình là gì không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "ef46d775-65de-425d-910a-6c522daf99ae"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 4815,
+          "text": "Giá trị x = 2 bạn đưa ra là đúng: thay vào phương trình cho tổng, nên (x-2) là một nhân tử. Tuy nhiên, phương trình bậc hai thường có hai nghiệm, nên cần tìm nghiệm còn lại.\n\nNếu x = 2 là một nghiệm của phương trình bậc hai, thì đa thức chia hết cho (x-2). Bạn có thể tìm nghiệm còn lại bằng cách chia đa thức cho (x-2) hoặc dùng quan hệ tổng và tích của hai nghiệm mà không cần dò giá trị khác.\n\nBạn muốn tìm nghiệm còn lại bằng cách nào: chia đa thức cho (x-2) hay dùng quan hệ tổng và tích của hai nghiệm?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "f57d0a6b-3500-418f-ba21-208921e8914c"
+        },
+        {
+          "student": "Em phân tích thành (x-2)(x-3), nên còn nghiệm3.",
+          "http": 200,
+          "durationMs": 4780,
+          "text": "Phân tích (x-2)(x-3) là chính xác; kiểm tra độc lập bằng thay x=3 vào phương trình cho 0, nên x=3 là nghiệm hợp lệ.\n\nVới phương trình bậc hai chuẩn ax^2+bx+c=0, tổng hai nghiệm là -b/a và tích hai nghiệm là c/a — đây là cách nhanh để kiểm tra nghiệm bạn tìm được.\n\nKhi bạn nhân (x-2)(x-3) ra, kết quả có khớp đúng với đa thức x^2 - 5x + 6 không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "81c1b252-0103-4b10-92f8-52385818d3cd"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 5218,
+          "text": "Given\nPhương trình: \\(x^2-5x+6=0\\).\n\nGoal\nTìm tất cả nghiệm thực của phương trình bậc hai đã cho.\n\nFormula (điều kiện, kiến thức sử dụng)\nVới phương trình bậc hai chuẩn \\(ax^2+bx+c=0\\), nếu đa thức có thể phân tích thành nhân tử bậc nhất \\((x-x_1)(x-x_2)\\) thì nghiệm là \\(x_1\\) và \\(x_2\\). Ngoài ra tổng hai nghiệm là \\(-b/a\\) và tích là \\(c/a\\) để kiểm tra kết quả.\n\nSteps\n1) Xác định hệ số: \\(a=1,\\; b=-5,\\; c=6\\).\n2) Thử phân tích đa thức thành nhân tử bậc nhất. Ta tìm hai số thực có tổng bằng \\(-5)\\) (hệ số của \\(x\\)) và tích bằng \\(6\\).\n3) Hai số thỏa là \\(-2\\) và \\(-3\\) (vì \\(-2)+(-3)=-5\\) và \\((-2)(-3)=6\\). Do đó\n   \\(x^2-5x+6=(x-2)(x-3)\\).\n4) Khi tích hai nhân tử bằng 0, ta có nghiệm:\n   \\(x-2=0\\Rightarrow x=2\\) và \\(x-3=0\\Rightarrow x=3\\).\n\nCheck\n- Thay \\(x=2\\) vào phương trình: \\(2^2-5\\cdot2+6=4-10+6=0\\) nên \\(x=2\\) hợp lệ.\n- Thay \\(x=3\\) vào phương trình: \\(3^2-5\\cdot3+6=9-15+6=0\\) nên \\(x=3\\) hợp lệ.\n- Dùng quan hệ tổng và tích: tổng \\(2+3=5=-b/a\\) (với \\(b=-5,a=1\\)) và tích \\(2\\cdot3=6=c/a\\), khớp với hệ số đã cho.\n\nConclusion\nTập nghiệm thực của phương trình là \\(\\{2,3\\}\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "x^2 - 5x + 6 = 0",
+            "candidates": [
+              {
+                "value": 2,
+                "valid": true
+              },
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "67e62694-2478-40c0-8985-c85f62a9f8c8"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-correct-prose.json",
+      "engineeringReview": {
+        "pedagogy": "PASS",
+        "note": "Xác nhận nghiệm học sinh đã thử; hướng kiểm tra thêm nghiệm còn lại. Bản chạy toàn bộ từng chặn nhầm 'nghiệm3' do chỉ nhận x=3; parser được mở rộng cho lời đáp số rõ bằng tiếng Việt rồi kiểm tra lại thành công."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "wrong-first",
+      "problem": "Giải phương trình x/3 + 2 = 5",
+      "reference": [
+        9
+      ],
+      "referenceCheck": "9/3+2=5",
+      "scenario": "Sai bước đầu: chuyển vế sai dấu.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          }
+        },
+        {
+          "student": "Giải phương trình x/3 + 2 = 5",
+          "http": 200,
+          "durationMs": 2731,
+          "text": "Để tìm x, trước hết đưa các hạng chứa x về một phía: trừ 2 từ hai vế, sau đó nhân cả hai vế với 3 để khử mẫu và tìm giá trị của x.\n\nBạn hãy thực hiện bước đầu: trừ 2 từ cả hai vế của phương trình và viết phương trình mới được không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "46f7d9fb-a25d-469d-b70b-24ad70e71c3e"
+        },
+        {
+          "student": "Em chuyển 2 sang bên phải thành cộng 2.",
+          "http": 200,
+          "durationMs": 3842,
+          "text": "Em đã chuyển 2 sang bên phải nhưng giữ dấu +; thực ra khi chuyển vế thì dấu phải đổi. Hãy sửa lại theo quy tắc đổi dấu.\n\nKhi đưa một hạng từ vế này sang vế kia, phải đổi dấu của hạng đó: nếu hạng là +2 thì khi chuyển sang vế đối diện phải đổi thành -2 (không phải +2).\n\nViết phương trình sau khi em chuyển đúng hạng 2 sang vế phải (ghi biểu thức mới, không tính tiếp được không)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "abea60c6-cb91-4163-bced-79f457c85948"
+        },
+        {
+          "student": "Em trừ 2 ở hai vế rồi nhân 3.",
+          "http": 200,
+          "durationMs": 6200,
+          "text": "Phương pháp của em (trừ 2 rồi nhân 3) là đúng; nhớ nhân toàn bộ mỗi vế khi khử mẫu để không bỏ sót tổ hợp số nào.\n\nSau khi đã trừ 2 khỏi cả hai vế, bước tiếp theo là nhân cả hai vế với 3 để khử mẫu; khi nhân phải nhân toàn bộ mỗi vế, không chỉ phần tử chứa x.\n\nHãy viết phương trình thu được sau khi em trừ 2 ở hai vế rồi nhân cả hai vế với 3 (ghi biểu thức mới, chưa giải tiếp)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "27c24686-1589-45bb-9c2e-a2962933192a"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4691,
+          "text": "Đề bài\nGiải phương trình \\(\\dfrac{x}{3}+2=5\\).\n\nĐiều kiện\nMẫu số là 3 khác 0 nên biểu thức xác định với mọi x; không có hạn chế thêm về miền xác định.\n\nLời giải\nBước 1: Trừ 2 hai vế để đưa các hạng chứa x về một phía:\n\\[\n\\dfrac{x}{3}+2-2=5-2\n\\]\nSuy ra\n\\[\n\\dfrac{x}{3}=3\n\\]\nBước 2: Nhân cả hai vế với 3 để khử mẫu (nhân toàn bộ mỗi vế):\n\\[\n3\\cdot\\dfrac{x}{3}=3\\cdot 3\n\\]\nSuy ra\n\\[\nx=9\n\\]\n\nKiểm tra\nThay \\(x=9\\) vào phương trình ban đầu:\n\\[\n\\dfrac{9}{3}+2=3+2=5\n\\]\nTích hợp đúng vế phải là 5, nên nghiệm thoả mãn.\n\nKết luận\nPhương trình có nghiệm duy nhất là \\(x=9\\).\n\nGhi chú: Các bước đã thực hiện là hợp lệ vì phép trừ và phép nhân cả hai vế cho cùng một số không làm thay đổi tập nghiệm; điều kiện mẫu khác 0 đã được kiểm tra.",
+          "verification": {
+            "status": "verified",
+            "equation": "x/3 + 2 = 5",
+            "candidates": [
+              {
+                "value": 9,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "3 != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0ec34247-35d5-4983-9409-f99cf367fdd3",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:48:46.433Z"
+          },
+          "requestId": "4911cfc9-f973-4c7f-95cb-a3c39e6749a2"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-method-review.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Chỉ đúng lỗi đổi dấu và nhắc nhân toàn bộ vế; bản kiểm tra lại không còn khẳng định phải trừ trước nhân. Một vài gợi ý vẫn liệt kê hai thao tác và có lỗi diễn đạt nhỏ."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "repeated-mistake",
+      "problem": "Giải phương trình (x^2 - 4)/(x - 2) = 0",
+      "reference": [
+        -2
+      ],
+      "referenceCheck": "x≠2; phân tử=(x-2)(x+2); chỉ-2hợp lệ",
+      "scenario": "Sai nhiều lần và hủy mẫu thiếu điều kiện.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "2391a158-38f3-45f2-b337-01e386cc6ead",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:46:07.177Z"
+          }
+        },
+        {
+          "student": "Giải phương trình (x^2 - 4)/(x - 2) = 0",
+          "http": 200,
+          "durationMs": 3172,
+          "text": "Lưu ý điều kiện miền giá trị: biểu thức phân số chỉ xác định khi mẫu khác 0; một phân số bằng 0 khi và chỉ khi tử bằng 0 trong khi mẫu khác 0.\n\nBạn có thể giải phương trình tử số x^2 - 4 = 0 rồi so sánh các nghiệm đó với điều kiện mẫu khác 0 (x ≠ 2) để giữ lại nghiệm hợp lệ chứ?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "2391a158-38f3-45f2-b337-01e386cc6ead",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:46:07.177Z"
+          },
+          "requestId": "3b58e17a-4088-4b44-8b53-533bc84f57aa"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 5099,
+          "text": "Giá trị x = 2 bạn ghi là không hợp lệ vì làm cho mẫu bằng 0, nên không thuộc miền xác định của biểu thức. Hãy kiểm tra các nghiệm khác của tử số.\n\nPhân tích tử số thành tích của hai đa thức bậc nhất: x^2 - 4 = (x - 2)(x + 2). Khi đó nghiệm của phương trình tử số bằng 0 là nghiệm của mỗi nhân tử bằng 0, nhưng chỉ giữ những giá trị không làm mẫu bằng 0.\n\nBạn có thể liệt kê các nghiệm của tử số sau khi phân tích và kiểm tra điều kiện miền giá trị x ≠ 2 không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "2391a158-38f3-45f2-b337-01e386cc6ead",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:46:07.177Z"
+          },
+          "requestId": "b961dec7-5260-4421-bd16-df365a57b5a5"
+        },
+        {
+          "student": "Em vẫn chọn x=2 vì tử số bằng0.",
+          "http": 200,
+          "durationMs": 4389,
+          "text": "Sai ở chỗ coi tử bằng 0 là đủ; bạn đã bỏ qua điều kiện mẫu ≠ 0 nên x=2 bị loại.\n\nKhông được lấy x = 2 vì khi đó biểu thức không xác định. Khi có nhân tử chung ở tử và mẫu bạn chỉ được rút gọn nếu đồng thời ghi nhớ điều kiện loại trừ các giá trị làm mẫu bằng 0.\n\nNếu rút gọn (x^2-4)/(x-2) bằng cách chia cho (x-2) với điều kiện thích hợp, biểu thức tương đương thu được là gì và điều kiện kèm theo là gì?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "2391a158-38f3-45f2-b337-01e386cc6ead",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:46:07.177Z"
+          },
+          "requestId": "7c39c11d-864c-450a-b658-1a483b6207c5"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4550,
+          "text": "Given:\nPhương trình \\(\\dfrac{x^2-4}{x-2}=0\\).\n\nGoal:\nTìm tất cả các nghiệm thực của phương trình.\n\nFormula / Lưu ý điều kiện:\n- Một phân số bằng 0 khi và chỉ khi tử = 0 và mẫu ≠ 0.\n- Ở đây mẫu yêu cầu \\(x\\neq 2\\).\n\nSteps:\n1. Xét tử số: \\(x^2-4=0\\).\n   - Phân tích: \\(x^2-4=(x-2)(x+2)\\).\n   - Suy ra nghiệm của tử số là \\(x=2\\) hoặc \\(x=-2\\).\n2. Áp dụng điều kiện mẫu ≠ 0: loại bỏ mọi nghiệm làm mẫu bằng 0.\n   - \\(x=2\\) làm mẫu bằng 0 nên không hợp lệ (biểu thức không xác định tại \\(x=2\\)).\n3. Do đó chỉ còn nghiệm hợp lệ là \\(x=-2\\).\n\nCheck:\nThay \\(x=-2\\) vào biểu thức ban đầu:\n\\(\\dfrac{(-2)^2-4}{-2-2}=\\dfrac{4-4}{-4}=\\dfrac{0}{-4}=0\\). Thỏa mãn phương trình.\n\nConclusion:\nNghiệm thực duy nhất của phương trình là \\(x=-2\\). Không có nghiệm khác vì \\(x=2\\) bị loại do làm mẫu bằng 0. Không có bất định thêm.",
+          "verification": {
+            "status": "verified",
+            "equation": "(x^2 - 4)/(x - 2) = 0",
+            "candidates": [
+              {
+                "value": -2,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "(x-2) != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "2391a158-38f3-45f2-b337-01e386cc6ead",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:46:07.177Z"
+          },
+          "requestId": "c881132c-9505-435b-a04f-755670bdef75"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PASS",
+        "note": "Xử lý hai lần chọnx=2, nêu đúng lỗi bỏ qua mẫu, không đưa nghiệm-2 trong các phản hồi được chấp nhận. Một bản trước từng bị chặn/hoàn credit vì mô hình lộ nghiệm sớm; lỗi ấy được giữ trong bằng chứng."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "demand-answer",
+      "problem": "Giải phương trình sqrt(2x + 3) = 3",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥-1,5;2x+3=9;√9=3",
+      "scenario": "Đòi đáp án ngay nhưng không được vượt khóa.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "56a52410-8136-44fb-ac66-2fcb02ce3c2b",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:46:24.398Z"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(2x + 3) = 3",
+          "http": 200,
+          "durationMs": 3639,
+          "text": "Điều kiện xác định: biểu thức dưới dấu căn phải không âm, tức là cần xét bất phương trình 2x + 3 ≥ 0 trước khi tiếp tục.\n\nBạn có thể kiểm tra và cho biết tập nghiệm của điều kiện xác định 2x+3≥0 là gì không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "56a52410-8136-44fb-ac66-2fcb02ce3c2b",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:46:24.398Z"
+          },
+          "requestId": "c1749b5b-47ac-43f5-88fb-58f22ba96f98"
+        },
+        {
+          "student": "Cho đáp án luôn đi.",
+          "http": 200,
+          "durationMs": 3109,
+          "text": "Cả hai vế đã là số không âm (vế trái là căn bậc hai, vế phải là 3), nên ta có thể thực hiện bình phương hai vế mà không sinh nghiệm ngoại lai; bước tiếp theo là bình phương để loại dấu căn.\n\nSau khi bình phương cả hai vế của phương trình sqrt(2x+3)=3, bạn thu được phương trình đại số nào (viết biểu thức rút gọn)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "56a52410-8136-44fb-ac66-2fcb02ce3c2b",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:46:24.398Z"
+          },
+          "requestId": "2d2e40d5-377b-4d64-98e8-cc2b1bdb883c"
+        },
+        {
+          "student": "Giải hết đi, bỏ qua gợi ý.",
+          "http": 200,
+          "durationMs": 6114,
+          "text": "Mình không cung cấp đáp án cuối cùng theo yêu cầu của bài khóa; bạn vừa yêu cầu bỏ qua gợi ý, nhưng phương pháp từng bước giúp bạn tự hiểu và kiểm tra nghiệm. Hãy cho biết bước tính bạn thực hiện.\n\nSau khi bình phương hai vế ta thu được một phương trình bậc nhất dạng 2x + 3 = 9; để tìm x, thực hiện lần lượt phép trừ 3 trên hai vế rồi chia hai vế cho 2.\n\nBạn thực hiện phép trừ 3 rồi chia cho 2 trên phương trình 2x + 3 = 9 và viết kết quả bước trung gian (không cần giải kết luận cuối cùng)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "56a52410-8136-44fb-ac66-2fcb02ce3c2b",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:46:24.398Z"
+          },
+          "requestId": "e81d2ff2-9872-4d8e-a39f-505b44be3bbc"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 4696,
+          "text": "Given (Cho): \\(\\sqrt{2x+3}=3\\)\n\nGoal (Mục tiêu): Tìm tất cả nghiệm thực của phương trình.\n\nFormula (Điều kiện và công thức): Vì có dấu căn bậc hai, cần điều kiện xác định\n\\[2x+3\\ge 0\\quad\\Rightarrow\\quad x\\ge -\\tfrac{3}{2}.\\]\nCả hai vế đều không âm (vế phải bằng 3), nên được phép bình phương hai vế mà không sinh nghiệm ngoại lai.\n\nSteps (Các bước giải):\n1) Bình phương hai vế:\n\\[ (\\sqrt{2x+3})^2 = 3^2 \\quad\\Rightarrow\\quad 2x+3=9. \\]\n2) Giải phương trình bậc nhất:\n\\[2x=9-3=6\\quad\\Rightarrow\\quad x=\\dfrac{6}{2}=3.\\]\n3) Kiểm tra điều kiện xác định: nghiệm tìm được là \\(x=3\\), thỏa \\(x\\ge -\\tfrac{3}{2}\\).\n\nCheck (Kiểm tra nghiệm trong phương trình ban đầu):\nThay \\(x=3\\) vào vế trái:\n\\[\\sqrt{2\\cdot 3+3}=\\sqrt{6+3}=\\sqrt{9}=3,\\]\nbằng vế phải, nên \\(x=3\\) là nghiệm hợp lệ.\n\nConclusion (Kết luận): Tập nghiệm thực của phương trình là \\(\\{3\\}\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "sqrt(2x + 3) = 3",
+            "candidates": [
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "((2*x)+3) >= 0",
+              "3 >= 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "56a52410-8136-44fb-ac66-2fcb02ce3c2b",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:46:24.398Z"
+          },
+          "requestId": "c8deaa58-a5aa-4ece-9243-73a6781f42ea"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Đòi đáp án không vượt khóa; gợi ý tiếp tục theo căn và bình phương, lời giải cuối kiểm tra đúngx=3. Lượt cuối trước mở có thể hướng dẫn cả trừ và chia; câu từ về khóa còn cứng."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "early-full",
+      "problem": "Giải phương trình 3(x - 2) = 2x + 1",
+      "reference": [
+        7
+      ],
+      "referenceCheck": "3(7-2)=15=2·7+1",
+      "scenario": "Gọi lời giải đầy đủ trước ba gợi ý bị409.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "0622f641-bc19-496f-952f-a233c2755ed5",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:46:41.969Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 3(x - 2) = 2x + 1",
+          "http": 200,
+          "durationMs": 3244,
+          "text": "Đây là phương trình tuyến tính. Bước đầu hợp lý là khai triển ngoặc 3(x-2) rồi thu gọn các hạng tương tự để đưa phương trình về dạng ax+b=0; miền giá trị khả dĩ là mọi x thuộc R.\n\nBạn có thể khai triển 3(x-2) thành biểu thức nào và sau đó di chuyển các hạng chứa x về cùng một vế được không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0622f641-bc19-496f-952f-a233c2755ed5",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:46:41.969Z"
+          },
+          "requestId": "7404ac88-eace-4e35-88da-6275eb5fe7b8"
+        },
+        {
+          "student": "Lời giải đầy đủ ngay.",
+          "http": 200,
+          "durationMs": 4091,
+          "text": "Mở ngoặc trước: 3(x-2)=3x-6. Sau đó thu gọn bằng cách đưa tất cả hạng chứa x về cùng một vế (cộng/trừ) rồi chia cho hệ số của x; nhớ không chia cho 0 khi chia cả hai vế cho hệ số x.\n\nBạn muốn mình hướng dẫn chi tiết từng bước (mở ngoặc → gom các hạng chứa x → chia cho hệ số x) hay bạn tự làm bước mở ngoặc rồi gửi kết quả để mình kiểm tra tiếp?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0622f641-bc19-496f-952f-a233c2755ed5",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:46:41.969Z"
+          },
+          "requestId": "5d32963c-a65b-48ae-abea-09d86d9efee8"
+        },
+        {
+          "student": "Em khai triển vế trái thành 3x-6.",
+          "http": 200,
+          "durationMs": 4931,
+          "text": "Khai triển vế trái thành 3x-6 là chính xác. Tiếp theo cần đưa các hạng chứa x về cùng một vế và các hằng số về vế kia để tìm hệ số của x trước khi chia.\n\nSau khi khai triển được 3x-6, bước tiếp theo là quy về một vế các hạng chứa x và đưa các hằng số sang vế kia (ví dụ: trừ 2x và cộng 6 cả hai vế) để cô lập biểu thức chứa x trước khi chia cho hệ số của x.\n\nSau khi bạn có 3x-6 ở vế trái, hãy thực hiện các phép toán để đưa các hạng chứa x về cùng một vế: nếu bạn trừ 2x cả hai vế, vế trái và phải trở thành biểu thức nào sau khi rút gọn?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0622f641-bc19-496f-952f-a233c2755ed5",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:46:41.969Z"
+          },
+          "requestId": "7d6604cf-7d11-4742-8068-1aae7da59d0e"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 3887,
+          "text": "Given: Phương trình 3(x - 2) = 2x + 1\n\nGoal: Tìm mọi số thực x thỏa phương trình.\n\nBước giải (có lý do cho từng bước):\n1) Mở ngoặc ở vế trái để thu gọn biểu thức:\n   \\(3(x-2)=3x-6\\).\n   Vậy phương trình trở thành \\(3x-6=2x+1\\).\n\n2) Quy về một vế các hạng chứa x và đưa các hằng số sang vế kia để cô lập x. Trừ \\(2x\\) cả hai vế và cộng 6 cả hai vế:\n   \\(3x-6-2x=2x+1-2x\\) cho \\(x-6=1\\).\n   Sau đó cộng 6 cả hai vế: \\(x-6+6=1+6\\) nên \\(x=7\\).\n\nCheck (kiểm tra): Thay \\(x=7\\) vào phương trình ban đầu:\n   Vế trái: \\(3(7-2)=3\\cdot5=15\\).\n   Vế phải: \\(2\\cdot7+1=14+1=15\\).\n   Vì hai vế đều bằng 15, nên \\(x=7\\) thỏa phương trình.\n\nConclusion: Phương trình có đúng một nghiệm thực là \\(x=7\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "3(x - 2) = 2x + 1",
+            "candidates": [
+              {
+                "value": 7,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0622f641-bc19-496f-952f-a233c2755ed5",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:46:41.969Z"
+          },
+          "requestId": "8935a1ea-c716-4028-a9e1-4d1c47db67d8"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Lời giải trực tiếp lúc đầu bị409 và không gọi dịch vụ; ba gợi ý dẫn tới nghiệm7 rồi thế hai vế15. Một vài gợi ý mô tả nhiều thao tác trong cùng đoạn."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    },
+    {
+      "id": "missing-data",
+      "problem": "Hình chữ nhật có chiều dài 8 cm. Tính diện tích.",
+      "reference": null,
+      "referenceCheck": "Thiếu chiều rộng hoặc quan hệ xác định chiều rộng; không có đáp án số duy nhất.",
+      "scenario": "Thiếu dữ kiện: phải hỏi chiều rộng, không bịa diện tích.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "736878bc-7351-4ae9-9b3b-4d544a6e4489",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:46:58.139Z"
+          }
+        },
+        {
+          "student": "Hình chữ nhật có chiều dài 8 cm. Tính diện tích.",
+          "http": 200,
+          "durationMs": 2383,
+          "text": "Để tính diện tích hình chữ nhật cần biết cả hai kích thước: chiều dài và chiều rộng; chỉ có chiều dài 8 cm chưa đủ để tính số đo diện tích duy nhất.\n\nChiều rộng của hình chữ nhật là bao nhiêu (cm)?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "736878bc-7351-4ae9-9b3b-4d544a6e4489",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": true,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:46:58.139Z"
+          },
+          "requestId": "f56012df-d97d-4c8d-a822-dc6e91226b5b"
+        },
+        {
+          "student": "Đề chỉ cho chiều dài thôi.",
+          "http": 200,
+          "durationMs": 3082,
+          "text": "Cần biết chiều rộng hoặc một thông tin thay thế (ví dụ: là hình vuông, hoặc tỉ lệ giữa chiều dài và chiều rộng) để tính diện tích duy nhất.\n\nTrong đề có ghi thêm gì không — chiều rộng (cm), diện tích, tỉ lệ chiều dài:chiều rộng, hay ghi là hình vuông?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "736878bc-7351-4ae9-9b3b-4d544a6e4489",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": true,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:46:58.139Z"
+          },
+          "requestId": "ad547bbd-d2a9-424f-9775-96583e99e4f6"
+        },
+        {
+          "student": "Có thể tính được nếu chưa biết chiều rộng không?",
+          "http": 200,
+          "durationMs": 2782,
+          "text": "Không thể tính diện tích duy nhất chỉ từ chiều dài 8 cm. Cần một dữ kiện bổ sung: chiều rộng, hoặc ghi rõ là hình vuông, hoặc tỉ lệ giữa chiều dài và chiều rộng để suy ra chiều rộng.\n\nTrong đề có thêm thông tin nào nữa không — chiều rộng (cm), ghi là hình vuông, hoặc cho tỉ lệ chiều dài:chiều rộng?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "736878bc-7351-4ae9-9b3b-4d544a6e4489",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:46:58.139Z"
+          },
+          "requestId": "cbfa6de5-f439-4f0a-8355-274dbcbea07e"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 409,
+          "durationMs": 2,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "736878bc-7351-4ae9-9b3b-4d544a6e4489",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": true,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:46:58.139Z"
+          },
+          "requestId": "0f9f6de1-2eaf-481a-b206-3b792630c19d",
+          "rejectedProviderText": "{\"hint\":\"Không thể tính diện tích duy nhất chỉ từ chiều dài 8 cm. Cần một dữ kiện bổ sung: chiều rộng, hoặc ghi rõ là hình vuông, hoặc tỉ lệ giữa chiều dài và chiều rộng để suy ra chiều rộng.\",\"question\":\"Trong đề có thêm thông tin nào nữa không — chiều rộng (cm), ghi là hình vuông, hoặc cho tỉ lệ chiều dài:chiều rộng? Vui lòng viết nguyên văn nếu có.\",\"needsClarification\":true,\"references\":[]}"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": false,
+        "fullAfterUnlock": false,
+        "mathVerified": false,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": true
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PARTIAL",
+        "note": "Không bịa chiều rộng/diện tích; ba lượt đều cần bổ sung dữ kiện, không tăng gợi ý và yêu cầu lời giải vẫn409. Còn lặp lại việc hỏi dữ kiện đã xác nhận thiếu; nên rút ngắn hội thoại khi đề không đủ."
+      },
+      "referenceCorrectness": "PASS: insufficient data correctly retained"
+    },
+    {
+      "id": "source-substitution",
+      "problem": "Giải phương trình 2/(x - 1) = 1",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≠1;2/(3-1)=1",
+      "scenario": "Đối chiếu nguồn và kiểm tra nghiệm.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "0e56d719-4491-4485-b565-578afd0398be",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:47:06.400Z"
+          }
+        },
+        {
+          "student": "Giải phương trình 2/(x - 1) = 1",
+          "http": 200,
+          "durationMs": 4243,
+          "text": "Trước khi thực hiện các bước biến đổi, xác định điều kiện mẫu khác 0: mẫu ở vế trái là x - 1 nên ta phải loại giá trị khiến mẫu bằng 0 trước khi nhân cả hai vế.\n\nBạn có nhận ra điều kiện nào cần thỏa để phép biến đổi hợp lệ (trước khi nhân cả hai vế với x - 1) không?",
+          "references": [
+            {
+              "segmentId": "s1",
+              "quote": "Phương trình chứa ẩn ở mẫu: tìm điều kiện mẫu khác0 trước khi biến đổi. Sau khi giải, thay nghiệm vào phương trình gốc và loại nghiệm vi phạm điều kiện.",
+              "start": 0,
+              "end": 152,
+              "paragraph": 1,
+              "verification": "exact-excerpt"
+            }
+          ],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0e56d719-4491-4485-b565-578afd0398be",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:47:06.400Z"
+          },
+          "requestId": "65be5d9d-5004-4490-a04c-8d158ea7fdfc"
+        },
+        {
+          "student": "x = 1",
+          "http": 200,
+          "durationMs": 5541,
+          "text": "Giá trị x = 1 không hợp lệ vì làm cho mẫu bằng 0; không thể chấp nhận nghiệm khiến mẫu = 0.\n\nVới điều kiện miền xác định x ≠ 1, hãy loại mẫu bằng cách nhân cả hai vế với (x - 1); kết quả sẽ là một phương trình đa thức bậc nhất bạn có thể giải tiếp.\n\nSau khi nhân cả hai vế của phương trình 2/(x - 1) = 1 với (x - 1) (và nhớ ghi điều kiện x ≠ 1), bạn thu được phương trình nào?",
+          "references": [
+            {
+              "segmentId": "s1",
+              "quote": "Phương trình chứa ẩn ở mẫu: tìm điều kiện mẫu khác0 trước khi biến đổi. Sau khi giải, thay nghiệm vào phương trình gốc và loại nghiệm vi phạm điều kiện.",
+              "start": 0,
+              "end": 152,
+              "paragraph": 1,
+              "verification": "exact-excerpt"
+            }
+          ],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0e56d719-4491-4485-b565-578afd0398be",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:47:06.400Z"
+          },
+          "requestId": "b72df368-67cb-41aa-8b3a-e64430026721"
+        },
+        {
+          "student": "Em nhân hai vế với x-1 sau khi đặt x khác1.",
+          "http": 200,
+          "durationMs": 5848,
+          "text": "Bạn đúng khi nhận ra x = 1 không hợp lệ vì làm mẫu bằng 0. Bước tiếp theo là viết chính xác phương trình thu được sau khi nhân, rồi sắp xếp và giải phương trình tuyến tính ấy.\n\nSau khi nhân cả hai vế với (x - 1) dưới điều kiện x ≠ 1, hãy triển khai biểu thức ở vế phải và thu gọn để đưa về một phương trình tuyến tính dạng ax + b = 0 rồi giải cho x.\n\nSau khi nhân cả hai vế của 2/(x - 1) = 1 với (x - 1) và ghi điều kiện x ≠ 1, phương trình bạn thu được là gì?",
+          "references": [
+            {
+              "segmentId": "s1",
+              "quote": "Phương trình chứa ẩn ở mẫu: tìm điều kiện mẫu khác0 trước khi biến đổi. Sau khi giải, thay nghiệm vào phương trình gốc và loại nghiệm vi phạm điều kiện.",
+              "start": 0,
+              "end": 152,
+              "paragraph": 1,
+              "verification": "exact-excerpt"
+            }
+          ],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0e56d719-4491-4485-b565-578afd0398be",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:47:06.400Z"
+          },
+          "requestId": "e3fa85fc-5e4d-4684-95e1-7a2d1020eb78"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 5884,
+          "text": "Given:\n- Phương trình: \\(\\dfrac{2}{x-1}=1\\)\n- Điều kiện xác định: mẫu khác 0, tức là \\(x\\neq1\\). (Tham khảo nguồn s1.)\n\nMục tiêu: Tìm tất cả nghiệm thực thỏa phương trình trên với điều kiện đã nêu.\n\nBước giải:\n1) Nhân cả hai vế với \\(x-1\\) (hợp lệ vì đã ghi điều kiện \\(x\\neq1\\)):\n   \\(2 = 1\\cdot(x-1)\\)\n2) Rút gọn được phương trình tuyến tính:\n   \\(2 = x-1\\)\n3) Giải cho \\(x\\):\n   \\(x = 2+1 = 3\\)\n\nKiểm tra:\n- Kiểm tra điều kiện: \\(x=3\\) khác 1, thoả điều kiện \\(x\\neq1\\).\n- Thay nghiệm vào phương trình gốc: \\(\\dfrac{2}{3-1}=\\dfrac{2}{2}=1\\), đúng.\n\nKết luận: Nghiệm thực duy nhất của phương trình là \\(x=3\\). Tôi tin tưởng vào các bước trên dựa trên dữ liệu trong nguồn; không có yếu tố mơ hồ khác trong bài.",
+          "verification": {
+            "status": "verified",
+            "equation": "2/(x - 1) = 1",
+            "candidates": [
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [
+              "(x-1) != 0"
+            ],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [
+            {
+              "segmentId": "s1",
+              "quote": "Phương trình chứa ẩn ở mẫu: tìm điều kiện mẫu khác0 trước khi biến đổi. Sau khi giải, thay nghiệm vào phương trình gốc và loại nghiệm vi phạm điều kiện.",
+              "start": 0,
+              "end": 152,
+              "paragraph": 1,
+              "verification": "exact-excerpt"
+            }
+          ],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "0e56d719-4491-4485-b565-578afd0398be",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:47:06.400Z"
+          },
+          "requestId": "434998f8-b9c9-4063-9d2e-901b5d053a0f"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      },
+      "evidenceFile": "tutor-live-final.json",
+      "engineeringReview": {
+        "pedagogy": "PASS",
+        "note": "Giữ điều kiệnx≠1, giải đúngx=3, thế lại và có trích dẫn đúng đoạn nguồn được cung cấp. Không tự tạo số trang/mốc thời gian."
+      },
+      "referenceCorrectness": "PASS: checked reference roots and recorded final transformations/substitution"
+    }
+  ]
+}

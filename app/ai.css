@@ -1,0 +1,84 @@
+.lm-ai-workbench {
+  max-width: 820px;
+  margin: auto;
+}
+.lm-ai-workbench-head {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.lm-ai-workbench-head .lm-ai-orb {
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  margin: 0;
+}
+.lm-ai-workbench-head .lm-help {
+  font-size: 12px;
+}
+.lm-ai-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.lm-ai-result {
+  border: 1px solid var(--lm-line);
+  border-radius: 13px;
+  padding: 24px;
+  margin-top: 24px;
+}
+.lm-ai-result > small {
+  color: var(--lm-accent);
+  display: block;
+  margin-bottom: 16px;
+}
+.lm-ai-output {
+  font-size: 16px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lm-math {
+  display: inline;
+  white-space: normal;
+}
+.lm-math--display {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+.lm-math-text {
+  min-width: 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.lm-voice-tools {
+  border-top: 1px solid var(--lm-line);
+  padding-top: 25px;
+  margin-top: 35px;
+}
+.lm-voice-tools audio {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+}
+.lm-spin {
+  animation: lm-rotate 1s linear infinite;
+}
+@keyframes lm-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 700px) {
+  .lm-ai-controls {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .lm-ai-result {
+    padding: 18px;
+  }
+  .lm-ai-workbench-head .lm-help {
+    font-size: 11px;
+  }
+}

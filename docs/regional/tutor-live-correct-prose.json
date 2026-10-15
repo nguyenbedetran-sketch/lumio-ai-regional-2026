@@ -1,0 +1,185 @@
+{
+  "schema": 1,
+  "runAt": "2026-10-15T05:47:02.914Z",
+  "environment": "isolated local route + real configured AI provider",
+  "authBoundary": "Canonical account/session is injected by harness. This is NOT an OAuth or public deployment test.",
+  "providerCallsLimit": 4,
+  "calls": 4,
+  "realProviderCalls": true,
+  "providerRequests": 4,
+  "studentTrial": false,
+  "cases": [
+    {
+      "id": "correct-first",
+      "problem": "Giải phương trình x^2 - 5x + 6 = 0",
+      "reference": [
+        2,
+        3
+      ],
+      "referenceCheck": "(x-2)(x-3)=0; thay2và3 đều0",
+      "scenario": "Học sinh trả lời đúng ngay, vẫn kiểm tra lý do và đủ nghiệm.",
+      "transcript": [
+        {
+          "student": "[Direct full request before first hint]",
+          "http": 409,
+          "error": "TUTOR_LOCKED",
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 0,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 0,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          }
+        },
+        {
+          "student": "Giải phương trình x^2 - 5x + 6 = 0",
+          "http": 200,
+          "durationMs": 3802,
+          "text": "Đây là một phương trình bậc hai vì hệ số của x^2 khác 0; xác định các hệ số a, b, c sẽ là bước đầu cần thiết trước khi áp dụng công thức nghiệm hoặc phân tích thành nhân tử.\n\nBạn có thể cho biết các hệ số a, b, c của phương trình là gì không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 1,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 1,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "ef46d775-65de-425d-910a-6c522daf99ae"
+        },
+        {
+          "student": "x = 2",
+          "http": 200,
+          "durationMs": 4815,
+          "text": "Giá trị x = 2 bạn đưa ra là đúng: thay vào phương trình cho tổng, nên (x-2) là một nhân tử. Tuy nhiên, phương trình bậc hai thường có hai nghiệm, nên cần tìm nghiệm còn lại.\n\nNếu x = 2 là một nghiệm của phương trình bậc hai, thì đa thức chia hết cho (x-2). Bạn có thể tìm nghiệm còn lại bằng cách chia đa thức cho (x-2) hoặc dùng quan hệ tổng và tích của hai nghiệm mà không cần dò giá trị khác.\n\nBạn muốn tìm nghiệm còn lại bằng cách nào: chia đa thức cho (x-2) hay dùng quan hệ tổng và tích của hai nghiệm?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 2,
+            "requiredHints": 3,
+            "canUnlock": false,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 2,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "f57d0a6b-3500-418f-ba21-208921e8914c"
+        },
+        {
+          "student": "Em phân tích thành (x-2)(x-3), nên còn nghiệm3.",
+          "http": 200,
+          "durationMs": 4780,
+          "text": "Phân tích (x-2)(x-3) là chính xác; kiểm tra độc lập bằng thay x=3 vào phương trình cho 0, nên x=3 là nghiệm hợp lệ.\n\nVới phương trình bậc hai chuẩn ax^2+bx+c=0, tổng hai nghiệm là -b/a và tích hai nghiệm là c/a — đây là cách nhanh để kiểm tra nghiệm bạn tìm được.\n\nKhi bạn nhân (x-2)(x-3) ra, kết quả có khớp đúng với đa thức x^2 - 5x + 6 không?",
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "hints",
+            "revision": 3,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "81c1b252-0103-4b10-92f8-52385818d3cd"
+        },
+        {
+          "student": "[Unlocked full solution]",
+          "http": 200,
+          "durationMs": 5218,
+          "text": "Given\nPhương trình: \\(x^2-5x+6=0\\).\n\nGoal\nTìm tất cả nghiệm thực của phương trình bậc hai đã cho.\n\nFormula (điều kiện, kiến thức sử dụng)\nVới phương trình bậc hai chuẩn \\(ax^2+bx+c=0\\), nếu đa thức có thể phân tích thành nhân tử bậc nhất \\((x-x_1)(x-x_2)\\) thì nghiệm là \\(x_1\\) và \\(x_2\\). Ngoài ra tổng hai nghiệm là \\(-b/a\\) và tích là \\(c/a\\) để kiểm tra kết quả.\n\nSteps\n1) Xác định hệ số: \\(a=1,\\; b=-5,\\; c=6\\).\n2) Thử phân tích đa thức thành nhân tử bậc nhất. Ta tìm hai số thực có tổng bằng \\(-5)\\) (hệ số của \\(x\\)) và tích bằng \\(6\\).\n3) Hai số thỏa là \\(-2\\) và \\(-3\\) (vì \\(-2)+(-3)=-5\\) và \\((-2)(-3)=6\\). Do đó\n   \\(x^2-5x+6=(x-2)(x-3)\\).\n4) Khi tích hai nhân tử bằng 0, ta có nghiệm:\n   \\(x-2=0\\Rightarrow x=2\\) và \\(x-3=0\\Rightarrow x=3\\).\n\nCheck\n- Thay \\(x=2\\) vào phương trình: \\(2^2-5\\cdot2+6=4-10+6=0\\) nên \\(x=2\\) hợp lệ.\n- Thay \\(x=3\\) vào phương trình: \\(3^2-5\\cdot3+6=9-15+6=0\\) nên \\(x=3\\) hợp lệ.\n- Dùng quan hệ tổng và tích: tổng \\(2+3=5=-b/a\\) (với \\(b=-5,a=1\\)) và tích \\(2\\cdot3=6=c/a\\), khớp với hệ số đã cho.\n\nConclusion\nTập nghiệm thực của phương trình là \\(\\{2,3\\}\\).",
+          "verification": {
+            "status": "verified",
+            "equation": "x^2 - 5x + 6 = 0",
+            "candidates": [
+              {
+                "value": 2,
+                "valid": true
+              },
+              {
+                "value": 3,
+                "valid": true
+              }
+            ],
+            "conditions": [],
+            "complete": true,
+            "method": "Giải độc lập phương trình hệ số nguyên, đa thức/hữu tỉ bậc không quá hai (hoặc một căn), rồi thay mọi nghiệm vào đề gốc.",
+            "note": "Bộ kiểm tra số độc lập với mô hình; dung sai tương đối 10⁻⁸. Không chứng minh tính đúng của mọi bước lập luận."
+          },
+          "references": [],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 0,
+            "totalItems": 1,
+            "issues": [
+              "missing-source",
+              "semantic-review"
+            ]
+          },
+          "tutor": {
+            "sessionId": "b2d44cd0-1988-429d-b584-7b49d5212458",
+            "hintCount": 3,
+            "requiredHints": 3,
+            "canUnlock": true,
+            "needsClarification": false,
+            "guidance": "full",
+            "revision": 4,
+            "expiresAt": "2026-10-22T05:47:02.955Z"
+          },
+          "requestId": "67e62694-2478-40c0-8985-c85f62a9f8c8"
+        }
+      ],
+      "status": "PASS",
+      "criteria": {
+        "lockedBeforeThree": true,
+        "threeMeaningfulHints": true,
+        "fullAfterUnlock": true,
+        "mathVerified": true,
+        "missingDataNotInvented": true,
+        "clarificationsDoNotUnlock": false
+      }
+    }
+  ],
+  "summary": {
+    "pass": 1,
+    "partial": 0,
+    "fail": 0
+  },
+  "finishedAt": "2026-10-15T05:47:21.583Z"
+}
