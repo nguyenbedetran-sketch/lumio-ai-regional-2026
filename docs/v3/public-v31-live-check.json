@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-15T07:55:00Z",
+  "status": "PASS_WITH_LIMITS",
+  "url": "https://lumio-ai-demo.onrender.com/",
+  "version": "3.1.0-regional.1",
+  "deployedCommit": "6eabc3219f9298676bdd29ae0ee15a91b9593288",
+  "scope": "Actual authenticated Chrome UI and real provider responses on final Render deployment. One short authored mathematics exercise, not a student pilot or broad accuracy evaluation.",
+  "actualProviderRequests": 4,
+  "checks": [
+    "Fresh verified Google sign-in returned to the final deployment; protected admin and private teacher form worked as recorded separately.",
+    "Asked the explicit problem Giải phương trình 3x - 6 = 9. against an authored text fixture.",
+    "Observed hint progress0 to1 to2 to3. Full answer control was disabled before3 and enabled after3 accepted hints.",
+    "On the learner's intentional x=6 mistake, tutor pointed out the incorrect15/3 calculation and asked the learner to calculate it again, without giving x=5 in that hint.",
+    "After the gate, full answer gave x=5, division by nonzero3 and correct substitution into the original equation.",
+    "Independent server verifier displayed exact candidate, checked domain and completeness proved within supported scope. Explicit transformations were only partly checked; arithmetic display stayed unchecked.",
+    "Source references displayed authored paragraphs; opened paragraph3 was an exact quote about equal operations and the nonzero-divisor condition."
+  ],
+  "limits": [
+    "The independent verifier does not certify every line of reasoning, all arithmetic displays, arbitrary prose, geometry or every type of equation.",
+    "The full model answer had one literal LaTeX command outside math delimiters and an overconfident closing sentence. The independent scope and general AI-error notice remain visible; presentation/pedagogy are partial, not perfect.",
+    "Hybrid multi-document retrieval and real two-page PDF extraction were observed separately on V3.0 runtime28fbcdc, not falsely counted as new3.1 provider requests.",
+    "No new TTS or microphone request, physical device test, real teacher declaration/decision, student trial, Facebook public review or payment occurred during this final smoke test."
+  ],
+  "screenshots": ["02_MinhChung_UI/Public-V31-math-verification.jpg"],
+  "teacherEvidence": "public-v31-teacher-check.json",
+  "anonymousSecurityEvidence": "public-v31-http-check.json"
+}

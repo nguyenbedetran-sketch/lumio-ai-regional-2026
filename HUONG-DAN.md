@@ -1,6 +1,8 @@
 # Mở code và dùng Lumio AI khu vực V2 + V3.1
 
-Đây là hướng dẫn source web **3.1.0-regional.1**, SQLite schema11, của đội AI26A0048. Bản này thêm hồ sơ/xét duyệt giáo viên trên nền V3. Kết quả public/GitHub/Drive/nộp bài xem trong [báo cáo cuối](docs/regional/FINAL-REPORT.md); tài liệu này không tự xác nhận đã deploy, duyệt thử giáo viên public hoặc đã nộp. Báo cáo còn BẢN NHÁP nghĩa là trạng thái cuối chưa chốt.
+Đây là hướng dẫn source web **3.1.0-regional.1**, SQLite schema11, của đội AI26A0048. Public đã thử tại [lumio-ai-demo.onrender.com](https://lumio-ai-demo.onrender.com/) trên runtime **`6eabc3219f9298676bdd29ae0ee15a91b9593288`**: health200, Google OAuth, form/queue giáo viên và tutor thật theo [report](docs/v3/public-v31-live-check.json). Không gửi hay duyệt hồ sơ giáo viên thật. **Chưa nộp lần cuối**; trạng thái gói/GitHub/Drive xem [báo cáo cuối](docs/regional/FINAL-REPORT.md).
+
+Tài liệu được cập nhật sau phép thử public. Các commit doc-only trong HEAD bàn giao không làm đổi runtime đang chạy; hash Render trong report mới là mốc đã thử, không mặc nhiên là HEAD source/tài liệu mới nhất.
 
 ## 1. Mở và chạy trên laptop
 
@@ -41,7 +43,7 @@ Quyền được cấp là **credential do admin xét bản khai**, không phả
 
 Hồ sơ/credential giáo viên nằm riêng trên server, không trong JSON thư viện/sync. Hiện chưa tự hết hạn sau 7 ngày và chưa có nút/endpoint tự xóa hồ sơ này; xóa local/snapshot không xóa bản khai. Liên hệ người phụ trách dự án để xử lý dữ liệu tài khoản. Host miễn phí có thể mất hồ sơ/quyền khi DB reset. Xem [phạm vi backend](docs/v3/08-TEACHER-BACKEND.md), [danh mục tham khảo](docs/v3/09-LOCATION-DATA.md) và `/privacy`.
 
-Kiểm tra source3.1 có **600 PASS**; UI giáo viên admin **31 +3 SSR**, form **43 +4 SSR PASS** với dữ liệu tổng hợp trong browser riêng. Không phải hồ sơ giáo viên thật, OAuth thật hoặc xác nhận teacher public; trạng thái triển khai3.1 cần xem báo cáo cuối.
+Kiểm tra source3.1 có **600 PASS**, [compiled release15 PASS](docs/v3/production-compiled-report.json); UI giáo viên admin **31 +3 SSR**, form **43 +4 SSR PASS** dùng dữ liệu tổng hợp trong browser riêng. Bằng chứng public độc lập: [form/queue và Google OAuth thật](docs/v3/public-v31-teacher-check.json), [chặn vô danh/cross-origin](docs/v3/public-v31-http-check.json). Queue thật rỗng; quyết định approve/reject/revoke chỉ thử bằng fixture, không xác minh một giáo viên thật.
 
 ## 3. Học từ tài liệu
 
@@ -90,7 +92,7 @@ pnpm build
 node scripts/start-regional.cjs
 ```
 
-Lệnh cuối cần origin HTTPS và đủ env server; không chạy như localhost HTTP thông thường. Dùng `render-regional.yaml`, không nhầm `render.yaml` UI-only cũ. Cấu hình trong [AI-SETUP.md](AI-SETUP.md). Root triển khai và kiểm tra URL thực tế riêng, không coi build local là public đã hoạt động.
+Lệnh cuối cần origin HTTPS và đủ env server; không chạy như localhost HTTP thông thường. Dùng `render-regional.yaml`, không nhầm `render.yaml` UI-only cũ. Cấu hình trong [AI-SETUP.md](AI-SETUP.md). Bản public hiện tại có report riêng ở đầu tài liệu. Khi tự triển khai một runtime khác, cần kiểm tra lại URL, tài khoản và chức năng theo đúng commit đó.
 
 Render Free là host tạm: tài khoản, liên kết, credit, nhật ký, phiên gia sư, sync/chỉ mục, tác vụ và hồ sơ/quyền giáo viên có thể reset sau ngủ/restart/deploy; học liệu trình duyệt là kho riêng. Giới hạn AI: 15/phút, 150/ngày UTC và 1 đang chạy/tài khoản; bản khu vực thêm 200 lượt thử/ngày UTC và 3 đồng thời. V3 counter/lease nằm trong SQLite dùng chung; chỉ giữ qua restart khi tệp DB còn, không tự dùng chung nhiều máy có ổ riêng. Không nhập thông tin quan trọng chỉ giữ duy nhất trên bản thi.
 

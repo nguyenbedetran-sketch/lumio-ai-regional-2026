@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-15T07:49:00Z",
+  "status": "PASS",
+  "url": "https://lumio-ai-demo.onrender.com/teacher",
+  "version": "3.1.0-regional.1",
+  "deployedCommit": "6eabc3219f9298676bdd29ae0ee15a91b9593288",
+  "renderDeployment": "dep-db889c689jmc73ck1i70",
+  "scope": "Actual Google OAuth, authenticated public applicant form and protected admin queue on Render; browser behavior and configured owner access only.",
+  "checks": [
+    "Public /api/health returned ready, version3.1.0-regional.1, competition-preview, HTTP200.",
+    "Render dashboard displayed Deploy succeeded | Live for the exact runtime commit.",
+    "Guest /teacher showed sign-in buttons without a private application.",
+    "A fresh Google chooser returned to /teacher and loaded the authenticated form.",
+    "Country selector had249 entries; Vietnam province selector loaded34 entries.",
+    "Selecting Thành phố Đà Nẵng populated94 ward entries; ward stayed unselected.",
+    "School, teaching level, subjects, optional contact/evidence and both declaration checkboxes were present.",
+    "After explicit user approval to grant the owner admin access, that Google account entered /admin and displayed SUPER ADMIN.",
+    "The protected teacher queue fetched successfully and displayed Không có hồ sơ đang chờ, explicitly without seeded illustration records.",
+    "Main sidebar exposed the teacher application link and the owner-only admin link."
+  ],
+  "actualTeacherApplicationsCreated": 0,
+  "actualTeacherDecisionsMade": 0,
+  "limits": [
+    "No claim that the owner is a teacher was submitted. Profile approval/rejection/revocation is exercised with isolated synthetic backend/browser fixtures only.",
+    "An approved declaration is not official identity or employment verification.",
+    "This module does not implement classes, assignments or student analytics.",
+    "No physical-device teacher test or independent teacher identity review was conducted.",
+    "Free-host reset clears platform records and grants; the configured owner allowlist restores admin only after a fresh verified Google sign-in."
+  ],
+  "screenshots": ["02_MinhChung_UI/Public-V31-teacher-form.jpg", "02_MinhChung_UI/Public-V31-admin-teachers.jpg", "02_MinhChung_UI/Render-V31-live.jpg"]
+}

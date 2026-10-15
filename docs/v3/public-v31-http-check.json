@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-15T07:52:45.059Z",
+  "scope": "Unauthenticated public HTTP probe; no user cookies, tokens, provider calls or application submissions.",
+  "checks": [
+    {
+      "endpoint": "/api/health",
+      "status": 200,
+      "result": "ready"
+    },
+    {
+      "endpoint": "/api/teacher-application",
+      "status": 401,
+      "result": "SIGN_IN_REQUIRED"
+    },
+    {
+      "endpoint": "/api/admin/teachers",
+      "status": 401,
+      "result": "SIGN_IN_REQUIRED"
+    },
+    {
+      "endpoint": "cross-origin teacher POST",
+      "status": 403,
+      "result": "INVALID_ORIGIN"
+    }
+  ]
+}

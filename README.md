@@ -2,7 +2,9 @@
 
 Không gian học từ tài liệu của bạn: gia sư hỏi từng bước, nguồn để đối chiếu, tóm tắt, flashcard, quiz, lịch ôn và đề xuất theo dữ liệu thực. Source web hiện tại **3.1.0-regional.1**, SQLite migration **1–11**; V3.1 thêm hồ sơ và xét duyệt giáo viên trên các module V3 có giới hạn. Bằng chứng xem `docs/regional` và `docs/v3`. Các tệp cài Android 0.3/Windows 0.1 trước đó **không tự được cập nhật khi source thay đổi**, chưa có xác nhận APK/EXE hoặc thiết bị thật cho đợt này.
 
-Bản thi dùng hosting miễn phí, hạn mức và database tạm; chưa phải dịch vụ lưu trữ production. Có code không đồng nghĩa AI đã cấu hình, đã deploy hoặc đã nộp bài. Xem [báo cáo khu vực](docs/regional/FINAL-REPORT.md); nếu còn BẢN NHÁP thì trạng thái cuối chưa chốt.
+Bản thi dùng hosting miễn phí, hạn mức và database tạm; chưa phải dịch vụ lưu trữ production. Public3.1 đã kiểm tra tại [lumio-ai-demo.onrender.com](https://lumio-ai-demo.onrender.com/): runtime **`6eabc3219f9298676bdd29ae0ee15a91b9593288`**, health200, Google OAuth thật, form/queue giáo viên và bốn lượt tutor; [AI](docs/v3/public-v31-live-check.json), [teacher](docs/v3/public-v31-teacher-check.json), [HTTP](docs/v3/public-v31-http-check.json). Không có hồ sơ hay quyết định giáo viên thật. **Lần nộp cuối vẫn chưa thực hiện.**
+
+Tài liệu được cập nhật sau phép thử public. Các commit doc-only trong HEAD source/tài liệu bàn giao không làm đổi runtime trên; report Render gắn hash runtime, không mặc nhiên gắn HEAD mới nhất. Xem [báo cáo khu vực](docs/regional/FINAL-REPORT.md) để đối chiếu gói/GitHub/Drive và trạng thái nộp.
 
 ## Mở code
 
@@ -42,7 +44,7 @@ Quyền giáo viên là credential riêng do admin xét **bản khai**, không p
 
 Hồ sơ/credential giáo viên không nằm trong sync/thư viện local và **không tự hết hạn sau bảy ngày, chưa có endpoint tự xóa hồ sơ**. Xóa dữ liệu trình duyệt/snapshot không xóa bản khai server; liên hệ người phụ trách dự án để xử lý. DB và backup có thể chứa thông tin khai báo riêng, không đưa vào GitHub/minh chứng. Render Free có thể mất cả hồ sơ và quyền. [Backend/27 kiểm tra](docs/v3/08-TEACHER-BACKEND.md) · [Nguồn danh mục](docs/v3/09-LOCATION-DATA.md).
 
-UI local, public teacher và một hồ sơ giáo viên thật là các loại kiểm chứng riêng. Không suy ra feature public đã được duyệt thử chỉ vì có source hoặc API tests; xem báo cáo release mới nhất.
+UI tổng hợp và public là các phép kiểm tra riêng. Public3.1 đã mở form249 quốc gia/34 tỉnh và queue admin rỗng bằng Google OAuth thật; **không gửi hay duyệt hồ sơ giáo viên thật**. Approve/reject/revoke được thử trong fixtures riêng; không xác nhận danh tính/công tác chính thức.
 
 ## Chọn đúng chế độ
 
@@ -90,7 +92,9 @@ Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoạ
 
 Hai lệnh UI giáo viên mở profile Edge riêng, dùng React/CSS của sản phẩm cùng hồ sơ/tài khoản/HTTP tổng hợp; không đăng nhập tài khoản thật hoặc cấp quyền giáo viên thật. `teacher-api.cjs` kiểm tra handler/quyền và SQLite tạm. `--v3-sync` kiểm tra DOM/IndexedDB/offline thật với HTTP fixture; không thay thử hai thiết bị hay sync public.
 
-Đợt source3.1 đã chạy `pnpm test` **600 kiểm tra PASS**; UI chạy riêng: admin giáo viên **31 +3 SSR**, form giáo viên **43 +4 SSR PASS**. [Report admin](docs/v3/qa-teacher-admin-report.json) · [Report form](docs/v3/qa-teacher-self-report.json) · [Bàn giao](docs/v3/00-HANDOFF.md). Không cộng các con số thành số người dùng hoặc tỷ lệ đúng AI; public3.1/teacher vẫn cần kết quả riêng sau triển khai.
+Đợt source3.1 đã chạy `pnpm test` **600 kiểm tra PASS**; UI riêng: admin giáo viên **31 +3 SSR**, form giáo viên **43 +4 SSR PASS**. [Compiled15 PASS](docs/v3/production-compiled-report.json) dùng bản cài sạch, route/workers thật, JWT/DB tổng hợp, không thay OAuth public. [Report admin](docs/v3/qa-teacher-admin-report.json) · [Report form](docs/v3/qa-teacher-self-report.json) · [Bàn giao](docs/v3/00-HANDOFF.md).
+
+Public tutor3.1 thực hiện bốn lượt, giữ khóa ba gợi ý, chỉ lỗi x=6 và cho lời giải x=5 sau mở khóa. Bộ kiểm tra xác nhận nghiệm/điều kiện/tính đủ trong phạm vi hỗ trợ; các bước chỉ được kiểm tra một phần, số học hiển thị chưa kiểm tra. Không chứng nhận mọi lập luận, mọi bài Toán, trình bày model hoàn hảo hoặc hiệu quả học sinh. PDF/Linux và hybrid nhiều nguồn thật được ghi riêng ở [publicV3.0](docs/v3/public-v3-live-check.json), không cộng vào requestV3.1.
 
 - [Kiểm tra ban đầu](docs/regional/01-INITIAL-AUDIT.md) · [Nghiệm thu](docs/regional/FINAL-REPORT.md)
 - [Cá nhân hóa/privacy/giá và UI](docs/regional/LEARNING-PRIVACY-VERIFICATION.md) · [Định vị có nguồn](docs/regional/PRODUCT-POSITIONING.md)
