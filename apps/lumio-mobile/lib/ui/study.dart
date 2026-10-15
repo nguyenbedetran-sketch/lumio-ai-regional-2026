@@ -683,7 +683,7 @@ class _TutorPageState extends State<TutorPage> {
     setState(() {
       messages.add({'role': 'user', 'text': prompt});
       busy = true;
-      question.clear();
+      if (!full) question.clear();
     });
     request = activeRequest;
     try {

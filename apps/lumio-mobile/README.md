@@ -30,6 +30,14 @@ Bản release **không gắn chứng thư debug**. Trước khi phát hành cầ
 
 ## Mới trong 0.3.0+3
 
+### Bản vá mã nguồn vòng khu vực — 15/10/2026
+
+Mã Dart đã tương thích phiên gia sư mới trên máy chủ: giữ `tutorSessionId` qua các lượt trong trang Hỏi Lumio/Trò chuyện giọng nói, nhận trạng thái cả khi HTTP409/lỗi, hiển thị tiến trình từ máy chủ và chỉ bật **Đối chiếu lời giải** khi được máy chủ mở. **Bài mới** đặt lại phiên đang mở; đổi tài khoản, học liệu hoặc ngôn ngữ cũng bỏ trạng thái cũ. Ứng dụng không tự đếm gợi ý hoặc dùng lịch sử phía máy khách để mở lời giải.
+
+Đây là bản vá **mã nguồn**; APK0.3 đã gửi trước đây chưa được build lại. Phiên được giữ trong bộ nhớ khi trang mở, chưa khôi phục hội thoại sau khi đóng trang/khởi động lại app. Không đổi định dạng thư viện hoặc ghi thêm hội thoại vào bản sao. Phạm vi và kết quả kiểm tra: [TUTOR-COMPATIBILITY.md](docs/TUTOR-COMPATIBILITY.md).
+
+### Giao diện và chuyển động của bản 0.3
+
 - Trang Hôm nay và Studio học tập có thẻ hành động mới, màu kem/xanh rừng, điểm nhấn tím Lumio và xanh lime. Nhịp học hôm nay chỉ đánh dấu hoạt động đã lưu; mở app không tự tạo streak.
 - Giữ trang và vị trí cuộn khi đổi tab. Trang chưa mở được tải khi cần; các trang ẩn dừng ticker animation. Từ khóa tìm và bộ lọc không mất khi quay lại Thư viện.
 - Tìm tiếng Việt có hoặc không dấu, nhiều từ khóa, cả tiêu đề/nguồn/ghi chú/tóm tắt đã lưu. Có lọc thẻ, quiz, ghi chú và sắp xếp theo tên hoặc lần cập nhật. Chỉ mục chỉ ở bộ nhớ trong phiên app, không gửi mạng.

@@ -1,6 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
+import 'dart:io';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -14,6 +18,7 @@ import 'package:lumio_mobile/ui/common.dart';
 import 'package:lumio_mobile/ui/study.dart';
 
 const id = '00000000-0000-4000-8000-000000000001';
+final previewKey = GlobalKey();
 Map<String, dynamic> state(
   int hints, {
   bool? allowed,
@@ -83,10 +88,35 @@ Future<void> mount(WidgetTester tester, AppStore store) async {
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.resetPhysicalSize);
   addTearDown(tester.view.resetDevicePixelRatio);
+  await tester.runAsync(() async {
+    final fonts = Directory(
+      '../../work/toolchains/flutter/bin/cache/artifacts/material_fonts',
+    );
+    if (fonts.existsSync()) {
+      for (final pair in [
+        ('Roboto', 'roboto-regular.ttf'),
+        ('MaterialIcons', 'materialicons-regular.otf'),
+      ]) {
+        final loader = FontLoader(pair.$1)
+          ..addFont(
+            File(
+              '${fonts.path}/${pair.$2}',
+            ).readAsBytes().then((bytes) => ByteData.sublistView(bytes)),
+          );
+        await loader.load();
+      }
+    }
+  });
   await tester.pumpWidget(
     StoreScope(
       store: store,
-      child: const MaterialApp(home: TutorPage(itemId: 'math')),
+      child: RepaintBoundary(
+        key: previewKey,
+        child: const MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: TutorPage(itemId: 'math'),
+        ),
+      ),
     ),
   );
   await tester.pumpAndSettle();
@@ -278,11 +308,41 @@ void main() {
       expect(calls.map((c) => c['session']).toList(), [null, id, id]);
       expect(find.textContaining('3/3'), findsOneWidget);
       final full = find.widgetWithText(OutlinedButton, 'Đối chiếu lời giải');
+      await tester.enterText(find.byType(TextField), 'Unsent follow-up draft');
       await tester.ensureVisible(full);
+      await tester.pumpAndSettle();
+      tester
+          .state<ScrollableState>(
+            find
+                .descendant(
+                  of: find.byType(ListView),
+                  matching: find.byType(Scrollable),
+                )
+                .first,
+          )
+          .position
+          .jumpTo(0);
+      await tester.pumpAndSettle();
+      await tester.runAsync(() async {
+        final boundary =
+            previewKey.currentContext!.findRenderObject()!
+                as RenderRepaintBoundary;
+        final image = await boundary.toImage(pixelRatio: 2);
+        final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
+        await Directory('docs').create(recursive: true);
+        await File(
+          'docs/qa-regional-mobile-tutor.png',
+        ).writeAsBytes(bytes!.buffer.asUint8List());
+        image.dispose();
+      });
       await tester.tap(full);
       await tester.pumpAndSettle();
       expect(calls.last['session'], id);
       expect(calls.last['guidance'], 'full');
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).controller!.text,
+        'Unsent follow-up draft',
+      );
       expect(tester.takeException(), isNull);
     },
   );
