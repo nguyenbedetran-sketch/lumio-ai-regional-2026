@@ -165,6 +165,26 @@ try {
     kind: "text",
     mode: "quick",
   });
+  store
+    .providerAttemptObserver({
+      userId: student.id,
+      sessionVersion: student.sessionVersion,
+      requestId: lease.requestId,
+      reservationId: reserved.reservationId,
+      feature: "learner.chat",
+    })
+    .prepare({
+      provider: "openai",
+      requestedModel: "fixture-model",
+      endpointKind: "responses",
+    })
+    .finish({
+      status: "response_received",
+      httpStatus: 200,
+      inputTokens: 0,
+      totalTokens: 0,
+      responseModel: "fixture-response",
+    });
   store.settleUsage({
     userId: student.id,
     reservationId: reserved.reservationId,
@@ -174,7 +194,7 @@ try {
   check(
     "Canonical contract matches all migrations and six exact immutable guards",
     () => {
-      assert.equal(schema.migrations.length, 16);
+      assert.equal(schema.migrations.length, 17);
       const fresh = new DatabaseSync(":memory:");
       try {
         fresh.exec(
@@ -221,13 +241,13 @@ try {
     },
   );
   check(
-    "Schema16 readiness is read-only and checks complete history plus actual guards",
+    "Schema17 readiness is read-only and checks complete history plus actual guards",
     () => {
       const before = db.prepare("PRAGMA data_version").get().data_version,
         total = db.prepare("SELECT total_changes() n").get().n;
       assert.deepEqual(store.runtimeHealth(), {
         ready: true,
-        schemaVersion: 16,
+        schemaVersion: 17,
       });
       assert.equal(
         db.prepare("PRAGMA data_version").get().data_version,
@@ -241,7 +261,7 @@ try {
     () => {
       backup = copy("backup");
       restored = disposable("restored");
-      assert.equal(snapshot(backup, restored).schemaVersion, 16);
+      assert.equal(snapshot(backup, restored).schemaVersion, 17);
       const d = new DatabaseSync(restored, { readOnly: true });
       try {
         for (const table of [
@@ -252,6 +272,7 @@ try {
           "teaching_grade_events",
           "sync_snapshots",
           "ai_http_requests",
+          "ai_provider_attempts",
           "billing_accounts",
           "billing_reservations",
           "billing_ledger",
@@ -378,7 +399,7 @@ try {
       const alter = new DatabaseSync(out);
       try {
         alter.exec(
-          "DROP TABLE teaching_assessment_windows;DELETE FROM schema_migrations WHERE version>=15",
+          "DROP TABLE ai_provider_attempts;DROP TABLE teaching_assessment_windows;DELETE FROM schema_migrations WHERE version>=15",
         );
         assert.throws(() => active.runtimeHealth(), /SCHEMA_NOT_SUPPORTED/);
       } finally {
@@ -402,7 +423,7 @@ try {
       const out = copy("future-guard-only");
       edit(out, (d) => {
         d.exec(
-          "PRAGMA foreign_keys=OFF;DROP TABLE teaching_assessment_windows;DROP TABLE teaching_grade_events;DELETE FROM schema_migrations WHERE version>=15",
+          "PRAGMA foreign_keys=OFF;DROP TABLE ai_provider_attempts;DROP TABLE teaching_assessment_windows;DROP TABLE teaching_grade_events;DELETE FROM schema_migrations WHERE version>=15",
         );
         d.exec(
           "CREATE TRIGGER teaching_grade_events_no_update BEFORE UPDATE ON billing_ledger BEGIN SELECT RAISE(ABORT,'TEACHING_HISTORY_IMMUTABLE'); END",
@@ -492,15 +513,15 @@ try {
   check(
     "Current runtime refuses a future schema before WAL, seeds, migrations or byte changes",
     () => {
-      const out = copy("future17");
+      const out = copy("future18");
       edit(out, (d) =>
-        d.prepare("INSERT INTO schema_migrations VALUES(17,?)").run(stamp),
+        d.prepare("INSERT INTO schema_migrations VALUES(18,?)").run(stamp),
       );
       unchangedFailure(out, () => platform.createStore(out));
     },
   );
   check(
-    "Simulated hardened runtime14 refuses a schema16 database without rewriting identity, seed or schema bytes",
+    "Simulated hardened runtime14 refuses a schema17 database without rewriting identity, seed or schema bytes",
     () => {
       const out = copy("old-runtime");
       edit(out, () => {});
@@ -654,7 +675,7 @@ try {
       try {
         assert.deepEqual(upgraded.runtimeHealth(), {
           ready: true,
-          schemaVersion: 16,
+          schemaVersion: 17,
         });
       } finally {
         upgraded.close();
@@ -754,7 +775,7 @@ try {
       try {
         assert.deepEqual(upgraded.runtimeHealth(), {
           ready: true,
-          schemaVersion: 16,
+          schemaVersion: 17,
         });
       } finally {
         upgraded.close();
@@ -818,7 +839,7 @@ try {
       }
       const retry = platform.createStore(out);
       try {
-        assert.equal(retry.runtimeHealth().schemaVersion, 16);
+        assert.equal(retry.runtimeHealth().schemaVersion, 17);
       } finally {
         retry.close();
       }
@@ -829,7 +850,9 @@ try {
     () => {
       const out = copy("disguised15");
       edit(out, (d) =>
-        d.exec("DELETE FROM schema_migrations WHERE version=16"),
+        d.exec(
+          "DROP TABLE ai_provider_attempts;DELETE FROM schema_migrations WHERE version>=16",
+        ),
       );
       assert.throws(
         () => inspect(out),
@@ -861,7 +884,7 @@ try {
       assert.deepEqual(bytes(source), before);
       const upgraded = platform.createStore(out);
       try {
-        assert.equal(upgraded.runtimeHealth().schemaVersion, 16);
+        assert.equal(upgraded.runtimeHealth().schemaVersion, 17);
       } finally {
         upgraded.close();
       }
@@ -881,6 +904,63 @@ try {
     },
   );
   check(
+    "Genuine16 operator snapshot is read-only and only a restored copy gains an empty journal17",
+    () => {
+      const source = disposable("genuine16"),
+        d = new DatabaseSync(source);
+      d.exec(
+        "CREATE TABLE schema_migrations(version INTEGER PRIMARY KEY,applied_at TEXT NOT NULL)",
+      );
+      for (const m of schema.migrations.filter((m) => m.version <= 16)) {
+        d.exec(m.sql);
+        d.prepare("INSERT INTO schema_migrations VALUES(?,?)").run(
+          m.version,
+          stamp,
+        );
+      }
+      d.close();
+      const before = bytes(source),
+        out = disposable("genuine16-copy");
+      assert.equal(inspect(source).schemaVersion, 16);
+      assert.equal(snapshot(source, out).schemaVersion, 16);
+      assert.deepEqual(bytes(source), before);
+      const upgraded = platform.createStore(out);
+      try {
+        assert.equal(upgraded.runtimeHealth().schemaVersion, 17);
+      } finally {
+        upgraded.close();
+      }
+      const verify = new DatabaseSync(out, { readOnly: true });
+      try {
+        assert.equal(
+          verify.prepare("SELECT count(*) n FROM ai_provider_attempts").get().n,
+          0,
+        );
+      } finally {
+        verify.close();
+      }
+      assert.deepEqual(bytes(source), before);
+      assert.equal(inspect(source).schemaVersion, 16);
+    },
+  );
+  check(
+    "A fake16 retaining the known journal17 fails integrity/backup/startup without writes",
+    () => {
+      const out = copy("disguised16");
+      edit(out, (d) =>
+        d.exec("DELETE FROM schema_migrations WHERE version=17"),
+      );
+      assert.throws(
+        () => inspect(out),
+        /DATABASE_FUTURE_OBJECT:ai_provider_attempts/,
+      );
+      unchangedFailure(out, () => platform.createStore(out));
+      const dest = disposable("disguised16-refused");
+      unchangedFailure(out, () => snapshot(out, dest));
+      assert.equal(fs.existsSync(dest), false);
+    },
+  );
+  check(
     "Snapshot CLI uses Node24 shared contract without a development compiler or migrations",
     () => {
       const { spawnSync } = require("node:child_process"),
@@ -890,7 +970,7 @@ try {
           { cwd: root, encoding: "utf8" },
         );
       assert.equal(result.status, 0, result.stderr);
-      assert.equal(JSON.parse(result.stdout).schemaVersion, 16);
+      assert.equal(JSON.parse(result.stdout).schemaVersion, 17);
     },
   );
   const report = {
@@ -898,7 +978,7 @@ try {
     checkedAt: new Date().toISOString(),
     passed: checks.length,
     checks,
-    schemaVersion: 16,
+    schemaVersion: 17,
     providerRequests: 0,
     scope:
       "Actual temporary SQLite and native Node24 CLI. Authored private synthetic grade/receipt/sync/ledger rows, real VACUUM snapshots and separate restore; no production DB, providers, off-host transfer or disaster recovery.",

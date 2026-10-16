@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T04:54:36.883Z",
+  "checkedAt": "2026-10-16T05:17:36.380Z",
   "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
   "providerCalls": 0,
   "phases": {
@@ -64,7 +64,7 @@
     },
     {
       "phase": 4,
-      "name": "Compiled outcome summary is administrator-only, account-bound and honest about unknown cost",
+      "name": "Compiled outcome and attempt summaries are administrator-only, account-bound and honest about unknown cost",
       "status": "PASS"
     },
     {
@@ -81,10 +81,10 @@
   "teachingAuditEvents": 23,
   "backupRestore": {
     "status": "PASS",
-    "schemaVersion": 16,
+    "schemaVersion": 17,
     "scope": "Separate restored SQLite file; not off-host hosting disaster recovery."
   },
   "passed": 11,
   "version": "3.3.0-rc.1",
-  "completedAt": "2026-10-16T04:54:41.169Z"
+  "completedAt": "2026-10-16T05:17:39.519Z"
 }

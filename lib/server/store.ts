@@ -14,6 +14,8 @@ import { createSummaryJobStore } from "./job-core";
 import { createTeacherStore } from "./teacher-core";
 import { createTeachingStore } from "./teaching-core";
 import { createAIHttpStore } from "./ai-http-core";
+import { createProviderAttemptStore } from "./provider-attempt-core";
+import { providerAttemptBreakdown } from "./provider-attempt-report";
 import { assertDatabaseIntegrity } from "./database-integrity";
 import { usageBreakdown, type UsageDimension } from "./usage-report";
 import { isPublicDemo } from "./public-demo";
@@ -700,6 +702,7 @@ export function createStore(
   });
   return {
     ...billingStore,
+    ...createProviderAttemptStore({ db, now, transaction, getUser }),
     ...createAIHttpStore({
       db,
       now,
@@ -749,6 +752,8 @@ export function createStore(
     listUsage,
     getUsageBreakdown: (dimension: UsageDimension, days = 7) =>
       usageBreakdown(db, now(), dimension, days),
+    getProviderAttemptBreakdown: (dimension: UsageDimension, days = 7) =>
+      providerAttemptBreakdown(db, now(), dimension, days),
     listAudit,
     getDashboard,
   };

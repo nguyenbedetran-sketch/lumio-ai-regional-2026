@@ -1,14 +1,14 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T04:52:50.267Z",
-  "passed": 21,
+  "checkedAt": "2026-10-16T05:14:13.021Z",
+  "passed": 23,
   "checks": [
     {
       "name": "Canonical contract matches all migrations and six exact immutable guards",
       "status": "PASS"
     },
     {
-      "name": "Schema16 readiness is read-only and checks complete history plus actual guards",
+      "name": "Schema17 readiness is read-only and checks complete history plus actual guards",
       "status": "PASS"
     },
     {
@@ -48,7 +48,7 @@
       "status": "PASS"
     },
     {
-      "name": "Simulated hardened runtime14 refuses a schema16 database without rewriting identity, seed or schema bytes",
+      "name": "Simulated hardened runtime14 refuses a schema17 database without rewriting identity, seed or schema bytes",
       "status": "PASS"
     },
     {
@@ -84,11 +84,19 @@
       "status": "PASS"
     },
     {
+      "name": "Genuine16 operator snapshot is read-only and only a restored copy gains an empty journal17",
+      "status": "PASS"
+    },
+    {
+      "name": "A fake16 retaining the known journal17 fails integrity/backup/startup without writes",
+      "status": "PASS"
+    },
+    {
       "name": "Snapshot CLI uses Node24 shared contract without a development compiler or migrations",
       "status": "PASS"
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 17,
   "providerRequests": 0,
   "scope": "Actual temporary SQLite and native Node24 CLI. Authored private synthetic grade/receipt/sync/ledger rows, real VACUUM snapshots and separate restore; no production DB, providers, off-host transfer or disaster recovery.",
   "notTested": [

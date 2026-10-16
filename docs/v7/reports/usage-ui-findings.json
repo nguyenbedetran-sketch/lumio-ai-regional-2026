@@ -1,0 +1,42 @@
+{
+  "scope": "Development chronology from executed isolated UsageBreakdownPanel browser runs. Historical counts below are not cumulative and do not replace the latest qa-usage-ui-report.json.",
+  "externalCalls": 0,
+  "findings": [
+    {
+      "at": "2026-10-16T05:02:55.797Z",
+      "kind": "fixture-error",
+      "status": "FIXED",
+      "detail": "The Playwright CLI run-code context has no URL global. Initial harness stopped after 12 checks; the browser fixture switched to a bounded query parser for its own authored ASCII URLs. This was not a product runtime error."
+    },
+    {
+      "at": "2026-10-16T05:03:10.901Z",
+      "kind": "visual-review",
+      "historicalPassed": 62,
+      "status": "FIXED_BY_PRODUCT_OWNER",
+      "detail": "The initial functional run passed, but review of actual component screenshots showed inline small elements joining 5 / 2 and 1 HTTP error into an apparent 5 / 21, plus joined token coverage. Product owner added scoped block note rendering, larger readable metadata and wrapping. Fixture parent wrappers were corrected to the actual ad-shell/ad-main/ad-content/ad-panel hierarchy."
+    },
+    {
+      "at": "2026-10-16T05:05:06.073Z",
+      "kind": "visual-review",
+      "historicalPassed": 66,
+      "status": "FIXED_BY_PRODUCT_OWNER",
+      "detail": "After the number-separation fix, a long synthetic model identifier still collapsed to a narrow row-header column on 390/768px layouts. Product owner added a scoped row-header minimum width; the next run checked readable normal identifiers and bounded wrapping of complete long identifiers."
+    },
+    {
+      "at": "2026-10-16T05:07:37.794Z",
+      "kind": "scoped-regression",
+      "historicalPassed": 72,
+      "status": "PASS_BEFORE_ALL_AGES_EXTENSION",
+      "detail": "72 checks passed with 12 intercepted synthetic GET requests, zero runtime errors and zero provider/public calls. Ordinary identifier remained on one line; the complete long identifier wrapped to ten lines at 390/768px. Window and all-age journal-capacity diagnostics were added subsequently and require a separate final rerun."
+    },
+    {
+      "at": "2026-10-16T05:11:44.317Z",
+      "kind": "final-scoped-acceptance",
+      "passed": 79,
+      "status": "PASS",
+      "detail": "After the all-age journal-capacity extension, 79 checks passed. Nine retained records, three all-age unresolved intents and two outside-window unresolved intents stay separate from the seven-attempt/one-unresolved selected-window cohort. Per-account/global pending caps and overall journal capacity are labelled independently. All three final PNGs were visually reviewed. Twelve intercepted synthetic GETs; no React runtime error, provider/public call, real account or cost claim.",
+      "componentSha256": "d1708672fb0f3cfca81bd4e8abc706f901ec4ef65117071ecb1ddff86cf7d16d",
+      "latestReport": "../qa-usage-ui-report.json"
+    }
+  ]
+}

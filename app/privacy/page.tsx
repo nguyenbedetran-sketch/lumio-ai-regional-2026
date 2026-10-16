@@ -309,10 +309,23 @@ export default function PrivacyPage() {
           hoặc tiếp nhận thông tin thanh toán.
         </p>
         <p>
-          Bản thử nghiệm chưa có cơ chế tự động xóa nhật ký theo lịch hoặc thời
-          hạn lưu giữ đã công bố. Người phụ trách dự án quản lý dữ liệu trên máy
-          chủ; quy trình lưu giữ cần được hoàn thiện trước khi vận hành rộng
-          rãi.
+          Luồng tạo nội dung cho người học, giáo viên và tóm tắt nền còn ghi riêng
+          từng lần chuẩn bị gọi AI, gồm mã tài khoản/yêu cầu, model được yêu cầu
+          và model trong phản hồi, số token được báo, trạng thái và thời gian.
+          Đây là metadata liên kết tài khoản, không phải dữ liệu ẩn danh hay
+          nội dung học. Nhật ký mới chưa bao phủ giọng nói và embeddings, không
+          dựng lại các lần gọi trước khi nâng cấp. Số token hoặc chi phí chưa
+          biết được giữ là chưa biết, không tự coi bằng không.
+        </p>
+        <p>
+          Metadata từng lần gọi đã kết thúc quá 31 ngày được dọn theo đợt khi có
+          yêu cầu mới đủ quyền; không có lịch xóa nền nên có thể còn lưu lâu hơn.
+          Bản ghi chưa rõ kết quả được giữ để kiểm tra lỗi, không tự xóa hoặc tự
+          gọi lại AI. Xóa thư viện hay phiên gia sư không xóa nhật ký này; quản trị
+          viên được cấp quyền có thể xem báo cáo metadata. Các nhật ký quản trị,
+          sổ credit và bản sao lưu vẫn có phạm vi riêng, chưa có nút tự xóa toàn
+          bộ hoặc thời hạn chung. Người phụ trách phải xác định phạm vi xử lý
+          khi có yêu cầu dữ liệu tài khoản.
         </p>
       </section>
       <section>

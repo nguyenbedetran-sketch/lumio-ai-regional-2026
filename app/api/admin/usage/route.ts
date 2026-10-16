@@ -18,25 +18,34 @@ export async function GET(req: Request) {
       if (
         [...params.keys()].some(
           (key) =>
-            !["summary", "dimension", "days"].includes(key) ||
+            !["summary", "dimension", "days", "scope"].includes(key) ||
             params.getAll(key).length !== 1,
         ) ||
         params.get("summary") !== "1"
       )
         throw new PlatformError("INVALID_USAGE_QUERY");
       const dimension = params.get("dimension") || "model";
+      const scope = params.get("scope") || "outcomes";
+      if (!["outcomes", "attempts"].includes(scope))
+        throw new PlatformError("INVALID_USAGE_QUERY");
       const dayText = params.get("days") || "7";
       if (!["model", "task", "user"].includes(dimension))
         throw new PlatformError("INVALID_USAGE_DIMENSION");
       if (!/^(?:[1-9]|[12][0-9]|3[01])$/.test(dayText))
         throw new PlatformError("INVALID_USAGE_WINDOW");
       return json(
-        getStore().getUsageBreakdown(
-          dimension as UsageDimension,
-          Number(dayText),
-        ),
+        scope === "attempts"
+          ? getStore().getProviderAttemptBreakdown(
+              dimension as UsageDimension,
+              Number(dayText),
+            )
+          : getStore().getUsageBreakdown(
+              dimension as UsageDimension,
+              Number(dayText),
+            ),
       );
     }
+    if (params.has("scope")) throw new PlatformError("INVALID_USAGE_QUERY");
     const offset = Number(params.get("offset") || 0);
     if (!Number.isSafeInteger(offset) || offset < 0 || offset > 1000000)
       throw new PlatformError("INVALID_PAGE");

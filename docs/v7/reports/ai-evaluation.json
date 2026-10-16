@@ -2,9 +2,9 @@
   "schema": 1,
   "evaluationId": "lumio-v7-authored-offline-1",
   "corpusVersion": "1.0.0",
-  "startedAt": "2026-10-16T04:52:33.986Z",
-  "completedAt": "2026-10-16T04:52:34.022Z",
-  "elapsedMs": 35,
+  "startedAt": "2026-10-16T05:13:56.222Z",
+  "completedAt": "2026-10-16T05:13:56.257Z",
+  "elapsedMs": 34,
   "status": "PASS_DETERMINISTIC_SCOPE",
   "caseCount": 46,
   "assertionCount": 219,
@@ -732,7 +732,7 @@
     "lib/rag/retrieval.ts": "7a161e02985c698cad4cbc61b1aa9d9889f31b0514748b2b53952cd562cc04b9",
     "lib/ai/contracts.ts": "021c088a1201d33ad4a4847b61bd2eee4957a2f44c09f627401d0b207c581058",
     "lib/ai/grounding.ts": "664e0f198b59116dcd68d006b0a8f6e550af192823f009d17a6b72d4db7ea0a8",
-    "lib/ai/router.ts": "6e8eb19890949a14434260d7bbe302f7460dc1e3138f40b29f904134cde4ea98",
+    "lib/ai/router.ts": "505c15a9f6015c645734e2b07b967b509d3b308af4f2bd6d51c7ebca36961fa6",
     "lib/tutor/math.ts": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
     "lib/tutor/math-exact.ts": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
     "lib/teaching/content-qa.ts": "4c04ce3fb3cd0110b57b96ebf5aa197eb324c45f5a2821237386ce944606e7e2",
@@ -740,6 +740,6 @@
     "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b"
   },
   "corpusSha256": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
-  "sourceBaseCommit": "9f4a37635bea5fd549d7af90d8b1f0237ea23521",
+  "sourceBaseCommit": "33a79f888385b9f7a733314cb4e27472cf64c4d1",
   "sourceState": "Working-tree module hashes above; base commit alone does not identify uncommitted V7 changes."
 }

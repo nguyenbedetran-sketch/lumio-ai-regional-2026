@@ -6,7 +6,7 @@
     "dev": "node preview.cjs",
     "build": "next build",
     "typecheck": "tsc --noEmit",
-    "test:v7": "node tests/v7-api-safety.cjs && node tests/v7-rag-lifecycle.cjs && node tests/v7-rag-billing.cjs && node tests/v7-request-client.cjs && node scripts/test-v7-rag-tokenizer.cjs && node scripts/test-v7-ai-evaluation.cjs && node tests/v7-grade-history.cjs && node tests/v7-retakes.cjs && node tests/v7-operations.cjs && node tests/v7-usage-report.cjs && node tests/v7-live-runner.cjs && node tests/v7-tutor-prompt.cjs && node tests/v7-content-prompt.cjs && node tests/v7-quiz-option-order.cjs",
+    "test:v7": "node tests/v7-api-safety.cjs && node tests/v7-rag-lifecycle.cjs && node tests/v7-rag-billing.cjs && node tests/v7-request-client.cjs && node scripts/test-v7-rag-tokenizer.cjs && node scripts/test-v7-ai-evaluation.cjs && node tests/v7-grade-history.cjs && node tests/v7-retakes.cjs && node tests/v7-operations.cjs && node tests/v7-usage-report.cjs && node tests/v7-live-runner.cjs && node tests/v7-tutor-prompt.cjs && node tests/v7-content-prompt.cjs && node tests/v7-quiz-option-order.cjs && node tests/v7-provider-attempts.cjs && node tests/v7-provider-attempt-adversarial.cjs && node tests/v7-provider-attempt-report.cjs",
     "test:v7:ui": "node scripts/test-v7-teaching-ui.cjs && node scripts/test-v7-learner-ui.cjs && node scripts/test-v7-grade-history-ui.cjs && node scripts/test-v7-practice-ui.cjs",
     "test:all": "pnpm test && pnpm test:v7",
     "start": "next start",
@@ -35,7 +35,8 @@
     "test:teacher-admin": "node scripts/test-teacher-admin.cjs",
     "test:teacher-self": "node scripts/test-teacher-self.cjs",
     "test:teaching:production": "node scripts/test-teaching-production.cjs",
-    "test:teaching": "node tests/teaching-api.cjs && node tests/teaching-content.cjs && node tests/teaching-content-api.cjs"
+    "test:teaching": "node tests/teaching-api.cjs && node tests/teaching-content.cjs && node tests/teaching-content-api.cjs",
+    "test:v7:usage-ui": "node scripts/test-v7-usage-ui.cjs"
   },
   "engines": {
     "node": ">=24.0.0 <25"

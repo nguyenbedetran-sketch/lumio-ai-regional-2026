@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T04:53:03.600Z",
+  "checkedAt": "2026-10-16T05:14:25.086Z",
   "passed": 12,
   "checks": [
     {
@@ -57,5 +57,5 @@
   "semanticRepairVerified": false,
   "liveFollowup": "NOT_TESTED",
   "scope": "Actual prompt builder/structured validators and Router with synthetic intercepted provider responses. Includes unchanged recorded bad-summary acceptance to document that structure/exact quotes do not prove semantic entailment. No real provider, student or teacher pilot.",
-  "routerSHA256": "6e8eb19890949a14434260d7bbe302f7460dc1e3138f40b29f904134cde4ea98"
+  "routerSHA256": "505c15a9f6015c645734e2b07b967b509d3b308af4f2bd6d51c7ebca36961fa6"
 }

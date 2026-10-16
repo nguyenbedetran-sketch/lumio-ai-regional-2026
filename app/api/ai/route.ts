@@ -247,7 +247,11 @@ export async function POST(req: Request) {
         ? input.videoRange.endSeconds - input.videoRange.startSeconds
         : undefined,
     });
-    const result = await routeAI(input, fetch, signal);
+    const result = await routeAI(input, fetch, signal, getStore().providerAttemptObserver({
+      userId: release.userId, sessionVersion: release.sessionVersion,
+      requestId, reservationId: reservation.reservationId,
+      feature: input.tutorContext ? "learner.tutor" : `learner.${input.task}`,
+    }));
     if (ragSnapshot) getStore().ragAssertSnapshot(release.userId, ragSnapshot);
     signal.throwIfAborted();
     let tutor: TutorState | undefined;

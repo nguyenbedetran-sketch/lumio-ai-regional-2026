@@ -22,7 +22,7 @@ function inspect(filename) {
     });
     // Keep the verified pre-upgrade snapshot usable without migrating it from
     // an operator inspect/restore command. Unreviewed old/future schemas fail.
-    if (![13, 14, 15, 16].includes(schemaVersion))
+    if (![13, 14, 15, 16, 17].includes(schemaVersion))
       throw Error("SCHEMA_NOT_SUPPORTED");
     return { integrity: "ok", schemaVersion };
   } finally {

@@ -676,7 +676,7 @@ async function main() {
   );
   await check(
     4,
-    "Compiled outcome summary is administrator-only, account-bound and honest about unknown cost",
+    "Compiled outcome and attempt summaries are administrator-only, account-bound and honest about unknown cost",
     async () => {
       const route =
         origin + "/api/admin/usage?summary=1&dimension=model&days=7";
@@ -700,6 +700,19 @@ async function main() {
       assert.equal(result.scope, "recorded-request-outcomes");
       assert.equal(result.totals.recordedEstimatedCostUsd, null);
       assert.match(response.headers.get("cache-control"), /no-store/);
+      const attemptRoute = route + "&scope=attempts";
+      assert.equal((await fetch(attemptRoute, { headers: headers(users.student) })).status, 403);
+      assert.equal((await fetch(attemptRoute, { headers: headers(users.owner, { "x-lumio-account": users.student.key }) })).status, 401);
+      const attemptResponse = await fetch(attemptRoute, { headers: headers(users.owner) });
+      assert.equal(attemptResponse.status, 200);
+      assert.match(attemptResponse.headers.get("cache-control"), /no-store/);
+      const attempts = await attemptResponse.json();
+      assert.equal(attempts.scope, "recorded-text-provider-attempts");
+      assert.equal(attempts.totals.attempts, 0);
+      assert.equal(attempts.totals.estimatedCostUsd, null);
+      assert.equal(attempts.totals.inputTokens, null);
+      assert.equal(attempts.retainedAllAges.unresolved, 0);
+      assert.equal(attempts.limits.unresolvedPerAccount, 64);
     },
   );
   await check(

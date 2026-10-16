@@ -133,6 +133,15 @@ export default function DataDeletionPage() {
       <section>
         <h2>3. Yêu cầu xử lý tài khoản máy chủ</h2>
         <p>
+          Nhật ký từng lần gọi AI là metadata liên kết tài khoản trên máy chủ,
+          tách khỏi thư viện và hội thoại. Bản ghi đã kết thúc quá 31 ngày được
+          dọn theo đợt khi có lượt gọi mới đủ quyền; bản ghi chưa rõ kết quả được
+          giữ riêng, không có nút tự xóa hoặc lịch xóa đúng hạn. Xóa trên thiết bị
+          không xóa nhật ký hay bản sao lưu máy chủ. Người phụ trách cần kiểm tra
+          riêng chúng khi xử lý yêu cầu tài khoản, không tự gọi lại AI để điền
+          thông tin đã mất.
+        </p>
+        <p>
           Liên hệ người phụ trách dự án qua kênh đã mời bạn dùng thử. Nêu rõ yêu
           cầu xóa tài khoản Lumio và dịch vụ đăng nhập đã dùng. Bạn có thể được
           yêu cầu xác minh mình là chủ tài khoản; không gửi mật khẩu hoặc mã

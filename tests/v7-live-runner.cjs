@@ -425,6 +425,12 @@ async function runChecks() {
               .digest("hex"),
           );
         assert.match(result.report.sourceHashScope, /not a complete transitive/);
+        assert.equal(result.report.providerAttemptJournal.scope, "recorded-text-provider-attempts");
+        assert.equal(result.report.providerAttemptJournal.totals.attempts, 4);
+        assert.equal(result.report.providerAttemptJournal.totals.responses, 4);
+        assert.equal(result.report.providerAttemptJournal.totals.unresolved, 0);
+        assert.equal(result.report.providerAttemptJournal.totals.inputTokens, 44);
+        assert.equal(result.report.providerAttemptJournal.totals.estimatedCostUsd, null);
         assert.equal(global.fetch, priorFetch);
         assert.equal(process.env.LUMIO_AI_ENABLED, priorAI);
       },

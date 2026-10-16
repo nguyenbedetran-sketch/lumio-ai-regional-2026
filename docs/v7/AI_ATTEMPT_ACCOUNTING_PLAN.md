@@ -1,5 +1,7 @@
 # F02 tiếp theo · Provenance theo từng lần gọi provider
 
+**Ghi chú cập nhật:** phần dưới giữ thiết kế trước triển khai. F02a1 text/multimodal đã được root phê duyệt sau đó; trạng thái/giới hạn và bằng chứng hiện hành nằm ở [PROVIDER_ATTEMPT_ACCEPTANCE.md](PROVIDER_ATTEMPT_ACCEPTANCE.md). Không hiểu các dòng DESIGN ONLY lịch sử bên dưới là trạng thái của journal đã triển khai, hoặc suy ra toàn bộ cost accounting đã hoàn thiện.
+
 **PROVIDER JOURNAL: DESIGN ONLY — chưa triển khai hoặc migration mới.** Rà soát16/10/2026 trên HEAD9f4a376 và working tree D04. Đã đọc CHECKLIST.md, FEATURE_MATRIX.md và USAGE_OBSERVABILITY.md trước: F02 đã có breakdown request outcome theo model/task/user; không đề xuất thêm dashboard hay thay credit ledger để làm lại phần đó. Sau audit, root chỉ cho phép sửa riêng F02a0 unknown-vs-zero bên dưới, đã kiểm với transport giả;0 API thật. V6§29/41 vẫn PARTIAL về chi phí thực tế.
 
 ## Khoảng trống có bằng chứng trong mã

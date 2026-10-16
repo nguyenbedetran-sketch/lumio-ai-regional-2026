@@ -1,8 +1,8 @@
 import type { DatabaseSync } from "node:sqlite";
 
-// Canonical metadata derived from migrations1–16 using SQLite itself.
+// Canonical metadata derived from migrations1–17 using SQLite itself.
 // Update together with a reviewed migration; tests compare against fresh schema.
-export const DATABASE_SCHEMA_VERSION = 16;
+export const DATABASE_SCHEMA_VERSION = 17;
 export const DATABASE_TABLES: readonly {
   name: string;
   since: number;
@@ -501,6 +501,16 @@ export const DATABASE_TABLES: readonly {
       {
         since: 16,
         sql: "CREATE TABLE teaching_assessment_windows (\n assignment_id TEXT NOT NULL PRIMARY KEY REFERENCES teaching_assignments(id) ON DELETE CASCADE,\n root_assignment_id TEXT NOT NULL REFERENCES teaching_assignments(id),\n parent_assignment_id TEXT REFERENCES teaching_assignments(id),attempt_no INTEGER NOT NULL CHECK(attempt_no BETWEEN 1 AND 3),\n student_id TEXT REFERENCES users(id),available_from TEXT,available_until TEXT,\n reason TEXT,acknowledged INTEGER NOT NULL DEFAULT 0 CHECK(acknowledged IN(0,1)),\n created_by TEXT NOT NULL REFERENCES users(id),created_at TEXT NOT NULL,\n UNIQUE(root_assignment_id,student_id,attempt_no),\n CHECK((attempt_no=1 AND root_assignment_id=assignment_id AND parent_assignment_id IS NULL AND student_id IS NULL AND acknowledged=0 AND reason IS NULL) OR\n (attempt_no>1 AND root_assignment_id!=assignment_id AND parent_assignment_id IS NOT NULL AND parent_assignment_id=root_assignment_id AND student_id IS NOT NULL AND available_from IS NOT NULL AND available_until IS NOT NULL AND acknowledged=1 AND reason IS NOT NULL))\n)",
+      },
+    ],
+  },
+  {
+    name: "ai_provider_attempts",
+    since: 17,
+    definitions: [
+      {
+        since: 17,
+        sql: "CREATE TABLE ai_provider_attempts (\n id TEXT NOT NULL PRIMARY KEY,logical_request_id TEXT NOT NULL CHECK(length(logical_request_id) BETWEEN 1 AND 100),\n dispatch_ordinal INTEGER NOT NULL CHECK(dispatch_ordinal>=1),user_id TEXT NOT NULL REFERENCES users(id),\n session_version INTEGER NOT NULL CHECK(session_version>=1),reservation_id TEXT NOT NULL REFERENCES billing_reservations(id),\n feature TEXT NOT NULL CHECK(feature IN('learner.chat','learner.tutor','learner.summary','learner.cards','learner.quiz','teacher.lesson','teacher.questions','teacher.feedback','teacher.assistant','job.summary-part')),\n provider TEXT NOT NULL CHECK(provider IN('openai','gemini')),endpoint_kind TEXT NOT NULL CHECK(endpoint_kind IN('responses','generate-content')),\n requested_model TEXT NOT NULL CHECK(length(requested_model) BETWEEN 1 AND 100),response_model TEXT CHECK(length(response_model) BETWEEN 1 AND 100),\n provider_request_id TEXT CHECK(length(provider_request_id) BETWEEN 1 AND 100),\n status TEXT NOT NULL DEFAULT 'prepared' CHECK(status IN('prepared','response_received','network_unknown','timeout_unknown','cancelled_unknown')),\n http_status INTEGER CHECK(http_status BETWEEN 100 AND 599),\n input_tokens INTEGER CHECK(input_tokens>=0),output_tokens INTEGER CHECK(output_tokens>=0),cached_tokens INTEGER CHECK(cached_tokens>=0),\n total_tokens INTEGER CHECK(total_tokens>=0),reasoning_tokens INTEGER CHECK(reasoning_tokens>=0),latency_ms INTEGER CHECK(latency_ms>=0),\n safe_error_code TEXT CHECK(length(safe_error_code) BETWEEN 1 AND 80),\n usage_source TEXT CHECK(usage_source IN('openai-response-usage','gemini-usage-metadata')),\n estimated_cost_usd REAL CHECK(estimated_cost_usd IS NULL),prepared_at TEXT NOT NULL,ended_at TEXT,\n UNIQUE(logical_request_id,dispatch_ordinal),\n CHECK((status='prepared' AND ended_at IS NULL) OR (status!='prepared' AND ended_at IS NOT NULL)),\n CHECK((provider='openai' AND endpoint_kind='responses') OR (provider='gemini' AND endpoint_kind='generate-content'))\n)",
       },
     ],
   },

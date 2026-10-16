@@ -1,6 +1,6 @@
 # Lumio AI 3.3 RC — nâng cấp V6 + V7 · AI26A0048
 
-Source nhánh nâng cấp hiện tại **3.3.0-rc.1**, SQLite migrations **1–16**. V6 và V7 là một backlog chung trên ứng dụng hiện có. Có thêm bảo vệ request AI/credit lặp, ràng buộc tài khoản, điều hướng gọn, trích dẫn đúng vị trí, lịch sử điểm bất biến, luyện lại có cửa sổ thời gian và kiểm cấu trúc/backup database. Đọc [hướng dẫn mở và nghiệm thu](docs/v7/REVIEW_GUIDE.vi.md), [audit](docs/PRODUCT_AUDIT.md), [checklist đang làm](docs/v7/CHECKLIST.md) và [kết quả thực tế](docs/v7/ACCEPTANCE_REPORT.md). Bản RC này chưa đồng nghĩa hoàn thành mọi mục V6/V7; public, native và biên nhận thi có gate riêng.
+Source nhánh nâng cấp hiện tại **3.3.0-rc.1**, SQLite migrations **1–17**. V6 và V7 là một backlog chung trên ứng dụng hiện có. Có thêm bảo vệ request AI/credit lặp, ràng buộc tài khoản, điều hướng gọn, trích dẫn đúng vị trí, lịch sử điểm bất biến, luyện lại có cửa sổ thời gian và kiểm cấu trúc/backup database. Đọc [hướng dẫn mở và nghiệm thu](docs/v7/REVIEW_GUIDE.vi.md), [audit](docs/PRODUCT_AUDIT.md), [checklist đang làm](docs/v7/CHECKLIST.md) và [kết quả thực tế](docs/v7/ACCEPTANCE_REPORT.md). Bản RC này chưa đồng nghĩa hoàn thành mọi mục V6/V7; public, native và biên nhận thi có gate riêng.
 
 Teacher Workspace3.2 được giữ và mở rộng: lớp/nhóm/mã mời/đồng giảng viên, giáo án/học liệu, ngân hàng câu hỏi, giao–nộp–chấm–công bố, phân tích kết quả đã công bố, thông báo/lịch, báo cáo và tùy chọn giáo viên. Các module học cá nhân V2/V3 vẫn có. [Tài liệu3.2 lịch sử](TEACHER-WORKSPACE.md) và [báo cáo3.2](docs/teacher-workspace) không phải bằng chứng cho bản RC mới. APK/IPA/EXE và thử nghiệm người học thật chưa được suy ra từ kiểm thử source web.
 
@@ -70,7 +70,9 @@ Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang ch�
 
 Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục, hàng đợi và hồ sơ/quyền giáo viên có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Quy tắc này không áp dụng cho bản khai/credential giáo viên hoặc nhật ký tài khoản. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
 
-Migration chạy khi khởi tạo store; sau cập nhật3.2 hãy khởi động lại Node. `/api/health` kiểm tra schema13/các bảng cần thiết và trả version, không xác nhận AI hay hồ sơ giáo viên thật. Công cụ backup `scripts/database-snapshot.cjs` hiện yêu cầu schema13, bao gồm dữ liệu giảng dạy; bản ghi chú operations3.1 là lịch sử schema11. Không xóa migration history để chạy build cũ.
+Migration chạy khi khởi tạo store; bản source hiện tại yêu cầu **schema17/49 bảng/53 định nghĩa versioned/sáu guard cũ**. `/api/health` kiểm contract DB/version, không xác nhận AI đúng hay full build/public đã đạt. Backup CLI Node24 nhận genuine13–17 không migrate/seed nguồn; chỉ restored copy mở bằng runtime mới mới nâng17. Giữ snapshot và artifact cũ đúng cặp khi rollback; không xóa history/table để ép build cũ chạy. [Runbook17](docs/v7/OPERATIONS_RUNBOOK.md) có 23 kiểm tra ops local, giới hạn riêng tư/free host và [checkpoint16/21 lịch sử](docs/v7/reports/operations-integrity-schema16.json).
+
+[Journal F02a1](docs/v7/PROVIDER_ATTEMPT_ACCEPTANCE.md) ghi metadata mỗi dispatch routeAI text/multimodal của learner/teacher/summary jobs; chưa gồm embedding/voice hoặc backfill lịch sử. Admin → Hoạt động AI tách **Kết quả yêu cầu** và **Từng lần gọi AI**, cùng quyền/account/no-store hiện có. Token/cost thiếu giữ null, chi phí chưa có rate luôn chưa biết; journal không thay ledger credit hoặc hóa đơn. Terminal quá 31 ngày dọn tối đa 200 mỗi prepare; unresolved không tự purge và có cap 64/account, 2048 toàn DB, 100000 tổng. Khối dung lượng đếm mọi tuổi; bản ghi còn giữ đầu tiên không phải ngày bật instrumentation. DB/backup có metadata tài khoản riêng, không công khai. Chưa suy ra full regression/build/public17 từ các gate module.
 
 ## Kiểm tra và minh chứng
 
@@ -90,6 +92,8 @@ node scripts/test-ui.cjs --v3-sync
 node tests/teacher-api.cjs
 pnpm test:teacher-self
 pnpm test:teacher-admin
+# Fixture quản trị usage riêng, không gọi provider:
+pnpm test:v7:usage-ui
 ```
 
 Test tự động có fixture/dịch vụ giả được ghi nhãn. Hội thoại AI thật local có báo cáo riêng, không thay OAuth/public hoặc kết quả học sinh. `pnpm services:check` gọi dịch vụ thật và có thể tính phí; không chạy lặp tự động. Kiểm tra bộ đề không bảo đảm mọi câu AI đều đúng. Thiết bị/micro/Zoom thật cần kiểm tra riêng.

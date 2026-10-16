@@ -39,7 +39,7 @@ export async function executeTeachingGeneration(request: TeachingGenerationReque
     store.assertTeachingGenerationContext(context);
     const input = teachingAIInput(request, context);
     reservation = reserveUsage({ userId: context.userId, sessionVersion: context.sessionVersion, requestId: ledgerRequestId, task, mode: "quick", kind: "text" });
-    const result = await routeAI(input, fetch, signal);
+    const result = await routeAI(input, fetch, signal, store.providerAttemptObserver({ userId: context.userId, sessionVersion: context.sessionVersion, requestId: ledgerRequestId, reservationId: reservation.reservationId, feature: `teacher.${request.kind}` }));
     signal.throwIfAborted();
     let raw: unknown;
     try { raw = JSON.parse(result.text.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "")); }

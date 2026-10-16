@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T05:13:47.341Z",
+  "passed": 24,
+  "checks": [
+    {
+      "name": "Guest cannot generate or call a provider",
+      "status": "PASS"
+    },
+    {
+      "name": "Account header and same-origin are required",
+      "status": "PASS"
+    },
+    {
+      "name": "Student membership is not a teacher generation credential",
+      "status": "PASS"
+    },
+    {
+      "name": "An approved teacher still cannot access another org",
+      "status": "PASS"
+    },
+    {
+      "name": "Consent, minimization and strict schema precede provider calls",
+      "status": "PASS"
+    },
+    {
+      "name": "Teacher JSON mode uses existing Router and correct quiz ledger cost, with no autosave",
+      "status": "PASS"
+    },
+    {
+      "name": "Source quote and locator are rebuilt from the owned snapshot",
+      "status": "PASS"
+    },
+    {
+      "name": "Retry of a completed client UUID cannot charge or call the provider twice",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent duplicate is rate-guarded429 before a second transport or charge",
+      "status": "PASS"
+    },
+    {
+      "name": "Malformed client UUID is rejected before transport",
+      "status": "PASS"
+    },
+    {
+      "name": "Same client UUID is account-namespaced for both ledger and usage metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid model JSON refunds the actual SQLite reservation",
+      "status": "PASS"
+    },
+    {
+      "name": "Independent incorrect-answer QA refunds instead of returning a bad generated draft",
+      "status": "PASS"
+    },
+    {
+      "name": "Invented source reference refunds",
+      "status": "PASS"
+    },
+    {
+      "name": "Real source revision race fails settlement and refunds without a nested BEGIN",
+      "status": "PASS"
+    },
+    {
+      "name": "Credential revocation during transport is rechecked in real settlement and refunds",
+      "status": "PASS"
+    },
+    {
+      "name": "Disabling teacher AI during transport is rechecked at settlement and refunded",
+      "status": "PASS"
+    },
+    {
+      "name": "Session revocation during transport cannot settle credits or return content",
+      "status": "PASS"
+    },
+    {
+      "name": "Request cancellation refunds and never returns a generated draft",
+      "status": "PASS"
+    },
+    {
+      "name": "Topic lesson is an editable unverified draft, billed by summary rate",
+      "status": "PASS"
+    },
+    {
+      "name": "Anonymous feedback never queries or sends stored student submissions",
+      "status": "PASS"
+    },
+    {
+      "name": "Detected private source text is rejected before transport",
+      "status": "PASS"
+    },
+    {
+      "name": "Empty media source is not pretended to be transcribed or observed",
+      "status": "PASS"
+    },
+    {
+      "name": "No orphaned held credits and no autonomous reviewed/published content",
+      "status": "PASS"
+    }
+  ],
+  "fixture": "Actual handler, isolated SQLite ledger, canonical synthetic users/teacher declarations/org/source revisions. Provider fetch and OAuth session are fixtures; deterministic store clock advances between checks to isolate minute quotas. No real teacher/student accounts or external requests.",
+  "actualProviderRequests": 0,
+  "interceptedProviderCalls": 16,
+  "sourceRaceGuard": "Real store assertion executes inside real ledger settlement, no mock and no nested BEGIN",
+  "productionPublic": "NOT TESTED",
+  "semanticAccuracy": "NOT TESTED; deterministic adversarial outputs test validator behavior"
+}

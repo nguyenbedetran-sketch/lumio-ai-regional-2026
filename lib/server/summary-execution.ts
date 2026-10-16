@@ -16,6 +16,8 @@ export async function executeSummaryInput(
     /** Called in the same transaction as credit settlement. Must not open a transaction. */
     commit?: (result: AIResult) => void;
     telemetry?: boolean;
+    /** Trusted production caller, never copied from raw AI input. */
+    feature?: "learner.summary" | "job.summary-part";
   },
 ): Promise<AIResult> {
   const store = getStore(),
@@ -65,7 +67,7 @@ export async function executeSummaryInput(
     });
     options.onReserved?.(reservation);
     signal.throwIfAborted();
-    const result = await routeAI(input, fetch, signal);
+    const result = await routeAI(input, fetch, signal, store.providerAttemptObserver({ userId: principal.userId, sessionVersion: principal.sessionVersion, requestId: options.requestId, reservationId: reservation.reservationId, feature: options.feature || "learner.summary" }));
     if (!result.summary) throw new AIError("INVALID_AI_OUTPUT", 502);
     signal.throwIfAborted();
     const current = store.getUser(principal.userId);

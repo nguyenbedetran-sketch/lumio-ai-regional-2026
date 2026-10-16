@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "reviewType": "independent-developer-semantic-and-journal-review",
+  "status": "TWO_OBSERVED_CASES_REVIEWED_RUN_STOPPED_AT_CAP",
+  "reviewedAt": "2026-10-16T05:18:49.565Z",
+  "rawReport": {
+    "path": "docs/v7/reports/v7-live-journal-smoke-20261016.json",
+    "sha256": "329cf9576fa7f7a6ba3f46f042ed083dea70c7c9f99b34427fff8a9a9b817c03",
+    "status": "STOPPED",
+    "startedAt": "2026-10-16T05:16:47.955Z",
+    "finishedAt": "2026-10-16T05:17:04.707Z",
+    "packageVersion": "3.3.0-rc.1",
+    "schemaVersion": 17,
+    "headCommit": "33a79f888385b9f7a733314cb4e27472cf64c4d1",
+    "sourceIdentity": "Use the raw report sourceHashes; HEAD alone excludes uncommitted runtime changes."
+  },
+  "scope": {
+    "reviewedActualProviderHTTPAttempts": 2,
+    "providerHTTPAttemptLimit": 2,
+    "completedCases": 2,
+    "technicalPassesInRawReport": 2,
+    "unrunCases": 4,
+    "rawAndDeliveredOutputsRead": true,
+    "additionalProviderCallsByReviewer": 0,
+    "localSyntheticPrincipal": true,
+    "actualLocalRequestHandlersAndTemporarySQLite": true,
+    "realOAuth": "NOT_TESTED",
+    "publicHTTPOrDeployment": "NOT_TESTED",
+    "browserMathRendering": "NOT_TESTED",
+    "independentTeacherReview": "NOT_TESTED",
+    "studentTrialOrLearningOutcome": "NOT_TESTED",
+    "cliExit": {
+      "code": 1,
+      "reason": "The runner intentionally stopped at EVALUATION_PROVIDER_CAP. This is not a clean six-case pass."
+    },
+    "priorReports": "The prior 70-call reports/reviews were not edited or reclassified. This review covers only the two additional dispatches in this artifact."
+  },
+  "cases": [
+    {
+      "id": "vi-summary",
+      "providerAttemptNumber": 1,
+      "httpStatus": 200,
+      "assessment": "No obvious substantive mathematical or source-fidelity error observed in this one short authored example.",
+      "observations": [
+        "Raw and delivered title, overview, key points and mind map match. The delivered chapter preserves the raw rule and example.",
+        "The denominator must be nonzero; for 1/(x-2), x must differ from 2. Both claims are correct and explicitly supplied in the source.",
+        "One chapter and a two-node mind map stay within the rule and example; no invented date, chronology, extra condition or additional factual topic was observed.",
+        "The summary repeats the rule and example across overview, key points and chapter bullets. This is mild redundancy on a very short source, not new unsupported content."
+      ],
+      "deliveredExactReferenceCount": 1,
+      "checkedReferenceOffsets": true,
+      "sourceParagraph": 1,
+      "rawAndDeliveredQuality": "Delivered status remains review-required; the reviewer did not certify general semantic correctness."
+    },
+    {
+      "id": "vi-cards",
+      "providerAttemptNumber": 2,
+      "httpStatus": 200,
+      "assessment": "No obvious substantive mathematical or source-fidelity error observed in the one returned card.",
+      "observations": [
+        "Raw and delivered front/back strings match.",
+        "The card asks for the condition on 1/(x-2) and answers that the denominator is nonzero, hence x differs from 2. The mapping is correct.",
+        "One supported card is returned without padding the short source into redundant extra cards.",
+        "Both nested references are exact source excerpts at the supplied offsets. The raw top-level reference is also an exact full-source excerpt; it is not an extra delivered card."
+      ],
+      "deliveredExactReferenceCount": 2,
+      "checkedReferenceOffsets": true,
+      "sourceParagraph": 1,
+      "rawAndDeliveredQuality": "Delivered status remains review-required; no teacher/student validation was performed."
+    }
+  ],
+  "journalComparison": {
+    "evidenceBoundary": "Independently recomputed from the raw report providerAttempts and compared with its actual SQLite-derived providerAttemptJournal aggregate. The ephemeral database was not reopened by this reviewer, and the provider envelope beyond fields preserved in the report was not independently fetched.",
+    "perProvider": [
+      {
+        "provider": "gemini",
+        "requestedModel": "gemini-3.8-flash",
+        "providerReportedResponseModel": "gemini-3.8-flash",
+        "requestedAndResponseModelDiffer": false,
+        "journalChangedModelRecords": 0,
+        "inputTokens": 881,
+        "outputTokens": 451,
+        "totalTokens": 2039,
+        "cachedTokensInCapturedProviderUsage": null,
+        "journalGroupInputOutputTotalMatch": true,
+        "totalMinusInputAndOutput": 707,
+        "interpretation": "The provider-reported total is retained independently. The report does not preserve a reasoning-token count, so the 707-token difference is not relabeled as verified reasoning, cache or billing usage."
+      },
+      {
+        "provider": "openai",
+        "requestedModel": "gpt-5-mini",
+        "providerReportedResponseModel": "gpt-5-mini-2025-08-07",
+        "requestedAndResponseModelDiffer": true,
+        "journalChangedModelRecords": 1,
+        "inputTokens": 708,
+        "outputTokens": 627,
+        "totalTokens": 1335,
+        "cachedTokensInCapturedProviderUsage": 0,
+        "journalGroupInputOutputTotalMatch": true,
+        "totalMinusInputAndOutput": 0,
+        "interpretation": "The returned versioned model name differs from the requested alias. This is one observed name difference, not proof of an unrequested fallback. Observed cached zero is not treated as absent usage or added to input/output totals."
+      }
+    ],
+    "recomputedTotals": {
+      "attempts": 2,
+      "responses": 2,
+      "unresolved": 0,
+      "transportUnknown": 0,
+      "httpErrors": 0,
+      "inputTokens": 1589,
+      "outputTokens": 1078,
+      "totalTokens": 3374,
+      "inputTokenRecords": 2,
+      "outputTokenRecords": 2,
+      "totalTokenRecords": 2,
+      "responseModelRecords": 2,
+      "changedModelRecords": 1
+    },
+    "allComparedJournalTotalsMatch": true,
+    "inputPlusOutput": 2667,
+    "independentProviderReportedTotal": 3374,
+    "differenceNotInventedOrDropped": 707,
+    "cacheAndReasoningScope": "Cached usage is null for Gemini and observed zero for OpenAI in the report. The aggregate does not expose cache/reasoning subtotals. Neither is added to or subtracted from provider-reported total tokens. Output-token totals are not assumed to mean only visible answer text.",
+    "estimatedCostUsd": null,
+    "unpricedAttempts": 2,
+    "invoiceOrZeroCostClaim": false,
+    "creditScope": "The authored summary account settled 8 application credits and the authored card account settled 6, each with reserved=0 afterward. These are separate application-ledger values and are not equated to provider price or token cost."
+  },
+  "notTestedCases": [
+    {
+      "id": "vi-quiz",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-injection-summary",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-unrelated-goal-summary",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-conflicting-source-summary",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    }
+  ],
+  "residualLimitations": [
+    "This narrow journal smoke used one short Vietnamese source twice; it does not rerun the earlier tutor/content suites or establish general accuracy.",
+    "No quiz answer-key mapping, injection resistance, unrelated-goal behavior or conflicting-source handling was exercised in this two-call run.",
+    "No learner/teacher pedagogy study, audio, vision, native device or public authenticated browser flow was reviewed.",
+    "The preserved escaped math strings were inspected as text; actual browser formula rendering was not assessed.",
+    "Two observed responses with matching journal metadata do not prove crash recovery, every future dispatch, invoice amounts, or completeness of provider accounting."
+  ],
+  "conclusion": "The two observed outputs have no obvious substantive error in the reviewed source scope, and the preserved per-provider input/output/total/model metadata matches the SQLite-derived groups and totals. The parent run remains STOPPED at its two-call cap with four cases unrun; this is not a six-case acceptance pass."
+}

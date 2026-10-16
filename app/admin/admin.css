@@ -2023,3 +2023,23 @@
   padding: 12px 0;
   font-size: 13px;
 }
+.ad-usage-breakdown .ad-table {
+  white-space: normal;
+  min-width: 720px;
+  font-size: 12px;
+}
+.ad-usage-breakdown .ad-table th {
+  font-size: 12px;
+}
+.ad-usage-breakdown .ad-table th[scope="row"] {
+  min-width: 12rem;
+}
+.ad-usage-breakdown .ad-table td {
+  min-width: 9rem;
+}
+.ad-usage-breakdown .ad-table small {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.5;
+  white-space: normal;
+}

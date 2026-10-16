@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T04:52:44.637Z",
+  "checkedAt": "2026-10-16T05:14:06.244Z",
   "passed": 24,
   "checks": [
     {
@@ -100,7 +100,7 @@
       "status": "PASS"
     }
   ],
-  "schemaVersion": 16,
+  "schemaVersion": 17,
   "providerRequests": 0,
   "scope": "Actual teaching handlers and isolated SQLite; synthetic OAuth accounts, server clock, source questions and confirmed grades only. No provider/credit usage, real learner records, UI/deployment or secure-exam claim.",
   "notImplemented": [

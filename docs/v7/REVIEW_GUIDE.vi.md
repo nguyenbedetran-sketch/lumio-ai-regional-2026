@@ -51,7 +51,20 @@ Lần mới dùng **cùng bộ câu hỏi đã chốt**, giữ bài/kết quả 
 
 ## 4. Báo cáo quản trị mới
 
-Trong `/admin` → **Hoạt động AI**, mở **Phân tích sử dụng theo model, tính năng và tài khoản**, chọn phạm vi rồi bấm **Xem báo cáo**. Đây là truy vấn chỉ đọc, không gọi provider. Chi phí/token chưa đo hiển thị chưa biết, không coi là 0. Thống kê chỉ gồm **kết quả yêu cầu đã ghi nhận**; có thể thiếu lượt fallback và token tiêu thụ khi lỗi, không phải hóa đơn hay sổ đầy đủ mọi lần gọi. Credit/hoàn credit dùng sổ giao dịch riêng. [Phạm vi observability](USAGE_OBSERVABILITY.md).
+Trong `/admin` → **Hoạt động AI**, mở **Phân tích sử dụng theo model, tính năng và tài khoản**, chọn loại rồi bấm **Xem báo cáo**. Đây là truy vấn chỉ đọc, không gọi provider; vẫn cần quyền admin, intended account và phiên phù hợp, response no-store.
+
+- **Kết quả yêu cầu** giữ scope outcome cũ: một logical request, có thể thiếu fallback/token khi output lỗi. Không cộng chung với số attempt rồi coi là tổng request.
+- **Từng lần gọi AI** dùng [journal F02a1/schema17](PROVIDER_ATTEMPT_ACCEPTANCE.md): mỗi dispatch routeAI text/multimodal của learner, teacher draft và summary jobs, kể cả fallback hoặc output bị loại sau phản hồi. Chưa instrument embedding/voice, không backfill lịch sử. Requested model và response model khác nhau/thiếu vẫn được phân biệt, không tự chọn một bảng giá.
+
+Token/cost chưa đo hiển thị chưa biết, không coi là 0. Mọi attempt cost hiện vẫn null vì chưa có rate được duyệt; response HTTP không chứng minh câu trả lời đúng hoặc provider đã xuất hóa đơn. Credit/hoàn credit dùng ledger riêng. Cửa sổ 7/14/31 ngày là cohort theo thời điểm prepare; **bản ghi còn giữ đầu tiên không phải ngày bắt đầu instrumentation**. Khối dung lượng đếm mọi tuổi, bao gồm unresolved nằm ngoài cửa sổ đang xem; cap 64 unresolved/account, 2048 toàn DB và 100000 tổng row không được so với riêng count 31 ngày. Terminal quá 31 ngày dọn theo đợt 200 khi có prepare, không là scheduler xóa đúng giờ; unresolved không tự purge. [Phạm vi observability](USAGE_OBSERVABILITY.md).
+
+Kiểm riêng UI usage bằng profile Edge/React/CSS/HTTP tổng hợp có nhãn, không gọi provider và không thay OAuth/public:
+
+```powershell
+pnpm test:v7:usage-ui
+```
+
+Lệnh cập nhật report/ảnh fixture local; không cần dev server. Kết quả của command phải xem report mới, không suy ra đã chạy chỉ vì có hướng dẫn.
 
 ## 5. Xem minh chứng đúng loại
 
@@ -80,5 +93,7 @@ Không cần mở dev server cho bốn fixture này. Chạy sẽ cập nhật b�
 - Chưa có pilot người học thật, đánh giá giáo viên độc lập, xác minh quan hệ/người giám hộ hoặc đo trước–sau/ghi nhớ dài hạn.
 - Thanh toán thật, ký/phát hành APK/IPA/EXE, kiểm tra thiết bị/micro/Zoom thực, tích hợp LMS/push và thi bảo mật đầy đủ chưa được nhận nghiệm thu trong đợt này.
 - Chưa có database/object storage/worker production bền vững đa máy. **Hosting miễn phí có thể mất SQLite khi ngủ, restart hoặc deploy**, gồm tài khoản/quyền, credit, phiên, sync/chỉ mục, lớp, bài nộp và lịch sử điểm. Học liệu trình duyệt là kho riêng: xuất JSON và giữ file gốc; JSON thư viện không phải backup toàn bộ dữ liệu lớp/server. Lịch sử điểm/lý do không tự có TTL 7 ngày hay endpoint tự xóa. Không tải database/backup chứa hồ sơ hoặc điểm thật lên nơi công khai.
+
+Source hiện có migration17,49 bảng/53 định nghĩa versioned và sáu guard audit/credit/grade history. Journal là prepare→terminal CAS có retention, không phải append-only financial ledger. [23 kiểm tra ops local](reports/operations-integrity.json) giữ checkpoint backup13–16 read-only/restored-copy→17; [schema16/21 lịch sử](reports/operations-integrity-schema16.json) là phép kiểm cũ riêng. Giữ artifact cũ cùng snapshot đúng version khi rollback, không trỏ code cũ vào DB17. Backup chứa cả metadata tài khoản/journal riêng; đừng đưa DB lên minh chứng. Các phép kiểm local không xác nhận migration/restore Render, integrated build/regression mới hoặc deployment public17 thành công.
 
 Đọc [quy trình thăm dò kết quả học tập chưa thực hiện](LEARNING_OUTCOMES_PROTOCOL.vi.md), [runbook vận hành](OPERATIONS_RUNBOOK.md) và [checklist đang theo dõi](CHECKLIST.md) khi đánh giá bước tiếp theo. Trạng thái triển khai và nộp chỉ đổi sau khi có kết quả xác minh riêng.

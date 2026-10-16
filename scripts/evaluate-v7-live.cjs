@@ -649,6 +649,11 @@ async function runEvaluation(
         "lib/ai/grounding.ts",
         "lib/ai/summary.ts",
         "lib/ai/quiz-option-order.ts",
+        "lib/ai/provider-attempt.ts",
+        "lib/server/provider-attempt-core.ts",
+        "lib/server/provider-attempt-schema.ts",
+        "lib/server/provider-attempt-report.ts",
+        "lib/server/store.ts",
         "lib/tutor/policy.ts",
         "lib/tutor/math.ts",
         "lib/tutor/math-exact.ts",
@@ -994,6 +999,13 @@ async function runEvaluation(
           reason: report.error || "RUN_INCOMPLETE",
         }));
     report.finishedAt = new Date().toISOString();
+    if (store) {
+      try {
+        report.providerAttemptJournal = store.getProviderAttemptBreakdown("model", 31);
+      } catch (error) {
+        report.providerAttemptJournalError = safeCode(error);
+      }
+    }
     try {
       save();
     } finally {
