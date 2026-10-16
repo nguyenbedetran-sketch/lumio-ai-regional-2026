@@ -37,6 +37,7 @@ const formatNumber = (n: number | null) =>
   n === null ? "—" : new Intl.NumberFormat("vi-VN").format(n);
 const date = (value: string) =>
   new Intl.DateTimeFormat("vi-VN", {
+    timeZone: "Asia/Ho_Chi_Minh",
     day: "2-digit",
     month: "2-digit",
     hour: "2-digit",

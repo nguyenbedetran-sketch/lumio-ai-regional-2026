@@ -1,0 +1,107 @@
+{
+  "status": "PASS",
+  "passed": 14,
+  "checkedAt": "2026-10-16T05:44:41.604Z",
+  "scope": "Actual AdminConsole renderToString under four process time zones and real Edge hydrateRoot under three client time zones; synthetic snapshot, all HTTP intercepted, zero provider calls. Public fix still requires redeployment/reverification.",
+  "sourceSha256": "c8a0f5f71bd268de20c11d7b4deb69daed9220f9fc3cdfef6b07308bfb983958",
+  "clocks": [
+    {
+      "zone": "UTC",
+      "text": "12:38 16-10",
+      "htmlSha256": "507729110478b046a405bdb8aa2cc2202b2c98db389adba2e42f7a71d367fbdc"
+    },
+    {
+      "zone": "Asia/Ho_Chi_Minh",
+      "text": "12:38 16-10",
+      "htmlSha256": "507729110478b046a405bdb8aa2cc2202b2c98db389adba2e42f7a71d367fbdc"
+    },
+    {
+      "zone": "America/New_York",
+      "text": "12:38 16-10",
+      "htmlSha256": "507729110478b046a405bdb8aa2cc2202b2c98db389adba2e42f7a71d367fbdc"
+    },
+    {
+      "zone": "Asia/Tokyo",
+      "text": "12:38 16-10",
+      "htmlSha256": "507729110478b046a405bdb8aa2cc2202b2c98db389adba2e42f7a71d367fbdc"
+    }
+  ],
+  "browser": [
+    {
+      "timezoneId": "Asia/Ho_Chi_Minh",
+      "errors": [],
+      "recoverable": [],
+      "clock": " 12:38 16-10"
+    },
+    {
+      "timezoneId": "America/New_York",
+      "errors": [],
+      "recoverable": [],
+      "clock": " 12:38 16-10"
+    },
+    {
+      "timezoneId": "Asia/Tokyo",
+      "errors": [],
+      "recoverable": [],
+      "clock": " 12:38 16-10"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Actual AdminConsole SSR is identical in UTC and Asia/Ho_Chi_Minh",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual AdminConsole SSR is identical in UTC and America/New_York",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual AdminConsole SSR is identical in UTC and Asia/Tokyo",
+      "status": "PASS"
+    },
+    {
+      "name": "Timestamp preserves Vietnamese UTC+7 display rather than hiding the mismatch",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual SVG title remains one deterministic text node",
+      "status": "PASS"
+    },
+    {
+      "name": "React hydrateRoot has no recoverable mismatch in Asia/Ho_Chi_Minh",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual AdminConsole hydrates without browser errors in Asia/Ho_Chi_Minh",
+      "status": "PASS"
+    },
+    {
+      "name": "Hydrated clock equals server output in Asia/Ho_Chi_Minh",
+      "status": "PASS"
+    },
+    {
+      "name": "React hydrateRoot has no recoverable mismatch in America/New_York",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual AdminConsole hydrates without browser errors in America/New_York",
+      "status": "PASS"
+    },
+    {
+      "name": "Hydrated clock equals server output in America/New_York",
+      "status": "PASS"
+    },
+    {
+      "name": "React hydrateRoot has no recoverable mismatch in Asia/Tokyo",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual AdminConsole hydrates without browser errors in Asia/Tokyo",
+      "status": "PASS"
+    },
+    {
+      "name": "Hydrated clock equals server output in Asia/Tokyo",
+      "status": "PASS"
+    }
+  ]
+}
