@@ -1,6 +1,6 @@
 # Persistent implementation checklist
 
-Updated: 2026-10-16. Source baseline: `31aff071`. Work branch: `codex/v6-v7-upgrade`. This file is the execution state; [FEATURE_MATRIX.md](FEATURE_MATRIX.md) is the full V6 capability scope. `DONE` means the stated scoped task passed its named gate, not that a broad product area is complete.
+Updated: 2026-10-16 after confirmed submission4. Source baseline: `31aff071`; accepted deployed checkpoint: `2e64bbb`. This file is the execution state; [FEATURE_MATRIX.md](FEATURE_MATRIX.md) is the full V6 capability scope. `DONE` means the stated scoped task passed its named gate, not that a broad product area is complete. [Final release and receipt](FINAL_RELEASE_2026-10-16.md).
 
 | ID | Task | State | Verification / next step |
 | --- | --- | --- | --- |
@@ -32,8 +32,8 @@ Updated: 2026-10-16. Source baseline: `31aff071`. Work branch: `codex/v6-v7-upgr
 | G03 | Real merchant billing/store releases/device acceptance | BLOCKED | Merchant/platform credentials, signing and physical-device validation absent; actual charges remain off |
 | G04 | Guardian and human pilot evidence | BLOCKED | Verified guardian relationships/consent and real participants absent |
 | H01 | Integrated regression and accessibility review | DONE, scoped checkpoint | Current17 test:all/TypeScript/build exit0;11 compiled HTTP groups include both admin report scopes. Admin79 browser checks/3 images; prior D04 learner/teaching390/19 images kept separately. No blanket WCAG/device claim |
-| H02 | Bounded real-provider and deployed version smoke | PARTIAL |72 actual provider HTTP calls reviewed separately; latest2 test current17 journal. Local synthetic principal only. New public deployment/OAuth smoke not performed |
-| I01 | New source/evidence package and GitHub release | PENDING | CRC, freshness, secret scan, accurate status documentation |
-| I02 | Final submission4 | HELD | Only after accepted deployed release + accessible evidence; preserve receipts1–3 |
+| H02 | Bounded real-provider and deployed version smoke | DONE, scoped checkpoint |72 local provider calls remain separate. One public AI sample on62f verified hint/source/gate/credit/journal; no repeated AI after timezone-only fix. Final2e64 Live,53 assertions/20 HTTPS GETs, Google/admin fresh-load and reload with0 observed error/warn logs. No general AI correctness or real participant claim |
+| I01 | New source/evidence package and GitHub release | DONE, scoped checkpoint | Exact deployed2e64 source895files, CRC/Gitblob equality/configured-secret scan PASS;6 exclusions documented. PDF6pages visually reviewed, evidence84files CRC PASS; Drive metadata,size,parent,anyone-reader and destination listing verified |
+| I02 | Final submission4 | DONE | Portal acknowledgement and history:4 submissions; Lần4 current for judging at12:57:27 16/10/2026 UTC+7. Receipts1–3 preserved; no fifth submission |
 
-Next: extend bounded attempt coverage to embeddings/voice, then address remaining V6 gaps and deployed acceptance. Approved price/budget and durable production storage remain separate work; no inferred charges or human evidence. Tutor repetition/clarification/domain wording and broader semantic quality remain known limits. Current17 full regression, TypeScript, production build and compiled HTTP pass; all72 actual-call transcripts and earlier errors stay preserved. No V6/V7 public deployment or final competition submission4 has been made.
+Final competition checkpoint is public and receipt4 confirmed. A discovered admin UTC/client timezone hydration mismatch was fixed with one explicit Asia/Ho_Chi_Minh formatter option;5 actual-component SSR checks and14 Edge hydration checks pass, exact2e64 CI succeeds, and public initial/reloaded admin has no observed errors/warnings in the scoped check. Remaining work includes embeddings/voice attempt coverage, approved pricing/budgets, durable production storage, real participants/devices and the remaining feature matrix. No new charges or human evidence are inferred. Earlier phase evidence is preserved; the final receipt is separate from the source/evidence bundle frozen before submission.

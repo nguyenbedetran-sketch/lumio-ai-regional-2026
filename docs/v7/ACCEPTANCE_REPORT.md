@@ -1,6 +1,6 @@
 # V6 + V7 acceptance report
 
-Status: implementation in progress. Final acceptance, deployment and competition receipt4 are not complete.
+Status: scoped competition checkpoint accepted, deployed and submitted as receipt4 at 12:57:27 16/10/2026 (UTC+7). Deployed runtime and exact successful CI: `2e64bbba32a02ca9fa1c7f3e1e1110b4633fc7f9`. See [final release evidence](FINAL_RELEASE_2026-10-16.md). The remaining V6/V7 backlog, real-user/device validation and durable production hosting are still incomplete. Sections below preserve phase-specific historical results, not a claim every feature is complete.
 
 ## Phase A — audit and baseline
 
