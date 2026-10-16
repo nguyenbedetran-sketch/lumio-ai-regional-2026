@@ -3,6 +3,11 @@ const fs = require("node:fs");
 const path = require("node:path");
 const crypto = require("node:crypto");
 const { DatabaseSync } = require("node:sqlite");
+// Node24's native type stripping reads the exact same contract as app health.
+// No development compiler, migration execution or source secrets are needed.
+const {
+  assertDatabaseIntegrity,
+} = require("../lib/server/database-integrity.ts");
 function inspect(filename) {
   const file = path.resolve(filename);
   if (!fs.statSync(file).isFile()) throw Error("SOURCE_NOT_FILE");
@@ -12,53 +17,14 @@ function inspect(filename) {
       throw Error("INTEGRITY_FAILED");
     if (db.prepare("PRAGMA foreign_key_check").all().length)
       throw Error("FOREIGN_KEYS_FAILED");
-    const versions = db
-      .prepare("SELECT version FROM schema_migrations ORDER BY version")
-      .all()
-      .map((r) => Number(r.version));
-    if (versions.length !== 13 || versions.some((v, i) => v !== i + 1))
+    const { schemaVersion } = assertDatabaseIntegrity(db, {
+      allowPrefix: true,
+    });
+    // Keep the verified pre-upgrade snapshot usable without migrating it from
+    // an operator inspect/restore command. Unreviewed old/future schemas fail.
+    if (![13, 14, 15, 16, 17].includes(schemaVersion))
       throw Error("SCHEMA_NOT_SUPPORTED");
-    for (const table of [
-      "users",
-      "identities",
-      "feature_flags",
-      "billing_accounts",
-      "billing_reservations",
-      "billing_ledger",
-      "ai_usage",
-      "mobile_sessions",
-      "tutor_sessions",
-      "tutor_turns",
-      "runtime_rate_windows",
-      "runtime_ai_leases",
-      "sync_snapshots",
-      "sync_operations",
-      "rag_documents",
-      "rag_chunks",
-      "rag_snapshots",
-      "summary_jobs",
-      "summary_job_parts",
-      "teacher_applications",
-      "teacher_credentials",
-      "teacher_application_operations",
-      "teaching_organizations",
-      "teaching_classes",
-      "teaching_class_teachers",
-      "teaching_enrollments",
-      "teaching_groups",
-      "teaching_group_members",
-      "teaching_invites",
-      "teaching_content",
-      "teaching_assignments",
-      "teaching_assignment_targets",
-      "teaching_submissions",
-      "teaching_announcements",
-      "teaching_events",
-      "teaching_operations",
-      "teaching_preferences",
-    ])
-      db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
-    return { integrity: "ok", schemaVersion: 13 };
+    return { integrity: "ok", schemaVersion };
   } finally {
     db.close();
   }

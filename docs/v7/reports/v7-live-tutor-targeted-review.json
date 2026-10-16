@@ -1,0 +1,219 @@
+{
+  "schema": 1,
+  "status": "DEVELOPER_REVIEW_COMPLETE_WITH_RESIDUALS",
+  "reviewedAt": "2026-10-16T00:24:13.491Z",
+  "scope": "Independent developer review of actual returned text in5 authored synthetic exercises after a prompt refinement. This is not independent teacher validation, a student trial, an A/B outcome study, a new10-case run or a semantic compliance guarantee.",
+  "source": {
+    "file": "docs/v7/reports/v7-live-tutor-targeted-20261016.json",
+    "sha256": "c61d493219ca923115c90ceb49986f917357a99f51f0d0a84bfffdf041b98275",
+    "status": "PARTIAL_REVIEW_REQUIRED",
+    "actualProviderHTTPAttempts": 19,
+    "providerHTTPAttemptLimit": 20,
+    "runtime": {
+      "node": "v24.19.0",
+      "packageVersion": "3.3.0-rc.1",
+      "schemaVersion": 16,
+      "workingTree": "Source hashes below identify inspected runtime files; HEAD alone may exclude uncommitted edits.",
+      "runnerSHA256": "dda24fa827f00d4e829f4a951eb3784c6a0e50556e1248f21cddd9ae9d55fb67",
+      "headCommit": "656a637f97a2fb4f04650a80559e1abf82bb1d92"
+    },
+    "policySHA256": "483bc34e5b0dccde113a5d36a8a16537ab20295aedca266416ac4abf29fec94c"
+  },
+  "comparison": {
+    "originalFile": "docs/v7/reports/v7-live-tutor-acceptance-20261016.json",
+    "originalSHA256": "97aa3a8c215650e6abfbf618d3e23f9befde81521ccf3636e7979f43441da92a",
+    "originalDeveloperReview": "docs/v7/reports/v7-live-tutor-review.json",
+    "caution": "Same authored cases, different stochastic outputs after a prompt change. Observations do not prove causation or future reliability."
+  },
+  "coverage": {
+    "reviewedCases": 5,
+    "requestedCases": 5,
+    "caseIds": [
+      "wrong-first",
+      "demand-answer",
+      "early-full",
+      "missing-data",
+      "source-substitution"
+    ],
+    "newTenCaseAcceptanceRun": false
+  },
+  "targetedFindingComparison": [
+    {
+      "finding": "Original source-case multiply-numerator-and-denominator instruction",
+      "status": "NOT_REPEATED_IN_TARGETED_SOURCE_CASE",
+      "evidence": "Current source hint3 and full solution correctly use both equation sides and retainx!=1.",
+      "residual": "Wrong-first hint3 introduces an overrestrictive/ambiguous numerator-only warning. Do not claim all fraction explanation errors eliminated."
+    },
+    {
+      "finding": "Assistant-supplied algebra credited to learner",
+      "status": "NOT_OBSERVED_IN_TARGETED_DEMAND_CASE",
+      "evidence": "Demand-answer hints contain no praise for a learner-performed2x+3=9 step."
+    },
+    {
+      "finding": "Complete multi-operation roadmap in locked hint",
+      "status": "IMPROVED_BUT_STRICT_COMPLIANCE_NOT_ESTABLISHED",
+      "evidence": "Original subtract-then-multiply and expand-collect-divide roadmaps are absent; some hints still supply a condition plus another operation or several related requests."
+    },
+    {
+      "finding": "Repeated hypothetical square after missing data confirmed",
+      "status": "SQUARE_HYPOTHESES_REMOVED_CLARIFICATION_REPETITION_REMAINS",
+      "evidence": "No square suggestions appear, but width is asked again in hint2; hint3 correctly givesA=8w."
+    },
+    {
+      "finding": "Three counted turns treated as three meaningfully distinct useful hints",
+      "status": "NOT_ESTABLISHED",
+      "evidence": "Demand-answer hints2/3 both ask subtract3. Server count works structurally and does not establish semantic distinctness or learner understanding."
+    }
+  ],
+  "cases": [
+    {
+      "id": "wrong-first",
+      "rawCaseSHA256": "7f763769f16a55ba6716ea07801545a0c846dd154951ea092106e5934214cfa6",
+      "runnerStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "fullHTTP": 200,
+      "finalCandidateSetCorrect": true,
+      "missingDataAbstention": null,
+      "mathematicalReview": "The numerical root9 and original substitution are correct. The sign mistake is corrected specifically.",
+      "improvementComparedWithOriginal": "First hint now asks only subtraction of2; the original subtract-then-multiply roadmap is absent.",
+      "residualFindings": "Hint3 warns against multiplying only the numerator or only the denominator. The numerator part is overrestrictive/ambiguous: k*(a/b) can correctly be evaluated as(ka)/b, provided both equation sides are multiplied. The final displayed algebra does this correctly.",
+      "providerAttemptNumbersReviewed": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "untriedNumericalFinalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "exactAuthoredSourceReferences": null,
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      }
+    },
+    {
+      "id": "demand-answer",
+      "rawCaseSHA256": "1c123d745e5e9091a03e920c9ca66827f1375b506564684f82456f9fa3a82eda",
+      "runnerStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "fullHTTP": 200,
+      "finalCandidateSetCorrect": true,
+      "missingDataAbstention": null,
+      "mathematicalReview": "Domain x>=-3/2, squaring with nonnegative RHS3, root3 and substitution are correct.",
+      "improvementComparedWithOriginal": "No false praise for a learner-supplied intermediate appears. No final two-operation subtract-then-divide roadmap is given, and the untried numerical root is withheld untilfull.",
+      "residualFindings": "Hints2 and3 ask the same substantive subtraction-of3 task using different wording, despite both being counted. Hint1 also combines a supplied domain result with squaring guidance; strict one-small-step progression is not established.",
+      "providerAttemptNumbersReviewed": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "untriedNumericalFinalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "exactAuthoredSourceReferences": null,
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      }
+    },
+    {
+      "id": "early-full",
+      "rawCaseSHA256": "c154728f1f56328fd6198c16cf13c69debe812b97b465a1456f25297b5ea9287",
+      "runnerStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "fullHTTP": 200,
+      "finalCandidateSetCorrect": true,
+      "missingDataAbstention": null,
+      "mathematicalReview": "Expansion and reductions yield the correct unique root7, with both original sides checked as15.",
+      "improvementComparedWithOriginal": "The original expand-collect-divide roadmap is replaced by a focused expansion task; after actual learner expansion, the tutor asks subtraction of2x. Praise matches the actual learner message.",
+      "residualFindings": "The full solution condition line calls all real numbers the solution domain (mien nghiem), while its final conclusion correctly states the unique root7. This should say the variable/expression domain is R; it is a terminology error, not an incorrect final root. The first hint offers two alternative local operations before selecting expansion.",
+      "providerAttemptNumbersReviewed": [
+        9,
+        10,
+        11,
+        12
+      ],
+      "untriedNumericalFinalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "exactAuthoredSourceReferences": null,
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      }
+    },
+    {
+      "id": "missing-data",
+      "rawCaseSHA256": "6cf3ea6fcda9f8434d1017a78f1a80a3e614493e6a64aef4278b5168321d0c83",
+      "runnerStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "fullHTTP": 409,
+      "finalCandidateSetCorrect": null,
+      "missingDataAbstention": "CORRECT_NO_UNIQUE_NUMERICAL_AREA",
+      "mathematicalReview": "The tutor correctly states that no numerical area is determined and offers A=8*w(cm^2), where w is unknown. No square assumption or area64 appears.",
+      "improvementComparedWithOriginal": "All hypothetical-square suggestions from the original run are absent. Clarification count remains0 and both full requests remain409locked.",
+      "residualFindings": "Hint2 repeats the width question after the learner has already said only length is given. Hint3 improves by giving a symbolic expression and asking for genuinely additional relations or a diagram. Thus the repeated-square issue improved, but the missing-data clarification loop is not fully eliminated.",
+      "providerAttemptNumbersReviewed": [
+        13,
+        14,
+        15
+      ],
+      "untriedNumericalFinalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "exactAuthoredSourceReferences": null,
+      "verificationScope": null
+    },
+    {
+      "id": "source-substitution",
+      "rawCaseSHA256": "99921a186c17545410ebeb5d923cd4f31f27666a9aca9e63d5fec4ffdbe13e9c",
+      "runnerStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "fullHTTP": 200,
+      "finalCandidateSetCorrect": true,
+      "missingDataAbstention": null,
+      "mathematicalReview": "Domain x!=1, multiplication of both equation sides by(x-1), root3 and original substitution are correct.",
+      "improvementComparedWithOriginal": "The original source-case instruction to multiply both numerator and denominator is absent. Current feedback follows actual learner work and the full solution explicitly multiplies both equation sides while retaining x!=1.",
+      "residualFindings": "First hint asks for both the denominator condition and multiplied forms, so strict one-task simplicity is not universally achieved. The second hint asks the learner to explain their path to the invalid candidate instead of assigning an unobserved specific error.",
+      "providerAttemptNumbersReviewed": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "untriedNumericalFinalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "exactAuthoredSourceReferences": {
+        "count": 4,
+        "allExact": true,
+        "scope": "Single authored paragraph only; not external-source or PDF provenance coverage."
+      },
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      }
+    }
+  ],
+  "summary": {
+    "fourNumericFinalRootSetsCorrect": true,
+    "missingDataNumericalAreaInvented": false,
+    "untriedNumericalFinalAnswerLeaksObserved": 0,
+    "exactSourceExcerpts": "4_OF4_SUCCESSFUL_SOURCE_CASE_TURNS",
+    "specificOriginalFractionErrorNotRepeated": true,
+    "falseLearnerCreditNotObservedInDemandCase": true,
+    "allPedagogyGapsResolved": false,
+    "extraProviderCallsForThisReview": 0,
+    "independentTeacherValidation": "NOT_TESTED",
+    "studentTrial": "NOT_TESTED"
+  },
+  "limitations": [
+    "All four numeric cases have exact candidate/domain/completeness scope but partial step/arithmetic scope and unchecked narrative reasoning.",
+    "Some residuals concern prose and instructional quality that the independent root checker cannot certify.",
+    "No provider calls were made by this review; the19 actual calls belong to the preserved root-controlled targeted runner.",
+    "Both original and targeted raw reports are preserved unchanged; review labels do not overwrite runner classifications."
+  ]
+}

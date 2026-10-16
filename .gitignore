@@ -11,6 +11,7 @@ oauth*.json
 .backups/
 *.sqlite*
 .playwright-cli/
+work/
 tooling/supabase-config/
 
 # Source companions: generated artifacts remain local.

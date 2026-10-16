@@ -1,12 +1,15 @@
-.tw-shell {
+.tw-shell,
+.tw-draft-boundary {
   --tw-bg: #f5f5f0;
   --tw-paper: #fffefa;
   --tw-ink: #203e34;
-  --tw-muted: #718077;
+  --tw-muted: #5c6a61;
   --tw-line: #e0e6dd;
   --tw-green: #244d3d;
   --tw-lime: #d9ecac;
   --tw-indigo: #625eb7;
+}
+.tw-shell {
   color: var(--tw-ink);
   background: var(--tw-bg);
   min-height: 100dvh;
@@ -136,10 +139,167 @@
 .tw-sidebar nav button svg {
   flex-shrink: 0;
 }
-.tw-sidebar nav button span {
+.tw-sidebar nav button .tw-nav-count {
   margin-left: auto;
   font-size: 10px;
   color: #929c84;
+}
+.tw-primary-nav {
+  display: grid;
+  gap: 5px;
+}
+.tw-sidebar nav .tw-nav-short {
+  display: none;
+}
+.tw-sidebar nav .tw-nav-full {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+.tw-more-nav {
+  margin-block: 12px;
+  border-top: 1px solid var(--tw-line);
+  border-bottom: 1px solid var(--tw-line);
+  padding-block: 6px;
+}
+.tw-more-nav > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 8px 13px;
+  cursor: pointer;
+  color: #435d4c;
+  font-size: 12px;
+  list-style: none;
+}
+.tw-more-nav > summary::-webkit-details-marker {
+  display: none;
+}
+.tw-more-nav[open] > summary svg {
+  transform: rotate(90deg);
+}
+.tw-secondary-nav {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+.tw-secondary-nav h2 {
+  font-size: 11px;
+  color: #5b6d61;
+  font-weight: 600;
+  padding: 7px 13px 3px;
+}
+.tw-account-nav {
+  margin-top: 8px;
+}
+.tw-sidebar nav button {
+  min-height: 44px;
+  color: #526959;
+}
+.tw-hero.tw-hero-compact {
+  display: block;
+  padding: 22px 25px;
+  border: 1px solid var(--tw-line);
+  background: var(--tw-paper);
+  color: var(--tw-ink);
+}
+.tw-hero-compact .tw-eyebrow {
+  color: #5d7158;
+}
+.tw-hero-compact h2 {
+  font-size: 21px;
+  margin: 9px 0;
+}
+.tw-hero-compact p {
+  color: #536b5c;
+  max-width: 760px;
+}
+.tw-discard-dialog {
+  max-width: 520px;
+  padding: 25px;
+}
+.tw-discard-dialog h2 {
+  font-size: 23px;
+  margin-bottom: 14px;
+}
+.tw-discard-dialog p {
+  color: #546b5d;
+}
+.tw-tabs button {
+  min-height: 44px;
+}
+.tw-text-button {
+  min-height: 36px;
+}
+.tw-tab-panel {
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .tw-sidebar nav {
+    display: block;
+    overflow: visible;
+    margin: 0;
+  }
+  .tw-primary-nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+  }
+  .tw-sidebar nav .tw-primary-nav button {
+    min-height: 64px;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+    padding: 9px 3px;
+    font-size: 11px;
+    position: relative;
+  }
+  .tw-sidebar nav .tw-primary-nav .tw-nav-full {
+    display: none;
+  }
+  .tw-sidebar nav .tw-primary-nav .tw-nav-short {
+    display: block;
+    color: inherit;
+    font: inherit;
+  }
+  .tw-sidebar nav .tw-nav-count {
+    position: absolute;
+    top: 3px;
+    right: 5px;
+  }
+  .tw-more-nav {
+    margin: 8px 0 0;
+  }
+  .tw-secondary-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .tw-sidebar nav .tw-secondary-nav button,
+  .tw-sidebar nav .tw-account-nav button {
+    min-height: 44px;
+    white-space: normal;
+    width: 100%;
+    font-size: 12px;
+  }
+  .tw-account-nav {
+    margin-top: 4px;
+  }
+  .tw-hero.tw-hero-compact {
+    padding: 20px;
+  }
+  .tw-hero-compact h2 {
+    font-size: 21px;
+  }
+  .tw-text-button,
+  .tw-icon-button {
+    min-height: 44px;
+  }
+  .tw-icon-button {
+    min-width: 44px;
+  }
 }
 .tw-sidebar-bottom {
   margin-top: auto;
@@ -302,7 +462,7 @@
 .tw-button.danger {
   background: #f8eeea;
   border-color: #ead4ca;
-  color: #a16b59;
+  color: #81513e;
 }
 .tw-button.danger:hover:not(:disabled) {
   background: #f0e2da;
@@ -849,8 +1009,8 @@
   background: #f6f7f0;
   border: 1px solid var(--tw-line);
   border-radius: 9px;
-  color: #8a967e;
-  font-size: 11px;
+  color: #50604b;
+  font-size: 13px;
   line-height: 1.8;
 }
 .tw-editor {
@@ -1202,4 +1362,76 @@
   .tw-table {
     white-space: normal;
   }
+}
+/* V7 navigation keeps secondary tools reachable without a desktop strip on phones. */
+.tw-dialog.tw-discard-dialog {
+  padding: 25px;
+  max-width: 520px;
+}
+.tw-tab-panel {
+  display: grid;
+  gap: 22px;
+}
+.tw-hero.tw-hero-compact .tw-eyebrow {
+  color: #526b52;
+}
+.tw-hero.tw-hero-compact h2 {
+  font-size: 21px;
+}
+.tw-hero.tw-hero-compact p {
+  color: #536b5c;
+}
+@media (max-width: 520px) {
+  .tw-dialog .tw-form-footer {
+    flex-wrap: wrap;
+  }
+  .tw-discard-dialog .tw-form-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tw-discard-dialog .tw-form-footer button {
+    white-space: normal;
+  }
+}
+@media (max-width: 800px) {
+  .tw-sidebar nav {
+    display: block;
+    overflow: visible;
+  }
+  .tw-sidebar nav .tw-primary-nav {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .tw-sidebar nav .tw-more-nav,
+  .tw-sidebar nav .tw-account-nav {
+    width: 100%;
+  }
+  .tw-sidebar nav .tw-secondary-nav .tw-nav-count {
+    position: static;
+    margin-left: auto;
+  }
+}
+@media (max-width: 520px) {
+  .tw-main > .tw-topbar .tw-breadcrumb {
+    display: none;
+  }
+  .tw-main > .tw-topbar .tw-topbar-actions {
+    width: 100%;
+    min-width: 0;
+  }
+  .tw-main > .tw-topbar select {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+}
+/* Native dialogs can be opened from a table cell; do not inherit its no-wrap text. */
+.tw-dialog {
+  white-space: normal;
+}
+[data-grade-history],
+[data-grade-history] > *,
+[data-grade-history] .tw-card-list {
+  min-width: 0;
+  overflow-wrap: anywhere;
 }

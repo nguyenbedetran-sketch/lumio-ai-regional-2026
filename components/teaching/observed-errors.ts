@@ -18,7 +18,11 @@ export function observedErrors(
     }
   >();
   for (const submission of data.submissions) {
-    if (submission.status !== "published") continue;
+    if (
+      submission.status !== "published" ||
+      submission.countsTowardAnalytics === false
+    )
+      continue;
     const assignment = data.assignments.find(
       (a) => a.id === submission.assignmentId,
     );

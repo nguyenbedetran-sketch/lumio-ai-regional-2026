@@ -39,7 +39,12 @@ export type ContentQuality = {
   structuralChecks: boolean;
   citedItems: number;
   totalItems: number;
-  issues: ("missing-source" | "unlocated-media" | "semantic-review")[];
+  issues: (
+    | "missing-source"
+    | "unlocated-media"
+    | "semantic-review"
+    | "positional-options-preserved"
+  )[];
 };
 
 export function parseSourceEvidence(

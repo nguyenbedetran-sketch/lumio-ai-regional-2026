@@ -2,11 +2,11 @@ import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lumio_mobile/core/app_store.dart';
 import 'package:lumio_mobile/core/repository.dart';
 import 'package:lumio_mobile/main.dart';
+import 'test_fonts.dart';
 
 void main() {
   testWidgets(
@@ -16,25 +16,7 @@ void main() {
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
-      final fonts = Directory(
-        '../../work/toolchains/flutter/bin/cache/artifacts/material_fonts',
-      );
-      await tester.runAsync(() async {
-        if (fonts.existsSync()) {
-          for (final pair in [
-            ('Roboto', 'roboto-regular.ttf'),
-            ('MaterialIcons', 'materialicons-regular.otf'),
-          ]) {
-            final loader = FontLoader(pair.$1)
-              ..addFont(
-                File(
-                  '${fonts.path}/${pair.$2}',
-                ).readAsBytes().then((b) => ByteData.sublistView(b)),
-              );
-            await loader.load();
-          }
-        }
-      });
+      await tester.runAsync(loadLumioTestFonts);
       final store = AppStore(PreviewRepository())
         ..ready = true
         ..onboarded = true
@@ -58,9 +40,11 @@ void main() {
                 as RenderRepaintBoundary;
         final image = await boundary.toImage(pixelRatio: 2);
         final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-        await Directory('outputs').create(recursive: true);
+        await Directory(
+          '../../docs/v7/evidence/native',
+        ).create(recursive: true);
         await File(
-          'outputs/ui-preview.png',
+          '../../docs/v7/evidence/native/ui-preview.png',
         ).writeAsBytes(bytes!.buffer.asUint8List());
         image.dispose();
       });
@@ -94,7 +78,7 @@ void main() {
         final image = await boundary.toImage(pixelRatio: 2);
         final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
         await File(
-          'outputs/plugin-upgrade-share-preview.png',
+          '../../docs/v7/evidence/native/plugin-upgrade-share-preview.png',
         ).writeAsBytes(bytes!.buffer.asUint8List());
         image.dispose();
       });

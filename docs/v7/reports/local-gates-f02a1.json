@@ -1,0 +1,123 @@
+{
+  "schema": 1,
+  "status": "PASS_SCOPED_LOCAL_CHECKPOINT",
+  "recordedAt": "2026-10-16T05:22:22.011738+00:00",
+  "packageVersion": "3.3.0-rc.1",
+  "schemaVersion": 17,
+  "parentCommit": "33a79f888385b9f7a733314cb4e27472cf64c4d1",
+  "sourceState": "Parent plus uncommitted F02a1 metadata journal, admin scope, privacy and tests. Final build includes privacy disclosure. Runner-only journal-export assertions were focused-rechecked after full regression; no subsequent product logic change.",
+  "commands": [
+    {
+      "command": "pnpm test:all",
+      "exitCode": 0,
+      "privateLogName": "phase-f02-regression.log",
+      "privateLogSHA256": "4c0b01cac9c09e249222789fe4c08de4ec04ef671d686bd04b136865950da5cd"
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0,
+      "privateLogName": "phase-f02-build-final.log",
+      "privateLogSHA256": "1be3eedd82ef0eec7ad465991d44c364f1f5985295ad0ed7e90d0a4176057705"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "privateLogName": "phase-f02-typecheck.log",
+      "privateLogSHA256": "b44f2360adc3011eb0f76b39bc9515c47ea67dbc0d214e076a9a018b7a780957"
+    },
+    {
+      "command": "node scripts/test-teaching-production.cjs",
+      "exitCode": 0,
+      "privateLogName": "phase-f02-http-final.log",
+      "privateLogSHA256": "9b754b6fbfbd76e84e7c0a9f385c623c650cac211d7b364065e57d51c3fbce03"
+    },
+    {
+      "command": "node tests/v7-live-runner.cjs",
+      "exitCode": 0,
+      "privateLogName": "phase-f02-live-runner.log",
+      "privateLogSHA256": "16ad1b8ac7a5d3a1eda1aced194b14105c62e351ed382892e45f2ee244288fcd"
+    }
+  ],
+  "actualLiveRuns": [
+    {
+      "file": "v7-live-tutor-acceptance-20261016.json",
+      "actualProviderHTTPAttempts": 39,
+      "status": "PARTIAL_REVIEW_REQUIRED",
+      "sha256": "97aa3a8c215650e6abfbf618d3e23f9befde81521ccf3636e7979f43441da92a"
+    },
+    {
+      "file": "v7-live-tutor-targeted-20261016.json",
+      "actualProviderHTTPAttempts": 19,
+      "status": "PARTIAL_REVIEW_REQUIRED",
+      "sha256": "c61d493219ca923115c90ceb49986f917357a99f51f0d0a84bfffdf041b98275"
+    },
+    {
+      "file": "v7-live-content-20261016.json",
+      "actualProviderHTTPAttempts": 6,
+      "status": "PARTIAL_REVIEW_REQUIRED",
+      "sha256": "37eb74bb0d9b247beb38dceeeb1e9b9f4884c1e230d809bfba75e71ea382da0e"
+    },
+    {
+      "file": "v7-live-content-targeted-20261016.json",
+      "actualProviderHTTPAttempts": 6,
+      "status": "PARTIAL_REVIEW_REQUIRED",
+      "sha256": "643df53502ef9a949b9d418e8723b026e802c85e587319df2602b4d3fa846145"
+    },
+    {
+      "file": "v7-live-journal-smoke-20261016.json",
+      "actualProviderHTTPAttempts": 2,
+      "status": "STOPPED",
+      "sha256": "329cf9576fa7f7a6ba3f46f042ed083dea70c7c9f99b34427fff8a9a9b817c03"
+    }
+  ],
+  "totalActualProviderHTTPAttempts": 72,
+  "currentSmoke": {
+    "actualHTTPAttempts": 2,
+    "cap": 2,
+    "runnerStatus": "STOPPED",
+    "cliExitCode": 1,
+    "stoppedReason": "EVALUATION_PROVIDER_CAP",
+    "notTestedCases": 4,
+    "notACompleteBenchmark": true,
+    "journalMatchesCapturedMetadata": true,
+    "review": "docs/v7/reports/v7-live-journal-smoke-review.json",
+    "reviewSHA256": "50cbd0b62016c0c82173b8d4b4aa23a8a559d4ebc1832c9fb1b5f53508ed2c22"
+  },
+  "scopedTests": {
+    "primaryProviderAttempts": 25,
+    "independentAdversarial": 15,
+    "adminAttemptReport": 12,
+    "operationsCurrent": 23,
+    "legacyOperations": 9,
+    "adminBrowser": 79,
+    "compiledHTTPGroups": 11
+  },
+  "browserEvidence": {
+    "file": "docs/v7/qa-usage-ui-report.json",
+    "sha256": "51d0b71574746c024088ed8954f1886b15aaf487614304c669f24cb48464538e",
+    "images": 3,
+    "syntheticAccountsAndHTTP": true
+  },
+  "selectedSourceHashes": {
+    "app/api/ai/route.ts": "ac73fdab4ed4b7949eb1d8bfae6448809d8ea643f4d3548371c68daf4586d88f",
+    "app/api/admin/usage/route.ts": "0c17691a234b3f47df77a38c7f658e2051681471f0297c3450b60cea9653acac",
+    "app/privacy/page.tsx": "6753c06f22fe80160ac7efe006ed095e0048ce2c7374a3013f116811b6e3e799",
+    "app/data-deletion/page.tsx": "4b956f6d5eadb76a02661451c17faa0541272bd52e7c8640882df533f5518a81",
+    "lib/ai/router.ts": "505c15a9f6015c645734e2b07b967b509d3b308af4f2bd6d51c7ebca36961fa6",
+    "lib/ai/provider-attempt.ts": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e",
+    "lib/server/provider-attempt-core.ts": "cec612694fdc6e3ac3c863a777f0fbfd90c8bda967fdf17b71089681d96bddd5",
+    "lib/server/provider-attempt-schema.ts": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c",
+    "lib/server/provider-attempt-report.ts": "65f6a12506f100543057a2bd4a1f16232f111b72d8f2db9f8aacaa2156b99c8b",
+    "lib/server/database-integrity.ts": "ab79dac00ea85ff2ad91fafaff599103cbba2196b2c9377f2fc6a8832c5e840c",
+    "components/admin/usage-breakdown.tsx": "d1708672fb0f3cfca81bd4e8abc706f901ec4ef65117071ecb1ddff86cf7d16d",
+    "app/admin/admin.css": "95245b45c2d2c6760d39dc7b377f41ed7c3ef3500547582251319173908da7c1"
+  },
+  "limits": [
+    "Selected hashes are not a full transitive dependency manifest.",
+    "Local synthetic principals are not OAuth/public acceptance; browser HTTP is intercepted.",
+    "Text/multimodal dispatches only; voice/embedding/rates/budgets/invoice/durable hosting remain incomplete.",
+    "No general AI correctness, physical-device or learning outcome claim.",
+    "No new public deployment or competition submission4.",
+    "Lint is unconfigured; existing local pnpm layout warning retained."
+  ]
+}

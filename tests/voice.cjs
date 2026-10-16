@@ -5,6 +5,11 @@ const fs = require("node:fs"),
   ts = require("typescript");
 const root = path.resolve(__dirname, ".."),
   cache = new Map();
+const browserIntentStorage = new Map();
+Object.defineProperty(globalThis, "sessionStorage", { configurable: true, value: {
+  getItem: (key) => browserIntentStorage.get(key) ?? null,
+  setItem: (key, value) => browserIntentStorage.set(key, value),
+} });
 let session = null;
 function load(relative) {
   const filename = path.resolve(root, relative);
@@ -105,7 +110,14 @@ const snapshot = (user) =>
 const post = (body, signal) =>
   new Request(origin + "/api/voice", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Origin: origin },
+    headers: {
+      "Content-Type": "application/json",
+      Origin: origin,
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
+    },
     body: JSON.stringify(body),
     signal,
   });
@@ -119,7 +131,13 @@ function recording(
   data.set("file", new File([body], "sample.webm", { type: mime }));
   return new Request(origin + "/api/voice", {
     method: "POST",
-    headers: { Origin: origin },
+    headers: {
+      Origin: origin,
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
+    },
     body: data,
   });
 }

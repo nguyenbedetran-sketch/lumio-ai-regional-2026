@@ -1,0 +1,330 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T00:37:43.613Z",
+  "appVersion": "3.3.0-rc.1",
+  "command": "pnpm test:v7:ui",
+  "commandExitCode": 0,
+  "browserChecks": {
+    "teacher": 129,
+    "learner": 172,
+    "gradeHistory": 47,
+    "practice": 42,
+    "totalAcrossSuites": 390
+  },
+  "additionalChecks": {
+    "sharedTeachingSSRAndPure": 32,
+    "practiceFocusedSSRAndPure": 15,
+    "learnerSyntax": 6,
+    "note": "The shared 32-check teaching fixture is reused by three suites and is counted once here."
+  },
+  "suites": [
+    {
+      "scope": "teacher",
+      "report": "docs/v7/qa-teaching-ui-report.json",
+      "sha256": "93566efd72d6d6f11ebf9cb7fb5a9bf86c783823779f0b45ac8ec3e8d0ecf85f",
+      "checkedAt": "2026-10-16T00:37:09.225Z",
+      "browserChecks": 129,
+      "unitChecks": 32,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 0,
+      "screenshots": [
+        "docs/v7/qa-teaching-desktop.png",
+        "docs/v7/qa-teaching-tablet.png",
+        "docs/v7/qa-teaching-mobile.png",
+        "docs/v7/qa-classroom-mobile.png"
+      ]
+    },
+    {
+      "scope": "learner",
+      "report": "docs/v7/qa-learner-ui-report.json",
+      "sha256": "4ae60690a27030fc1e2387f772e929081b183c5b03a830269561d9467b057985",
+      "checkedAt": "2026-10-16T00:37:26.101Z",
+      "browserChecks": 172,
+      "unitChecks": 0,
+      "syntaxChecks": 6,
+      "reusedBaselineChecks": 0,
+      "screenshots": [
+        "docs/v7/qa-learner-desktop.png",
+        "docs/v7/qa-learner-source-location.png",
+        "docs/v7/qa-learner-source-mobile.png",
+        "docs/v7/qa-learner-tutor-mobile.png",
+        "docs/v7/qa-learner-tablet.png",
+        "docs/v7/qa-settings-desktop.png",
+        "docs/v7/qa-settings-mobile.png",
+        "docs/v7/qa-settings-expanded-mobile.png",
+        "docs/v7/qa-settings-keyboard-focus.png"
+      ]
+    },
+    {
+      "scope": "gradeHistory",
+      "report": "docs/v7/qa-grade-history-ui-report.json",
+      "sha256": "85d75bf0a04c2eeb63794a5a842731377f3a41b7cf6c0631a185579d5b67420b",
+      "checkedAt": "2026-10-16T00:37:34.704Z",
+      "browserChecks": 47,
+      "unitChecks": 0,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 32,
+      "screenshots": [
+        "docs/v7/qa-grade-history-teacher-desktop.png",
+        "docs/v7/qa-grade-history-student-mobile.png"
+      ]
+    },
+    {
+      "scope": "practice",
+      "report": "docs/v7/qa-practice-ui-report.json",
+      "sha256": "0f764c776e2f649ea1a226b0ed9c9914efaeccf2f072cc60cae7358a0cf440e9",
+      "checkedAt": "2026-10-16T00:37:43.613Z",
+      "browserChecks": 42,
+      "unitChecks": 15,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 32,
+      "screenshots": [
+        "docs/v7/qa-practice-teacher-desktop.png",
+        "docs/v7/qa-practice-review-desktop.png",
+        "docs/v7/qa-practice-review-mobile.png",
+        "docs/v7/qa-practice-student-mobile.png"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "docs/v7/qa-teaching-desktop.png",
+      "width": 1440,
+      "height": 1040,
+      "bytes": 88869,
+      "sha256": "377a8c286f2b896a245b0974cfc84bae6e3d5eb1c619748331e5cd7e3344b8de",
+      "modifiedAt": "2026-10-16T00:37:08.139439+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-teaching-tablet.png",
+      "width": 768,
+      "height": 1638,
+      "bytes": 78045,
+      "sha256": "dea2100cfbe2c4d7f40a980e94b57d64565cdc3e2eed65b7eafaa5fdfabe679e",
+      "modifiedAt": "2026-10-16T00:37:08.215610+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-teaching-mobile.png",
+      "width": 390,
+      "height": 1741,
+      "bytes": 72705,
+      "sha256": "0731ea473e2a0811530c998836e9522dd352d23fb1a0259179a6a539b2c7fe30",
+      "modifiedAt": "2026-10-16T00:37:08.274635+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-classroom-mobile.png",
+      "width": 390,
+      "height": 981,
+      "bytes": 43430,
+      "sha256": "cdc141137b3f31a5a9cc61d9acb880e790ca15453aea89bf9275a5df0f7315dd",
+      "modifiedAt": "2026-10-16T00:37:08.399817+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-learner-desktop.png",
+      "width": 1440,
+      "height": 2931,
+      "bytes": 515938,
+      "sha256": "1a9adf5e746357fce1e5d492ca51d9b87205238f96ea473c27d2d3eb59398f0d",
+      "modifiedAt": "2026-10-16T00:37:21.932794+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-learner-source-location.png",
+      "width": 1440,
+      "height": 1338,
+      "bytes": 106706,
+      "sha256": "1cc05051675b8db913abfec0d64dc1ef04139dcac0631ceeaa959e52ae56de40",
+      "modifiedAt": "2026-10-16T00:37:22.780316+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-learner-source-mobile.png",
+      "width": 390,
+      "height": 1316,
+      "bytes": 48930,
+      "sha256": "986ff063762eb375956d2cffe4eded66cd5899274494c627f5877e73afc07f66",
+      "modifiedAt": "2026-10-16T00:37:22.882110+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-learner-tutor-mobile.png",
+      "width": 390,
+      "height": 3386,
+      "bytes": 203505,
+      "sha256": "f41be6d36c84c40373c4e224e157bb7540d8dee4a1a24ae1a28548e35cd31a0d",
+      "modifiedAt": "2026-10-16T00:37:24.024721+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-learner-tablet.png",
+      "width": 768,
+      "height": 3207,
+      "bytes": 265236,
+      "sha256": "056a7a32c593b0fce0b58e3e20e4c636deb6e80aa0b139dab7830d0da71821f8",
+      "modifiedAt": "2026-10-16T00:37:24.163856+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-settings-desktop.png",
+      "width": 1440,
+      "height": 1565,
+      "bytes": 171128,
+      "sha256": "2ba4754cf4da16e9413cbcc0cfe529848c28beb9317b56bf0001c922c05d677d",
+      "modifiedAt": "2026-10-16T00:37:20.458153+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-settings-mobile.png",
+      "width": 390,
+      "height": 2532,
+      "bytes": 112158,
+      "sha256": "0e8cd5488d4aab8e6856e31d519889c9ce4ce8f2611afa7fd7f59325594710f5",
+      "modifiedAt": "2026-10-16T00:37:20.881285+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-settings-expanded-mobile.png",
+      "width": 390,
+      "height": 4866,
+      "bytes": 214300,
+      "sha256": "599fb155d70f6ba7bf6a37e036c92a580cff0e0c74451f94787620ddf0874d2a",
+      "modifiedAt": "2026-10-16T00:37:21.037769+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-settings-keyboard-focus.png",
+      "width": 610,
+      "height": 88,
+      "bytes": 5209,
+      "sha256": "55d688961ef1eee137a06d8a5a73ccf4f23ec10739c7378515e24df7e3cf9201",
+      "modifiedAt": "2026-10-16T00:37:15.821374+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-grade-history-teacher-desktop.png",
+      "width": 1440,
+      "height": 1034,
+      "bytes": 146848,
+      "sha256": "78d6558db2732b8c02eda735374cda3343aef9b0f63e03d5b61eb50ce507d0ea",
+      "modifiedAt": "2026-10-16T00:37:31.427191+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-grade-history-student-mobile.png",
+      "width": 390,
+      "height": 894,
+      "bytes": 65488,
+      "sha256": "5dc516bb6cd4c69461e33f5cb88176a05a255bdd4fe939764455112caa945410",
+      "modifiedAt": "2026-10-16T00:37:32.214792+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-practice-teacher-desktop.png",
+      "width": 1440,
+      "height": 1300,
+      "bytes": 86289,
+      "sha256": "b89102f3172353f7029fd75f4f2685c00e0863c441a0ca610592c5caa349d59a",
+      "modifiedAt": "2026-10-16T00:37:41.830657+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    },
+    {
+      "file": "docs/v7/qa-practice-review-desktop.png",
+      "width": 1440,
+      "height": 1034,
+      "bytes": 165329,
+      "sha256": "380390833e0f30b8fe158d17b48a12615230eba5d90e6f9626750c7299c69fbf",
+      "modifiedAt": "2026-10-16T00:37:41.261343+00:00",
+      "visualReview": "individual full-size confirmation and contact-sheet layout"
+    },
+    {
+      "file": "docs/v7/qa-practice-review-mobile.png",
+      "width": 390,
+      "height": 1033,
+      "bytes": 83012,
+      "sha256": "c860c78a9c524753bb3f9b31819cd1b7ce40713d5149eebefba71309a905550b",
+      "modifiedAt": "2026-10-16T00:37:41.349432+00:00",
+      "visualReview": "individual full-size confirmation and contact-sheet layout"
+    },
+    {
+      "file": "docs/v7/qa-practice-student-mobile.png",
+      "width": 390,
+      "height": 1376,
+      "bytes": 59646,
+      "sha256": "a417ffdd3857d1a706cdec9abf5d96bf6921ef51ca4f6fb04f177a8caaefae63",
+      "modifiedAt": "2026-10-16T00:37:42.173287+00:00",
+      "visualReview": "contact-sheet layout; not a full-size readability certification"
+    }
+  ],
+  "versionEvidence": {
+    "packageVersion": "3.3.0-rc.1",
+    "learnerFixtureIncludesCurrentPackageVersion": true,
+    "learnerScreenshotFooterVisuallyConfirmed": "3.3.0-rc.1",
+    "teacherStudentScreenshotVersionLabel": "No visible build version label; bundled from the current integrated source."
+  },
+  "runtimeErrors": 0,
+  "paidProviderRequests": 0,
+  "actualStudents": 0,
+  "scope": "Actual components/CSS/browser storage with isolated synthetic accounts and intercepted HTTP. This does not establish live provider accuracy, backend tenant/UTC enforcement, native-device behavior or public deployment.",
+  "notes": [
+    "Integrated pnpm test:v7:ui exited0; actual React/CSS with intercepted HTTP and synthetic accounts only.",
+    "All19 current accepted screenshots included in a labelled contact-sheet layout review. The desktop/mobile confirmation captures were separately opened full size. Historical failure PNGs are excluded from this manifest and remain retained separately.",
+    "Computed contrast samples cover only the recorded confirmation/note/muted pairs, not full WCAG conformance.",
+    "The prior pnpm workspace-layout warning remains; no dependency upgrade was performed."
+  ],
+  "generatedAt": "2026-10-16T04:52:37.213096+00:00",
+  "contrastSamples": [
+    {
+      "label": "desktop-confirmation-note",
+      "foreground": "rgb(80, 96, 75)",
+      "background": [
+        246,
+        247,
+        240
+      ],
+      "ratio": 6.252280796847239,
+      "fontSizePx": 13,
+      "fontWeight": "400"
+    },
+    {
+      "label": "desktop-confirmation-action",
+      "foreground": "rgb(129, 81, 62)",
+      "background": [
+        248,
+        238,
+        234
+      ],
+      "ratio": 5.78913694103125,
+      "fontSizePx": 12,
+      "fontWeight": "400"
+    },
+    {
+      "label": "teacher-muted-description",
+      "foreground": "rgb(92, 106, 97)",
+      "background": [
+        245,
+        245,
+        240
+      ],
+      "ratio": 5.204718516679616,
+      "fontSizePx": 12,
+      "fontWeight": "400"
+    },
+    {
+      "label": "mobile-confirmation-note",
+      "foreground": "rgb(80, 96, 75)",
+      "background": [
+        246,
+        247,
+        240
+      ],
+      "ratio": 6.252280796847239,
+      "fontSizePx": 13,
+      "fontWeight": "400"
+    }
+  ],
+  "contrastScope": "Computed CSS samples for confirmation note/action and teacher muted text only; not full WCAG conformance or all-state/color/device coverage."
+}

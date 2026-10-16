@@ -1,6 +1,14 @@
 "use client";
 import { MathText } from "../lumio/math-text";
 import { observedErrors } from "./observed-errors";
+import { GradeHistoryButton } from "./grade-history";
+import { PracticeRetakeButton } from "./practice-retake";
+import {
+  AssessmentWindow,
+  AssignmentAttempt,
+  assessmentDate,
+  localAssessmentDate,
+} from "./assessment-window";
 import { useState } from "react";
 import {
   ArrowRight,
@@ -33,6 +41,8 @@ import {
   csv,
   dateTime,
   downloadText,
+  ModalCancelButton,
+  useTeachingConfirmation,
 } from "./ui";
 import { GenerationPanel } from "./content";
 const assignmentStatus: Record<string, string> = {
@@ -76,10 +86,20 @@ export function AssignmentsView({ client }: { client: TeachingClient }) {
             <h3>{assignment.title}</h3>
             <p>
               {data.classes.find((c) => c.id === assignment.classId)?.name} ·{" "}
-              {assignment.questions.length || assignment.questionIds.length} câu
-              · {assignment.maxPoints} điểm
+              {assignment.questionCount ??
+                (assignment.questions.length ||
+                  assignment.questionIds.length)}{" "}
+              câu · {assignment.maxPoints} điểm
             </p>
             <p>{assignment.instructions}</p>
+            <AssignmentAttempt assignment={assignment} />
+            <AssessmentWindow assignment={assignment} />
+            {assignment.practiceRetake && (
+              <p className="tw-note">
+                Luyện tập cùng đề đã giao; không phải đề thi mới bảo mật. Bài và
+                kết quả lần trước được giữ riêng.
+              </p>
+            )}
             <div className="tw-card-footer">
               <span>
                 Giao cho{" "}
@@ -185,13 +205,6 @@ export function AssignmentsView({ client }: { client: TeachingClient }) {
     </div>
   );
 }
-function localDate(value?: string) {
-  if (!value) return "";
-  const date = new Date(value);
-  return new Date(date.getTime() - date.getTimezoneOffset() * 60000)
-    .toISOString()
-    .slice(0, 16);
-}
 function AssignmentEditor({
   client,
   initial,
@@ -205,7 +218,9 @@ function AssignmentEditor({
     [classId, setClassId] = useState(initial?.classId || ""),
     [title, setTitle] = useState(initial?.title || ""),
     [instructions, setInstructions] = useState(initial?.instructions || ""),
-    [due, setDue] = useState(localDate(initial?.dueAt)),
+    [due, setDue] = useState(localAssessmentDate(initial?.dueAt)),
+    [from, setFrom] = useState(localAssessmentDate(initial?.availableFrom)),
+    [until, setUntil] = useState(localAssessmentDate(initial?.availableUntil)),
     [questions, setQuestions] = useState<string[]>(initial?.questionIds || []),
     [target, setTarget] = useState<AssignmentDraft["target"]>(
       initial?.target || { kind: "class", ids: [] },
@@ -229,6 +244,8 @@ function AssignmentEditor({
             questionIds: questions,
             target,
             dueAt: new Date(due).toISOString(),
+            availableFrom: assessmentDate(from),
+            availableUntil: assessmentDate(until),
           };
           await client.mutate(
             initial
@@ -282,6 +299,33 @@ function AssignmentEditor({
             />
           </Field>
         </div>
+        <fieldset className="tw-card tw-form">
+          <legend>Thời gian nhận bài (tùy chọn)</legend>
+          <div className="tw-form-row">
+            <Field label="Mở nhận bài (giờ trên thiết bị)">
+              <input
+                type="datetime-local"
+                value={from}
+                max={due || undefined}
+                onChange={(e) => setFrom(e.target.value)}
+              />
+            </Field>
+            <Field label="Đóng cứng (giờ trên thiết bị)">
+              <input
+                type="datetime-local"
+                value={until}
+                min={due || undefined}
+                onChange={(e) => setUntil(e.target.value)}
+              />
+            </Field>
+          </div>
+          <p className="tw-note">
+            Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở,
+            học sinh chỉ thấy thông tin bài, chưa thấy đề và hướng dẫn. Đóng
+            cứng chặn cả nộp muộn. Để trống giữ chính sách hạn nộp của lớp. Sau
+            khi giao, đề, người nhận và cửa sổ thời gian không thể sửa.
+          </p>
+        </fieldset>
         <Field label="Hướng dẫn">
           <textarea
             required
@@ -456,6 +500,12 @@ export function GradingView({ client }: { client: TeachingClient }) {
                             ? "Xem kết quả"
                             : "Chấm & nhận xét"}
                         </button>
+                        <GradeHistoryButton
+                          key={s.id + ":" + s.revision}
+                          client={client}
+                          submission={s}
+                        />
+                        <PracticeRetakeButton client={client} submission={s} />
                         {s.status === "graded" && (
                           <button
                             className="tw-text-button"
@@ -523,163 +573,221 @@ function GradeEditor({
     [feedback, setFeedback] = useState(submission.feedback || ""),
     [confirmed, setConfirmed] = useState(false),
     [anonymous, setAnonymous] = useState(""),
-    [ai, setAI] = useState(false);
+    [ai, setAI] = useState(false),
+    [regrading, setRegrading] = useState(false),
+    [reason, setReason] = useState("");
+  const confirmation = useTeachingConfirmation();
+  const priorGrade =
+    submission.grades !== undefined ||
+    !!submission.confirmedAt ||
+    submission.status !== "submitted";
+  const readOnly = submission.status === "published" && !regrading;
+  const nextScore =
+    Math.round(grades.reduce((total, grade) => total + grade.points, 0) * 100) /
+    100;
   if (!assignment) return null;
   return (
-    <Modal
-      title={`Bài làm · ${submission.studentName}`}
-      onClose={onClose}
-      disabled={client.busy}
-    >
-      <form
-        className="tw-form"
-        onSubmit={submit(async () => {
-          await client.mutate({
-            action: "submission.grade",
-            id: submission.id,
-            expectedRevision: submission.revision,
-            grades,
-            feedback,
-            confirmed: true,
-          });
-          onClose();
-        })}
+    <>
+      <Modal
+        title={`Bài làm · ${submission.studentName}`}
+        onClose={onClose}
+        disabled={client.busy}
       >
-        <FormError client={client} />
-        <Tag>{assignment.title}</Tag>
-        {submission.autoScore !== undefined && (
-          <p className="tw-note">
-            Điểm trắc nghiệm gợi ý: {submission.autoScore}. Đây chưa phải điểm
-            được giáo viên công bố.
-          </p>
-        )}
-        {assignment.questions.map((question, index) => (
-          <article className="tw-card tw-form" key={question.id}>
-            <h3>
-              {index + 1}. <MathText text={question.prompt} inline />
-            </h3>
-            <div className="tw-note">
-              <strong>Bài làm đã nộp</strong>
-              <p>
-                <MathText
-                  inline
-                  text={(() => {
-                    const answer = submission.answers.find(
-                      (a) => a.questionId === question.id,
-                    )?.response;
-                    return typeof answer === "number"
-                      ? question.choices[answer] || "Chưa trả lời"
-                      : answer || "Chưa trả lời";
-                  })()}
-                />
-              </p>
-            </div>
-            {question.rubric?.length && (
+        <form
+          className="tw-form"
+          onSubmit={submit(async () => {
+            if (!confirmed || readOnly || (priorGrade && !reason.trim()))
+              return;
+            const save = async () => {
+              await client.mutate({
+                action: "submission.grade",
+                id: submission.id,
+                expectedRevision: submission.revision,
+                grades,
+                feedback,
+                confirmed: true,
+                ...(priorGrade ? { reason: reason.trim() } : {}),
+              });
+              onClose();
+            };
+            if (priorGrade) {
+              confirmation.ask({
+                title: "Xác nhận điều chỉnh điểm",
+                description: `Điểm hiện tại: ${submission.score ?? "—"} / ${assignment.maxPoints}. Điểm sau điều chỉnh: ${nextScore} / ${assignment.maxPoints}. Lý do: ${reason.trim()}. Bản chấm mới chưa được công bố. Kết quả hiện tại sẽ được tạm ẩn cho đến khi bạn công bố lại; lịch sử cũ được giữ nguyên.`,
+                label: "Lưu phiên bản điều chỉnh",
+                action: save,
+              });
+              return;
+            }
+            await save();
+          })}
+        >
+          <FormError client={client} />
+          <Tag>{assignment.title}</Tag>
+          {submission.autoScore !== undefined && (
+            <p className="tw-note">
+              Điểm trắc nghiệm gợi ý: {submission.autoScore}. Đây chưa phải điểm
+              được giáo viên công bố.
+            </p>
+          )}
+          {assignment.questions.map((question, index) => (
+            <article className="tw-card tw-form" key={question.id}>
+              <h3>
+                {index + 1}. <MathText text={question.prompt} inline />
+              </h3>
               <div className="tw-note">
-                Tiêu chí:{" "}
-                {question.rubric
-                  .map((r) => `${r.label} (${r.points} điểm)`)
-                  .join("; ")}
+                <strong>Bài làm đã nộp</strong>
+                <p>
+                  <MathText
+                    inline
+                    text={(() => {
+                      const answer = submission.answers.find(
+                        (a) => a.questionId === question.id,
+                      )?.response;
+                      return typeof answer === "number"
+                        ? question.choices[answer] || "Chưa trả lời"
+                        : answer || "Chưa trả lời";
+                    })()}
+                  />
+                </p>
               </div>
-            )}
-            <div className="tw-form-row">
-              <Field
-                label={`Điểm câu ${index + 1} (tối đa ${question.maxPoints})`}
-              >
-                <input
-                  type="number"
-                  min={0}
-                  max={question.maxPoints}
-                  step={0.1}
-                  required
-                  disabled={submission.status === "published"}
-                  value={grades[index]?.points ?? 0}
-                  onChange={(e) =>
-                    setGrades(
-                      grades.map((g, i) =>
-                        i === index
-                          ? { ...g, points: Number(e.target.value) }
-                          : g,
-                      ),
-                    )
-                  }
-                />
-              </Field>
-              <Field label={`Nhận xét câu ${index + 1}`}>
-                <textarea
-                  disabled={submission.status === "published"}
-                  maxLength={2000}
-                  value={grades[index]?.feedback || ""}
-                  onChange={(e) =>
-                    setGrades(
-                      grades.map((g, i) =>
-                        i === index ? { ...g, feedback: e.target.value } : g,
-                      ),
-                    )
-                  }
-                />
-              </Field>
-            </div>
-          </article>
-        ))}
-        <Field label="Nhận xét chung">
-          <textarea
-            disabled={submission.status === "published"}
-            maxLength={5000}
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-        </Field>
-        {submission.status !== "published" && (
-          <>
-            <label className="tw-check">
-              <input
-                type="checkbox"
-                checked={confirmed}
-                onChange={(e) => setConfirmed(e.target.checked)}
+              {question.rubric?.length && (
+                <div className="tw-note">
+                  Tiêu chí:{" "}
+                  {question.rubric
+                    .map((r) => `${r.label} (${r.points} điểm)`)
+                    .join("; ")}
+                </div>
+              )}
+              <div className="tw-form-row">
+                <Field
+                  label={`Điểm câu ${index + 1} (tối đa ${question.maxPoints})`}
+                >
+                  <input
+                    type="number"
+                    min={0}
+                    max={question.maxPoints}
+                    step={0.1}
+                    required
+                    disabled={readOnly}
+                    value={grades[index]?.points ?? 0}
+                    onChange={(e) =>
+                      setGrades(
+                        grades.map((g, i) =>
+                          i === index
+                            ? { ...g, points: Number(e.target.value) }
+                            : g,
+                        ),
+                      )
+                    }
+                  />
+                </Field>
+                <Field label={`Nhận xét câu ${index + 1}`}>
+                  <textarea
+                    disabled={readOnly}
+                    maxLength={2000}
+                    value={grades[index]?.feedback || ""}
+                    onChange={(e) =>
+                      setGrades(
+                        grades.map((g, i) =>
+                          i === index ? { ...g, feedback: e.target.value } : g,
+                        ),
+                      )
+                    }
+                  />
+                </Field>
+              </div>
+            </article>
+          ))}
+          <Field label="Nhận xét chung">
+            <textarea
+              disabled={readOnly}
+              maxLength={5000}
+              value={feedback}
+              onChange={(e) => setFeedback(e.target.value)}
+            />
+          </Field>
+          {priorGrade && !readOnly && (
+            <Field
+              label="Lý do điều chỉnh (bắt buộc)"
+              hint="Lý do được lưu trong lịch sử dành cho giáo viên; không hiển thị trong lịch sử học sinh."
+            >
+              <textarea
+                required
+                maxLength={1000}
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
               />
-              Tôi đã kiểm tra bài làm, tiêu chí, từng điểm và nhận xét. Lưu chấm
-              chưa công bố cho học sinh.
-            </label>
-            <div className="tw-form-footer">
-              <Button secondary type="button" onClick={onClose}>
-                Đóng
-              </Button>
-              <Button type="submit" busy={client.busy} disabled={!confirmed}>
-                Lưu phần chấm của giáo viên
-              </Button>
+            </Field>
+          )}
+          {!readOnly && (
+            <>
+              <label className="tw-check">
+                <input
+                  type="checkbox"
+                  checked={confirmed}
+                  onChange={(e) => setConfirmed(e.target.checked)}
+                />
+                Tôi đã kiểm tra bài làm, tiêu chí, từng điểm và nhận xét. Lưu
+                chấm chưa công bố cho học sinh.
+              </label>
+              <div className="tw-form-footer">
+                <ModalCancelButton onClose={onClose}>Đóng</ModalCancelButton>
+                <Button
+                  type="submit"
+                  busy={client.busy}
+                  disabled={!confirmed || (priorGrade && !reason.trim())}
+                >
+                  {priorGrade
+                    ? "Xem lại & lưu điều chỉnh"
+                    : "Lưu phần chấm của giáo viên"}
+                </Button>
+              </div>
+            </>
+          )}
+          {submission.status === "published" && (
+            <div className="tw-form">
+              <Tag tone="green">Kết quả đã công bố cho học sinh này</Tag>
+              <p className="tw-note">
+                Điều chỉnh điểm cần lý do và bước xác nhận riêng. Lưu bản chấm
+                mới sẽ tạm ẩn kết quả hiện tại cho đến khi bạn công bố lại. Các
+                lần đã công bố vẫn được giữ trong lịch sử.
+              </p>
+              {readOnly && (
+                <Button secondary onClick={() => setRegrading(true)}>
+                  Bắt đầu điều chỉnh điểm
+                </Button>
+              )}
             </div>
-          </>
-        )}
-        {submission.status === "published" && (
-          <Tag tone="green">Kết quả đã công bố cho học sinh này</Tag>
-        )}
-      </form>
-      <details className="tw-pad">
-        <summary className="tw-text-button" onClick={() => setAI(true)}>
-          Gợi ý nhận xét AI từ đoạn đã ẩn danh
-        </summary>
-        <p className="tw-note">
-          Không tự gửi bài làm hoặc tên học sinh. Bạn cần tự sao chép phần ngắn,
-          bỏ tên, lớp và thông tin nhận diện. Công cụ dò thông tin chỉ là hỗ
-          trợ, không bảo đảm ẩn danh hoàn toàn.
-        </p>
-        <Field label="Đoạn đã ẩn danh (tối đa 1.500 ký tự)">
-          <textarea
-            maxLength={1500}
-            value={anonymous}
-            onChange={(e) => setAnonymous(e.target.value)}
-          />
-        </Field>
-        {ai && anonymous.trim().length >= 5 && (
-          <GenerationPanel
-            client={client}
-            kind="feedback"
-            anonymousExcerpt={anonymous}
-          />
-        )}
-      </details>
-    </Modal>
+          )}
+        </form>
+        <details className="tw-pad">
+          <summary className="tw-text-button" onClick={() => setAI(true)}>
+            Gợi ý nhận xét AI từ đoạn đã ẩn danh
+          </summary>
+          <p className="tw-note">
+            Không tự gửi bài làm hoặc tên học sinh. Bạn cần tự sao chép phần
+            ngắn, bỏ tên, lớp và thông tin nhận diện. Công cụ dò thông tin chỉ
+            là hỗ trợ, không bảo đảm ẩn danh hoàn toàn.
+          </p>
+          <Field label="Đoạn đã ẩn danh (tối đa 1.500 ký tự)">
+            <textarea
+              maxLength={1500}
+              value={anonymous}
+              onChange={(e) => setAnonymous(e.target.value)}
+            />
+          </Field>
+          {ai && anonymous.trim().length >= 5 && (
+            <GenerationPanel
+              client={client}
+              kind="feedback"
+              anonymousExcerpt={anonymous}
+            />
+          )}
+        </details>
+      </Modal>
+      {confirmation.dialog}
+    </>
   );
 }
 
@@ -814,6 +922,10 @@ export function ReportsView({ client }: { client: TeachingClient }) {
           "Học sinh",
           "Lớp",
           "Bài tập",
+          "Bài gốc",
+          "Lần làm",
+          "Luyện lại cùng đề",
+          "Dùng trong phân tích hiện tại",
           "Điểm",
           "Điểm tối đa",
           "Thời điểm nộp",
@@ -824,6 +936,15 @@ export function ReportsView({ client }: { client: TeachingClient }) {
           s.studentName,
           data.classes.find((c) => c.id === s.classId)?.name || "",
           data.assignments.find((a) => a.id === s.assignmentId)?.title || "",
+          data.assignments.find((a) => a.id === s.assignmentId)
+            ?.rootAssignmentId || s.assignmentId,
+          data.assignments.find((a) => a.id === s.assignmentId)?.attemptNo || 1,
+          data.assignments.find((a) => a.id === s.assignmentId)?.practiceRetake
+            ? "Có"
+            : "Không",
+          s.countsTowardAnalytics === false
+            ? "Không - giữ trong lịch sử"
+            : "Có",
           s.score,
           data.assignments.find((a) => a.id === s.assignmentId)?.maxPoints,
           s.submittedAt,
@@ -852,9 +973,12 @@ export function ReportsView({ client }: { client: TeachingClient }) {
             </select>
           </Field>
           <p className="tw-note">
-            Báo cáo chứa tên và kết quả học tập thật. Chỉ tải khi có mục đích
-            phù hợp; giữ tệp riêng và không chia sẻ công khai. Các trường có thể
-            gây thực thi công thức được vô hiệu hóa trong CSV.
+            Mỗi lần luyện lại được giữ thành dòng riêng. Phân tích chọn lần đã
+            công bố hiện tại mới nhất cho mỗi bài gốc và học sinh; làm lại cùng
+            bài không tạo thêm bài đánh giá độc lập. Báo cáo chứa tên và kết quả
+            học tập thật. Chỉ tải khi có mục đích phù hợp; giữ tệp riêng và
+            không chia sẻ công khai. Các trường có thể gây thực thi công thức
+            được vô hiệu hóa trong CSV.
           </p>
           <div className="tw-card-actions tw-no-print">
             <Button onClick={exportCSV} disabled={!rows.length}>
@@ -896,6 +1020,14 @@ export function ReportsView({ client }: { client: TeachingClient }) {
                         data.assignments.find((a) => a.id === s.assignmentId)
                           ?.title
                       }
+                      <small>
+                        Lần{" "}
+                        {data.assignments.find((a) => a.id === s.assignmentId)
+                          ?.attemptNo || 1}
+                        {s.countsTowardAnalytics === false
+                          ? " · Lưu lịch sử, không cộng phân tích"
+                          : " · Dùng trong phân tích hiện tại"}
+                      </small>
                     </td>
                     <td>
                       {s.score} /{" "}

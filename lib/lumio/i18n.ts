@@ -142,7 +142,7 @@ const en = {
   storage: "Local data",
   privacy: "Privacy",
   privacyText:
-    "Sources are stored in this browser. Choosing AI processing sends the selected material to an online AI service. Social sign-in contacts Google or Facebook. Avoid sensitive data on shared devices.",
+    "Sources are stored in this browser. An AI request sends the selected material to the configured AI service. Cloud sync and source indexing require separate choices in Settings. Social sign-in contacts Google or Facebook. Avoid sensitive data on shared devices.",
   guideText:
     "1. Add your source. 2. Read or play it. 3. Write notes. 4. Create flashcards and quiz questions. 5. Review and export your work.",
   recordStart: "Start recording",
@@ -348,7 +348,7 @@ const vi: Messages = {
   storage: "Dữ liệu local",
   privacy: "Quyền riêng tư",
   privacyText:
-    "Không có nội dung được tải lên dịch vụ AI. Chỉ đăng nhập mạng xã hội mới liên hệ nhà cung cấp khi bạn chọn. Không lưu thông tin nhạy cảm trên thiết bị dùng chung.",
+    "Tài liệu lưu trong trình duyệt. Khi bạn yêu cầu AI xử lý, nội dung đã chọn được gửi tới dịch vụ AI đã cấu hình. Đồng bộ đám mây và lập chỉ mục nguồn là các lựa chọn riêng trong Cài đặt. Đăng nhập liên hệ Google hoặc Facebook. Tránh lưu dữ liệu nhạy cảm trên máy dùng chung.",
   guideText:
     "1. Thêm tài liệu. 2. Đọc hoặc phát nội dung. 3. Ghi chú. 4. Tự tạo flashcard và câu hỏi. 5. Ôn tập và xuất bản sao.",
   recordStart: "Bắt đầu ghi âm",
@@ -795,8 +795,6 @@ const ko: Messages = {
   saveCard: "카드 저장",
   localMode: "로컬 모드",
 };
-vi.privacyText =
-  "Tài liệu lưu trong trình duyệt. Khi bạn chọn xử lý bằng AI, nội dung đã chọn được gửi tới dịch vụ AI trực tuyến. Đăng nhập liên hệ Google hoặc Facebook. Tránh lưu dữ liệu nhạy cảm trên máy dùng chung.";
 vi.aiHint =
   "Cấu hình nhà cung cấp để tạo kết quả bằng AI. Chỉ gửi tài liệu khi bạn chủ động yêu cầu xử lý.";
 export const catalogs: Record<Locale, Messages> = {

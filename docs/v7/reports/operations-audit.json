@@ -1,0 +1,133 @@
+{
+  "schema": 1,
+  "status": "PARTIAL",
+  "checkedAt": "2026-10-15T23:47:03.236Z",
+  "baseCommit": "31aff071dbb95aee37a77fa8f8d6822240b10344",
+  "workingTree": true,
+  "auditedSchema": 14,
+  "scope": "Initial read-only audit followed by root-approved bounded runtime integrity fix. Actual temporary SQLite and Node24 CLI; no private production database, provider requests, deployment, full build/typecheck or off-host disaster recovery.",
+  "providerRequests": 0,
+  "existingTests": [
+    {
+      "command": "node tests/operations.cjs",
+      "passed": 9
+    },
+    {
+      "command": "node tests/summary-jobs.cjs",
+      "passed": 23
+    },
+    {
+      "command": "node tests/runtime-sync.cjs",
+      "passed": 14
+    }
+  ],
+  "existingTestTotal": 46,
+  "findings": [
+    {
+      "id": "F01",
+      "priority": "P2",
+      "status": "FIXED_LOCAL",
+      "title": "Snapshot/readiness omit append-only trigger validation",
+      "reproduction": {
+        "intactVacuumPreservesTriggers": true,
+        "removedGuards": 4,
+        "snapshotAccepted": true,
+        "restoredLedgerUpdateSucceeded": true
+      },
+      "resolution": "Shared versioned canonical SQL guard/table contract is checked by startup, health and backup. Missing/weakened guards and restored UPDATE/DELETE regression pass."
+    },
+    {
+      "id": "F02",
+      "priority": "P2",
+      "status": "FIXED_LOCAL",
+      "title": "Runtime14 may write future-schema15 database before unhealthy readiness",
+      "reproduction": {
+        "futureMigrationMarker": 15,
+        "createStoreSucceeded": true,
+        "identityWriteSucceeded": true,
+        "health": {
+          "ready": false,
+          "schemaVersion": 15
+        }
+      },
+      "limitation": "Future version marker fixture proves lack of startup fence; not a real migration15 or production corruption test.",
+      "resolution": "Read-only complete-prefix/future history check precedes WAL/migrations/seeds; startup closes on error. Current/future and simulated old14 runtime byte-level unchanged regression pass."
+    },
+    {
+      "id": "F03",
+      "priority": "P2",
+      "status": "FIXED_LOCAL",
+      "title": "Truncated migration history disguised future objects as old schema",
+      "source": "Independent tutor review of first patch",
+      "resolution": "Schema14 declaration with retained15 table/guards is rejected by health/startup/inspect/backup without writes.",
+      "scope": "Actual temporary SQLite fixture, no real provider or production DB."
+    },
+    {
+      "id": "F04",
+      "priority": "P2",
+      "status": "FIXED_LOCAL",
+      "title": "Canonical table name and guards concealed wrong structure",
+      "source": "Independent tutor review of first patch",
+      "resolution": "Dummy-column table and same-column weakened CHECK table are rejected by structural contract without startup writes.",
+      "scope": "Actual temporary SQLite fixture, no real provider or production DB."
+    }
+  ],
+  "upcomingE1": {
+    "implementedAtAudit": false,
+    "table": "teaching_grade_events",
+    "triggers": [
+      "teaching_grade_events_no_update",
+      "teaching_grade_events_no_delete"
+    ],
+    "ttl": "No automatic seven-day deletion or self-erasure endpoint claimed.",
+    "implementedAtVerification": true
+  },
+  "notTested": [
+    "Off-host backup and disaster recovery",
+    "Production process/host crash recovery",
+    "Provider invoice reconciliation and USD spend cap",
+    "External GitHub branch protection/Actions",
+    "Physical Android/iOS and real student pilot"
+  ],
+  "sourceHashes": {
+    "scripts/database-snapshot.cjs": "e3fbb3695512e103ac782dd69f11d1f576e0002fd5ed25a68ce6e2af7ae3e891",
+    "lib/server/store.ts": "7345e15fa63cd7b1c3cfa6256cb4474054578c9c0d2c564adb637f788b704496",
+    "lib/server/runtime-v3-core.ts": "9de9ba5a22fc0789c04127860e35570c9c668a2cac179fdf8f9ce8eb6d3f57ab",
+    "lib/server/job-core.ts": "a319241ad3f2d84c361c213ad205ec116195abc21f84b069aaceb70a325d5a81",
+    "lib/server/job-worker.ts": "7456e70bbc246e98eb44bb2a7b8c5f6581d15c1f39599ef6320c4ab7ad498308",
+    "lib/jobs/contracts.ts": "7336b6ed3daeb87eecb95316cc020338bddf26155b2cc16f1ff7cbfa17d2fc9b",
+    "lib/ai/router.ts": "711cea24558ff15ed9d3ba481652eb3dfaa4f4207f15e183ba70a512f28e2608",
+    "lib/server/schema.ts": "6c4c9427b1a052dcaf306e8a1c551a571cb32433d6bbbddb91a2b2318a150e23"
+  },
+  "remediatedAt": "2026-10-15T23:58:57.661Z",
+  "remediationCheckpoint": "656a637f97a2fb4f04650a80559e1abf82bb1d92",
+  "verifiedSchema": 15,
+  "newRegression": {
+    "command": "node tests/v7-operations.cjs",
+    "passed": 17,
+    "report": "operations-integrity.json"
+  },
+  "postFixFocusedTotal": 63,
+  "ci": {
+    "source": ".github/workflows/verify.yml",
+    "status": "SOURCE_ADDED",
+    "execution": "NOT_TESTED",
+    "scope": "Root-owned pinned Actions workflow with deterministic test/build/typecheck, no provider credentials."
+  },
+  "sourceHashesAfterFix": {
+    "lib/server/database-integrity.ts": "8c5bef317ce1ab9c0482d0a005400dbf5f96e9afa32b7970e60d9f77c6f4dbaf",
+    "lib/server/store.ts": "4d818f9c713096b1d55a5a9fca778541da45b4ab9ce4c37d3202359781cf7b43",
+    "lib/server/runtime-v3-core.ts": "d4e79ff48c9efc85dd04811d6665ebed8983aee0ed5e4eaf7428fa564d49d7cc",
+    "scripts/database-snapshot.cjs": "6dd5965f79dbf963c5daaed7857364d9af9fbdd00a8f9832a18e09f04f7053dd",
+    "tests/v7-operations.cjs": "3998d076d8f87106d620fae4c2b7416806fac835305044fbe366dfcb7b86c42f"
+  },
+  "structuralContract": {
+    "schemaVersion": 15,
+    "tables": 47,
+    "versionedDefinitions": 51,
+    "guards": 6,
+    "knownFutureObjectsRejected": true,
+    "tableConstraints": "Canonical SQL tokens preserve literals and boundaries; columns/types/PK/UNIQUE/FK/CHECK checked at declared version.",
+    "migration16Applied": false
+  }
+}

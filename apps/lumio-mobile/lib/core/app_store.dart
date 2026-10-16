@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'api.dart';
 import 'models.dart';
 import 'motion.dart';
 import 'repository.dart';
+import 'paid_intents.dart';
 
 class AppStore extends ChangeNotifier {
   AppStore(
@@ -19,6 +22,9 @@ class AppStore extends ChangeNotifier {
   final LumioApi Function(Uri, String?) _apiFactory;
   final LocalRepository repository;
   final FlutterSecureStorage secure;
+  late final PaidIntentRegistry _paidIntents = PaidIntentRegistry.secure(
+    secure,
+  );
   LibraryData data = const LibraryData();
   MobileSession? session;
   String language = 'vi', server = 'https://lumio-ai-demo.onrender.com';
@@ -36,8 +42,24 @@ class AppStore extends ChangeNotifier {
   Future<void> _settingsWrites = Future.value();
   String get scope => session?.scope ?? 'guest';
   String t(String vi, String en) => language == 'vi' ? vi : en;
-  LumioApi get api =>
-      _apiFactory(validateServer(session?.origin ?? server), session?.token);
+  LumioApi get api {
+    final current = session;
+    final api = _apiFactory(
+      validateServer(current?.origin ?? server),
+      current?.token,
+    );
+    api.bindCanonicalUser(
+      current?.id,
+      paidIntents: _paidIntents,
+      sessionCurrent: () =>
+          current != null &&
+          session?.scope == current.scope &&
+          session?.token == current.token &&
+          authenticated,
+    );
+    return api;
+  }
+
   bool get authenticated =>
       session != null && session!.expiresAt.isAfter(DateTime.now());
   bool get canAI =>

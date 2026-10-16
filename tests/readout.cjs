@@ -1,4 +1,9 @@
 const assert = require("node:assert/strict");
+const browserIntentStorage = new Map();
+Object.defineProperty(globalThis, "sessionStorage", { configurable: true, value: {
+  getItem: (key) => browserIntentStorage.get(key) ?? null,
+  setItem: (key, value) => browserIntentStorage.set(key, value),
+} });
 const fs = require("node:fs");
 const path = require("node:path");
 const ts = require("typescript");

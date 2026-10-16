@@ -1,0 +1,90 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T05:17:36.380Z",
+  "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
+  "providerCalls": 0,
+  "phases": {
+    "1": {
+      "status": "PASS",
+      "checks": 3
+    },
+    "2": {
+      "status": "PASS",
+      "checks": 2
+    },
+    "3": {
+      "status": "PASS",
+      "checks": 2
+    },
+    "4": {
+      "status": "PASS",
+      "checks": 4
+    }
+  },
+  "checks": [
+    {
+      "phase": 1,
+      "name": "Compiled endpoints deny anonymous, cross-origin and forged account binding",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Teacher credential approval and explicit organization/class creation use persisted handlers",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Hashed invite joins the intended class; replay is idempotent and tenant reads are isolated",
+      "status": "PASS"
+    },
+    {
+      "phase": 2,
+      "name": "Manual question draft requires teacher review and cannot be assigned unreviewed",
+      "status": "PASS"
+    },
+    {
+      "phase": 2,
+      "name": "Student payload omits answer keys, explanation, internal rubric and roster",
+      "status": "PASS"
+    },
+    {
+      "phase": 3,
+      "name": "Submission is self-bound and auto grading remains hidden until teacher confirmation/publication",
+      "status": "PASS"
+    },
+    {
+      "phase": 3,
+      "name": "Compiled grade history preserves published versions while a reviewed regrade remains private",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Compiled retake requires acknowledgement, preserves root history and hides questions before opening",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Compiled outcome and attempt summaries are administrator-only, account-bound and honest about unknown cost",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Draft announcements stay private; published class notice/calendar are scoped and exports authorized",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Teacher/student pages render compiled authenticated HTML; backup and restored teaching rows remain intact",
+      "status": "PASS"
+    }
+  ],
+  "teachingAuditEvents": 23,
+  "backupRestore": {
+    "status": "PASS",
+    "schemaVersion": 17,
+    "scope": "Separate restored SQLite file; not off-host hosting disaster recovery."
+  },
+  "passed": 11,
+  "version": "3.3.0-rc.1",
+  "completedAt": "2026-10-16T05:17:39.519Z"
+}

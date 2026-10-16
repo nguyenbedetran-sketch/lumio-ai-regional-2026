@@ -3,11 +3,31 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type {
   TeachingMutation,
   TeachingMutationResult,
+  TeachingGradeHistoryResponse,
   TeachingState,
 } from "../../lib/teaching/contracts";
 type WithoutRequest<T> = T extends unknown ? Omit<T, "requestId"> : never;
 export type TeachingCommand = WithoutRequest<TeachingMutation>;
 const messages: Record<string, string> = {
+  TEACHING_INVALID_WINDOW:
+    "Giờ mở, hạn nộp và giờ đóng chưa hợp lệ. Kiểm tra thứ tự thời gian; các mốc được gửi theo giờ UTC.",
+  TEACHING_NOT_OPEN:
+    "Chưa đến giờ mở nhận bài. Tải lại khi bài được mở; thời gian do máy chủ kiểm tra.",
+  TEACHING_RETAKE_ROOT_REQUIRED: "Chọn bài gốc đã giao để cấp lần luyện lại.",
+  TEACHING_RETAKE_ACK_REQUIRED:
+    "Cần xác nhận luyện lại cùng câu hỏi, có thể có đáp án học sinh đã xem.",
+  TEACHING_RETAKE_GRADE_REQUIRED:
+    "Bài gốc của học sinh cần được giáo viên chấm trước khi cấp lần luyện lại.",
+  TEACHING_RETAKE_PENDING:
+    "Học sinh còn một lần luyện lại chưa được giải quyết. Hoàn tất hoặc đóng lần đó trước.",
+  TEACHING_RETAKE_LIMIT:
+    "Học sinh đã dùng tối đa 3 lần trong cùng bài gốc. Muốn đánh giá độc lập, hãy tạo đề mới được xem lại.",
+  TEACHING_HISTORY_INCONSISTENT:
+    "Lịch sử điểm cần được đối chiếu với bản chấm hiện tại. Tải lại hoặc liên hệ quản trị; không ghi đè lịch sử.",
+  TEACHING_REGRADE_REASON_REQUIRED:
+    "Nêu lý do điều chỉnh trước khi lưu một bản chấm mới.",
+  TEACHING_HISTORY_LIMIT:
+    "Bài nộp đã chạm giới hạn số phiên bản chấm. Lịch sử hiện có vẫn được giữ; liên hệ quản trị để được hỗ trợ.",
   TEACHING_STORAGE_LIMIT:
     "Không gian đã chạm giới hạn dung lượng của bản hiện tại. Giữ bản nháp và liên hệ quản trị trước khi thêm dữ liệu.",
   BILLING_REQUEST_FINALIZED:
@@ -308,6 +328,77 @@ export function useTeachingClient(accountKey: string) {
       if (active.current) setBusy(false);
     }
   };
+  const readGradeHistory = async (
+    submissionId: string,
+    cursor?: string,
+    signal?: AbortSignal,
+  ): Promise<TeachingGradeHistoryResponse> => {
+    const orgId = org.current,
+      current = sequence.current;
+    if (!orgId || !active.current)
+      throw new DOMException("CONTEXT_CHANGED", "AbortError");
+    const controller = new AbortController();
+    const cancel = () => controller.abort();
+    if (signal?.aborted) controller.abort();
+    signal?.addEventListener("abort", cancel, { once: true });
+    controllers.current.add(controller);
+    try {
+      const query = new URLSearchParams({ orgId, submissionId, limit: "20" });
+      if (cursor) query.set("cursor", cursor);
+      const response = await fetch(
+        "/api/teaching/grade-history?" + query.toString(),
+        {
+          headers: { "X-Lumio-Account": accountKey },
+          cache: "no-store",
+          signal: controller.signal,
+        },
+      );
+      const body = await readResponse(response);
+      if (
+        !active.current ||
+        current !== sequence.current ||
+        controller.signal.aborted ||
+        org.current !== orgId
+      )
+        throw new DOMException("CONTEXT_CHANGED", "AbortError");
+      if (!response.ok) {
+        if ([401, 403].includes(response.status)) {
+          setData(null);
+          pending.current.clear();
+        }
+        throw Error(teachingError(body.error));
+      }
+      if (
+        body.submissionId !== submissionId ||
+        !Array.isArray(body.events) ||
+        body.events.length > 20 ||
+        !(
+          body.nextCursor === null ||
+          (typeof body.nextCursor === "string" &&
+            body.nextCursor.length <= 4000)
+        ) ||
+        body.events.some(
+          (event: Record<string, unknown>) =>
+            !event ||
+            typeof event.id !== "string" ||
+            !["grade", "publish", "legacy_snapshot"].includes(
+              String(event.kind),
+            ) ||
+            !Number.isInteger(event.gradeVersion) ||
+            !Number.isFinite(event.score) ||
+            !Array.isArray(event.grades) ||
+            typeof event.feedback !== "string",
+        )
+      )
+        throw Error(
+          "Lịch sử nhận được chưa hợp lệ. Hãy tải lại trước khi đối chiếu.",
+        );
+      return body as TeachingGradeHistoryResponse;
+    } finally {
+      signal?.removeEventListener("abort", cancel);
+      controllers.current.delete(controller);
+    }
+  };
   return {
     data,
     loading,
@@ -316,6 +407,7 @@ export function useTeachingClient(accountKey: string) {
     notice,
     online,
     mutate,
+    readGradeHistory,
     reload: () => fetchState(org.current),
     selectOrganization: (id: string) => {
       setData(null);

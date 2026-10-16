@@ -1,0 +1,429 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkedAt": "2026-10-15T23:43:05.288Z",
+  "command": "flutter test --no-pub --machine",
+  "total": 92,
+  "passed": 92,
+  "failed": 0,
+  "skipped": 0,
+  "newPaidIntentTests": 21,
+  "analyze": {
+    "command": "flutter analyze --no-pub",
+    "exitCode": 0,
+    "issues": 0,
+    "observedDurationSeconds": 16.6,
+    "log": "mobile-analyze.log",
+    "sha256": "1d70a50239213a30b4e1def30c60c52ad1d9634c53d2958966c0fd1d32ca2e2d"
+  },
+  "providerRequests": 0,
+  "evidenceType": "Flutter unit/widget tests with mocked HTTP and secure storage plus temporary file tests; no provider, live backend, physical device, APK/IPA build or store validation.",
+  "log": "mobile-tests.jsonl",
+  "logSha256": "d9939edb217faeb1449374759718db777697473bd241ec7cd143457eef1843b8",
+  "limitations": [
+    "Paid-intent metadata storage and HTTP responses are fixtures; actual platform secure storage and network/server receipts require a separate device/integration run.",
+    "Lost output is not replayed or recovered; completed/conflict receipts preserve the request key.",
+    "Seven-day old uncertainty is blocked instead of silently issuing a new paid operation. Explicit reset core API is not yet exposed as a full native receipt-management screen.",
+    "Mobile source version remains0.4.0+4; no rebuilt binary is claimed."
+  ],
+  "tests": [
+    {
+      "name": "Native pairing parses integer milliseconds and preserves expiry when stored as ISO",
+      "status": "success"
+    },
+    {
+      "name": "Release requires HTTPS; debug HTTP only exact loopback/emulator hosts",
+      "status": "success"
+    },
+    {
+      "name": "Bearer is attached only to configured origin and redirects are disabled",
+      "status": "success"
+    },
+    {
+      "name": "Spaced review uses real ratings; again returns in 10 minutes",
+      "status": "success"
+    },
+    {
+      "name": "Streak handles yesterday, gaps, midnight and future events without login activity",
+      "status": "success"
+    },
+    {
+      "name": "Quiz rejects incomplete answers and grades against actual keys",
+      "status": "success"
+    },
+    {
+      "name": "Pause and resume preserve remaining focus time; completed session counts once",
+      "status": "success"
+    },
+    {
+      "name": "Corrupt typed primary recovers backup and can subsequently save/reopen",
+      "status": "success"
+    },
+    {
+      "name": "Account transition blocks late saves and preserves each account namespace",
+      "status": "success"
+    },
+    {
+      "name": "Daily reading activity is deduplicated, while no data creates no progress",
+      "status": "success"
+    },
+    {
+      "name": "Inline Vietnamese prose stays in one rich paragraph around math",
+      "status": "success"
+    },
+    {
+      "name": "Both display delimiters render native formulas with horizontal scrolling",
+      "status": "success"
+    },
+    {
+      "name": "Headings, bullets and bold remain readable without Markdown markers",
+      "status": "success"
+    },
+    {
+      "name": "Fenced and inline code preserve literal formulas without parsing",
+      "status": "success"
+    },
+    {
+      "name": "Malformed formulas show source text instead of crashing or parser diagnostics",
+      "status": "success"
+    },
+    {
+      "name": "Oversized and deeply nested expressions bypass the math parser",
+      "status": "success"
+    },
+    {
+      "name": "Custom macros and HTML remain inert readable text",
+      "status": "success"
+    },
+    {
+      "name": "Common formulas have Vietnamese screen-reader labels",
+      "status": "success"
+    },
+    {
+      "name": "Selectable prose supports narrow layouts without math overflow",
+      "status": "success"
+    },
+    {
+      "name": "Device accessibility always overrides full motion; unknown preference stays automatic",
+      "status": "success"
+    },
+    {
+      "name": "Motion preference persists independently of library backups and other settings",
+      "status": "success"
+    },
+    {
+      "name": "Vietnamese search accepts accents, decomposed accents and multiple terms",
+      "status": "success"
+    },
+    {
+      "name": "Paid headers use canonical user and UUIDv4, not a provider credential",
+      "status": "success"
+    },
+    {
+      "name": "Paid transport fails closed without canonical user even with bearer",
+      "status": "success"
+    },
+    {
+      "name": "Cross-origin absolute endpoint is rejected before sending bearer",
+      "status": "success"
+    },
+    {
+      "name": "Lost JSON ACK reuses its UUID across new API and registry instances; success releases it",
+      "status": "success"
+    },
+    {
+      "name": "Network uncertainty never auto-retries; explicit retry keeps its UUID",
+      "status": "success"
+    },
+    {
+      "name": "Completed, in-progress and conflict receipts retain the old intent without a new paid key",
+      "status": "success"
+    },
+    {
+      "name": "A definite JSON failure releases its key but an HTML error remains uncertain",
+      "status": "success"
+    },
+    {
+      "name": "JSON gateway 5xx after a synthetic settlement retains the UUID across restart and completed receipt",
+      "status": "success"
+    },
+    {
+      "name": "Every JSON HTTP 5xx stays uncertain until a failed receipt acknowledges it",
+      "status": "success"
+    },
+    {
+      "name": "Secure metadata read/write errors prevent every paid request",
+      "status": "success"
+    },
+    {
+      "name": "Corrupt metadata fails closed rather than forgetting an uncertain charge",
+      "status": "success"
+    },
+    {
+      "name": "Same-intent concurrency across client instances is blocked locally",
+      "status": "success"
+    },
+    {
+      "name": "Concurrent different intents are serialized in metadata without losing either receipt",
+      "status": "success"
+    },
+    {
+      "name": "Sharing selects one section and does not serialize other library fields",
+      "status": "success"
+    },
+    {
+      "name": "Sixty-four uncertain intents are bounded and never evicted to make a new charge",
+      "status": "success"
+    },
+    {
+      "name": "Selected card includes its actual question and answer, not schedule or ID",
+      "status": "success"
+    },
+    {
+      "name": "Expired uncertainty is not silently replaced by a new UUID after restart",
+      "status": "success"
+    },
+    {
+      "name": "Share length validation refuses empty and oversized text without truncating",
+      "status": "success"
+    },
+    {
+      "name": "Account/origin scopes are separate and only hashes/UUID/time are persisted",
+      "status": "success"
+    },
+    {
+      "name": "Canonical binding cannot be changed and a stale account response is rejected",
+      "status": "success"
+    },
+    {
+      "name": "Transcription fingerprint uses immutable audio bytes, not multipart boundaries",
+      "status": "success"
+    },
+    {
+      "name": "TTS keeps an uncertain invalid audio response and releases a validated audio ACK",
+      "status": "success"
+    },
+    {
+      "name": "AppStore binds session.id and shares secure intent metadata between API getters",
+      "status": "success"
+    },
+    {
+      "name": "Native request sends canonical session and guidance, never local history or hint count",
+      "status": "success"
+    },
+    {
+      "name": "Card reveal exposes only current face and finishes normally",
+      "status": "success"
+    },
+    {
+      "name": "Card reveal exposes only current face and finishes with reduced motion",
+      "status": "success"
+    },
+    {
+      "name": "HTTP409 preserves only validated public tutor state on ApiFailure",
+      "status": "success"
+    },
+    {
+      "name": "Malformed, inconsistent or forged display states are rejected conservatively",
+      "status": "success"
+    },
+    {
+      "name": "Clarification and expired server sessions cannot enable full solution button",
+      "status": "success"
+    },
+    {
+      "name": "Session tracker accepts only current context and never increments hint progress",
+      "status": "success"
+    },
+    {
+      "name": "Language, source, exercise changes and explicit reset invalidate the local session id",
+      "status": "success"
+    },
+    {
+      "name": "Motion is bypassed for disabled animations",
+      "status": "success"
+    },
+    {
+      "name": "Motion is bypassed for accessible navigation",
+      "status": "success"
+    },
+    {
+      "name": "Receipt copy explains lost output and new-credit risk instead of an automatic retry",
+      "status": "success"
+    },
+    {
+      "name": "Entry and feedback animations finish, with no repeated ticker",
+      "status": "success"
+    },
+    {
+      "name": "Sharing requires preview then explicit action, sends edited text only and reports dismissal honestly",
+      "status": "success"
+    },
+    {
+      "name": "Share failure keeps draft editable and offers explicit copy, without auto-send",
+      "status": "success"
+    },
+    {
+      "name": "Web DTO round-trip keeps citations, source units, topic/difficulty, artifacts and skillEvidence",
+      "status": "success"
+    },
+    {
+      "name": "DTO refuses native backup, unsupported versions, duplicate records, live timers and oversized UTF8",
+      "status": "success"
+    },
+    {
+      "name": "Structural equality ignores key order and numeric JSON formatting",
+      "status": "success"
+    },
+    {
+      "name": "Three-way merge preserves nonconflicting records and requires explicit choice for both-side changes",
+      "status": "success"
+    },
+    {
+      "name": "Known-base deletions are not resurrected by an unchanged remote record",
+      "status": "success"
+    },
+    {
+      "name": "Initialising/disabled controller never requests or uploads native data",
+      "status": "success"
+    },
+    {
+      "name": "Explicit receive retains the canonical web snapshot without a native conversion",
+      "status": "success"
+    },
+    {
+      "name": "Library search and selected filter survive navigation between retained tabs",
+      "status": "success"
+    },
+    {
+      "name": "Pending operation is persisted before PUT, and notes upload preserves metadata",
+      "status": "success"
+    },
+    {
+      "name": "Lost ACK survives restart and replays identical idempotency key/body, not a second mutation",
+      "status": "success"
+    },
+    {
+      "name": "Local edits after lost ACK are retained when the pending operation is reconciled",
+      "status": "success"
+    },
+    {
+      "name": "Both-side edits stop for conflict without overwriting until a choice is given",
+      "status": "success"
+    },
+    {
+      "name": "Server reset cannot automatically resurrect old content or a stale pending upload",
+      "status": "success"
+    },
+    {
+      "name": "Account generation change while awaiting network cannot reveal or apply an old response",
+      "status": "success"
+    },
+    {
+      "name": "Origins/accounts have separate outboxes and disabling does not erase snapshots",
+      "status": "success"
+    },
+    {
+      "name": "Deleting server copy uses CAS and keeps local snapshot while clearing pending/cursor/consent",
+      "status": "success"
+    },
+    {
+      "name": "Unreadable storage is not silently replaced by an empty workspace",
+      "status": "success"
+    },
+    {
+      "name": "Canonical bearer and user header are used for GET/PUT/DELETE without a provider key",
+      "status": "success"
+    },
+    {
+      "name": "HTTP revoke/redirect errors are bounded and never followed to another origin",
+      "status": "success"
+    },
+    {
+      "name": "File store scopes names, flushes snapshots, recovers valid backup and refuses corrupt writes",
+      "status": "success"
+    },
+    {
+      "name": "Real review rating persists once after card reveal",
+      "status": "success"
+    },
+    {
+      "name": "Tutor keeps server session across hints and requests full solution only after server unlock",
+      "status": "success"
+    },
+    {
+      "name": "Quiz locks the chosen answer and saves the actual result once",
+      "status": "success"
+    },
+    {
+      "name": "Focus dial shows actual seconds and finite progress, respecting reduced motion",
+      "status": "success"
+    },
+    {
+      "name": "Error state retains id without counting messages and new exercise resets only page memory",
+      "status": "success"
+    },
+    {
+      "name": "Home and studio render at 360px with large text light",
+      "status": "success"
+    },
+    {
+      "name": "Snapshot card makes native-library boundary, retention and pairing explicit at phone width",
+      "status": "success"
+    },
+    {
+      "name": "Invalid restored server session cannot crash the mounted snapshot UI or expose its token",
+      "status": "success"
+    },
+    {
+      "name": "Changing source or language starts a clean canonical exercise without deleting the library",
+      "status": "success"
+    },
+    {
+      "name": "Home and studio render at 360px with large text dark",
+      "status": "success"
+    },
+    {
+      "name": "A late response from the previous context cannot overwrite the new tutor session",
+      "status": "success"
+    },
+    {
+      "name": "Capture actual 0.3 home and studio Flutter widgets with labelled example content",
+      "status": "success"
+    },
+    {
+      "name": "Native home renders at phone width; offline material persists through navigation",
+      "status": "success"
+    }
+  ],
+  "sourceHashes": {
+    "apps/lumio-mobile/lib/core/api.dart": "d4209fda7c3ee92f290421a50af8cf9ccd0bb3d7a5189d4ab0522c7a390fedc5",
+    "apps/lumio-mobile/lib/core/app_store.dart": "fc16b3366794c8308c552d5aa0ac30fa35c1a0642b14929e01acbf0e6ac070c2",
+    "apps/lumio-mobile/lib/core/paid_intents.dart": "8bf017d55823e15a98355bdf36f7d98983a7d16a2d2c2115e79565fa6dc7cdf3",
+    "apps/lumio-mobile/lib/ui/common.dart": "024e76003e259d5602932c8eb112aa11c7decd51cfbaaf5ffc8f6ea4a4400ff3",
+    "apps/lumio-mobile/test/paid_intents_test.dart": "afb9af8bb9baf85a6fb1924f695cba191a6e34b092270af59db9099670937686",
+    "apps/lumio-mobile/test/tutor_session_test.dart": "2ea7e13f184108fe4259229799281bfc55cfd991d253e3714615008846aa08e5",
+    "apps/lumio-mobile/test/test_fonts.dart": "17e2ac248bd74a90b7df7cbb3acc4b92cd849239090daa3e7e7f2b8f0dadd3b1",
+    "apps/lumio-mobile/test/widget_test.dart": "c99edf196929577c22001db37b4b6489d433911b4a38de5cd1491f11c9b69686",
+    "apps/lumio-mobile/test/motion_upgrade_test.dart": "68dd0ca56468b5c9fd3a6734284fbfa0594a144bbc75d4571197c7e1ed177218"
+  },
+  "capture": {
+    "test": "Tutor keeps server session across hints and requests full solution only after server unlock",
+    "status": "PASS",
+    "scope": "Recaptured actual Flutter widget with authored API fixtures after portable SDK font discovery fix and QA FIXTURE banner; no device or provider.",
+    "visuallyReviewed": [
+      "../evidence/native/native-0.3-home.png",
+      "../evidence/native/native-0.3-study.png",
+      "../evidence/native/plugin-upgrade-share-preview.png",
+      "../evidence/native/qa-regional-mobile-tutor.png",
+      "../evidence/native/ui-preview.png"
+    ],
+    "log": "mobile-capture.log",
+    "logSha256": "53fa8165480b82640424a74f57b3e699e1c6cf229b9d325aed0f017b27df51f4"
+  },
+  "gateway5xxRegression": {
+    "status": "PASS",
+    "scope": "Mocked JSON 502 after synthetic settlement retains one UUID across new API/registry instances and completed receipts; JSON 500/502/503/504/599 retains uncertainty until a failed receipt. No real gateway/provider/backend calls.",
+    "automaticRetries": 0
+  }
+}

@@ -212,6 +212,33 @@ export function createRagStore({
       return { deleted: true };
     });
   }
+  /** A local source may have indexed copies under older workspaces. Erase all
+   * copies owned by this actor and invalidate those workspaces' cached evidence. */
+  function ragDeleteSource(
+    userId: string,
+    clientItemId: string,
+    version: number,
+  ) {
+    if (
+      typeof clientItemId !== "string" ||
+      !clientItemId.trim() ||
+      clientItemId.length > 100 ||
+      /[\u0000-\u001f\u007f]/.test(clientItemId)
+    )
+      throw new PlatformError("INVALID_RAG_DOCUMENT");
+    return transaction(() => {
+      current(userId, version);
+      db.prepare(
+        "DELETE FROM rag_snapshots WHERE user_id=? AND workspace_id IN (SELECT workspace_id FROM rag_documents WHERE user_id=? AND client_item_id=?)",
+      ).run(userId, userId, clientItemId);
+      const result = db
+        .prepare(
+          "DELETE FROM rag_documents WHERE user_id=? AND client_item_id=?",
+        )
+        .run(userId, clientItemId);
+      return { deleted: Number(result.changes) };
+    });
+  }
   function scopeRows(userId: string, raw: RagScope) {
     current(userId);
     sweep();
@@ -460,6 +487,7 @@ export function createRagStore({
     ragList,
     ragIndex,
     ragDelete,
+    ragDeleteSource,
     ragSearch,
     ragPrepareSnapshot,
     ragReadSnapshot,

@@ -1,5 +1,6 @@
 import {
-  authorizeAI,
+  resolveAIPrincipal,
+  authorizeStoredAI,
   boundedBytes,
   failure,
   type AILease,
@@ -13,6 +14,13 @@ import {
   type UsageReservation,
 } from "../../../lib/server/billing";
 import { PlatformError } from "../../../lib/server/types";
+import { getStore } from "../../../lib/server/store";
+import {
+  aiHttpKey,
+  aiHttpFingerprint,
+  type AIHttpLease,
+} from "../../../lib/server/ai-http-core";
+import { createHash } from "node:crypto";
 import { speechInput, transcriptionForm } from "../../../lib/voice/server";
 import {
   VOICE_IDS,
@@ -35,15 +43,36 @@ export function GET() {
 export async function POST(req: Request) {
   let release: AILease | undefined;
   let reservation: UsageReservation | undefined;
-  const requestId = crypto.randomUUID(),
-    startedAt = Date.now();
+  let httpLease: AIHttpLease | undefined;
+  let requestId: string = crypto.randomUUID();
+  const startedAt = Date.now();
   const task = req.headers.get("content-type")?.includes("multipart/form-data")
     ? "transcription"
     : "speech";
   let usedModel: string | undefined;
   const signal = AbortSignal.any([req.signal, AbortSignal.timeout(60000)]);
   try {
-    release = await authorizeAI(req, true);
+    const principal = await resolveAIPrincipal(req, true);
+    const requestKey = aiHttpKey(req.headers.get("idempotency-key"));
+    const acquire = (fingerprint: string) => {
+      httpLease = getStore().beginAIHttpRequest(
+        principal.userId,
+        principal.sessionVersion,
+        "voice",
+        requestKey,
+        fingerprint,
+      );
+      requestId = httpLease.requestId;
+      release = authorizeStoredAI(
+        principal.userId,
+        principal.sessionVersion,
+        true,
+      );
+    };
+    const commit = () => {
+      signal.throwIfAborted();
+      getStore().completeAIHttpRequest(httpLease!);
+    };
     signal.throwIfAborted();
     const key = process.env.XAI_API_KEY;
     if (!key) throw new AIError("PROVIDER_NOT_CONFIGURED", 503);
@@ -60,10 +89,26 @@ export async function POST(req: Request) {
       if (!model) throw new AIError("PROVIDER_NOT_CONFIGURED", 503);
       usedModel = model;
       const form = transcriptionForm(data, model);
+      const file = form.get("file") as File;
+      const fileDigest = createHash("sha256")
+        .update(new Uint8Array(await file.arrayBuffer()))
+        .digest("hex");
+      acquire(
+        aiHttpFingerprint({
+          task,
+          file: {
+            name: file.name,
+            type: file.type,
+            size: file.size,
+            digest: fileDigest,
+          },
+          language: data.get("language") || null,
+        }),
+      );
       signal.throwIfAborted();
       reservation = reserveUsage({
-        userId: release.userId,
-        sessionVersion: release.sessionVersion,
+        userId: principal.userId,
+        sessionVersion: principal.sessionVersion,
         requestId,
         task: "transcription",
         kind: "audio",
@@ -92,13 +137,16 @@ export async function POST(req: Request) {
       )
         throw new AIError("EMPTY_AI_OUTPUT", 502);
       signal.throwIfAborted();
-      settleUsage({
-        userId: release.userId,
+      const settled = settleUsage({
+        userId: principal.userId,
         reservationId: reservation.reservationId,
+        onSettled: commit,
       });
+      if (!settled.changed || settled.status !== "settled")
+        throw new PlatformError("BILLING_REQUEST_FINALIZED", 409);
       recordAIUsage({
         requestId,
-        userId: release.userId,
+        userId: principal.userId,
         task,
         provider: "xai",
         model,
@@ -119,10 +167,11 @@ export async function POST(req: Request) {
       throw new AIError("INVALID_JSON");
     }
     const input = speechInput(raw);
+    acquire(aiHttpFingerprint({ task, input }));
     signal.throwIfAborted();
     reservation = reserveUsage({
-      userId: release.userId,
-      sessionVersion: release.sessionVersion,
+      userId: principal.userId,
+      sessionVersion: principal.sessionVersion,
       requestId,
       task: "speech",
       kind: "text",
@@ -146,13 +195,16 @@ export async function POST(req: Request) {
     )
       throw new AIError("EMPTY_AI_OUTPUT", 502);
     signal.throwIfAborted();
-    settleUsage({
-      userId: release.userId,
+    const settled = settleUsage({
+      userId: principal.userId,
       reservationId: reservation.reservationId,
+      onSettled: commit,
     });
+    if (!settled.changed || settled.status !== "settled")
+      throw new PlatformError("BILLING_REQUEST_FINALIZED", 409);
     recordAIUsage({
       requestId,
-      userId: release.userId,
+      userId: principal.userId,
       task,
       provider: "xai",
       status: "success",
@@ -166,6 +218,18 @@ export async function POST(req: Request) {
       },
     });
   } catch (e) {
+    if (httpLease) {
+      try {
+        getStore().failAIHttpRequest(
+          httpLease,
+          e instanceof AIError || e instanceof PlatformError
+            ? e.code
+            : "PROVIDER_UNAVAILABLE",
+        );
+      } catch {
+        console.warn("[lumio] HTTP_RECEIPT_RECOVERY_REQUIRED");
+      }
+    }
     if (release && reservation) {
       try {
         failUsage({

@@ -1,0 +1,166 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T04:52:25.349Z",
+  "checks": [
+    {
+      "name": "Correct supported equation remains draft/manual review, never automatic certification",
+      "status": "PASS"
+    },
+    {
+      "name": "Wrong correctIndex is independently blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Equation with two individually correct options is ambiguous and blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "No correct supported option is blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Negative and positive alternatives are distinct",
+      "status": "PASS"
+    },
+    {
+      "name": "Fraction and decimal equivalent options are blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Percent and fraction equivalent options are blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "All-of-the-above and combined answer options are blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Bounded nonempty options and explanation are required",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit incorrect arithmetic explanation is blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Do not extract a false constant equality from an equation embedded in prose",
+      "status": "PASS"
+    },
+    {
+      "name": "Unsupported geometry stays unverified rather than falsely exact",
+      "status": "PASS"
+    },
+    {
+      "name": "Pure arithmetic answer key is checked independently",
+      "status": "PASS"
+    },
+    {
+      "name": "Age-inappropriate harmful instructional content is blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Essay rubric total must match maximum points",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing source supports manual review, not a verified-claim flag",
+      "status": "PASS"
+    },
+    {
+      "name": "Exact reference uses actual paragraph and discards invented locators",
+      "status": "PASS"
+    },
+    {
+      "name": "Physical page comes only from trusted extraction units",
+      "status": "PASS"
+    },
+    {
+      "name": "Timestamp is derived only from a literal transcript cue",
+      "status": "PASS"
+    },
+    {
+      "name": "Foreign source IDs and altered quotes are rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Ambiguous repeated quote needs the real paragraph",
+      "status": "PASS"
+    },
+    {
+      "name": "Review transition blocks provably wrong drafts",
+      "status": "PASS"
+    },
+    {
+      "name": "A valid topic-only lesson still needs human review",
+      "status": "PASS"
+    },
+    {
+      "name": "Lesson cannot reference an unselected material",
+      "status": "PASS"
+    },
+    {
+      "name": "Consent is mandatory before provider transport",
+      "status": "PASS"
+    },
+    {
+      "name": "Unknown student record and client context fields are rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Feedback is only a bounded explicitly typed anonymous excerpt",
+      "status": "PASS"
+    },
+    {
+      "name": "Detectable email, phone, identifier label and secrets are rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Counts, selected source count, duplicate IDs and task are bounded",
+      "status": "PASS"
+    },
+    {
+      "name": "Client idempotency key must be a UUIDv4 and cannot be empty or arbitrary",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated question draft cannot auto-approve or bind a class",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated question count and answer validation are enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated batch duplicate questions are blocked",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated references are rebuilt, never model-certified pages",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated lesson cannot smuggle foreign sources",
+      "status": "PASS"
+    },
+    {
+      "name": "Generated feedback cannot carry student names/grades as metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "Generic AI input ignores hostile server-only teacher context",
+      "status": "PASS"
+    },
+    {
+      "name": "Only internal teacher context selects bounded draft schema",
+      "status": "PASS"
+    }
+  ],
+  "passed": 38,
+  "actualProviderRequests": 0,
+  "scope": "Pure deterministic content QA and server-context regression; authored fixtures only. No teacher/student participants, live provider, OAuth, public deployment or device claims.",
+  "limits": [
+    "Exact quote presence does not verify every claim.",
+    "Math checks cover narrow literal equations/arithmetic only; unknown cases require teacher review.",
+    "Safety/PII heuristics are not complete age classification or anonymization."
+  ]
+}

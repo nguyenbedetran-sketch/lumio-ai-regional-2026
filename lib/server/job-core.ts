@@ -612,6 +612,11 @@ export function createSummaryJobStore({
     jobId: string,
     action: "cancel" | "resume" | "delete",
   ) {
+    if (
+      typeof action !== "string" ||
+      !["cancel", "resume", "delete"].includes(action)
+    )
+      throw new PlatformError("INVALID_JOB_ACTION");
     return transaction(() => {
       const row = owned(userId, version, jobId);
       if (action === "resume") {

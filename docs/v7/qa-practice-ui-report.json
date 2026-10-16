@@ -1,0 +1,116 @@
+{
+  "status": "PASS",
+  "passed": 42,
+  "cases": [
+    "Issued root has no window editing action",
+    "Filling draft windows never writes until explicit save",
+    "Device-local draft window inputs are sent as explicit UTC instants",
+    "Saved draft displays both opening and hard-close window",
+    "Clearing optional draft windows sends explicit nulls instead of silently retaining old bounds",
+    "Teacher sees same-question practice and already-seen answer warning",
+    "Practice form fits 320px",
+    "Practice form fits 375px",
+    "Practice form fits 390px",
+    "Practice form fits 768px",
+    "Practice form fits 1024px",
+    "Practice form fits 1280px",
+    "Practice form fits 1440px",
+    "Missing same-question acknowledgement blocks final review and sends no request",
+    "Final retake review shows the actual window and reason before authorization",
+    "Critical confirmation note computed foreground/background reaches at least4.5:1",
+    "Critical confirmation note uses at least13px computed text",
+    "Enabled confirmation action text reaches at least4.5:1 computed contrast",
+    "Teacher muted description reaches at least4.5:1 against its actual inherited background",
+    "Mobile critical confirmation keeps the measured contrast and readable font floor",
+    "Larger confirmation text wraps without horizontal dialog clipping at390px",
+    "Acknowledgements and first review stage do not send a retake mutation",
+    "Cancelling final retake review retains teacher draft",
+    "Retake request uses original root ID and current root CAS revision",
+    "Uncertain retake acknowledgement does not auto-retry or locally grant another attempt",
+    "Manual retry retains same request UUID and one synthetic child",
+    "Granting practice leaves old submission and published result unchanged",
+    "Teacher assignment list identifies the separate same-question practice attempt",
+    "Server not-open state cannot open the attempt and redacted instructions stay absent",
+    "Redacted pre-open assignment still shows truthful server questionCount",
+    "Student prior published result remains separately visible before new practice opens",
+    "Opened student practice explains its assessment limitation",
+    "New practice attempt submits its own assignment with initial submission revision0",
+    "Submitting child practice creates a distinct submission and preserves original score",
+    "Student sees old published result and new pending result without an invented score",
+    "Student result view stays linked to the active result tab",
+    "Closed server attempt cannot be reopened from a cached student card",
+    "Closing the explicit child leaves its original assignment unchanged",
+    "Server denial is localized and creates no frontend-only allowance",
+    "Account switch removes pending practice review and its student data",
+    "Every practice and submission write retains canonical account binding",
+    "No runtime errors across windows, review, lost acknowledgement, student attempt and denial"
+  ],
+  "errors": [],
+  "syntheticMutations": 7,
+  "paidProviderRequests": 0,
+  "actualStudents": 0,
+  "contrastSamples": [
+    {
+      "label": "desktop-confirmation-note",
+      "foreground": "rgb(80, 96, 75)",
+      "background": [
+        246,
+        247,
+        240
+      ],
+      "ratio": 6.252280796847239,
+      "fontSizePx": 13,
+      "fontWeight": "400"
+    },
+    {
+      "label": "desktop-confirmation-action",
+      "foreground": "rgb(129, 81, 62)",
+      "background": [
+        248,
+        238,
+        234
+      ],
+      "ratio": 5.78913694103125,
+      "fontSizePx": 12,
+      "fontWeight": "400"
+    },
+    {
+      "label": "teacher-muted-description",
+      "foreground": "rgb(92, 106, 97)",
+      "background": [
+        245,
+        245,
+        240
+      ],
+      "ratio": 5.204718516679616,
+      "fontSizePx": 12,
+      "fontWeight": "400"
+    },
+    {
+      "label": "mobile-confirmation-note",
+      "foreground": "rgb(80, 96, 75)",
+      "background": [
+        246,
+        247,
+        240
+      ],
+      "ratio": 6.252280796847239,
+      "fontSizePx": 13,
+      "fontWeight": "400"
+    }
+  ],
+  "contrastScope": "Computed CSS samples for confirmation note/action and teacher muted text only; not full WCAG conformance or all-state/color/device coverage.",
+  "contrastReference": "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
+  "screenshots": [
+    "docs/v7/qa-practice-teacher-desktop.png",
+    "docs/v7/qa-practice-review-desktop.png",
+    "docs/v7/qa-practice-review-mobile.png",
+    "docs/v7/qa-practice-student-mobile.png"
+  ],
+  "scope": "Actual teacher/student components with synthetic HTTP windows/retakes. Server UTC boundaries, immutable snapshots, caps and tenant ACL require separate backend evidence.",
+  "unitChecks": 15,
+  "baselineUnitChecks": 32,
+  "checkedAt": "2026-10-16T00:37:43.613Z",
+  "tool": "@playwright/cli@0.1.21",
+  "mode": "Actual teaching/student React/CSS with synthetic windows/retakes/auth/HTTP only; no real student grades, provider calls or public mutations"
+}

@@ -1,4 +1,5 @@
 "use client";
+import { useAccountScope } from "./account-scope";
 import { useEffect, useId, useRef, useState } from "react";
 import {
   AudioLines,
@@ -172,6 +173,7 @@ export function VoiceStudio({
   onSaveRecording,
 }: VoiceStudioProps) {
   const c = voiceCopy[locale];
+  const account = useAccountScope();
   const [config, setConfig] = useState(providers);
   const [phase, setPhase] = useState<Phase>("idle"),
     [seconds, setSeconds] = useState(0);
@@ -183,9 +185,13 @@ export function VoiceStudio({
     [voice, setVoice] = useState<VoiceId>("calm");
   const [autoRead, setAutoRead] = useState(true),
     [turns, setTurns] = useState<VoiceTurn[]>([]);
-  const [tutorState, setTutorState] = useState<TutorState|null>(null);
-  const [tutorGuidance, setTutorGuidance] = useState<"hints"|"full">("hints");
-  useEffect(()=>{setTutorState(null);setTurns([]);setTutorGuidance("hints");},[sourceText,language]);
+  const [tutorState, setTutorState] = useState<TutorState | null>(null);
+  const [tutorGuidance, setTutorGuidance] = useState<"hints" | "full">("hints");
+  useEffect(() => {
+    setTutorState(null);
+    setTurns([]);
+    setTutorGuidance("hints");
+  }, [sourceText, language]);
   const [spoken, setSpoken] = useState<{
     id: string;
     blob: Blob;
@@ -451,6 +457,7 @@ export function VoiceStudio({
         recording,
         language,
         controller.signal,
+        account,
       );
       if (!controller.signal.aborted && mounted.current) setQuestion(text);
     } catch (caught) {
@@ -466,6 +473,7 @@ export function VoiceStudio({
       language,
       voice,
       controller.signal,
+      account,
     );
     if (!controller.signal.aborted && mounted.current)
       setSpoken({
@@ -491,6 +499,7 @@ export function VoiceStudio({
         tutorState?.sessionId,
         setTutorState,
         tutorGuidance,
+        account,
       );
       if (controller.signal.aborted || !mounted.current) return;
       const reply: VoiceTurn = {
@@ -731,7 +740,11 @@ export function VoiceStudio({
           {!supported && <p className="lv-note">{c.unsupported}</p>}
           {recording && !recordingActive && (
             <div className="lv-recorded">
-              <OutboundDataNotice locale={locale} action="transcription" mediaKind="audio"/>
+              <OutboundDataNotice
+                locale={locale}
+                action="transcription"
+                mediaKind="audio"
+              />
               <VoicePlayback
                 blob={recording}
                 locale={locale}
@@ -794,10 +807,32 @@ export function VoiceStudio({
             <ShieldCheck size={17} />
             <p>{c.privacy}</p>
           </div>
-          <OutboundDataNotice locale={locale} action="speech"/>
+          <OutboundDataNotice locale={locale} action="speech" />
         </div>
         <div className="lv-conversation">
-          <TutorProgress locale={locale} state={tutorState} disabled={blocked} onNew={()=>{setTutorState(null);setTutorGuidance("hints");setTurns([]);setSpoken(null);setQuestion("");setError("");setNotice("");}} onUnlock={()=>{if(!tutorState?.canUnlock)return;setTutorGuidance("full");setQuestion(locale==="vi"?"Mình đã thử các gợi ý. Hãy trình bày lời giải đầy đủ và kiểm tra kết quả.":"I have tried the hints. Please show the complete solution and check the result.");}}/>
+          <TutorProgress
+            locale={locale}
+            state={tutorState}
+            disabled={blocked}
+            onNew={() => {
+              setTutorState(null);
+              setTutorGuidance("hints");
+              setTurns([]);
+              setSpoken(null);
+              setQuestion("");
+              setError("");
+              setNotice("");
+            }}
+            onUnlock={() => {
+              if (!tutorState?.canUnlock) return;
+              setTutorGuidance("full");
+              setQuestion(
+                locale === "vi"
+                  ? "Mình đã thử các gợi ý. Hãy trình bày lời giải đầy đủ và kiểm tra kết quả."
+                  : "I have tried the hints. Please show the complete solution and check the result.",
+              );
+            }}
+          />
           <div className="lv-conversation-head">
             <span>
               <Sparkles size={15} />
@@ -883,7 +918,14 @@ export function VoiceStudio({
           </div>
           <div className="lv-compose">
             <label htmlFor={transcriptId}>{c.transcript}</label>
-            <OutboundDataNotice locale={locale} action="chat" sourceCharacters={sourceText.length} questionCharacters={question.trim().length} historyMessages={turns.length} tutorSession/>
+            <OutboundDataNotice
+              locale={locale}
+              action="chat"
+              sourceCharacters={sourceText.length}
+              questionCharacters={question.trim().length}
+              historyMessages={turns.length}
+              tutorSession
+            />
             <textarea
               id={transcriptId}
               rows={4}

@@ -12,8 +12,8 @@ import type { TutorState, MathVerification } from "../../lib/tutor/types";
 export const tutorUICopy = {
   vi: {
     title: "Tự tìm ra cách giải",
-    hint: "gợi ý có ý nghĩa",
-    rule: "Mỗi lượt: một gợi ý và một câu hỏi. Máy chủ chỉ mở lời giải sau ít nhất 3 gợi ý hợp lệ; đổi kiểu học không bỏ qua điều kiện này.",
+    hint: "lượt gợi ý đã ghi nhận",
+    rule: "Lumio hướng tới một gợi ý và một câu hỏi mỗi lượt. Máy chủ mở lời giải sau ít nhất 3 lượt gợi ý được chấp nhận; đổi kiểu học không bỏ qua khóa. Số lượt chỉ ghi nhận cấu trúc, không xác nhận gợi ý luôn đúng hoặc bạn đã hiểu bài.",
     locked: "Lời giải đang khóa",
     unlocked: "Đã đủ điều kiện xem lời giải",
     open: "Xem lời giải đầy đủ",
@@ -36,8 +36,8 @@ export const tutorUICopy = {
   },
   en: {
     title: "Find your way to the solution",
-    hint: "meaningful hints",
-    rule: "One hint and one question per turn. The server unlocks the full solution after at least 3 valid hints; changing modes cannot bypass it.",
+    hint: "recorded hint turns",
+    rule: "Lumio aims for one hint and one question per turn. The server unlocks the full solution after at least 3 accepted hint turns; changing modes cannot bypass the lock. This structural count does not certify hint correctness or learner understanding.",
     locked: "Solution locked",
     unlocked: "Solution available",
     open: "View full solution",
@@ -60,8 +60,8 @@ export const tutorUICopy = {
   },
   ja: {
     title: "自分で解き方を見つける",
-    hint: "有効なヒント",
-    rule: "各回にヒント1つと質問1つ。有効なヒント3回後にサーバーが解答を解除します。モードを変更しても回避できません。",
+    hint: "記録済みのヒント回数",
+    rule: "各回にヒント1つと質問1つを目指します。サーバーは受け付けたヒントが3回以上になると解答を解除し、モード変更では回避できません。この回数は形式上の記録で、ヒントの正しさや学習者の理解を保証しません。",
     locked: "解答はロック中",
     unlocked: "解答を表示できます",
     open: "完全な解答を見る",
@@ -83,8 +83,8 @@ export const tutorUICopy = {
   },
   ko: {
     title: "스스로 풀이 찾기",
-    hint: "유효한 힌트",
-    rule: "한 번에 힌트 하나와 질문 하나. 서버에서 유효한 힌트 3회 후 전체 풀이를 열며 모드 변경으로 우회할 수 없어요.",
+    hint: "기록된 힌트 횟수",
+    rule: "한 차례에 힌트 하나와 질문 하나를 목표로 해요. 서버가 받아들인 힌트가 3회 이상이면 전체 풀이가 열리며 모드 변경으로 우회할 수 없어요. 형식상 기록된 횟수이며 힌트의 정확성이나 학습자의 이해를 보장하지 않아요.",
     locked: "풀이 잠김",
     unlocked: "풀이 확인 가능",
     open: "전체 풀이 보기",
@@ -103,8 +103,8 @@ export const tutorUICopy = {
   },
   "zh-CN": {
     title: "自己找到解题方法",
-    hint: "有效提示",
-    rule: "每轮一个提示、一个问题。至少3轮有效提示后，服务器才解锁完整解答；切换模式无法绕过。",
+    hint: "已记录的提示轮次",
+    rule: "Lumio力求每轮一个提示、一个问题。服务器接受至少3轮提示后才解锁完整解答，切换模式无法绕过。这个次数仅记录格式上接受的轮次，不证明提示正确或学习者已经理解。",
     locked: "解答已锁定",
     unlocked: "可以查看解答",
     open: "查看完整解答",

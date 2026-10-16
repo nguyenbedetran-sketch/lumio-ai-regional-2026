@@ -29,6 +29,7 @@ import { rangeCopy } from "../../lib/ingestion/video-range";
 import { fullSummaryCopy } from "../../lib/ai/full-summary-copy";
 import { MathText } from "./math-text";
 import { SourceReferences } from "./source-references";
+import type { SourceReference } from "../../lib/ai/grounding";
 export const summaryCopy = {
   vi: {
     overview: "Tổng quan",
@@ -422,11 +423,13 @@ export function RichSummary({
   item,
   locale,
   updateArtifact,
+  onOpenSource,
 }: {
   artifact: StudyArtifact;
   item: LearningItem;
   locale: Locale;
   updateArtifact?: (artifact: StudyArtifact) => void;
+  onOpenSource?: (reference?: SourceReference) => void;
 }) {
   const c = summaryCopy[locale],
     summary = artifact.summary,
@@ -840,6 +843,7 @@ export function RichSummary({
             )}
             <SourceReferences
               references={summary.chapters[selected].references}
+              onOpenSource={onOpenSource}
               source={item.text}
               evidence={item.sourceEvidence}
               item={item}

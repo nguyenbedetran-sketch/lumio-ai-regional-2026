@@ -167,7 +167,13 @@
   .list article {
     flex-wrap: wrap;
   }
-  .list article > .lm-button {
-    margin-left: 28px;
+  .list article > svg {
+    flex: 0 0 auto;
+  }
+  .list article > div {
+    flex: 1 1 calc(100% - 32px);
+  }
+  .list article > button {
+    max-width: 100%;
   }
 }

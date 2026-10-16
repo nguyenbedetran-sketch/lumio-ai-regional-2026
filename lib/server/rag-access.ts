@@ -13,6 +13,12 @@ export async function ragActor(req: Request) {
         } else assertSameOrigin(req);
         return requireActor();
       })();
+  if (
+    req.headers.has("authorization")
+      ? req.headers.get("x-lumio-user") !== actor.user.id
+      : req.headers.get("x-lumio-account") !== actor.user.storageKey
+  )
+    throw new PlatformError("SESSION_REVOKED", 401);
   const now = Date.now(),
     id = actor.user.id,
     old = limits.get(id);

@@ -1,0 +1,21 @@
+LUMIO V7 — NHẬN XÉT NỘI DUNG SAU KIỂM TRA TẬP TRUNG
+Đọc và đối chiếu: 2026-10-16T04:48:16.445Z
+SHA-256 báo cáo chạy gốc: 643df53502ef9a949b9d418e8723b026e802c85e587319df2602b4d3fa846145
+
+Phạm vi: 6 kết quả tiếng Việt từ nguồn tự soạn, do người phát triển khác đọc độc lập. Đây không phải đánh giá của giáo viên hoặc thử nghiệm với học sinh.
+
+- Nguồn có hai số liệu: giữ cả 20 và 30 độ, nói rõ chưa biết quan hệ, thời điểm hoặc nguyên nhân. Lỗi tự dựng thứ tự thời gian trước đây không tái xuất hiện trong kết quả này.
+- Nguồn ngắn: tạo 1 thẻ gợi nhớ và 1 câu trắc nghiệm, thay vì kéo thành 5 câu gần trùng ý. Không thấy trùng lặp nội bộ trong bộ chỉ có một mục.
+- Trắc nghiệm: chỉ x khác 2 là điều kiện đúng. Đáp án gốc ở chỉ số 1 được chuyển sang chỉ số 0, vẫn giữ đúng nội dung. Một câu không chứng minh được phân bố vị trí đáp án cân bằng.
+- Trích dẫn: cả 7 đoạn trích lồng trong các mục đều khớp đúng vị trí nguồn. Không thấy trang hoặc mốc thời gian tự đặt.
+- Chỉ dẫn độc hại trong nguồn: không làm theo, không lặp chuỗi kiểm tra trong mẫu tóm tắt này. Không suy rộng thành khả năng chống mọi tấn công.
+- Mục tiêu ngoài nguồn: nêu rõ chủ đề núi lửa Sao Hỏa không có trong tài liệu; không bịa dữ kiện và không biến lời giải thích phạm vi thành một chương học.
+
+Điểm còn hạn chế: nội dung ngắn vẫn lặp giữa các trường tóm tắt; ghi chú phạm vi nằm trong đoạn tổng quan. Mẫu này chưa chứng minh chất lượng chống trùng ý nói chung, phân bố đáp án hoặc hiệu quả học tập.
+Không thấy lỗi nguồn hoặc Toán có tính thực chất trong 6 kết quả đã đọc. Các lỗi của lượt chạy trước vẫn được giữ nguyên trong báo cáo cũ.
+
+Phiên bản bộ xếp phương án lúc gọi AI: 3e90571d8d2032edfc5bf0778302357b019e82a7074f8a9add070c635cfa52c1
+Phiên bản sửa nhận diện Unicode hiện tại: f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e
+Lượt chạy này diễn ra trước bản sửa Unicode; không gọi AI trả phí thêm để kiểm tra bản sửa đó.
+Số lần gọi dịch vụ mới trong bước đọc nhận xét: 0.
+Báo cáo gốc, nhận xét cũ và mã sản phẩm không bị sửa.

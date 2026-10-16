@@ -1,0 +1,133 @@
+/* Incremental navigation hierarchy; use the current product color tokens. */
+.lumio .lv7-settings-disclosure {
+  border: 1px solid var(--lm-line);
+  border-radius: 16px;
+  margin: 0 0 16px;
+  overflow: clip;
+}
+.lumio .lv7-settings-disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+.lumio .lv7-settings-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.lumio .lv7-settings-disclosure > summary:focus-visible {
+  outline: 2px solid var(--lm-accent);
+  outline-offset: -4px;
+}
+.lumio .lv7-settings-disclosure > summary strong {
+  font-size: 15px;
+}
+.lumio .lv7-settings-disclosure > summary small {
+  display: block;
+  color: var(--lm-muted);
+  font-size: 13px;
+  margin-top: 5px;
+  line-height: 1.5;
+}
+.lumio .lv7-settings-disclosure > summary > svg {
+  flex: 0 0 auto;
+}
+.lumio .lv7-settings-disclosure[open] > summary {
+  border-bottom: 1px solid var(--lm-line);
+}
+.lumio .lv7-settings-disclosure[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.lumio .lv7-settings-disclosure > .lm-panel {
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+.lumio .lv7-nav-group {
+  margin: 6px 0;
+  border-top: 1px solid var(--lm-line);
+}
+.lumio .lv7-nav-group > summary {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 650;
+  color: var(--lm-muted);
+  list-style: none;
+}
+.lumio .lv7-nav-group > summary::-webkit-details-marker {
+  display: none;
+}
+.lumio .lv7-nav-group[open] > summary svg {
+  transform: rotate(180deg);
+}
+.lumio .lv7-nav-group .lm-nav {
+  padding-top: 0;
+}
+.lumio .lv7-drawer-close {
+  display: none;
+}
+.lumio :is(button, a, summary, select, input, textarea):focus-visible {
+  outline: 2px solid var(--lm-accent, #8b88f8);
+  outline-offset: 3px;
+}
+.lumio .lm-profile {
+  cursor: default;
+}
+.lumio .lv7-discard-dialog::backdrop {
+  background: #11182785;
+  backdrop-filter: blur(4px);
+}
+.lumio .lv7-discard-dialog {
+  color: var(--lm-text);
+  margin: auto;
+}
+.lumio .lv7-discard-dialog h2 {
+  font-size: 21px;
+  margin: 0 0 14px;
+}
+.lumio .lv7-discard-dialog p {
+  margin-bottom: 22px;
+}
+.lumio .lv7-source-location {
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid var(--lm-line);
+  border-radius: 14px;
+  background: var(--lm-surface);
+  scroll-margin-top: 90px;
+}
+.lumio .lv7-source-location blockquote {
+  margin: 10px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  .lumio .lv7-drawer-close {
+    display: inline-flex;
+    position: absolute;
+    top: 14px;
+    right: 10px;
+  }
+  .lumio .lm-sidebar .lm-brand-button {
+    padding-right: 32px;
+  }
+  .lumio .lm-sidebar {
+    max-width: calc(100vw - 24px);
+  }
+  .lumio .lm-sidebar :is(.lm-nav button, .lm-nav-single) {
+    min-height: 42px;
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .lumio .lv7-nav-group > summary svg {
+    transition: transform 140ms ease;
+  }
+}

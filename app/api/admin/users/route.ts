@@ -30,7 +30,8 @@ export async function PATCH(req: Request) {
     if (
       typeof data.userId !== "string" ||
       typeof data.reason !== "string" ||
-      !["disable", "enable", "revoke"].includes(String(data.action))
+      typeof data.action !== "string" ||
+      !["disable", "enable", "revoke"].includes(data.action)
     )
       throw new PlatformError("INVALID_REQUEST");
     const action = data.action as "disable" | "enable" | "revoke";

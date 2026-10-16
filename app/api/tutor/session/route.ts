@@ -1,19 +1,9 @@
-import {
-  requireActor,
-  assertSameOrigin,
-  readJSON,
-  json,
-  errorResponse,
-} from "../../../../lib/server/access";
-import { requireMobile } from "../../../../lib/server/mobile-access";
+import { readJSON, json, errorResponse } from "../../../../lib/server/access";
+import { requireBoundAIActor } from "../../../../lib/ai/guard";
 import { getStore } from "../../../../lib/server/store";
 import { PlatformError } from "../../../../lib/server/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-async function actor(req: Request) {
-  if (req.headers.has("authorization")) return requireMobile(req);
-  return requireActor();
-}
 function sessionId(value: unknown) {
   if (
     typeof value !== "string" ||
@@ -26,17 +16,18 @@ function sessionId(value: unknown) {
 }
 export async function GET(req: Request) {
   try {
-    const { user } = await actor(req),
+    const user = await requireBoundAIActor(req),
       id = sessionId(new URL(req.url).searchParams.get("sessionId"));
-    return json(getStore().getTutorSession(user.id, user.sessionVersion, id));
+    return json(
+      getStore().getTutorSession(user.userId, user.sessionVersion, id),
+    );
   } catch (e) {
     return errorResponse(e);
   }
 }
 export async function DELETE(req: Request) {
   try {
-    if (!req.headers.has("authorization")) assertSameOrigin(req);
-    const { user } = await actor(req),
+    const user = await requireBoundAIActor(req),
       body = await readJSON(req);
     if (body.all !== true && body.sessionId === undefined)
       throw new PlatformError("INVALID_TUTOR_SESSION");
@@ -44,7 +35,7 @@ export async function DELETE(req: Request) {
       throw new PlatformError("INVALID_TUTOR_SESSION");
     return json(
       getStore().deleteTutorSessions(
-        user.id,
+        user.userId,
         user.sessionVersion,
         body.all === true ? undefined : sessionId(body.sessionId),
       ),

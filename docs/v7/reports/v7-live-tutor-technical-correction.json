@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "status": "DERIVED_TECHNICAL_CORRECTION_ONLY",
+  "createdAt": "2026-10-16T00:21:01.597Z",
+  "provenance": {
+    "sourceReport": "docs/v7/reports/v7-live-tutor-acceptance-20261016.json",
+    "sourceSHA256": "97aa3a8c215650e6abfbf618d3e23f9befde81521ccf3636e7979f43441da92a"
+  },
+  "originalStatus": "PARTIAL_REVIEW_REQUIRED",
+  "originalMode": "live",
+  "originalActualProviderHTTPAttempts": 39,
+  "newProviderRequests": 0,
+  "newModelOutputs": 0,
+  "sourceMutated": false,
+  "correctionScriptSHA256": "951e62aa4ca67f06eaa1d41cb2949e0934119ce515492af468660c44cc512257",
+  "currentRunnerSHA256": "dda24fa827f00d4e829f4a951eb3784c6a0e50556e1248f21cddd9ae9d55fb67",
+  "originalRunnerSHA256": null,
+  "originalRunnerHashLimitation": "Original runner did not record its own hash. Do not assign the current runner hash retrospectively to the original generation.",
+  "knownOldRunnerIssues": [
+    "Unexpected non200 full-answer responses were recorded but not propagated to FAIL/BLOCKED/PARTIAL_LIMIT, so full-phase errors could appear PARTIAL with fail0.",
+    "Valid candidate roots were compared as arrays; duplicate equal roots could incorrectly make a correct mathematical set PARTIAL."
+  ],
+  "revisedCriteria": [
+    "Any non200 full answer is an error except the expected missing-data TUTOR_LOCKED409 with hintCount0.",
+    "Provider auth/rate/config/AI_DISABLED errors are BLOCKED; HTTP provider cap is PARTIAL_LIMIT; other error responses are FAIL.",
+    "Compare finite valid candidate values with the authored golden as unique sorted numeric sets.",
+    "Retain existing gate/progression/credit-hold checks; do not infer narrative math correctness or meaningful pedagogy from them."
+  ],
+  "cases": [
+    {
+      "id": "linear",
+      "rawCaseSHA256": "2d410496b5c6d19993cc3bd9b1666c356a8e46818d82aa2025235297748153c8",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        4
+      ],
+      "referenceSet": [
+        4
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "rational-domain",
+      "rawCaseSHA256": "407bf37e3afe7901778ffa64178f763bfd51b91b6a3b610984b35b4600600848",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        3.5
+      ],
+      "referenceSet": [
+        3.5
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "radical-extraneous",
+      "rawCaseSHA256": "fe4767abd5a8c1e470616b97a4ef6eae64cd205da361e8ab3f6ed709a69aedad",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        3
+      ],
+      "referenceSet": [
+        3
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "correct-first",
+      "rawCaseSHA256": "af078c0046cf7e392a829eea1ae5bcfcca24025c2e3a37bd7959842ce0648e77",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        2,
+        3
+      ],
+      "referenceSet": [
+        2,
+        3
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "wrong-first",
+      "rawCaseSHA256": "94c158f923c44037964a84b1a4f49ac828a529dce756696d889aef3661cc4ae4",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        9
+      ],
+      "referenceSet": [
+        9
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "repeated-mistake",
+      "rawCaseSHA256": "8c818a600b1df198056e23c938d24f9f028d77a3e488c74f2f6325f8af9d0db3",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        -2
+      ],
+      "referenceSet": [
+        -2
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "demand-answer",
+      "rawCaseSHA256": "f00e3bbf55a1d5bbd731bf5f64f5928159879ea20730e91cced6b806f992ce59",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        3
+      ],
+      "referenceSet": [
+        3
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "early-full",
+      "rawCaseSHA256": "cf4daf7d4d0740be2c6c485ff6ed6f1552f90012ecc5d764915cb9a5ce16dac9",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        7
+      ],
+      "referenceSet": [
+        7
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "missing-data",
+      "rawCaseSHA256": "9f5528043a0918f08462ff60b852f8c1ca423e5bff6d5e9c1e9ba2edb0c07946",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 409,
+      "candidateSet": null,
+      "referenceSet": null,
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "clarificationState": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    },
+    {
+      "id": "source-substitution",
+      "rawCaseSHA256": "fe1305e874f055740c1d8fa08e8c808d1edaff26a55a82e5505785dc2131b409",
+      "originalStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "revisedStatus": "TECHNICAL_PASS_REVIEW_PENDING",
+      "error": null,
+      "classificationChanged": false,
+      "fullHTTP": 200,
+      "candidateSet": [
+        3
+      ],
+      "referenceSet": [
+        3
+      ],
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "NOT_PERFORMED_BY_THIS_SCRIPT"
+    }
+  ],
+  "summary": {
+    "reviewed": 10,
+    "changed": 0,
+    "technicalPass": 10,
+    "partial": 0,
+    "blocked": 0,
+    "fail": 0
+  },
+  "semanticAccuracyClaim": false,
+  "studentTrial": "NOT_TESTED",
+  "independentTeacherReview": "NOT_TESTED",
+  "companionDeveloperReview": "docs/v7/reports/v7-live-tutor-review.json",
+  "limitations": [
+    "This is a deterministic reinterpretation of immutable recorded HTTP transcripts, not a new generation or a rerun after product fixes.",
+    "Stop-on-error policy is not applied retrospectively: every original case remains evidence of the request actually made.",
+    "No source/model output was reconstructed, replaced or corrected. An unchanged technical classification does not dismiss the companion developer review findings.",
+    "Gate, exact candidate set and canonical credit checks do not verify every written step, arithmetic, source implication, pedagogical quality or learning outcome."
+  ]
+}

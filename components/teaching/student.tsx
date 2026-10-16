@@ -1,6 +1,18 @@
 "use client";
 import { MathText } from "../lumio/math-text";
+import { GradeHistoryButton } from "./grade-history";
+import {
+  AssessmentWindow,
+  AssignmentAttempt,
+  availabilityLabel,
+} from "./assessment-window";
 import { useEffect, useState } from "react";
+import {
+  TeachingDraftBoundary,
+  useTeachingDraft,
+  useTeachingDraftGuard,
+} from "./draft-guard";
+import { useTeachingTabs } from "./tabs";
 import { signIn } from "next-auth/react";
 import {
   ArrowLeft,
@@ -35,6 +47,7 @@ import {
   Panel,
   Tag,
   dateTime,
+  ModalCancelButton,
 } from "./ui";
 
 export function StudentClassroom({
@@ -95,7 +108,11 @@ export function StudentClassroom({
         </main>
       </div>
     );
-  return <ClassroomAccount key={account.key} account={account} />;
+  return (
+    <TeachingDraftBoundary key={account.key}>
+      <ClassroomAccount account={account} />
+    </TeachingDraftBoundary>
+  );
 }
 function ClassroomAccount({
   account,
@@ -108,6 +125,17 @@ function ClassroomAccount({
     [tab, setTab] = useState("assignments"),
     [selected, setSelected] = useState<TeachingAssignment | null>(null);
   const data = client.data;
+  const guard = useTeachingDraftGuard(),
+    joinDraft = useTeachingDraft("Mã tham gia lớp"),
+    tabChoices = [
+      ["assignments", "Bài tập"],
+      ["materials", "Học liệu"],
+      ["lessons", "Bài giảng"],
+      ["announcements", "Bảng tin"],
+      ["calendar", "Lịch lớp"],
+      ["results", "Kết quả"],
+    ] as const,
+    tabs = useTeachingTabs(tab, tabChoices, setTab);
   useEffect(() => {
     setSelected(null);
     setJoin(false);
@@ -115,8 +143,10 @@ function ClassroomAccount({
   const joinForm = (
     <form
       className="tw-form"
+      onInputCapture={joinDraft.markDirty}
       onSubmit={submit(async () => {
         await client.mutate({ action: "class.join", code: code.trim() });
+        joinDraft.markClean();
         setJoin(false);
         setCode("");
       })}
@@ -142,14 +172,16 @@ function ClassroomAccount({
       </p>
       <div className="tw-form-footer">
         {join && (
-          <Button
-            secondary
-            type="button"
+          <ModalCancelButton
             disabled={client.busy}
-            onClick={() => setJoin(false)}
+            onClose={() => {
+              setJoin(false);
+              setCode("");
+              joinDraft.markClean();
+            }}
           >
             Hủy
-          </Button>
+          </ModalCancelButton>
         )}
         <Button type="submit" busy={client.busy}>
           Tham gia lớp <ArrowRight size={15} />
@@ -176,7 +208,10 @@ function ClassroomAccount({
               aria-label="Tổ chức lớp học"
               value={data.organization?.id || ""}
               disabled={client.busy || client.loading}
-              onChange={(e) => void client.selectOrganization(e.target.value)}
+              onChange={(e) => {
+                const id = e.target.value;
+                guard.leave(() => void client.selectOrganization(id));
+              }}
             >
               {data.organizations.map((org) => (
                 <option value={org.id} key={org.id}>
@@ -262,268 +297,296 @@ function ClassroomAccount({
           <>
             <div
               className="tw-tabs"
-              role="tablist"
+              {...tabs.listProps}
               aria-label="Nội dung lớp học"
             >
-              {[
-                ["assignments", "Bài tập"],
-                ["materials", "Học liệu"],
-                ["lessons", "Bài giảng"],
-                ["announcements", "Bảng tin"],
-                ["calendar", "Lịch lớp"],
-                ["results", "Kết quả"],
-              ].map(([key, label]) => (
-                <button
-                  key={key}
-                  role="tab"
-                  aria-selected={tab === key}
-                  onClick={() => setTab(key)}
-                >
+              {tabChoices.map(([key, label]) => (
+                <button key={key} {...tabs.buttonProps(key)}>
                   {label}
                 </button>
               ))}
             </div>
-            {tab === "assignments" ? (
-              <div className="tw-grid two">
-                {data.assignments.map((assignment) => {
-                  const own = data.submissions.find(
-                    (s) =>
-                      s.assignmentId === assignment.id &&
-                      s.studentId === data.actor.userId,
-                  );
-                  return (
-                    <article className="tw-card" key={assignment.id}>
-                      <div className="tw-card-top">
-                        <Tag tone={own ? "green" : "amber"}>
-                          {own
-                            ? "Đã nộp"
-                            : assignment.status === "closed"
-                              ? "Đã đóng"
-                              : "Cần làm"}
-                        </Tag>
-                        <span className="tw-subtle">
-                          Hạn {dateTime(assignment.dueAt)}
-                        </span>
-                      </div>
-                      <h3>{assignment.title}</h3>
-                      <p>
-                        {
-                          data.classes.find((c) => c.id === assignment.classId)
-                            ?.name
-                        }{" "}
-                        · {assignment.questions.length} câu ·{" "}
-                        {assignment.maxPoints} điểm
-                      </p>
-                      <p style={{ marginTop: 10 }}>{assignment.instructions}</p>
-                      <div className="tw-card-footer">
-                        <Button
-                          secondary
-                          disabled={!!own || assignment.status !== "issued"}
-                          onClick={() => setSelected(assignment)}
-                        >
-                          {own ? "Chờ kết quả giáo viên công bố" : "Mở bài tập"}
-                          <ArrowRight size={14} />
-                        </Button>
-                      </div>
-                    </article>
-                  );
-                })}
-                {!data.assignments.length && (
-                  <Panel>
-                    <Empty icon={ClipboardCheck} title="Chưa có bài được giao">
-                      Bài tập sẽ xuất hiện khi giáo viên giao cho tài khoản,
-                      nhóm hoặc lớp của bạn.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            ) : tab === "materials" ? (
-              <div className="tw-grid two">
-                {data.materials
-                  .filter((m) => m.status === "published")
-                  .map((m) => (
-                    <Panel title={m.title} key={m.id}>
-                      <div className="tw-pad tw-result">
-                        <MathText text={m.content} />
-                      </div>
-                    </Panel>
-                  ))}
-                {!data.materials.some((m) => m.status === "published") && (
-                  <Panel>
-                    <Empty
-                      icon={BookOpen}
-                      title="Chưa có học liệu được chia sẻ"
-                    >
-                      Chỉ học liệu giáo viên đã công bố cho lớp của bạn xuất
-                      hiện ở đây.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            ) : tab === "lessons" ? (
-              <div className="tw-grid">
-                {data.lessons
-                  .filter((l) => l.status === "published")
-                  .map((l) => (
-                    <Panel title={l.title} key={l.id}>
-                      <div className="tw-pad tw-form">
-                        <Tag tone="indigo">
-                          {l.topic} · Khối {l.grade}
-                        </Tag>
-                        <ul>
-                          {l.objectives.map((o, i) => (
-                            <li key={i}>{o}</li>
-                          ))}
-                        </ul>
-                        {l.sections.map((s, i) => (
-                          <section key={i}>
-                            <h3>{s.title}</h3>
-                            <div className="tw-result">
-                              <MathText text={s.body} />
-                            </div>
-                          </section>
-                        ))}
-                      </div>
-                    </Panel>
-                  ))}
-                {!data.lessons.some((l) => l.status === "published") && (
-                  <Panel>
-                    <Empty
-                      icon={BookOpen}
-                      title="Chưa có bài giảng được chia sẻ"
-                    >
-                      Bạn sẽ thấy bài giảng sau khi giáo viên xem lại và công
-                      bố.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            ) : tab === "announcements" ? (
-              <div className="tw-grid">
-                {data.announcements
-                  .filter((a) => a.status === "published")
-                  .map((a) => (
-                    <Panel title={a.title} key={a.id}>
-                      <div className="tw-pad">
-                        <div className="tw-result">{a.body}</div>
-                        <p className="tw-subtle">{dateTime(a.createdAt)}</p>
-                      </div>
-                    </Panel>
-                  ))}
-                {!data.announcements.length && (
-                  <Panel>
-                    <Empty icon={Users} title="Bảng tin đang yên">
-                      Thông báo được giáo viên đăng sẽ xuất hiện tại đây.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            ) : tab === "calendar" ? (
-              <div className="tw-grid two">
-                {data.events.map((e) => (
-                  <article className="tw-card" key={e.id}>
-                    <Tag tone="indigo">
-                      {data.classes.find((c) => c.id === e.classId)?.name}
-                    </Tag>
-                    <h3>{e.title}</h3>
-                    <p>
-                      {dateTime(e.startAt)} → {dateTime(e.endAt)}
-                    </p>
-                    <p>{e.description}</p>
-                  </article>
-                ))}
-                {!data.events.length && (
-                  <Panel>
-                    <Empty icon={CalendarDays} title="Chưa có lịch hẹn">
-                      Lịch lớp sẽ xuất hiện khi giáo viên thêm mốc học hoặc buổi
-                      gặp.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            ) : (
-              <div className="tw-grid">
-                {data.submissions
-                  .filter((s) => s.studentId === data.actor.userId)
-                  .map((s) => (
-                    <Panel
-                      title={
-                        data.assignments.find((a) => a.id === s.assignmentId)
-                          ?.title || "Bài đã nộp"
-                      }
-                      key={s.id}
-                    >
-                      <div className="tw-pad tw-form">
-                        <Tag
-                          tone={s.status === "published" ? "green" : "amber"}
-                        >
-                          {s.status === "published"
-                            ? "Kết quả đã công bố"
-                            : "Giáo viên chưa công bố kết quả"}
-                        </Tag>
-                        <p className="tw-subtle">
-                          Nộp lúc {dateTime(s.submittedAt)}
-                          {s.late ? " · Nộp muộn" : ""}
+            <div {...tabs.panelProps}>
+              {tab === "assignments" ? (
+                <div className="tw-grid two">
+                  {data.assignments.map((assignment) => {
+                    const own = data.submissions.find(
+                      (s) =>
+                        s.assignmentId === assignment.id &&
+                        s.studentId === data.actor.userId,
+                    );
+                    return (
+                      <article className="tw-card" key={assignment.id}>
+                        <div className="tw-card-top">
+                          <Tag tone={own ? "green" : "amber"}>
+                            {own
+                              ? "Đã nộp"
+                              : assignment.availability
+                                ? availabilityLabel[assignment.availability]
+                                : "Cần tải lại trạng thái"}
+                          </Tag>
+                          <span className="tw-subtle">
+                            Hạn {dateTime(assignment.dueAt)}
+                          </span>
+                        </div>
+                        <h3>{assignment.title}</h3>
+                        <p>
+                          {
+                            data.classes.find(
+                              (c) => c.id === assignment.classId,
+                            )?.name
+                          }{" "}
+                          ·{" "}
+                          {assignment.questionCount ??
+                            assignment.questions.length}{" "}
+                          câu · {assignment.maxPoints} điểm
                         </p>
-                        {s.status === "published" ? (
-                          <>
-                            <h3>
-                              {s.score} /{" "}
-                              {
-                                data.assignments.find(
-                                  (a) => a.id === s.assignmentId,
-                                )?.maxPoints
-                              }{" "}
-                              điểm
-                            </h3>
-                            <div className="tw-result">
-                              <MathText
-                                text={s.feedback || "Chưa có nhận xét chung."}
-                              />
-                            </div>
-                            {s.grades?.map((g) => (
-                              <div className="tw-note" key={g.questionId}>
-                                <strong>
-                                  <MathText
-                                    inline
-                                    text={
-                                      data.assignments
-                                        .find((a) => a.id === s.assignmentId)
-                                        ?.questions.find(
-                                          (q) => q.id === g.questionId,
-                                        )?.prompt || ""
-                                    }
-                                  />
-                                </strong>
-                                <p>
-                                  {g.points} điểm ·{" "}
-                                  <MathText text={g.feedback} inline />
-                                </p>
-                              </div>
-                            ))}
-                          </>
-                        ) : (
-                          <p className="tw-muted">
-                            Bài đã được máy chủ nhận. Điểm và nhận xét không
-                            hiển thị trước khi giáo viên quyết định công bố.
+                        <AssignmentAttempt assignment={assignment} />
+                        <AssessmentWindow assignment={assignment} />
+                        {assignment.practiceRetake && (
+                          <p className="tw-note">
+                            Luyện tập cùng câu hỏi đã giao, có thể gồm đáp án
+                            bạn đã xem. Bài và kết quả trước được giữ riêng; đây
+                            không phải đề thi mới bảo mật.
                           </p>
                         )}
-                      </div>
+                        <p style={{ marginTop: 10 }}>
+                          {assignment.instructions}
+                        </p>
+                        <div className="tw-card-footer">
+                          <Button
+                            secondary
+                            disabled={!!own || assignment.canSubmit !== true}
+                            onClick={() => setSelected(assignment)}
+                          >
+                            {own
+                              ? "Chờ kết quả giáo viên công bố"
+                              : assignment.canSubmit === true
+                                ? "Mở bài tập"
+                                : assignment.availability
+                                  ? availabilityLabel[assignment.availability]
+                                  : "Tải lại để kiểm tra"}
+                            <ArrowRight size={14} />
+                          </Button>
+                        </div>
+                      </article>
+                    );
+                  })}
+                  {!data.assignments.length && (
+                    <Panel>
+                      <Empty
+                        icon={ClipboardCheck}
+                        title="Chưa có bài được giao"
+                      >
+                        Bài tập sẽ xuất hiện khi giáo viên giao cho tài khoản,
+                        nhóm hoặc lớp của bạn.
+                      </Empty>
                     </Panel>
+                  )}
+                </div>
+              ) : tab === "materials" ? (
+                <div className="tw-grid two">
+                  {data.materials
+                    .filter((m) => m.status === "published")
+                    .map((m) => (
+                      <Panel title={m.title} key={m.id}>
+                        <div className="tw-pad tw-result">
+                          <MathText text={m.content} />
+                        </div>
+                      </Panel>
+                    ))}
+                  {!data.materials.some((m) => m.status === "published") && (
+                    <Panel>
+                      <Empty
+                        icon={BookOpen}
+                        title="Chưa có học liệu được chia sẻ"
+                      >
+                        Chỉ học liệu giáo viên đã công bố cho lớp của bạn xuất
+                        hiện ở đây.
+                      </Empty>
+                    </Panel>
+                  )}
+                </div>
+              ) : tab === "lessons" ? (
+                <div className="tw-grid">
+                  {data.lessons
+                    .filter((l) => l.status === "published")
+                    .map((l) => (
+                      <Panel title={l.title} key={l.id}>
+                        <div className="tw-pad tw-form">
+                          <Tag tone="indigo">
+                            {l.topic} · Khối {l.grade}
+                          </Tag>
+                          <ul>
+                            {l.objectives.map((o, i) => (
+                              <li key={i}>{o}</li>
+                            ))}
+                          </ul>
+                          {l.sections.map((s, i) => (
+                            <section key={i}>
+                              <h3>{s.title}</h3>
+                              <div className="tw-result">
+                                <MathText text={s.body} />
+                              </div>
+                            </section>
+                          ))}
+                        </div>
+                      </Panel>
+                    ))}
+                  {!data.lessons.some((l) => l.status === "published") && (
+                    <Panel>
+                      <Empty
+                        icon={BookOpen}
+                        title="Chưa có bài giảng được chia sẻ"
+                      >
+                        Bạn sẽ thấy bài giảng sau khi giáo viên xem lại và công
+                        bố.
+                      </Empty>
+                    </Panel>
+                  )}
+                </div>
+              ) : tab === "announcements" ? (
+                <div className="tw-grid">
+                  {data.announcements
+                    .filter((a) => a.status === "published")
+                    .map((a) => (
+                      <Panel title={a.title} key={a.id}>
+                        <div className="tw-pad">
+                          <div className="tw-result">{a.body}</div>
+                          <p className="tw-subtle">{dateTime(a.createdAt)}</p>
+                        </div>
+                      </Panel>
+                    ))}
+                  {!data.announcements.length && (
+                    <Panel>
+                      <Empty icon={Users} title="Bảng tin đang yên">
+                        Thông báo được giáo viên đăng sẽ xuất hiện tại đây.
+                      </Empty>
+                    </Panel>
+                  )}
+                </div>
+              ) : tab === "calendar" ? (
+                <div className="tw-grid two">
+                  {data.events.map((e) => (
+                    <article className="tw-card" key={e.id}>
+                      <Tag tone="indigo">
+                        {data.classes.find((c) => c.id === e.classId)?.name}
+                      </Tag>
+                      <h3>{e.title}</h3>
+                      <p>
+                        {dateTime(e.startAt)} → {dateTime(e.endAt)}
+                      </p>
+                      <p>{e.description}</p>
+                    </article>
                   ))}
-                {!data.submissions.length && (
-                  <Panel>
-                    <Empty
-                      icon={CheckCircle2}
-                      title="Kết quả sẽ đến từ những lần bạn thử"
-                    >
-                      Hoàn thành bài được giao để cùng giáo viên theo dõi cách
-                      hiểu của mình.
-                    </Empty>
-                  </Panel>
-                )}
-              </div>
-            )}
+                  {!data.events.length && (
+                    <Panel>
+                      <Empty icon={CalendarDays} title="Chưa có lịch hẹn">
+                        Lịch lớp sẽ xuất hiện khi giáo viên thêm mốc học hoặc
+                        buổi gặp.
+                      </Empty>
+                    </Panel>
+                  )}
+                </div>
+              ) : (
+                <div className="tw-grid">
+                  {data.submissions
+                    .filter((s) => s.studentId === data.actor.userId)
+                    .map((s) => (
+                      <Panel
+                        title={
+                          data.assignments.find((a) => a.id === s.assignmentId)
+                            ?.title || "Bài đã nộp"
+                        }
+                        key={s.id}
+                      >
+                        <div className="tw-pad tw-form">
+                          <Tag
+                            tone={s.status === "published" ? "green" : "amber"}
+                          >
+                            {s.status === "published"
+                              ? "Kết quả đã công bố"
+                              : "Giáo viên chưa công bố kết quả"}
+                          </Tag>
+                          <p className="tw-subtle">
+                            Nộp lúc {dateTime(s.submittedAt)}
+                            {s.late ? " · Nộp muộn" : ""}
+                          </p>
+                          <p className="tw-subtle">
+                            Lần{" "}
+                            {data.assignments.find(
+                              (a) => a.id === s.assignmentId,
+                            )?.attemptNo || 1}
+                            {s.countsTowardAnalytics === false
+                              ? " · Giữ trong lịch sử, không cộng thêm bài đánh giá"
+                              : ""}
+                          </p>
+                          <GradeHistoryButton
+                            key={s.id + ":" + s.revision}
+                            client={client}
+                            submission={s}
+                            student
+                          />
+                          {s.status === "published" ? (
+                            <>
+                              <h3>
+                                {s.score} /{" "}
+                                {
+                                  data.assignments.find(
+                                    (a) => a.id === s.assignmentId,
+                                  )?.maxPoints
+                                }{" "}
+                                điểm
+                              </h3>
+                              <div className="tw-result">
+                                <MathText
+                                  text={s.feedback || "Chưa có nhận xét chung."}
+                                />
+                              </div>
+                              {s.grades?.map((g) => (
+                                <div className="tw-note" key={g.questionId}>
+                                  <strong>
+                                    <MathText
+                                      inline
+                                      text={
+                                        data.assignments
+                                          .find((a) => a.id === s.assignmentId)
+                                          ?.questions.find(
+                                            (q) => q.id === g.questionId,
+                                          )?.prompt || ""
+                                      }
+                                    />
+                                  </strong>
+                                  <p>
+                                    {g.points} điểm ·{" "}
+                                    <MathText text={g.feedback} inline />
+                                  </p>
+                                </div>
+                              ))}
+                            </>
+                          ) : (
+                            <p className="tw-muted">
+                              Bài đã được máy chủ nhận. Điểm và nhận xét không
+                              hiển thị trước khi giáo viên quyết định công bố.
+                            </p>
+                          )}
+                        </div>
+                      </Panel>
+                    ))}
+                  {!data.submissions.length && (
+                    <Panel>
+                      <Empty
+                        icon={CheckCircle2}
+                        title="Kết quả sẽ đến từ những lần bạn thử"
+                      >
+                        Hoàn thành bài được giao để cùng giáo viên theo dõi cách
+                        hiểu của mình.
+                      </Empty>
+                    </Panel>
+                  )}
+                </div>
+              )}
+            </div>
           </>
         )}
         <footer className="tw-footer">
@@ -534,7 +597,11 @@ function ClassroomAccount({
       {join && (
         <Modal
           title="Tham gia một lớp học"
-          onClose={() => setJoin(false)}
+          onClose={() => {
+            setJoin(false);
+            setCode("");
+            joinDraft.markClean();
+          }}
           disabled={client.busy}
         >
           {joinForm}
@@ -544,7 +611,10 @@ function ClassroomAccount({
         data?.role === "STUDENT" &&
         selected.orgId === data.organization?.id &&
         data.assignments.some(
-          (a) => a.id === selected.id && a.revision === selected.revision,
+          (a) =>
+            a.id === selected.id &&
+            a.revision === selected.revision &&
+            a.canSubmit === true,
         ) && (
           <StudentAssignment
             client={client}
@@ -590,6 +660,14 @@ function StudentAssignment({
           {assignment.instructions} · Hạn {dateTime(assignment.dueAt)}. Câu trả
           lời chỉ gửi khi bạn bấm nộp; không tự gửi đến AI.
         </p>
+        <AssignmentAttempt assignment={assignment} />
+        <AssessmentWindow assignment={assignment} />
+        {assignment.practiceRetake && (
+          <p className="tw-note">
+            Đây là lần luyện lại cùng đề, không phải một bài đánh giá độc lập
+            mới. Kết quả lần trước vẫn được giữ.
+          </p>
+        )}
         {assignment.questions.map((question, index) => (
           <section className="tw-card tw-form" key={question.id}>
             <h3>
@@ -649,14 +727,9 @@ function StudentAssignment({
           trợ thay thế bài đã nộp.
         </label>
         <div className="tw-form-footer">
-          <Button
-            secondary
-            type="button"
-            disabled={client.busy}
-            onClick={onClose}
-          >
+          <ModalCancelButton disabled={client.busy} onClose={onClose}>
             Để sau
-          </Button>
+          </ModalCancelButton>
           <Button type="submit" busy={client.busy} disabled={!confirmed}>
             Nộp bài cho giáo viên <ArrowRight size={15} />
           </Button>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Upload, Link, FileText } from "lucide-react";
 import type { Messages } from "../../lib/lumio/i18n";
 import {
@@ -29,8 +29,20 @@ export function AddContent({
     [space, setSpace] = useState(spaceId),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
+  const mounted = useRef(true),
+    reading = useRef(false),
+    generation = useRef(0);
+  useEffect(() => {
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+      generation.current++;
+    };
+  }, []);
   async function files(list: FileList | null) {
-    if (!list?.length) return;
+    if (!list?.length || reading.current) return;
+    reading.current = true;
+    const current = ++generation.current;
     setBusy(true);
     setError("");
     try {
@@ -63,11 +75,15 @@ export function AddContent({
           }),
         );
       }
-      onSave(result);
+      if (mounted.current && current === generation.current) onSave(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : t.error);
+      if (mounted.current && current === generation.current)
+        setError(e instanceof Error ? e.message : t.error);
     } finally {
-      setBusy(false);
+      if (mounted.current && current === generation.current) {
+        reading.current = false;
+        setBusy(false);
+      }
     }
   }
   function submit(e: React.FormEvent) {

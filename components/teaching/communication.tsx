@@ -1,5 +1,7 @@
 "use client";
 import { useState } from "react";
+import { useTeachingTabs } from "./tabs";
+import { useTeachingDraft } from "./draft-guard";
 import {
   ArrowRight,
   Bell,
@@ -23,6 +25,7 @@ import {
   Panel,
   Tag,
   dateTime,
+  useTeachingConfirmation,
 } from "./ui";
 function localTime(value?: string) {
   if (!value) return "";
@@ -32,154 +35,158 @@ function localTime(value?: string) {
     .slice(0, 16);
 }
 export function CommunicationsView({ client }: { client: TeachingClient }) {
+  const confirmation = useTeachingConfirmation();
   const [tab, setTab] = useState<"announcements" | "events">("announcements"),
     [editing, setEditing] = useState<
       TeachingAnnouncement | TeachingEvent | "new" | null
     >(null);
   const data = client.data!;
+  const tabs = useTeachingTabs(
+    tab,
+    [
+      ["announcements", "Thông báo lớp"],
+      ["events", "Lịch & sự kiện"],
+    ],
+    (value) => setTab(value as typeof tab),
+  );
   return (
     <div className="tw-grid tw-enter">
       <div className="tw-toolbar">
         <div
           className="tw-tabs"
-          role="tablist"
+          {...tabs.listProps}
           aria-label="Bảng tin và lịch"
           style={{ margin: 0, border: 0, padding: 0 }}
         >
-          <button
-            role="tab"
-            aria-selected={tab === "announcements"}
-            onClick={() => setTab("announcements")}
-          >
-            Thông báo lớp
-          </button>
-          <button
-            role="tab"
-            aria-selected={tab === "events"}
-            onClick={() => setTab("events")}
-          >
-            Lịch & sự kiện
-          </button>
+          <button {...tabs.buttonProps("announcements")}>Thông báo lớp</button>
+          <button {...tabs.buttonProps("events")}>Lịch & sự kiện</button>
         </div>
         <AddButton onClick={() => setEditing("new")}>
           {tab === "announcements" ? "Soạn thông báo" : "Thêm lịch hẹn"}
         </AddButton>
       </div>
-      {tab === "announcements" ? (
-        <>
-          {data.announcements.map((item) => (
-            <article className="tw-card" key={item.id}>
-              <div className="tw-card-top">
-                <Tag tone={item.status === "published" ? "green" : "amber"}>
-                  {item.status === "published" ? "Đã đăng" : "Bản nháp"}
-                </Tag>
-                <span className="tw-subtle">
-                  {item.classId
-                    ? data.classes.find((c) => c.id === item.classId)?.name
-                    : "Trong tổ chức"}{" "}
-                  · {dateTime(item.createdAt)}
-                </span>
-              </div>
-              <h3>{item.title}</h3>
-              <div className="tw-result">{item.body}</div>
-              <div className="tw-card-footer">
-                <button
-                  className="tw-text-button"
-                  onClick={() => setEditing(item)}
-                >
-                  Chỉnh sửa
-                </button>
-                {item.status === "draft" && (
-                  <button
-                    className="tw-text-button"
-                    disabled={client.busy}
-                    onClick={() =>
-                      void client
-                        .mutate({
-                          action: "announcement.publish",
-                          id: item.id,
-                          expectedRevision: item.revision,
-                        })
-                        .catch(() => {})
-                    }
-                  >
-                    Đăng thông báo <ArrowRight size={13} />
-                  </button>
-                )}
-              </div>
-            </article>
-          ))}
-          {!data.announcements.length && (
-            <Panel>
-              <Empty icon={Bell} title="Những điều cần nói với lớp">
-                Soạn nháp, chọn phạm vi rồi đăng. Học sinh chỉ thấy thông báo đã
-                đăng trong lớp của mình.
-              </Empty>
-            </Panel>
-          )}
-        </>
-      ) : (
-        <>
-          {data.events
-            .slice()
-            .sort((a, b) => a.startAt.localeCompare(b.startAt))
-            .map((item) => (
+      <div {...tabs.panelProps}>
+        {tab === "announcements" ? (
+          <>
+            {data.announcements.map((item) => (
               <article className="tw-card" key={item.id}>
                 <div className="tw-card-top">
-                  <Tag tone="indigo">
-                    {item.kind === "lesson"
-                      ? "Tiết học"
-                      : item.kind === "deadline"
-                        ? "Hạn cần nhớ"
-                        : "Buổi gặp"}
+                  <Tag tone={item.status === "published" ? "green" : "amber"}>
+                    {item.status === "published" ? "Đã đăng" : "Bản nháp"}
                   </Tag>
                   <span className="tw-subtle">
-                    {data.classes.find((c) => c.id === item.classId)?.name}
+                    {item.classId
+                      ? data.classes.find((c) => c.id === item.classId)?.name
+                      : "Trong tổ chức"}{" "}
+                    · {dateTime(item.createdAt)}
                   </span>
                 </div>
                 <h3>{item.title}</h3>
-                <p>
-                  {dateTime(item.startAt)} → {dateTime(item.endAt)}
-                </p>
-                <p style={{ marginTop: 10 }}>{item.description}</p>
+                <div className="tw-result">{item.body}</div>
                 <div className="tw-card-footer">
                   <button
                     className="tw-text-button"
                     onClick={() => setEditing(item)}
                   >
-                    Chỉnh sửa lịch
+                    Chỉnh sửa
                   </button>
-                  <button
-                    className="tw-text-button"
-                    disabled={client.busy}
-                    onClick={() =>
-                      void client
-                        .mutate({
-                          action: "event.delete",
-                          id: item.id,
-                          expectedRevision: item.revision,
-                        })
-                        .catch(() => {})
-                    }
-                  >
-                    Xóa lịch hẹn
-                  </button>
+                  {item.status === "draft" && (
+                    <button
+                      className="tw-text-button"
+                      disabled={client.busy}
+                      onClick={() =>
+                        void client
+                          .mutate({
+                            action: "announcement.publish",
+                            id: item.id,
+                            expectedRevision: item.revision,
+                          })
+                          .catch(() => {})
+                      }
+                    >
+                      Đăng thông báo <ArrowRight size={13} />
+                    </button>
+                  )}
                 </div>
               </article>
             ))}
-          {!data.events.length && (
-            <Panel>
-              <Empty
-                icon={CalendarDays}
-                title="Chủ động với những cột mốc tiếp theo"
-              >
-                Thêm tiết học, buổi gặp hoặc hạn cần nhớ. Bản này hiển thị lịch
-                trong lớp, chưa tự gửi email hoặc thông báo đẩy.
-              </Empty>
-            </Panel>
-          )}
-        </>
-      )}
+            {!data.announcements.length && (
+              <Panel>
+                <Empty icon={Bell} title="Những điều cần nói với lớp">
+                  Soạn nháp, chọn phạm vi rồi đăng. Học sinh chỉ thấy thông báo
+                  đã đăng trong lớp của mình.
+                </Empty>
+              </Panel>
+            )}
+          </>
+        ) : (
+          <>
+            {data.events
+              .slice()
+              .sort((a, b) => a.startAt.localeCompare(b.startAt))
+              .map((item) => (
+                <article className="tw-card" key={item.id}>
+                  <div className="tw-card-top">
+                    <Tag tone="indigo">
+                      {item.kind === "lesson"
+                        ? "Tiết học"
+                        : item.kind === "deadline"
+                          ? "Hạn cần nhớ"
+                          : "Buổi gặp"}
+                    </Tag>
+                    <span className="tw-subtle">
+                      {data.classes.find((c) => c.id === item.classId)?.name}
+                    </span>
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>
+                    {dateTime(item.startAt)} → {dateTime(item.endAt)}
+                  </p>
+                  <p style={{ marginTop: 10 }}>{item.description}</p>
+                  <div className="tw-card-footer">
+                    <button
+                      className="tw-text-button"
+                      onClick={() => setEditing(item)}
+                    >
+                      Chỉnh sửa lịch
+                    </button>
+                    <button
+                      className="tw-text-button"
+                      disabled={client.busy}
+                      onClick={() =>
+                        confirmation.ask({
+                          title: "Xóa lịch hẹn?",
+                          description: `Lịch “${item.title}” sẽ được gỡ khỏi lớp. Thao tác này không xóa bài tập hoặc thay đổi hạn nộp bài.`,
+                          label: "Xác nhận xóa lịch",
+                          action: () =>
+                            client.mutate({
+                              action: "event.delete",
+                              id: item.id,
+                              expectedRevision: item.revision,
+                            }),
+                        })
+                      }
+                    >
+                      Xóa lịch hẹn
+                    </button>
+                  </div>
+                </article>
+              ))}
+            {!data.events.length && (
+              <Panel>
+                <Empty
+                  icon={CalendarDays}
+                  title="Chủ động với những cột mốc tiếp theo"
+                >
+                  Thêm tiết học, buổi gặp hoặc hạn cần nhớ. Bản này hiển thị
+                  lịch trong lớp, chưa tự gửi email hoặc thông báo đẩy.
+                </Empty>
+              </Panel>
+            )}
+          </>
+        )}
+      </div>
+      {confirmation.dialog}
       {editing && (
         <CommunicationEditor
           key={typeof editing === "string" ? tab : editing.id}
@@ -336,6 +343,7 @@ function CommunicationEditor({
   );
 }
 export function TeachingSettingsView({ client }: { client: TeachingClient }) {
+  const settingsDraft = useTeachingDraft("Cài đặt tổ chức");
   const settings = client.data!.settings,
     [name, setName] = useState(
       settings?.name || client.data!.organization?.name || "",
@@ -354,6 +362,8 @@ export function TeachingSettingsView({ client }: { client: TeachingClient }) {
       <Panel title="Không gian và thời gian" eyebrow="CẤU HÌNH TỔ CHỨC">
         <form
           className="tw-form tw-pad"
+          onInputCapture={settingsDraft.markDirty}
+          onChangeCapture={settingsDraft.markDirty}
           onSubmit={submit(async () => {
             await client.mutate({
               action: "settings.update",
@@ -362,6 +372,7 @@ export function TeachingSettingsView({ client }: { client: TeachingClient }) {
               timezone,
               allowLateSubmissions: allowLate,
             });
+            settingsDraft.markClean();
           })}
         >
           <FormError client={client} />
@@ -492,6 +503,7 @@ export function TeachingSettingsView({ client }: { client: TeachingClient }) {
   );
 }
 function PersonalPreferences({ client }: { client: TeachingClient }) {
+  const preferenceDraft = useTeachingDraft("Cài đặt cá nhân");
   const saved = client.data!.preferences,
     [displayName, setDisplayName] = useState(
       saved?.displayName || client.data!.actor.name,
@@ -518,6 +530,8 @@ function PersonalPreferences({ client }: { client: TeachingClient }) {
     <Panel title="Cách bạn muốn giảng dạy" eyebrow="CÀI ĐẶT RIÊNG CỦA TÔI">
       <form
         className="tw-form tw-pad"
+        onInputCapture={preferenceDraft.markDirty}
+        onChangeCapture={preferenceDraft.markDirty}
         onSubmit={submit(async () => {
           await client.mutate({
             action: "preferences.update",
@@ -530,6 +544,7 @@ function PersonalPreferences({ client }: { client: TeachingClient }) {
             aiEnabled,
             inAppNotifications: notifications,
           });
+          preferenceDraft.markClean();
         })}
       >
         <FormError client={client} />
@@ -612,8 +627,10 @@ function PersonalPreferences({ client }: { client: TeachingClient }) {
           </label>
           <p className="tw-note">
             Cài đặt gắn với tài khoản giáo viên này và được lưu trên máy chủ.
-            Chỉ học liệu đã chọn được gửi khi bạn chủ động tạo với AI. Không
-            dùng cài đặt này để chia sẻ bài làm riêng của học sinh.
+            Khi bạn xác nhận gửi tới AI, yêu cầu, tùy chọn và học liệu đã chọn
+            được gửi; gợi ý nhận xét còn gửi đoạn bạn tự loại thông tin nhận
+            dạng nếu có. Không tự đính kèm bài làm hay hồ sơ học sinh; bạn vẫn
+            cần kiểm tra đoạn nhập trước khi gửi.
           </p>
           <Button
             type="submit"
@@ -633,6 +650,7 @@ function PersonalPreferences({ client }: { client: TeachingClient }) {
   );
 }
 function OrganizationMembers({ client }: { client: TeachingClient }) {
+  const confirmation = useTeachingConfirmation();
   const data = client.data!,
     [remove, setRemove] = useState<string | null>(null);
   return (
@@ -659,16 +677,21 @@ function OrganizationMembers({ client }: { client: TeachingClient }) {
                     aria-label={`Vai trò của ${member.name}`}
                     disabled={client.busy}
                     value={member.role}
-                    onChange={(e) =>
-                      void client
-                        .mutate({
-                          action: "member.role",
-                          userId: member.userId,
-                          role: e.target.value as "TEACHER" | "SCHOOL_ADMIN",
-                          expectedRevision: data.organization!.revision,
-                        })
-                        .catch(() => {})
-                    }
+                    onChange={(e) => {
+                      const role = e.target.value as "TEACHER" | "SCHOOL_ADMIN";
+                      confirmation.ask({
+                        title: "Thay đổi vai trò thành viên?",
+                        description: `${member.name} sẽ có vai trò ${role === "SCHOOL_ADMIN" ? "quản trị tổ chức, được quản lý thành viên và lớp" : "giáo viên"}. Chỉ áp dụng trong tổ chức này; không cấp quyền quản trị hệ thống.`,
+                        label: "Xác nhận đổi vai trò",
+                        action: () =>
+                          client.mutate({
+                            action: "member.role",
+                            userId: member.userId,
+                            role,
+                            expectedRevision: data.organization!.revision,
+                          }),
+                      });
+                    }}
                   >
                     <option value="TEACHER">Giáo viên</option>
                     <option value="SCHOOL_ADMIN">Quản trị tổ chức</option>
@@ -692,6 +715,7 @@ function OrganizationMembers({ client }: { client: TeachingClient }) {
           trực tiếp thành giáo viên; giáo viên phải có hồ sơ đã duyệt.
         </p>
       </div>
+      {confirmation.dialog}
       {remove && (
         <Modal
           title="Gỡ thành viên khỏi tổ chức"

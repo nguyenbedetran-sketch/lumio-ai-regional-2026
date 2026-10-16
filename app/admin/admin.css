@@ -1981,3 +1981,65 @@
     font-size: 25px;
   }
 }
+.ad-usage-breakdown {
+  border: 1px solid var(--ad-line, #334155);
+  border-radius: 14px;
+  margin: 0 0 24px;
+  padding: 16px;
+}
+.ad-usage-breakdown > summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+.ad-usage-breakdown p {
+  line-height: 1.7;
+  font-size: 13px;
+}
+.ad-usage-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin: 16px 0;
+}
+.ad-usage-filters label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+}
+.ad-usage-filters select {
+  color: inherit;
+  background: var(--ad-bg, #14201c);
+  border: 1px solid var(--ad-line, #334155);
+  border-radius: 8px;
+  padding: 9px;
+}
+.ad-usage-breakdown .ad-table th code {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.ad-usage-breakdown caption {
+  text-align: left;
+  padding: 12px 0;
+  font-size: 13px;
+}
+.ad-usage-breakdown .ad-table {
+  white-space: normal;
+  min-width: 720px;
+  font-size: 12px;
+}
+.ad-usage-breakdown .ad-table th {
+  font-size: 12px;
+}
+.ad-usage-breakdown .ad-table th[scope="row"] {
+  min-width: 12rem;
+}
+.ad-usage-breakdown .ad-table td {
+  min-width: 9rem;
+}
+.ad-usage-breakdown .ad-table small {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.5;
+  white-space: normal;
+}

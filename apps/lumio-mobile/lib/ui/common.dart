@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../core/app_store.dart';
 import '../core/api.dart';
 import 'study_motion.dart';
@@ -30,6 +31,29 @@ void notice(BuildContext context, String text) {
 String errorText(BuildContext context, Object error) {
   final code = error is ApiFailure ? error.code : '';
   return switch (code) {
+    'AI_REQUEST_IN_PROGRESS' => context.tr(
+      'Yêu cầu này còn đang xử lý. Chờ rồi chủ động kiểm tra lại; ứng dụng không tự gọi AI lần nữa.',
+      'This request is still processing. Wait and check again explicitly; the app does not retry AI automatically.',
+    ),
+    'AI_REQUEST_COMPLETED' ||
+    'AI_REQUEST_CONFLICT' ||
+    'AI_REQUEST_UNSETTLED' => context.tr(
+      'Máy chủ đã ghi nhận yêu cầu này; thử lại không tạo lượt tính phí mới. Đầu ra bị mất chưa khôi phục được. Tạo một lượt mới có thể tốn thêm credit.',
+      'The server already recorded this request; retrying does not create another paid call. A lost result cannot yet be recovered. A new turn may use more credits.',
+    ),
+    'AI_REQUEST_METADATA_UNAVAILABLE' ||
+    'AI_REQUEST_METADATA_INVALID' => context.tr(
+      'Chưa lưu được mã bảo vệ yêu cầu trên thiết bị nên chưa gửi AI. Kiểm tra bộ nhớ an toàn rồi thử lại.',
+      'The request-protection record could not be saved, so AI was not called. Check secure storage, then retry.',
+    ),
+    'AI_REQUEST_PENDING_LIMIT' || 'AI_REQUEST_RETRY_EXPIRED' => context.tr(
+      'Còn yêu cầu chưa xác nhận hoặc đã quá hạn kiểm tra. Ứng dụng không tự tạo lượt mới; lượt mới có thể tốn thêm credit.',
+      'Unconfirmed requests remain or their retry window expired. The app will not create a new turn automatically; a new one may cost credits.',
+    ),
+    'ACCOUNT_CHANGED' || 'INVALID_ACCOUNT' => context.tr(
+      'Tài khoản đã đổi. Mở lại thao tác bằng tài khoản hiện tại.',
+      'The account changed. Reopen this action using the current account.',
+    ),
     'TUTOR_LOCKED' => context.tr(
       'Lời giải chưa mở. Tiếp tục thử với các gợi ý; máy chủ sẽ xác nhận khi đủ điều kiện.',
       'The solution is locked. Try the hints; the server confirms when review is available.',

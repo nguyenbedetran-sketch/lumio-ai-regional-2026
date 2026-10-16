@@ -13,6 +13,11 @@ import { createRagStore } from "./rag-core";
 import { createSummaryJobStore } from "./job-core";
 import { createTeacherStore } from "./teacher-core";
 import { createTeachingStore } from "./teaching-core";
+import { createAIHttpStore } from "./ai-http-core";
+import { createProviderAttemptStore } from "./provider-attempt-core";
+import { providerAttemptBreakdown } from "./provider-attempt-report";
+import { assertDatabaseIntegrity } from "./database-integrity";
+import { usageBreakdown, type UsageDimension } from "./usage-report";
 import { isPublicDemo } from "./public-demo";
 import { isCompetitionPreview } from "./competition-preview";
 import type {
@@ -91,12 +96,6 @@ export function createStore(
   if (filename !== ":memory:")
     mkdirSync(dirname(resolve(filename)), { recursive: true });
   const db = new DatabaseSync(filename);
-  db.exec(
-    "PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;",
-  );
-  db.exec(
-    "CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)",
-  );
   const now = options.now || Date.now;
   const stamp = () => new Date(now()).toISOString();
   function transaction<T>(fn: () => T): T {
@@ -110,25 +109,45 @@ export function createStore(
       throw e;
     }
   }
-  for (const migration of migrations) {
-    // A second process can initialize the same database, so check under the write lock.
-    transaction(() => {
-      if (
-        !db
-          .prepare("SELECT version FROM schema_migrations WHERE version=?")
-          .get(migration.version)
-      ) {
-        db.exec(migration.sql);
-        db.prepare(
-          "INSERT INTO schema_migrations(version,applied_at) VALUES (?,?)",
-        ).run(migration.version, stamp());
-      }
+  try {
+    if (migrations.some((migration, index) => migration.version !== index + 1))
+      throw new Error("SCHEMA_CONTRACT_OUTDATED");
+    // Reject future/gapped schemas and missing immutable guards before even
+    // enabling WAL or seeding. A failed old-runtime rollback must stay read-only.
+    assertDatabaseIntegrity(db, {
+      allowPrefix: true,
+      maximumVersion: migrations.length,
     });
+    db.exec(
+      "PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;",
+    );
+    db.exec(
+      "CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)",
+    );
+    for (const migration of migrations) {
+      // A second process can initialize the same database, so check under the write lock.
+      transaction(() => {
+        if (
+          !db
+            .prepare("SELECT version FROM schema_migrations WHERE version=?")
+            .get(migration.version)
+        ) {
+          db.exec(migration.sql);
+          db.prepare(
+            "INSERT INTO schema_migrations(version,applied_at) VALUES (?,?)",
+          ).run(migration.version, stamp());
+        }
+      });
+    }
+    assertDatabaseIntegrity(db, { maximumVersion: migrations.length });
+    for (const flag of flagDefinitions)
+      db.prepare(
+        "INSERT OR IGNORE INTO feature_flags(key,enabled,description,updated_at) VALUES (?,?,?,?)",
+      ).run(flag.key, Number(flag.enabled), flag.description, stamp());
+  } catch (error) {
+    db.close();
+    throw error;
   }
-  for (const flag of flagDefinitions)
-    db.prepare(
-      "INSERT OR IGNORE INTO feature_flags(key,enabled,description,updated_at) VALUES (?,?,?,?)",
-    ).run(flag.key, Number(flag.enabled), flag.description, stamp());
 
   const getUser = (id: string) =>
     userFrom(db.prepare("SELECT * FROM users WHERE id=?").get(id));
@@ -441,6 +460,11 @@ export function createStore(
     reason: string,
     expectedSessionVersion?: number,
   ) {
+    if (
+      typeof action !== "string" ||
+      !["disable", "enable", "revoke"].includes(action)
+    )
+      throw new PlatformError("INVALID_REQUEST");
     if (text(reason, 301).length < 8 || reason.length > 300)
       throw new PlatformError("REASON_REQUIRED");
     return transaction(() => {
@@ -667,23 +691,48 @@ export function createStore(
       ),
     };
   }
+  const billingStore = createBillingStore({
+    db,
+    now,
+    stamp,
+    transaction,
+    getUser,
+    actorFor,
+    recordAudit,
+  });
   return {
-    ...createBillingStore({
+    ...billingStore,
+    ...createProviderAttemptStore({ db, now, transaction, getUser }),
+    ...createAIHttpStore({
       db,
       now,
       stamp,
       transaction,
       getUser,
-      actorFor,
-      recordAudit,
+      refund: billingStore.failUsage,
     }),
     ...createMobileStore({ db, now, stamp, transaction, getUser, recordAudit }),
     ...createTutorStore({ db, now, stamp, transaction, getUser }),
     ...createRuntimeV3Store({ db, now, stamp, transaction, getUser }),
     ...createRagStore({ db, now, stamp, transaction, getUser }),
     ...createSummaryJobStore({ db, now, stamp, transaction, getUser }),
-    ...createTeacherStore({ db, now, stamp, transaction, getUser, getMemberships, recordAudit }),
-    ...createTeachingStore({ db, now, stamp, transaction, getUser, recordAudit }),
+    ...createTeacherStore({
+      db,
+      now,
+      stamp,
+      transaction,
+      getUser,
+      getMemberships,
+      recordAudit,
+    }),
+    ...createTeachingStore({
+      db,
+      now,
+      stamp,
+      transaction,
+      getUser,
+      recordAudit,
+    }),
     close: () => db.close(),
     getUser,
     getUserByStorageKey,
@@ -701,6 +750,10 @@ export function createStore(
     listFlags,
     updateFlag,
     listUsage,
+    getUsageBreakdown: (dimension: UsageDimension, days = 7) =>
+      usageBreakdown(db, now(), dimension, days),
+    getProviderAttemptBreakdown: (dimension: UsageDimension, days = 7) =>
+      providerAttemptBreakdown(db, now(), dimension, days),
     listAudit,
     getDashboard,
   };

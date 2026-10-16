@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <PolicyShell
       title="Dữ liệu của bạn, rõ ràng từ đầu."
       subtitle="Trang này mô tả cách bản Lumio AI hiện tại xử lý thông tin khi bạn đăng nhập và học tập."
-      updatedAt="15/10/2026"
+      updatedAt="16/10/2026"
     >
       <section>
         <h2>Phạm vi bản dự thi</h2>
@@ -99,6 +99,15 @@ export default function PrivacyPage() {
           riêng mà người tải phải bảo quản. Hosting miễn phí vẫn có thể làm
           mất dữ liệu máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính
           thức hoặc bản sao duy nhất.
+        </p>
+        <p>
+          Mỗi lần chấm và công bố lưu một phiên bản lịch sử riêng; sửa điểm
+          không ghi đè bản cũ. Lý do điều chỉnh điểm hoặc cho luyện lại, người
+          thực hiện và khung giờ mở/đóng bài cũng lưu trên máy chủ. Học sinh chỉ
+          xem lịch sử kết quả đã công bố của chính mình, không xem lý do nội
+          bộ. Những bản ghi này không có hạn bảy ngày hoặc nút tự xóa; sao lưu
+          cơ sở dữ liệu của người vận hành có thể chứa chúng và cần được xử lý
+          riêng.
         </p>
       </section>
       <section>
@@ -300,10 +309,23 @@ export default function PrivacyPage() {
           hoặc tiếp nhận thông tin thanh toán.
         </p>
         <p>
-          Bản thử nghiệm chưa có cơ chế tự động xóa nhật ký theo lịch hoặc thời
-          hạn lưu giữ đã công bố. Người phụ trách dự án quản lý dữ liệu trên máy
-          chủ; quy trình lưu giữ cần được hoàn thiện trước khi vận hành rộng
-          rãi.
+          Luồng tạo nội dung cho người học, giáo viên và tóm tắt nền còn ghi riêng
+          từng lần chuẩn bị gọi AI, gồm mã tài khoản/yêu cầu, model được yêu cầu
+          và model trong phản hồi, số token được báo, trạng thái và thời gian.
+          Đây là metadata liên kết tài khoản, không phải dữ liệu ẩn danh hay
+          nội dung học. Nhật ký mới chưa bao phủ giọng nói và embeddings, không
+          dựng lại các lần gọi trước khi nâng cấp. Số token hoặc chi phí chưa
+          biết được giữ là chưa biết, không tự coi bằng không.
+        </p>
+        <p>
+          Metadata từng lần gọi đã kết thúc quá 31 ngày được dọn theo đợt khi có
+          yêu cầu mới đủ quyền; không có lịch xóa nền nên có thể còn lưu lâu hơn.
+          Bản ghi chưa rõ kết quả được giữ để kiểm tra lỗi, không tự xóa hoặc tự
+          gọi lại AI. Xóa thư viện hay phiên gia sư không xóa nhật ký này; quản trị
+          viên được cấp quyền có thể xem báo cáo metadata. Các nhật ký quản trị,
+          sổ credit và bản sao lưu vẫn có phạm vi riêng, chưa có nút tự xóa toàn
+          bộ hoặc thời hạn chung. Người phụ trách phải xác định phạm vi xử lý
+          khi có yêu cầu dữ liệu tài khoản.
         </p>
       </section>
       <section>

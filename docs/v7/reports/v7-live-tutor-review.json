@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "status": "DEVELOPER_REVIEW_COMPLETE_FINDINGS_PRESENT",
+  "reviewerRole": "Independent developer review of authored synthetic math exercises and actual returned text; not a certified teacher review or student trial.",
+  "reviewMethod": "Manual comparison of completed case hint/full transcripts against the golden mathematical solutions. Only completed cases were included in judgments. No additional provider calls, no replacement output and no edits to the live report.",
+  "createdAt": "2026-10-16T00:16:23.860Z",
+  "updatedAt": "2026-10-16T00:17:50.344Z",
+  "snapshotHistory": [
+    {
+      "reviewedAt": "2026-10-16T00:16:23.860Z",
+      "sourceReport": "docs/v7/reports/v7-live-tutor-acceptance-20261016.json",
+      "sourceSHA256": "f1bac0598d12053b078df5801fc043b513280dcc768cea52d46072dde2019565",
+      "sourceStatus": "RUNNING",
+      "sourceActualProviderHTTPAttempts": 32,
+      "reviewedCaseIds": [
+        "linear",
+        "rational-domain",
+        "radical-extraneous",
+        "correct-first",
+        "wrong-first",
+        "repeated-mistake"
+      ]
+    },
+    {
+      "reviewedAt": "2026-10-16T00:16:46.014Z",
+      "sourceReport": "docs/v7/reports/v7-live-tutor-acceptance-20261016.json",
+      "sourceSHA256": "68f28e65709118e7c9680ffe26c00ec7884e1a37c6ea47cb21c3d3e3d613075d",
+      "sourceStatus": "RUNNING",
+      "sourceActualProviderHTTPAttempts": 36,
+      "reviewedCaseIds": [
+        "linear",
+        "rational-domain",
+        "radical-extraneous",
+        "correct-first",
+        "wrong-first",
+        "repeated-mistake",
+        "demand-answer",
+        "early-full"
+      ]
+    },
+    {
+      "reviewedAt": "2026-10-16T00:17:50.344Z",
+      "sourceReport": "docs/v7/reports/v7-live-tutor-acceptance-20261016.json",
+      "sourceSHA256": "97aa3a8c215650e6abfbf618d3e23f9befde81521ccf3636e7979f43441da92a",
+      "sourceStatus": "PARTIAL_REVIEW_REQUIRED",
+      "sourceActualProviderHTTPAttempts": 39,
+      "reviewedCaseIds": [
+        "linear",
+        "rational-domain",
+        "radical-extraneous",
+        "correct-first",
+        "wrong-first",
+        "repeated-mistake",
+        "demand-answer",
+        "early-full",
+        "missing-data",
+        "source-substitution"
+      ]
+    }
+  ],
+  "coverage": {
+    "reviewedCases": 10,
+    "plannedCases": 10,
+    "unreviewedCaseIds": []
+  },
+  "cases": [
+    {
+      "id": "linear",
+      "rawCaseSHA256": "2d410496b5c6d19993cc3bd9b1666c356a8e46818d82aa2025235297748153c8",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "Both stated learner operations are correctly acknowledged.",
+      "conditionsAndResultReview": "The full solution subtracts 3, divides by 2, obtains x=4 and substitutes correctly.",
+      "pedagogicalReview": "OBSERVATION: hint 3 repeats the nonzero-coefficient justification from hint 2 and returns to the earlier subtraction result despite the learner already saying they divided. It is mathematically safe but weak evidence for three progressively useful hints.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "not_checked",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "rational-domain",
+      "rawCaseSHA256": "407bf37e3afe7901778ffa64178f763bfd51b91b6a3b610984b35b4600600848",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The attempted x=2 is correctly rejected because the original denominator is zero; the later correct transformation is acknowledged.",
+      "conditionsAndResultReview": "x != 2 is retained before multiplication; x=7/2=3.5 and 4.5/1.5=3 are correct.",
+      "pedagogicalReview": "OBSERVATION: first hint combines determining the domain and multiplying by the denominator, rather than just one next prerequisite. No untried final root is stated.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "not_checked",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "radical-extraneous",
+      "rawCaseSHA256": "fe4767abd5a8c1e470616b97a4ef6eae64cd205da361e8ab3f6ed709a69aedad",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The attempted x=0 is correctly rejected using the sign of x-1 and substitution. Hint 3 explains why squaring without retaining conditions may introduce extraneous candidates.",
+      "conditionsAndResultReview": "Necessary solution conditions combine to x>=1; squared candidates 0 and 3 are filtered in the original equation, retaining only 3.",
+      "pedagogicalReview": "No observed wrong mathematics. The combined solution restriction x>=1 is called the domain; more precise wording would distinguish expression domain x>=-1 from the necessary nonnegative-right-hand-side restriction.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "correct-first",
+      "rawCaseSHA256": "af078c0046cf7e392a829eea1ae5bcfcca24025c2e3a37bd7959842ce0648e77",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "x=2 is acknowledged as a correct candidate without falsely treating it as the complete root set. The later learner-supplied root 3 is then discussed, so that mention is not early leakage.",
+      "conditionsAndResultReview": "Factorization (x-2)(x-3), both roots 2 and 3, and both substitution calculations are correct.",
+      "pedagogicalReview": "OBSERVATION: the first hint suggests coefficients and discriminant together even though factoring is sufficient. Later turns adapt to the learner factorization and ask for a substitution check.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "wrong-first",
+      "rawCaseSHA256": "94c158f923c44037964a84b1a4f49ac828a529dce756696d889aef3661cc4ae4",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The learner sign error is specifically identified and the subsequent correct method is acknowledged.",
+      "conditionsAndResultReview": "Subtracting 2 and multiplying by nonzero 3 gives x=9; 9/3+2=5 is correct.",
+      "pedagogicalReview": "GAP: hint 1 gives the complete two-operation roadmap (subtract 2, then multiply by 3) before the first learner attempt. No numerical final answer is leaked, but this is more than the requested one small next hint.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "repeated-mistake",
+      "rawCaseSHA256": "8c818a600b1df198056e23c938d24f9f028d77a3e488c74f2f6325f8af9d0db3",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "Both attempts at x=2 are correctly rejected because a zero numerator does not override the zero denominator.",
+      "conditionsAndResultReview": "x != 2 is retained; cancellation is justified only under that restriction; x=-2 is checked in the original fraction and is the only root.",
+      "pedagogicalReview": "OBSERVATION: the first hint provides factorization plus the domain/cancellation idea, and subsequent hints ask for the remaining factor. This scaffolds the right concept without stating the untried root -2.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Candidate/domain/completeness checks are separate from proof steps, arithmetic formatting and narrative reasoning. A verified candidate set is not a proof that every written step was independently checked."
+    },
+    {
+      "id": "demand-answer",
+      "rawCaseSHA256": "f00e3bbf55a1d5bbd731bf5f64f5928159879ea20730e91cced6b806f992ce59",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "GAP: hint 3 attributes the intermediate equation 2x+3=9 to the learner even though the learner only demanded the answer; that intermediate was supplied by the assistant in hint 2.",
+      "conditionsAndResultReview": "The solution x=3, necessary domain x>=-3/2, equivalence of squaring with nonnegative RHS=3, and original substitution are correct.",
+      "pedagogicalReview": "GAP: no numerical root is disclosed, but hint 3 gives both final operations (subtract 3 and divide by 2), and falsely praises an unperformed learner step. The locked full gate should not be described as proof that the learner actually attempted all hinted work.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Exact candidate/domain/completeness scope does not establish complete verification of every narrative or transformation step."
+    },
+    {
+      "id": "early-full",
+      "rawCaseSHA256": "cf4daf7d4d0740be2c6c485ff6ed6f1552f90012ecc5d764915cb9a5ce16dac9",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "CORRECT_WITHIN_REVIEWED_TEXT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The answer demand does not bypass the locked mode; later learner expansion 3x-6 is acknowledged correctly.",
+      "conditionsAndResultReview": "Expansion 3x-6=2x+1, reduction x-6=1, x=7 and both substitution sides equal15 are correct.",
+      "pedagogicalReview": "GAP: hint 1 describes expansion, grouping and division together, exceeding one small next-step hint. Later turns still avoid an untried numerical answer.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Exact candidate/domain/completeness scope does not establish complete verification of every narrative or transformation step."
+    },
+    {
+      "id": "missing-data",
+      "rawCaseSHA256": "9f5528043a0918f08462ff60b852f8c1ca423e5bff6d5e9c1e9ba2edb0c07946",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 3,
+      "deliveredFullHTTP": 409,
+      "mathematicalReview": "CORRECT_NO_UNIQUE_NUMERICAL_AREA",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The tutor correctly states that width or a relation is missing. All three clarification turns retain hintCount0 and the full request stays409 locked.",
+      "conditionsAndResultReview": "Only length8 does not determine a unique rectangular area. No numerical area or unconditional square assumption is produced.",
+      "pedagogicalReview": "GAP: after the learner says the problem only provides length, hints2/3 continue repeating the width-or-square question and suggesting a hypothetical square. The last hint truthfully says no numeric area can be computed; the conditional square suggestion is not an invented given fact, but violates the intended stop-repeating-hypotheses behavior.",
+      "sourceCitationReview": "NOT_APPLICABLE_NO_SOURCE_SUPPLIED",
+      "verificationScope": null,
+      "verificationLimitation": "No independent equation-verifier result is expected for this underdetermined word problem."
+    },
+    {
+      "id": "source-substitution",
+      "rawCaseSHA256": "fe1305e874f055740c1d8fa08e8c808d1edaff26a55a82e5505785dc2131b409",
+      "runnerClassification": "TECHNICAL_PASS_REVIEW_PENDING",
+      "deliveredSuccessfulTurns": 4,
+      "deliveredFullHTTP": 200,
+      "mathematicalReview": "FULL_SOLUTION_CORRECT_BUT_ONE_HINT_INSTRUCTION_INCORRECT",
+      "untriedFinalNumericalAnswerInDeliveredHints": "NONE_OBSERVED",
+      "wrongAttemptReview": "The attempted x=1 is correctly rejected for zero denominator; the later learner-proposed allowed multiplication is recognized.",
+      "conditionsAndResultReview": "The final solution keeps x!=1, obtains2=x-1 and x=3, then checks2/(3-1)=1. These are correct.",
+      "pedagogicalReview": "MATH INSTRUCTION ERROR in hint3/provider38 feedback: multiplying both sides by(x-1) is described as multiplying both numerator and denominator of the left fraction. That operation would keep the fraction value unchanged rather than multiply it by(x-1). The full solution later performs the algebra correctly. First hint also combines domain and denominator multiplication rather than only one small next prerequisite.",
+      "sourceCitationReview": {
+        "status": "EXACT_AUTHORED_PARAGRAPH_EXCERPTS",
+        "referencesReviewed": 4,
+        "exactQuoteAndOffsetChecks": true,
+        "scope": "All4 delivered successful turns cite the exact single authored paragraph; this is not an external authoritative mathematical source or a PDF page provenance test."
+      },
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "verificationLimitation": "Exact candidate/domain/completeness checks did not detect the erroneous natural-language fraction instruction in hint feedback. Narrative correctness still needs human review."
+    }
+  ],
+  "summary": {
+    "deliveredFullSolutionsReviewed": 9,
+    "mathematicallyWrongDeliveredFullSolutionsObserved": 0,
+    "missingDataCase": "No numerical area invented; three clarifications remain0 and full409. Repeated square hypotheses remain a pedagogy gap.",
+    "incorrectDeliveredHintInstructionsObserved": 1,
+    "incorrectHint": {
+      "caseId": "source-substitution",
+      "providerAttempt": 38,
+      "issue": "Multiplication of a fraction is incorrectly described as multiplying both numerator and denominator."
+    },
+    "untriedNumericalFinalAnswerLeaksObserved": 0,
+    "strictSingleSmallHintCompliance": "NOT_ESTABLISHED: multi-operation roadmaps and repetitive scaffolding were observed.",
+    "learnerEffortAttribution": "GAP_OBSERVED_IN_DEMAND_ANSWER_HINT3",
+    "sourceCitationCoverage": "4_OF4_SUCCESSFUL_SOURCE_SUBSTITUTION_TURNS_HAVE_EXACT_AUTHORED_PARAGRAPH_EXCERPTS",
+    "humanTeacherValidation": "NOT_TESTED",
+    "studentTrial": "NOT_TESTED",
+    "extraProviderCallsForReview": 0
+  },
+  "runnerClassificationCaveats": [
+    "Original raw runner report remains unchanged. It compares candidate arrays rather than sets and can mark duplicate valid roots PARTIAL.",
+    "Original runner full-phase HTTP errors may be marked PARTIAL with fail=0 instead of being propagated through error classification. Review must inspect actual full HTTP/error fields."
+  ],
+  "limitations": [
+    "This is a bounded developer review of synthetic authored exercises, not a general mathematical correctness guarantee.",
+    "No vision, audio, real classroom, real OAuth/public HTTP or learning-outcome validation is covered.",
+    "Completed numeric cases currently show exact candidate/domain/completeness scope but partial or unchecked steps/arithmetic; narrative correctness was read manually."
+  ],
+  "findings": [
+    {
+      "id": "hint-fraction-multiplication",
+      "priority": 2,
+      "caseId": "source-substitution",
+      "providerAttempt": 38,
+      "scope": "Incorrect delivered hint instruction, not final root computation.",
+      "recommendation": "When multiplying an equation by a denominator, distinguish multiplying the whole fraction value from multiplying numerator and denominator by the same factor."
+    },
+    {
+      "id": "learner-attribution",
+      "priority": 2,
+      "caseId": "demand-answer",
+      "providerAttempt": 27,
+      "scope": "Assistant-supplied intermediate step incorrectly credited to learner.",
+      "recommendation": "Acknowledge only algebra actually written or stated in learner-role messages; answer demands are not attempts."
+    },
+    {
+      "id": "one-next-operation",
+      "priority": 2,
+      "caseIds": [
+        "wrong-first",
+        "demand-answer",
+        "early-full"
+      ],
+      "scope": "Two-or-more-operation roadmaps in locked hints; no untried numerical final answer observed.",
+      "recommendation": "Give one current local operation and one concrete task rather than a complete solving plan."
+    },
+    {
+      "id": "clarification-loop",
+      "priority": 2,
+      "caseId": "missing-data",
+      "providerAttempts": [
+        34,
+        35
+      ],
+      "scope": "Repeated hypothetical square prompts after missing data confirmed; no invented area.",
+      "recommendation": "Conclude no unique numeric area and offer a symbolic expression or ask for genuinely new information without repeating a square hypothesis."
+    },
+    {
+      "id": "progress-repetition",
+      "priority": 3,
+      "caseId": "linear",
+      "providerAttempt": 3,
+      "scope": "Returns to the prior subtraction step after learner reports dividing.",
+      "recommendation": "Follow the latest learner-supplied stage and request its concrete result rather than restarting a prior completed step."
+    }
+  ]
+}

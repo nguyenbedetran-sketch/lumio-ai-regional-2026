@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T05:13:51.356Z",
+  "passed": 30,
+  "checks": [
+    {
+      "name": "Strict admin action rejects arrays without enabling suspended account or writing audit",
+      "status": "PASS"
+    },
+    {
+      "name": "Strict job action rejects array resume at handler and store without cancelling",
+      "status": "PASS"
+    },
+    {
+      "name": "AI enum coercion is rejected before any provider or credit reservation",
+      "status": "PASS"
+    },
+    {
+      "name": "Browser account binding rejects missing and stale headers for AI and voice",
+      "status": "PASS"
+    },
+    {
+      "name": "A UUID idempotency key is required before quota reservation and provider dispatch",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost ACK repeats return owned receipt with one charge, one provider call and one hint",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent identical requests share one persisted intent before the runtime limiter",
+      "status": "PASS"
+    },
+    {
+      "name": "Key cannot change content or endpoint, while another account has independent namespace",
+      "status": "PASS"
+    },
+    {
+      "name": "Failed provider intent refunds and cannot silently re-execute without a new explicit operation",
+      "status": "PASS"
+    },
+    {
+      "name": "Malformed model output fails receipt and refunds rather than storing a completed answer",
+      "status": "PASS"
+    },
+    {
+      "name": "Chat session revocation inside provider prevents receipt, hint and credit commit",
+      "status": "PASS"
+    },
+    {
+      "name": "TTS revocation at settlement returns no audio and refunds actual ledger hold",
+      "status": "PASS"
+    },
+    {
+      "name": "STT revocation at settlement returns no transcript and refunds actual ledger hold",
+      "status": "PASS"
+    },
+    {
+      "name": "Voice request cancellation remains failed and refunded on uncertain retry",
+      "status": "PASS"
+    },
+    {
+      "name": "Multipart boundary changes do not make one recording a second paid intent",
+      "status": "PASS"
+    },
+    {
+      "name": "Receipt update fault rolls back tutor turn and charge in the same transaction",
+      "status": "PASS"
+    },
+    {
+      "name": "Lease expiry fences a late response and refunds before refusing automatic rerun",
+      "status": "PASS"
+    },
+    {
+      "name": "Crash after reservation recovers via receipt access and late completion stays fenced",
+      "status": "PASS"
+    },
+    {
+      "name": "Receipt expiry never makes an already charged key reusable",
+      "status": "PASS"
+    },
+    {
+      "name": "Native binding and shared UUID intent work with real pairing credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "Tutor GET/DELETE require the originating account and never delete another session",
+      "status": "PASS"
+    },
+    {
+      "name": "Receipt recovery remains available when AI processing is disabled",
+      "status": "PASS"
+    },
+    {
+      "name": "Same actor source/key metadata survives reopen without storing source or output",
+      "status": "PASS"
+    },
+    {
+      "name": "Only an actual ledger settlement may complete a receipt; fake token cannot fence another intent",
+      "status": "PASS"
+    },
+    {
+      "name": "Old-session pending intents are fenced and refunded after a new canonical login",
+      "status": "PASS"
+    },
+    {
+      "name": "Tutor deletion removes only recovery pointer, preserving financial duplicate tombstone",
+      "status": "PASS"
+    },
+    {
+      "name": "Migration14 preserves schema13 users and private snapshot bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "TTS lost ACK is deduplicated after normalized whitespace and JSON property order",
+      "status": "PASS"
+    },
+    {
+      "name": "Non-chat cards also recheck session inside settlement and refund on revoke",
+      "status": "PASS"
+    },
+    {
+      "name": "Summary branch commits receipt atomically and never repeats a charged lost ACK",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual handlers, canonical synthetic users and real temporary SQLite/credit/tutor/receipt transactions. Only OAuth session and provider transport intercepted. No real providers, teachers, learners or external actions.",
+  "providerRequests": 0,
+  "productionDeployment": "NOT_TESTED"
+}

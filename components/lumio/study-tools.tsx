@@ -22,6 +22,7 @@ import {
 import type { Messages, Locale } from "../../lib/lumio/i18n";
 import { MathText } from "./math-text";
 import { SourceReferences } from "./source-references";
+import type { SourceReference } from "../../lib/ai/grounding";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
 import {
   createSkillEvidence,
@@ -131,6 +132,7 @@ export function Flashcards({
   update,
   drafts,
   onDraft,
+  onOpenSource,
 }: {
   item: LearningItem;
   t: Messages;
@@ -138,6 +140,7 @@ export function Flashcards({
   update: (item: LearningItem) => void;
   drafts?: FlashcardDrafts;
   onDraft?: (value: FlashcardDrafts) => void;
+  onOpenSource?: (reference?: SourceReference) => void;
 }) {
   const [adding, setAdding] = useState(drafts?.adding ?? false),
     [front, setFront] = useState(drafts?.front ?? ""),
@@ -290,6 +293,7 @@ export function Flashcards({
           {flipped && (
             <SourceReferences
               references={card.references}
+              onOpenSource={onOpenSource}
               source={item.text}
               evidence={item.sourceEvidence}
               item={item}
@@ -373,6 +377,7 @@ export function Quiz({
   update,
   drafts,
   onDraft,
+  onOpenSource,
 }: {
   item: LearningItem;
   t: Messages;
@@ -380,6 +385,7 @@ export function Quiz({
   update: (item: LearningItem) => void;
   drafts?: QuizDrafts;
   onDraft?: (value: QuizDrafts) => void;
+  onOpenSource?: (reference?: SourceReference) => void;
 }) {
   const [adding, setAdding] = useState(drafts?.adding ?? false),
     [prompt, setPrompt] = useState(drafts?.prompt ?? ""),
@@ -720,6 +726,7 @@ export function Quiz({
                 )}
                 <SourceReferences
                   references={q.references}
+                  onOpenSource={onOpenSource}
                   source={item.text}
                   evidence={item.sourceEvidence}
                   item={item}

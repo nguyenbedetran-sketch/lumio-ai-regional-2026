@@ -1,3 +1,4 @@
+import { paidFetch } from "../ai/request-client";
 import {
   recordingExtension,
   VOICE_LIMITS,
@@ -19,17 +20,22 @@ export async function transcribeRecording(
   blob: Blob,
   language: VoiceLanguage,
   signal: AbortSignal,
+  account = "guest",
 ) {
   if (!blob.size || blob.size > VOICE_LIMITS.audioBytes)
     throw new Error("INVALID_MEDIA");
   const form = new FormData();
   form.set("language", language);
   form.set("file", blob, `lumio-recording.${recordingExtension(blob.type)}`);
-  const response = await fetch("/api/voice", {
-    method: "POST",
-    body: form,
-    signal,
-  });
+  const response = await paidFetch(
+    "/api/voice",
+    {
+      method: "POST",
+      body: form,
+      signal,
+    },
+    account,
+  );
   if (!response.ok) throw await responseError(response);
   const result = await response.json();
   if (typeof result.text !== "string" || !result.text.trim())
@@ -45,27 +51,32 @@ export async function askVoiceTutor(
   tutorSessionId?: string,
   onTutorState?: (state: import("../tutor/types").TutorState) => void,
   guidance: "hints" | "full" = "hints",
+  account = "guest",
 ) {
   if (!question.trim() || question.length > VOICE_LIMITS.questionCharacters)
     throw new Error("INVALID_INPUT");
-  const response = await fetch("/api/ai", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    signal,
-    body: JSON.stringify({
-      task: "chat",
-      mode: "tutor",
-      language,
-      question: question.trim(),
-      source: source.slice(0, 200000),
-      tutorSessionId,
-      guidance,
-      goal: "This is a spoken tutoring conversation. Keep the reply concise and natural to read aloud; invite the learner to think before giving a full answer.",
-      history: turns
-        .slice(-6)
-        .map(({ role, text }) => ({ role, text: text.slice(0, 4000) })),
-    }),
-  });
+  const response = await paidFetch(
+    "/api/ai",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal,
+      body: JSON.stringify({
+        task: "chat",
+        mode: "tutor",
+        language,
+        question: question.trim(),
+        source: source.slice(0, 200000),
+        tutorSessionId,
+        guidance,
+        goal: "This is a spoken tutoring conversation. Keep the reply concise and natural to read aloud; invite the learner to think before giving a full answer.",
+        history: turns
+          .slice(-6)
+          .map(({ role, text }) => ({ role, text: text.slice(0, 4000) })),
+      }),
+    },
+    account,
+  );
   if (!response.ok) throw await responseError(response);
   const result = await response.json();
   if (result.tutor) onTutorState?.(result.tutor);
@@ -78,17 +89,22 @@ export async function synthesizeVoice(
   language: VoiceLanguage,
   voice: VoiceId,
   signal: AbortSignal,
+  account = "guest",
 ) {
-  const response = await fetch("/api/voice", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    signal,
-    body: JSON.stringify({
-      text: text.slice(0, VOICE_LIMITS.speechCharacters),
-      language,
-      voice,
-    }),
-  });
+  const response = await paidFetch(
+    "/api/voice",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal,
+      body: JSON.stringify({
+        text: text.slice(0, VOICE_LIMITS.speechCharacters),
+        language,
+        voice,
+      }),
+    },
+    account,
+  );
   if (!response.ok) throw await responseError(response);
   if (!response.headers.get("content-type")?.startsWith("audio/"))
     throw new Error("EMPTY_AI_OUTPUT");

@@ -1,0 +1,476 @@
+{
+  "schema": 1,
+  "mode": "live",
+  "status": "STOPPED",
+  "startedAt": "2026-10-16T05:16:47.955Z",
+  "scope": "Real local Request handlers, source/tutor/math validators and temporary SQLite ledger; injected synthetic authenticated principal. Not real OAuth/public HTTP, student trial or semantic teacher review.",
+  "automaticProviderRetries": false,
+  "fallbackPolicy": "Unchanged product router may perform one eligible text fallback; each HTTP attempt counts toward the same hard cap.",
+  "providerHTTPAttemptLimit": 2,
+  "actualProviderHTTPAttempts": 2,
+  "transportAttempts": 2,
+  "routeRequests": 2,
+  "providerAttempts": [
+    {
+      "number": 1,
+      "caseId": "vi-summary",
+      "phase": "content",
+      "provider": "gemini",
+      "requestedModel": "gemini-3.8-flash",
+      "startedAt": "2026-10-16T05:16:49.837Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\n  \"title\": \"Điều kiện xác định của phân thức\",\n  \"overview\": \"Nguồn tài liệu nêu rõ điều kiện xác định cơ bản là mẫu số phải khác không. Cụ thể, đối với phân thức \\\\( \\\\frac{1}{x-2} \\\\), ta cần điều kiện là \\\\( x \\\\) khác 2.\",\n  \"keyPoints\": [\n    \"Điều kiện xác định là mẫu số phải khác không.\",\n    \"Với phân thức \\\\( \\\\frac{1}{x-2} \\\\), ta cần \\\\( x \\\\) khác 2.\"\n  ],\n  \"chapters\": [\n    {\n      \"title\": \"Quy tắc điều kiện xác định\",\n      \"summary\": \"Điều kiện xác định được áp dụng cho phân thức thông qua yêu cầu mẫu số khác không.\",\n      \"bullets\": [\n        \"Mẫu số phải khác không.\",\n        \"Áp dụng cho phân thức \\\\( \\\\frac{1}{x-2} \\\\): cần \\\\( x \\\\) khác 2.\"\n      ],\n      \"references\": [\n        {\n          \"segmentId\": \"s1\",\n          \"quote\": \"Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.\"\n        }\n      ]\n    }\n  ],\n  \"mindMap\": {\n    \"nodes\": [\n      {\n        \"id\": \"root\",\n        \"label\": \"Điều kiện xác định\",\n        \"detail\": \"Mẫu số phải khác không\",\n        \"chapterIndex\": 0\n      },\n      {\n        \"id\": \"vidu\",\n        \"label\": \"Phân thức 1/(x-2)\",\n        \"detail\": \"x khác 2\",\n        \"chapterIndex\": 0\n      }\n    ],\n    \"edges\": [\n      {\n        \"source\": \"root\",\n        \"target\": \"vidu\",\n        \"label\": \"ví dụ\"\n      }\n    ]\n  }\n}",
+      "rawOutputTruncated": false,
+      "responseModel": "gemini-3.8-flash",
+      "providerFinish": "STOP",
+      "usage": {
+        "inputTokens": 881,
+        "outputTokens": 451,
+        "totalTokens": 2039,
+        "cachedTokens": null
+      },
+      "providerErrorCode": null,
+      "latencyMs": 7541,
+      "finishedAt": "2026-10-16T05:16:57.379Z"
+    },
+    {
+      "number": 2,
+      "caseId": "vi-cards",
+      "phase": "content",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-16T05:16:57.405Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\n  \"cards\": [\n    {\n      \"front\": \"Điều kiện xác định của phân thức \\\\(\\\\frac{1}{x-2}\\\\) là gì?\",\n      \"back\": \"Mẫu số phải khác 0, nên yêu cầu là \\\\(x\\\\neq 2\\\\).\",\n      \"references\": [\n        {\n          \"segmentId\": \"s1\",\n          \"quote\": \"Với phân thức 1/(x-2), ta cần x khác 2.\"\n        },\n        {\n          \"segmentId\": \"s1\",\n          \"quote\": \"Điều kiện xác định: mẫu số phải khác không.\"\n        }\n      ]\n    }\n  ],\n  \"topLevelReferences\": [\n    {\n      \"segmentId\": \"s1\",\n      \"quote\": \"Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.\"\n    }\n  ]\n}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 708,
+        "outputTokens": 627,
+        "totalTokens": 1335,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 7292,
+      "finishedAt": "2026-10-16T05:17:04.698Z"
+    }
+  ],
+  "cases": [
+    {
+      "id": "vi-summary",
+      "suite": "content",
+      "fixture": {
+        "id": "summary",
+        "task": "summary",
+        "source": "Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.",
+        "question": "Hãy giải thích điều kiện của mẫu số từ nguồn này.",
+        "language": "vi"
+      },
+      "technicalChecks": {
+        "expectedResponse": true,
+        "hasExactSourceReferences": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "PENDING",
+      "credits": {
+        "before": {
+          "planId": "free",
+          "balance": 200,
+          "reserved": 0,
+          "settledEntries": 0,
+          "refundEntries": 0
+        },
+        "after": {
+          "planId": "free",
+          "balance": 192,
+          "reserved": 0,
+          "settledEntries": 1,
+          "refundEntries": 0
+        }
+      },
+      "result": {
+        "http": 200,
+        "latencyMs": 7601,
+        "providerAttemptNumbers": [
+          1
+        ],
+        "body": {
+          "text": "# Điều kiện xác định của phân thức\n\nNguồn tài liệu nêu rõ điều kiện xác định cơ bản là mẫu số phải khác không. Cụ thể, đối với phân thức \\( \\frac{1}{x-2} \\), ta cần điều kiện là \\( x \\) khác 2.\n\n- Điều kiện xác định là mẫu số phải khác không.\n- Với phân thức \\( \\frac{1}{x-2} \\), ta cần \\( x \\) khác 2.\n\n## 1. Quy tắc điều kiện xác định\n\nĐiều kiện xác định được áp dụng cho phân thức thông qua yêu cầu mẫu số khác không.\n\n- Mẫu số phải khác không.\n- Áp dụng cho phân thức \\( \\frac{1}{x-2} \\): cần \\( x \\) khác 2.",
+          "summary": {
+            "title": "Điều kiện xác định của phân thức",
+            "overview": "Nguồn tài liệu nêu rõ điều kiện xác định cơ bản là mẫu số phải khác không. Cụ thể, đối với phân thức \\( \\frac{1}{x-2} \\), ta cần điều kiện là \\( x \\) khác 2.",
+            "keyPoints": [
+              "Điều kiện xác định là mẫu số phải khác không.",
+              "Với phân thức \\( \\frac{1}{x-2} \\), ta cần \\( x \\) khác 2."
+            ],
+            "chapters": [
+              {
+                "title": "Quy tắc điều kiện xác định",
+                "summary": "Điều kiện xác định được áp dụng cho phân thức thông qua yêu cầu mẫu số khác không.",
+                "bullets": [
+                  "Mẫu số phải khác không.",
+                  "Áp dụng cho phân thức \\( \\frac{1}{x-2} \\): cần \\( x \\) khác 2."
+                ],
+                "timestampKind": "none",
+                "references": [
+                  {
+                    "segmentId": "s1",
+                    "quote": "Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.",
+                    "start": 0,
+                    "end": 83,
+                    "paragraph": 1,
+                    "verification": "exact-excerpt"
+                  }
+                ]
+              }
+            ],
+            "mindMap": {
+              "nodes": [
+                {
+                  "id": "root",
+                  "label": "Điều kiện xác định",
+                  "detail": "Mẫu số phải khác không",
+                  "chapterIndex": 0
+                },
+                {
+                  "id": "vidu",
+                  "label": "Phân thức 1/(x-2)",
+                  "detail": "x khác 2",
+                  "chapterIndex": 0
+                }
+              ],
+              "edges": [
+                {
+                  "source": "root",
+                  "target": "vidu",
+                  "label": "ví dụ"
+                }
+              ]
+            }
+          },
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "requestId": "http-3ca82a5f1ed59a617c67be94214717bed0cd4c628ab1ae648a50c3fcd97dee0a"
+        }
+      },
+      "citationAudit": [
+        {
+          "index": 0,
+          "exactReferences": 1,
+          "suppliedReferences": 1
+        }
+      ],
+      "status": "TECHNICAL_PASS_REVIEW_PENDING"
+    },
+    {
+      "id": "vi-cards",
+      "suite": "content",
+      "fixture": {
+        "id": "cards",
+        "task": "cards",
+        "source": "Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.",
+        "question": "Hãy giải thích điều kiện của mẫu số từ nguồn này.",
+        "language": "vi"
+      },
+      "technicalChecks": {
+        "expectedResponse": true,
+        "hasExactSourceReferences": true,
+        "noLeakedCreditHold": true
+      },
+      "semanticReview": "PENDING",
+      "credits": {
+        "before": {
+          "planId": "free",
+          "balance": 200,
+          "reserved": 0,
+          "settledEntries": 0,
+          "refundEntries": 0
+        },
+        "after": {
+          "planId": "free",
+          "balance": 194,
+          "reserved": 0,
+          "settledEntries": 1,
+          "refundEntries": 0
+        }
+      },
+      "result": {
+        "http": 200,
+        "latencyMs": 7311,
+        "providerAttemptNumbers": [
+          2
+        ],
+        "body": {
+          "text": "{\n  \"cards\": [\n    {\n      \"front\": \"Điều kiện xác định của phân thức \\\\(\\\\frac{1}{x-2}\\\\) là gì?\",\n      \"back\": \"Mẫu số phải khác 0, nên yêu cầu là \\\\(x\\\\neq 2\\\\).\",\n      \"references\": [\n        {\n          \"segmentId\": \"s1\",\n          \"quote\": \"Với phân thức 1/(x-2), ta cần x khác 2.\"\n        },\n        {\n          \"segmentId\": \"s1\",\n          \"quote\": \"Điều kiện xác định: mẫu số phải khác không.\"\n        }\n      ]\n    }\n  ],\n  \"topLevelReferences\": [\n    {\n      \"segmentId\": \"s1\",\n      \"quote\": \"Điều kiện xác định: mẫu số phải khác không. Với phân thức 1/(x-2), ta cần x khác 2.\"\n    }\n  ]\n}",
+          "cards": [
+            {
+              "front": "Điều kiện xác định của phân thức \\(\\frac{1}{x-2}\\) là gì?",
+              "back": "Mẫu số phải khác 0, nên yêu cầu là \\(x\\neq 2\\).",
+              "references": [
+                {
+                  "segmentId": "s1",
+                  "quote": "Với phân thức 1/(x-2), ta cần x khác 2.",
+                  "start": 44,
+                  "end": 83,
+                  "paragraph": 1,
+                  "verification": "exact-excerpt"
+                },
+                {
+                  "segmentId": "s1",
+                  "quote": "Điều kiện xác định: mẫu số phải khác không.",
+                  "start": 0,
+                  "end": 43,
+                  "paragraph": 1,
+                  "verification": "exact-excerpt"
+                }
+              ]
+            }
+          ],
+          "quality": {
+            "status": "review-required",
+            "structuralChecks": true,
+            "citedItems": 1,
+            "totalItems": 1,
+            "issues": [
+              "semantic-review"
+            ]
+          },
+          "requestId": "http-0466bbb5c966f40def024495ef66fdd68d33c9206e34d2cd0446da7d3e1ee963"
+        }
+      },
+      "citationAudit": [
+        {
+          "index": 0,
+          "exactReferences": 2,
+          "suppliedReferences": 2
+        }
+      ],
+      "status": "TECHNICAL_PASS_REVIEW_PENDING"
+    }
+  ],
+  "manualReview": {
+    "status": "PENDING",
+    "studentTrial": "NOT_TESTED",
+    "independentTeacherReview": "NOT_TESTED",
+    "semanticAccuracyClaim": false
+  },
+  "limitations": [
+    "Provider HTTP attempts can incur cost even when application credit is refunded.",
+    "Cap counts transport dispatch attempts, including failed network attempts; does not prove provider receipt or invoice amount.",
+    "Bounded math/citation/structure checks do not prove all narrative reasoning, pedagogical quality, injection resistance or learning outcomes.",
+    "No automatic retry or replacement of rejected outputs; rejected raw authored outputs remain in providerAttempts.",
+    "No vision/audio/device/public deployment coverage in this runner."
+  ],
+  "runtime": {
+    "node": "v24.19.0",
+    "packageVersion": "3.3.0-rc.1",
+    "schemaVersion": 17,
+    "workingTree": "Source hashes below identify inspected runtime files; HEAD alone may exclude uncommitted edits.",
+    "runnerSHA256": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b",
+    "headCommit": "33a79f888385b9f7a733314cb4e27472cf64c4d1"
+  },
+  "fixtures": {
+    "tutorFile": "lib/tutor/reference-problems.ts",
+    "tutorCases": [
+      "linear",
+      "rational-domain",
+      "radical-extraneous",
+      "correct-first",
+      "wrong-first",
+      "repeated-mistake",
+      "demand-answer",
+      "early-full",
+      "missing-data",
+      "source-substitution"
+    ],
+    "contentCorpusId": "lumio-v7-authored-offline-1",
+    "corpusVersion": "1.0.0",
+    "languages": [
+      "vi"
+    ],
+    "authored": true,
+    "studentData": false
+  },
+  "plannedCases": [
+    {
+      "id": "vi-summary",
+      "suite": "content"
+    },
+    {
+      "id": "vi-cards",
+      "suite": "content"
+    },
+    {
+      "id": "vi-quiz",
+      "suite": "content"
+    },
+    {
+      "id": "vi-injection-summary",
+      "suite": "content"
+    },
+    {
+      "id": "vi-unrelated-goal-summary",
+      "suite": "content"
+    },
+    {
+      "id": "vi-conflicting-source-summary",
+      "suite": "content"
+    }
+  ],
+  "sourceHashScope": "Selected route, generation, validation, source-grounding and math files at run start; not a complete transitive dependency manifest or proof of deployed source.",
+  "sourceHashes": {
+    "app/api/ai/route.ts": "ac73fdab4ed4b7949eb1d8bfae6448809d8ea643f4d3548371c68daf4586d88f",
+    "lib/ai/router.ts": "505c15a9f6015c645734e2b07b967b509d3b308af4f2bd6d51c7ebca36961fa6",
+    "lib/ai/contracts.ts": "021c088a1201d33ad4a4847b61bd2eee4957a2f44c09f627401d0b207c581058",
+    "lib/ai/grounding.ts": "664e0f198b59116dcd68d006b0a8f6e550af192823f009d17a6b72d4db7ea0a8",
+    "lib/ai/summary.ts": "ab01af55b45fda1889a06650f3ca8f34991cf6cbaa8ab6187ee0c9d5af6a02a5",
+    "lib/ai/quiz-option-order.ts": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+    "lib/ai/provider-attempt.ts": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e",
+    "lib/server/provider-attempt-core.ts": "cec612694fdc6e3ac3c863a777f0fbfd90c8bda967fdf17b71089681d96bddd5",
+    "lib/server/provider-attempt-schema.ts": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c",
+    "lib/server/provider-attempt-report.ts": "65f6a12506f100543057a2bd4a1f16232f111b72d8f2db9f8aacaa2156b99c8b",
+    "lib/server/store.ts": "929ae161e9c222dfca906b1b484539855e52f4b05c5913d5b403bc5c20275870",
+    "lib/tutor/policy.ts": "483bc34e5b0dccde113a5d36a8a16537ab20295aedca266416ac4abf29fec94c",
+    "lib/tutor/math.ts": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
+    "lib/tutor/math-exact.ts": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
+    "lib/server/schema.ts": "c3cacb7ed99d8f80d1678267d384ef793ec94e383c844a1f14e1a4d3ca42a6da",
+    "lib/server/database-integrity.ts": "ab79dac00ea85ff2ad91fafaff599103cbba2196b2c9377f2fc6a8832c5e840c",
+    "lib/tutor/reference-problems.ts": "f7ebc653b771fc24ac25dedc382ee6a14ff8e49b4dd16d002605976262109206",
+    "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
+    "scripts/evaluate-v7-live.cjs": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b"
+  },
+  "budgetExhausted": true,
+  "stoppedReason": "EVALUATION_PROVIDER_CAP",
+  "notTestedCases": [
+    {
+      "id": "vi-quiz",
+      "suite": "content",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-injection-summary",
+      "suite": "content",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-unrelated-goal-summary",
+      "suite": "content",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    },
+    {
+      "id": "vi-conflicting-source-summary",
+      "suite": "content",
+      "status": "NOT_TESTED",
+      "reason": "EVALUATION_PROVIDER_CAP"
+    }
+  ],
+  "summary": {
+    "technicalPass": 2,
+    "partial": 0,
+    "fail": 0,
+    "blocked": 0,
+    "notTested": 4
+  },
+  "finishedAt": "2026-10-16T05:17:04.707Z",
+  "providerAttemptJournal": {
+    "scope": "recorded-text-provider-attempts",
+    "dimension": "model",
+    "days": 31,
+    "from": "2026-09-15T05:17:04.707Z",
+    "through": "2026-10-16T05:17:04.707Z",
+    "firstRetainedAttemptAt": "2026-10-16T05:16:49.835Z",
+    "retainedAllAges": {
+      "attempts": 2,
+      "unresolved": 0,
+      "unresolvedOutsideWindow": 0
+    },
+    "limits": {
+      "total": 100000,
+      "unresolvedGlobal": 2048,
+      "unresolvedPerAccount": 64
+    },
+    "totals": {
+      "attempts": 2,
+      "responses": 2,
+      "unresolved": 0,
+      "transportUnknown": 0,
+      "httpErrors": 0,
+      "inputTokens": 1589,
+      "outputTokens": 1078,
+      "inputTokenRecords": 2,
+      "outputTokenRecords": 2,
+      "totalTokens": 3374,
+      "totalTokenRecords": 2,
+      "responseModelRecords": 2,
+      "changedModelRecords": 1,
+      "averageLatencyMs": 7420,
+      "estimatedCostUsd": null,
+      "unpricedAttempts": 2
+    },
+    "groups": [
+      {
+        "attempts": 1,
+        "responses": 1,
+        "unresolved": 0,
+        "transportUnknown": 0,
+        "httpErrors": 0,
+        "inputTokens": 881,
+        "outputTokens": 451,
+        "inputTokenRecords": 1,
+        "outputTokenRecords": 1,
+        "totalTokens": 2039,
+        "totalTokenRecords": 1,
+        "responseModelRecords": 1,
+        "changedModelRecords": 0,
+        "averageLatencyMs": 7545,
+        "estimatedCostUsd": null,
+        "unpricedAttempts": 1,
+        "key": "gemini-3.8-flash",
+        "provider": "gemini"
+      },
+      {
+        "attempts": 1,
+        "responses": 1,
+        "unresolved": 0,
+        "transportUnknown": 0,
+        "httpErrors": 0,
+        "inputTokens": 708,
+        "outputTokens": 627,
+        "inputTokenRecords": 1,
+        "outputTokenRecords": 1,
+        "totalTokens": 1335,
+        "totalTokenRecords": 1,
+        "responseModelRecords": 1,
+        "changedModelRecords": 1,
+        "averageLatencyMs": 7295,
+        "estimatedCostUsd": null,
+        "unpricedAttempts": 1,
+        "key": "gpt-5-mini",
+        "provider": "openai"
+      }
+    ],
+    "truncated": false,
+    "limitations": [
+      "Text/multimodal generation only: learner, teacher drafts and summary jobs. Embedding, voice and historical attempts are not backfilled.",
+      "Prepared records are dispatch intents, not proof the provider received a request. Unresolved/network/timeout/cancelled records have unknown provider receipt or cost.",
+      "An HTTP response is not a valid or accepted answer. Recorded requested models are grouped; response model metadata may differ or be absent.",
+      "Token fields sum only observed non-null values; coverage is separate. No approved price is assumed: all attempt costs remain null, not zero or an invoice.",
+      "This cohort uses preparation time. First retained row is not an instrumentation activation date. Terminal retention and storage failures can reduce coverage; credits/refunds remain in the independent billing ledger."
+    ]
+  }
+}

@@ -42,6 +42,13 @@ import type { AITask } from "../../lib/ai/contracts";
 import { studioCopy } from "../../lib/lumio/studio-copy";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
 import { DocumentExtraction } from "./document-extraction";
+import { Dialog } from "./dialog";
+import {
+  validateReferences,
+  type SourceReference,
+} from "../../lib/ai/grounding";
+import { formatTime } from "../../lib/ai/summary";
+import { useDraft } from "../shared/draft-guard";
 import {
   defaultReaderPreferences,
   parseReaderPreferences,
@@ -305,6 +312,40 @@ export function LearningView({
     [blobUrl, setBlobUrl] = useState(""),
     [focus, setFocus] = useState(false);
   const [aiTask, setAiTask] = useState<AITask>("summary");
+  const draft = useDraft(item.title);
+  const [sourceLocation, setSourceLocation] = useState<SourceReference | null>(
+    null,
+  );
+  const [indexedLocation, setIndexedLocation] =
+    useState<SourceReference | null>(null);
+  const sourceLocationRef = useRef<HTMLElement>(null);
+  function openSource(reference?: SourceReference) {
+    if (reference?.rag) {
+      setIndexedLocation(reference);
+      return;
+    }
+    const valid =
+      reference &&
+      validateReferences([reference], item.text, item.sourceEvidence)[0];
+    setSourceLocation(valid || null);
+    setTab("source");
+  }
+  useEffect(() => {
+    if (tab !== "source" || !sourceLocation) return;
+    const target = sourceLocationRef.current;
+    if (!target) return;
+    target.focus({ preventScroll: true });
+    target.scrollIntoView({ block: "center", behavior: "instant" });
+    const text = target.parentElement?.querySelector<HTMLTextAreaElement>(
+      "textarea.lm-source-text",
+    );
+    if (
+      text &&
+      text.value.slice(sourceLocation.start, sourceLocation.end) ===
+        sourceLocation.quote
+    )
+      text.setSelectionRange(sourceLocation.start, sourceLocation.end);
+  }, [tab, sourceLocation]);
   const [reader, setReader] = useState<ReaderPreferences>(
       defaultReaderPreferences,
     ),
@@ -316,6 +357,44 @@ export function LearningView({
   const studioDrafts = useRef<StudioDrafts | undefined>(undefined);
   const flashcardDrafts = useRef<FlashcardDrafts | undefined>(undefined),
     quizDrafts = useRef<QuizDrafts | undefined>(undefined);
+  const aiDrafts = useRef<Record<string, { question: string; goal: string }>>(
+    {},
+  );
+  const studioBaseScript = useRef<string | undefined>(undefined);
+  function syncDraftFlags() {
+    const cards = flashcardDrafts.current,
+      quiz = quizDrafts.current,
+      studio = studioDrafts.current;
+    const dirty =
+      (item.kind === "link" &&
+        (linkDraft.current.text !== item.text ||
+          JSON.stringify(linkDraft.current.info) !==
+            JSON.stringify(item.sourceInfo))) ||
+      !!(cards?.adding && (cards.front || cards.back)) ||
+      !!(
+        quiz?.adding &&
+        (quiz.prompt || quiz.options.some(Boolean) || quiz.explanation)
+      ) ||
+      !!(quiz?.active && !quiz.finished) ||
+      !!(
+        studio?.plan &&
+        studio.plan !== studio.savedPlan &&
+        !item.notes.includes(studio.plan)
+      ) ||
+      !!(
+        studio &&
+        studioBaseScript.current !== undefined &&
+        studio.script !== studioBaseScript.current
+      ) ||
+      Object.values(aiDrafts.current).some(
+        (entry) => !!(entry.question || entry.goal),
+      );
+    if (dirty) draft.markDirty();
+    else draft.markClean();
+  }
+  useEffect(() => {
+    syncDraftFlags();
+  }, [item.text, item.notes]);
   useEffect(() => {
     try {
       setReader(
@@ -399,9 +478,9 @@ export function LearningView({
     ["notes", StickyNote, t.notes],
     ["cards", Layers, t.cards],
     ["quiz", ClipboardCheck, t.quiz],
-    ["summary", Sparkles, t.summary],
     ["chat", MessageCircle, t.chat],
   ] as const;
+  const activeTab = tab === "summary" ? "studio" : tab;
   return (
     <div
       className="lm-learning lsv-learning"
@@ -550,7 +629,7 @@ export function LearningView({
             event.metaKey
           )
             return;
-          const current = tabs.findIndex(([id]) => id === tab);
+          const current = tabs.findIndex(([id]) => id === activeTab);
           const next =
             event.key === "ArrowRight"
               ? (current + 1) % tabs.length
@@ -565,7 +644,7 @@ export function LearningView({
           event.preventDefault();
           const id = tabs[next][0];
           setTab(id);
-          if (id === "summary" || id === "chat") setAiTask(id);
+          if (id === "chat") setAiTask(id);
           tabListRef.current
             ?.querySelectorAll<HTMLButtonElement>("[role='tab']")
             [next]?.focus();
@@ -576,12 +655,12 @@ export function LearningView({
             key={id}
             role="tab"
             id={`${tabId}-${id}`}
-            aria-selected={tab === id}
+            aria-selected={activeTab === id}
             aria-controls={`${tabId}-panel`}
-            tabIndex={tab === id ? 0 : -1}
+            tabIndex={activeTab === id ? 0 : -1}
             onClick={() => {
               setTab(id);
-              if (id === "summary" || id === "chat") setAiTask(id);
+              if (id === "chat") setAiTask(id);
             }}
           >
             <Icon size={17} />
@@ -594,7 +673,7 @@ export function LearningView({
         className="lm-document-panel"
         role="tabpanel"
         id={`${tabId}-panel`}
-        aria-labelledby={`${tabId}-${tab}`}
+        aria-labelledby={`${tabId}-${activeTab}`}
       >
         {tab === "studio" && (
           <StudyStudio
@@ -604,6 +683,8 @@ export function LearningView({
             drafts={studioDrafts.current}
             onDraft={(value) => {
               studioDrafts.current = value;
+              studioBaseScript.current ??= value.script;
+              syncDraftFlags();
             }}
             onOpenNotes={() => setTab("notes")}
             onOpenSource={() => setTab("source")}
@@ -618,6 +699,35 @@ export function LearningView({
         )}
         {tab === "source" && (
           <>
+            {sourceLocation && (
+              <section
+                ref={sourceLocationRef}
+                tabIndex={-1}
+                className="lv7-source-location"
+                aria-label={
+                  locale === "vi" ? "Vị trí trích dẫn" : "Cited location"
+                }
+              >
+                <strong>
+                  {item.title} ·{" "}
+                  {sourceLocation.page
+                    ? `${t.source} · ${sourceLocation.page}`
+                    : sourceLocation.slide
+                      ? `Slide ${sourceLocation.slide}`
+                      : `§ ${sourceLocation.paragraph}`}
+                  {sourceLocation.seconds !== undefined
+                    ? ` · ${formatTime(sourceLocation.seconds)}`
+                    : ""}
+                </strong>
+                <blockquote>{sourceLocation.quote}</blockquote>
+                <button
+                  className="lm-button"
+                  onClick={() => setSourceLocation(null)}
+                >
+                  {t.close}
+                </button>
+              </section>
+            )}
             <div className="lm-source-head">
               <span>{t.source}</span>
               {blobUrl && (
@@ -655,6 +765,7 @@ export function LearningView({
                 draftState={linkDraft.current}
                 onDraft={(value) => {
                   linkDraft.current = value;
+                  syncDraftFlags();
                 }}
                 learn={() => {
                   setAiTask("summary");
@@ -664,7 +775,11 @@ export function LearningView({
             ) : blobUrl ? (
               <>
                 {item.kind === "pdf" ? (
-                  <iframe title={item.title} className="lm-pdf" src={blobUrl} />
+                  <iframe
+                    title={item.title}
+                    className="lm-pdf"
+                    src={`${blobUrl}${sourceLocation?.page ? `#page=${sourceLocation.page}` : ""}`}
+                  />
                 ) : item.kind === "image" ? (
                   <img
                     className="lm-source-image"
@@ -773,6 +888,7 @@ export function LearningView({
               </button>
             </div>
             <Flashcards
+              onOpenSource={openSource}
               item={item}
               t={t}
               locale={locale}
@@ -780,12 +896,14 @@ export function LearningView({
               drafts={flashcardDrafts.current}
               onDraft={(value) => {
                 flashcardDrafts.current = value;
+                syncDraftFlags();
               }}
             />
           </>
         )}{" "}
         {tab === "quiz" && (
           <Quiz
+            onOpenSource={openSource}
             item={item}
             t={t}
             locale={locale}
@@ -793,22 +911,69 @@ export function LearningView({
             drafts={quizDrafts.current}
             onDraft={(value) => {
               quizDrafts.current = value;
+              syncDraftFlags();
             }}
           />
         )}{" "}
         {(tab === "summary" || tab === "chat") && (
-          <AIPanel
-            key={`${tab}:${aiTask}`}
-            item={item}
-            t={t}
-            locale={locale}
-            initialTask={tab === "chat" ? "chat" : aiTask}
-            update={update}
-            onActivity={(kind) => onActivity(kind, item.id)}
-            onOpenSource={() => setTab("source")}
-          />
+          <>
+            {tab === "summary" && (
+              <button
+                className="lm-button plain"
+                onClick={() => setTab("studio")}
+              >
+                <ArrowLeft size={16} />
+                {studioCopy[locale].studio}
+              </button>
+            )}
+            <AIPanel
+              contextual
+              drafts={aiDrafts.current[tab === "chat" ? "chat" : aiTask]}
+              onDraft={(value) => {
+                aiDrafts.current[tab === "chat" ? "chat" : aiTask] = value;
+                syncDraftFlags();
+              }}
+              key={`${tab}:${aiTask}`}
+              item={item}
+              t={t}
+              locale={locale}
+              initialTask={tab === "chat" ? "chat" : aiTask}
+              update={update}
+              onActivity={(kind) => onActivity(kind, item.id)}
+              onOpenSource={openSource}
+            />
+          </>
         )}
       </div>
+      {indexedLocation && (
+        <Dialog
+          title={indexedLocation.rag?.title || t.source}
+          label={t.close}
+          close={() => setIndexedLocation(null)}
+        >
+          <p className="lm-help">
+            {locale === "vi"
+              ? "Bản trích từ chỉ mục riêng đã dùng cho câu trả lời; không phải toàn bộ tài liệu gốc."
+              : "Excerpt from the private retrieval snapshot used for this answer; not the entire original material."}
+          </p>
+          <strong>
+            {indexedLocation.page
+              ? `Page ${indexedLocation.page}`
+              : indexedLocation.slide
+                ? `Slide ${indexedLocation.slide}`
+                : `§ ${indexedLocation.paragraph}`}
+            {indexedLocation.seconds !== undefined
+              ? ` · ${formatTime(indexedLocation.seconds)}`
+              : ""}
+          </strong>
+          <blockquote>{indexedLocation.quote}</blockquote>
+          <p className="lm-help">
+            {locale === "vi"
+              ? "Đoạn trích khớp bản đã tìm, chưa chứng minh toàn bộ câu trả lời đúng. Tài liệu gốc có thể đã thay đổi."
+              : "The excerpt matches the retrieved snapshot; it does not prove the full answer correct. The original may have changed."}
+          </p>
+        </Dialog>
+      )}
     </div>
   );
 }

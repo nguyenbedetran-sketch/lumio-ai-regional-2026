@@ -69,6 +69,16 @@ import {
 import { productCopy } from "../../lib/lumio/product-copy";
 import { desktopCopy } from "../../lib/lumio/desktop-copy";
 import { Dialog } from "./dialog";
+import { AccountScope } from "./account-scope";
+import {
+  navigationCopy,
+  primaryNavigation,
+  secondaryNavigation,
+} from "../../lib/lumio/navigation-v7";
+import { accountHeaders } from "../../lib/ai/request-client";
+import { DraftBoundary, useDraftGuard } from "../shared/draft-guard";
+import packageInfo from "../../package.json";
+import { settingsCopy } from "../../lib/lumio/settings-copy-v7";
 import { AddContent, AddMode } from "./add-content";
 import { LearningView } from "./learning-view";
 import { BrandSymbol } from "./brand";
@@ -98,7 +108,10 @@ import { competitionCopy } from "../../lib/lumio/competition-copy";
 import { stripSkillEvidence } from "../../lib/lumio/skill-evidence";
 import { SyncPanel } from "./sync-panel";
 import { RAGManager } from "./rag-manager";
-import { normalizeSyncEnvelope, type SyncEnvelope } from "../../lib/sync/contracts";
+import {
+  normalizeSyncEnvelope,
+  type SyncEnvelope,
+} from "../../lib/sync/contracts";
 import { learningKey } from "../../lib/lumio/learning-engine";
 import { preferenceKey } from "../../lib/lumio/recommendations";
 const libraryConflictCopy = {
@@ -242,6 +255,7 @@ export default function LumioApp() {
     [facebookLocalHost, setFacebookLocalHost] = useState(false),
     [theme, setTheme] = useState("light");
   const t = catalogs[locale];
+  const navCopy = navigationCopy(locale);
   useEffect(() => {
     try {
       const lang = localStorage.getItem("lumio-language");
@@ -309,19 +323,37 @@ export default function LumioApp() {
   return (
     <div className="lumio">
       {ready ? (
-        <Workspace
-          key={profile.account}
-          t={t}
-          locale={locale}
-          setLocale={setLocale}
-          profile={profile}
-          setName={updateName}
-          providers={providers}
-          theme={theme}
-          setTheme={setTheme}
-          motion={motion}
-          login={() => setLogin(true)}
-        />
+        <AccountScope.Provider value={profile.account} key={profile.account}>
+          <DraftBoundary
+            copy={{
+              title: navCopy.discard,
+              description: (labels) => labels.join(" · "),
+              keep: navCopy.keep,
+              leave: navCopy.leave,
+            }}
+            styles={{
+              boundary: "lv7-draft-boundary",
+              dialog: "lm-dialog lv7-discard-dialog",
+              actions: "lm-row",
+              keep: "lm-button primary",
+              leave: "lm-button danger-fill",
+            }}
+          >
+            <Workspace
+              key={profile.account}
+              t={t}
+              locale={locale}
+              setLocale={setLocale}
+              profile={profile}
+              setName={updateName}
+              providers={providers}
+              theme={theme}
+              setTheme={setTheme}
+              motion={motion}
+              login={() => setLogin(true)}
+            />
+          </DraftBoundary>
+        </AccountScope.Provider>
       ) : (
         <div className="lm-loading">
           <LumioLogo />
@@ -466,6 +498,55 @@ function Workspace({
     [toast, setToast] = useState(""),
     [idea, setIdea] = useState("");
   const learning = useLearning(profile.account);
+  const draftGuard = useDraftGuard();
+  const nc = navigationCopy(locale);
+  const settingsText = settingsCopy(locale);
+  const sidebarRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLButtonElement>(null);
+  const [deletingSource, setDeletingSource] = useState(false);
+  useEffect(() => {
+    if (!mobile) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const overflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    sidebarRef.current
+      ?.querySelector<HTMLElement>("button,a[href],summary")
+      ?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (document.querySelector("dialog[open]")) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMobile(false);
+      }
+      if (event.key !== "Tab") return;
+      const nodes = Array.from(
+        sidebarRef.current?.querySelectorAll<HTMLElement>(
+          "button:not([disabled]),a[href],summary,[tabindex='0']",
+        ) || [],
+      ).filter((node) => node.getClientRects().length > 0);
+      const first = nodes[0],
+        last = nodes.at(-1);
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last?.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first?.focus();
+      }
+    };
+    const size = matchMedia("(min-width: 701px)");
+    const resize = () => {
+      if (size.matches) setMobile(false);
+    };
+    document.addEventListener("keydown", onKey);
+    size.addEventListener("change", resize);
+    return () => {
+      document.body.style.overflow = overflow;
+      document.removeEventListener("keydown", onKey);
+      size.removeEventListener("change", resize);
+      (previous?.isConnected ? previous : menuRef.current)?.focus();
+    };
+  }, [mobile]);
   const contentRef = useRef<HTMLElement>(null);
   useSurfaceEntrance(
     contentRef,
@@ -690,24 +771,30 @@ function Workspace({
     }
   }
   function go(next: View, id = "") {
-    setSelected("");
-    setView(next);
-    setSpaceId(id);
-    setMobile(false);
-    if (next !== "search") setQuery("");
-    window.scrollTo({ top: 0, behavior: "instant" });
+    draftGuard.leave(() => {
+      setSelected("");
+      setView(next);
+      setSpaceId(id);
+      setMobile(false);
+      if (next !== "search") setQuery("");
+      window.scrollTo({ top: 0, behavior: "instant" });
+    });
   }
   function open(item: LearningItem) {
     if (!data) return;
-    setSelected(item.id);
-    setMobile(false);
-    commit({
-      ...data,
-      items: data.items.map((i) =>
-        i.id === item.id ? { ...i, lastOpenedAt: new Date().toISOString() } : i,
-      ),
+    draftGuard.leave(() => {
+      setSelected(item.id);
+      setMobile(false);
+      commit({
+        ...data,
+        items: data.items.map((i) =>
+          i.id === item.id
+            ? { ...i, lastOpenedAt: new Date().toISOString() }
+            : i,
+        ),
+      });
+      window.scrollTo({ top: 0, behavior: "instant" });
     });
-    window.scrollTo({ top: 0, behavior: "instant" });
   }
   function update(item: LearningItem) {
     if (!data) return;
@@ -746,13 +833,36 @@ function Workspace({
   }
   function removeItem(item: LearningItem) {
     setConfirm({
-      message: `${t.confirmDelete}\n${item.title}\n${t.deleteHint}`,
+      message: `${t.confirmDelete}\n${item.title}\n${t.deleteHint}${profile.account !== "guest" ? `\n${nc.indexedDelete}` : ""}`,
       label: t.delete,
-      action: () => {
-        const d = currentData.current;
-        if (d)
-          commit({ ...d, items: d.items.filter((i) => i.id !== item.id) }, d);
-        setSelected("");
+      action: async () => {
+        if (deletingSource) return;
+        setDeletingSource(true);
+        try {
+          if (profile.account !== "guest") {
+            const response = await fetch("/api/rag/documents", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                ...accountHeaders(profile.account),
+              },
+              body: JSON.stringify({
+                action: "delete-source",
+                clientItemId: item.id,
+              }),
+            });
+            if (!response.ok) throw new Error("INDEX_DELETE_FAILED");
+            window.dispatchEvent(new Event("lumio-rag-changed"));
+          }
+          const d = currentData.current;
+          if (d)
+            commit({ ...d, items: d.items.filter((i) => i.id !== item.id) }, d);
+          setSelected("");
+        } catch {
+          setInfo(nc.deleteError);
+        } finally {
+          setDeletingSource(false);
+        }
       },
     });
   }
@@ -881,9 +991,20 @@ function Workspace({
   return (
     <>
       <aside
+        id="lumio-navigation"
+        ref={sidebarRef}
         className={`lm-sidebar ${mobile ? "open" : ""}`}
-        aria-label="Lumio"
+        aria-label={nc.navigation}
+        role={mobile ? "dialog" : undefined}
+        aria-modal={mobile ? true : undefined}
       >
+        <button
+          className="lm-icon lv7-drawer-close"
+          aria-label={t.close}
+          onClick={() => setMobile(false)}
+        >
+          <X size={20} />
+        </button>
         <button className="lm-brand-button" onClick={() => go("home")}>
           <LumioLogo />
         </button>
@@ -893,37 +1014,71 @@ function Workspace({
           <span>＋</span>
         </button>
         <div className="lx-sidebar-scroll">
-          <nav className="lm-nav">
-            {navigation.map(([id, Icon, label]) => (
-              <button
-                key={id}
-                title={
-                  id === "search" ? enhancements[locale].shortcut : undefined
-                }
-                className={view === id && !selected ? "active" : ""}
-                onClick={() => go(id)}
-              >
-                <Icon size={18} />
-                {label}
-                {id === "search" && <kbd>⌕</kbd>}
-              </button>
-            ))}
+          <nav className="lm-nav" aria-label={nc.primary}>
+            {primaryNavigation
+              .map((primaryId) => navigation.find(([id]) => id === primaryId)!)
+              .map(([id, Icon, label]) => (
+                <button
+                  key={id}
+                  title={
+                    id === "search" ? enhancements[locale].shortcut : undefined
+                  }
+                  className={view === id && !selected ? "active" : ""}
+                  aria-current={view === id && !selected ? "page" : undefined}
+                  onClick={() => go(id)}
+                >
+                  <Icon size={18} />
+                  {label}
+                  {id === "search" && <kbd>⌕</kbd>}
+                </button>
+              ))}
           </nav>
+          {secondaryNavigation.map((group) => (
+            <details
+              className="lv7-nav-group"
+              key={group.id}
+              open={
+                group.destinations.some((id) => id === view) ||
+                (group.id === "account" && view === "settings")
+              }
+            >
+              <summary>
+                {nc[group.id]}
+                <ChevronDown size={15} aria-hidden="true" />
+              </summary>
+              <nav className="lm-nav" aria-label={nc[group.id]}>
+                {navigation
+                  .filter(([id]) =>
+                    (group.destinations as readonly string[]).includes(id),
+                  )
+                  .map(([id, Icon, label]) => (
+                    <button
+                      key={id}
+                      className={view === id && !selected ? "active" : ""}
+                      aria-current={
+                        view === id && !selected ? "page" : undefined
+                      }
+                      onClick={() => go(id)}
+                    >
+                      <Icon size={18} />
+                      {label}
+                    </button>
+                  ))}
+                {group.id === "account" && (
+                  <button
+                    onClick={() => go("settings")}
+                    className={view === "settings" ? "active" : ""}
+                    aria-current={view === "settings" ? "page" : undefined}
+                  >
+                    <Settings size={18} />
+                    {t.settings}
+                  </button>
+                )}
+              </nav>
+            </details>
+          ))}
           <div className="lm-sidebar-section">
-            <div className="lm-sidebar-label">
-              {t.spaces}
-              <button
-                aria-label={t.newSpace}
-                className="lm-icon"
-                onClick={() => {
-                  setSpaceDialog(true);
-                  setSpaceName("");
-                  setSpaceColor("blue");
-                }}
-              >
-                <Plus size={15} />
-              </button>
-            </div>
+            <div className="lm-sidebar-label">{t.spaces}</div>
             <button
               className="lm-nav-single"
               onClick={() => {
@@ -1000,17 +1155,7 @@ function Workspace({
             <HelpCircle size={17} />
             {t.help}
           </button>
-          <button
-            className={`lm-nav-single ${view === "settings" ? "active" : ""}`}
-            onClick={() => go("settings")}
-          >
-            <Settings size={17} />
-            {t.settings}
-          </button>
-          <button
-            className="lm-profile"
-            onClick={profile.account === "guest" ? login : () => go("settings")}
-          >
+          <div className="lm-profile">
             <span className="lm-avatar">{name.slice(0, 1).toUpperCase()}</span>
             <span>
               <strong>{name}</strong>
@@ -1018,8 +1163,7 @@ function Workspace({
                 {profile.account === "guest" ? t.guest : lc.account}
               </small>
             </span>
-            <ChevronDown size={16} />
-          </button>
+          </div>
         </div>
       </aside>
       {mobile && (
@@ -1029,12 +1173,15 @@ function Workspace({
           onClick={() => setMobile(false)}
         />
       )}
-      <div className="lm-main">
+      <div className="lm-main" inert={mobile || undefined}>
         <header className="lm-topbar">
           <div className="lm-row">
             <button
               className="lm-icon lm-menu"
-              aria-label={mobile ? t.close : t.library}
+              ref={menuRef}
+              aria-label={mobile ? t.close : nc.navigation}
+              aria-expanded={mobile}
+              aria-controls="lumio-navigation"
               onClick={() => setMobile(!mobile)}
             >
               {mobile ? <X /> : <Menu />}
@@ -1109,9 +1256,16 @@ function Workspace({
           </div>
         </header>
         {providers?.competitionPreview && (
-          <section className="lm-competition-banner" aria-label={competitionCopy[locale].title} data-competition-preview>
+          <section
+            className="lm-competition-banner"
+            aria-label={competitionCopy[locale].title}
+            data-competition-preview
+          >
             <ShieldCheck size={20} aria-hidden="true" />
-            <div><strong>{competitionCopy[locale].title}</strong><p>{competitionCopy[locale].detail}</p></div>
+            <div>
+              <strong>{competitionCopy[locale].title}</strong>
+              <p>{competitionCopy[locale].detail}</p>
+            </div>
           </section>
         )}
         {providers?.publicDemo && (
@@ -1247,7 +1401,9 @@ function Workspace({
               update={personalization.update}
               open={open}
               storageError={personalization.error}
-              onClearSkillEvidence={() => commit({...data,items:stripSkillEvidence(data.items)},data)}
+              onClearSkillEvidence={() =>
+                commit({ ...data, items: stripSkillEvidence(data.items) }, data)
+              }
             />
           ) : view === "billing" ? (
             <BillingPanel
@@ -1366,128 +1522,286 @@ function Workspace({
                 </section>
                 <div>
                   <AccountConnections locale={locale} />
-                  <SyncPanel
-                    key={`sync:${profile.account}`}
-                    account={profile.account}
-                    locale={locale}
-                    disabled={libraryConflict || status !== "saved" || !learning.ready || !!learning.error || personalization.error}
-                    value={{version:1,library:data,learning:learning.state,preferences:personalization.state}}
-                    onApply={async (incoming: SyncEnvelope) => {
-                      if (currentData.current !== data || blocked.current || pending.current)
-                        throw Error("SYNC_LOCAL_CHANGED");
-                      const observedLearning = JSON.stringify(learning.state),
-                        observedPreferences = JSON.stringify(personalization.state),
-                        savedLearningBefore = localStorage.getItem(learningKey(profile.account)),
-                        savedPreferencesBefore = localStorage.getItem(preferenceKey(profile.account));
-                      if (
-                        (savedLearningBefore !== null && JSON.stringify(parseLearning(JSON.parse(savedLearningBefore))) !== observedLearning) ||
-                        (savedPreferencesBefore !== null && JSON.stringify(parsePreferences(JSON.parse(savedPreferencesBefore))) !== observedPreferences)
-                      ) throw Error("SYNC_LOCAL_CHANGED");
-                      const sourceKey = (item: LearningItem) => JSON.stringify([
-                        item.kind, item.text, item.url, item.fileName, item.sourceEvidence,
-                      ]);
-                      const framedItems = data.items.filter(item => item.artifacts?.some(artifact => artifact.frames?.length));
-                      // Compare the same normalized, media-free artifact contract that
-                      // is sent to sync; a restored page claim is not a new frame source.
-                      const comparableFramed = framedItems.length ? normalizeSyncEnvelope({
-                        ...incoming,
-                        library: { ...data, items: framedItems },
-                      }).library.items : [];
-                      const sansFrames = (artifact: NonNullable<LearningItem["artifacts"]>[number]) => {
-                        const { frames, ...content } = artifact;
-                        return content;
-                      };
-                      // Sync never destroys a device-only attachment or attaches it to a changed source.
-                      for (const item of data.items.filter(i => i.blob || i.artifacts?.some(artifact => artifact.frames?.length))) {
-                        const next = incoming.library.items.find(i => i.id === item.id);
-                        if (!next || data.items.filter(i => i.id === item.id).length !== 1 || incoming.library.items.filter(i => i.id === item.id).length !== 1 || sourceKey(next) !== sourceKey(item))
-                          throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
-                        for (const artifact of item.artifacts || []) {
-                          if (!artifact.frames?.length) continue;
-                          const matches = next.artifacts?.filter(a => a.id === artifact.id) || [];
-                          const oldMatches = item.artifacts?.filter(a => a.id === artifact.id) || [];
-                          const expected = comparableFramed.find(i => i.id === item.id)?.artifacts?.find(a => a.id === artifact.id);
-                          if (matches.length !== 1 || oldMatches.length !== 1 || !expected || JSON.stringify(sansFrames(matches[0])) !== JSON.stringify(sansFrames(expected)))
-                            throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
-                        }
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="sync"
+                  >
+                    <summary>
+                      <span>
+                        <strong>{settingsText.sync}</strong>
+                        <small>{settingsText.syncHint}</small>
+                      </span>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <SyncPanel
+                      key={`sync:${profile.account}`}
+                      account={profile.account}
+                      locale={locale}
+                      disabled={
+                        libraryConflict ||
+                        status !== "saved" ||
+                        !learning.ready ||
+                        !!learning.error ||
+                        personalization.error
                       }
-                      const nextLibrary = {
-                        ...incoming.library,
-                        items: incoming.library.items.map(item => ({
-                          ...item,
-                          blob: data.items.find(i => i.id === item.id)?.blob,
-                          ...(item.artifacts ? {
-                            artifacts: item.artifacts.map(artifact => {
-                              const old = data.items.find(i => i.id === item.id)?.artifacts?.find(a => a.id === artifact.id);
-                              return { ...sansFrames(artifact), ...(old?.frames?.length ? { frames: old.frames } : {}) };
-                            }),
-                          } : {}),
-                        })),
-                      };
-                      commit(nextLibrary, data);
-                      await saveQueue.current;
-                      if (blocked.current || pending.current || currentData.current !== nextLibrary)
-                        throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      // Library persistence yields to focus completion and other-tab edits.
-                      // Recompare both the latest render and storage before restoring either.
-                      const latestLocal = syncLocalSnapshot.current;
-                      if (
-                        latestLocal.account !== profile.account ||
-                        JSON.stringify(latestLocal.learning) !== observedLearning ||
-                        JSON.stringify(latestLocal.preferences) !== observedPreferences ||
-                        localStorage.getItem(learningKey(profile.account)) !== savedLearningBefore ||
-                        localStorage.getItem(preferenceKey(profile.account)) !== savedPreferencesBefore
-                      ) throw Error("SYNC_LOCAL_CHANGED");
-                      const nextLearning = {
-                        ...incoming.learning,
-                        focus: latestLocal.learning.focus,
-                        alarm: latestLocal.learning.alarm,
-                        lastAlarmId: latestLocal.learning.lastAlarmId,
-                      };
-                      learning.update(nextLearning, true);
-                      try {
+                      value={{
+                        version: 1,
+                        library: data,
+                        learning: learning.state,
+                        preferences: personalization.state,
+                      }}
+                      onApply={async (incoming: SyncEnvelope) => {
                         if (
-                          JSON.stringify(parseLearning(JSON.parse(localStorage.getItem(learningKey(profile.account)) || "null"))) !==
-                          JSON.stringify(parseLearning(nextLearning))
-                        ) throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      } catch { throw Error("SYNC_LOCAL_SAVE_FAILED"); }
-                      personalization.update(incoming.preferences, true);
-                      try {
-                        const saved = normalizeSyncEnvelope({
-                          version: 1,
-                          library: nextLibrary,
-                          learning: JSON.parse(localStorage.getItem(learningKey(profile.account)) || "null"),
-                          preferences: JSON.parse(localStorage.getItem(preferenceKey(profile.account)) || "null"),
-                        });
-                        if (JSON.stringify(saved) !== JSON.stringify(normalizeSyncEnvelope(incoming)))
+                          currentData.current !== data ||
+                          blocked.current ||
+                          pending.current
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const observedLearning = JSON.stringify(learning.state),
+                          observedPreferences = JSON.stringify(
+                            personalization.state,
+                          ),
+                          savedLearningBefore = localStorage.getItem(
+                            learningKey(profile.account),
+                          ),
+                          savedPreferencesBefore = localStorage.getItem(
+                            preferenceKey(profile.account),
+                          );
+                        if (
+                          (savedLearningBefore !== null &&
+                            JSON.stringify(
+                              parseLearning(JSON.parse(savedLearningBefore)),
+                            ) !== observedLearning) ||
+                          (savedPreferencesBefore !== null &&
+                            JSON.stringify(
+                              parsePreferences(
+                                JSON.parse(savedPreferencesBefore),
+                              ),
+                            ) !== observedPreferences)
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const sourceKey = (item: LearningItem) =>
+                          JSON.stringify([
+                            item.kind,
+                            item.text,
+                            item.url,
+                            item.fileName,
+                            item.sourceEvidence,
+                          ]);
+                        const framedItems = data.items.filter((item) =>
+                          item.artifacts?.some(
+                            (artifact) => artifact.frames?.length,
+                          ),
+                        );
+                        // Compare the same normalized, media-free artifact contract that
+                        // is sent to sync; a restored page claim is not a new frame source.
+                        const comparableFramed = framedItems.length
+                          ? normalizeSyncEnvelope({
+                              ...incoming,
+                              library: { ...data, items: framedItems },
+                            }).library.items
+                          : [];
+                        const sansFrames = (
+                          artifact: NonNullable<
+                            LearningItem["artifacts"]
+                          >[number],
+                        ) => {
+                          const { frames, ...content } = artifact;
+                          return content;
+                        };
+                        // Sync never destroys a device-only attachment or attaches it to a changed source.
+                        for (const item of data.items.filter(
+                          (i) =>
+                            i.blob ||
+                            i.artifacts?.some(
+                              (artifact) => artifact.frames?.length,
+                            ),
+                        )) {
+                          const next = incoming.library.items.find(
+                            (i) => i.id === item.id,
+                          );
+                          if (
+                            !next ||
+                            data.items.filter((i) => i.id === item.id)
+                              .length !== 1 ||
+                            incoming.library.items.filter(
+                              (i) => i.id === item.id,
+                            ).length !== 1 ||
+                            sourceKey(next) !== sourceKey(item)
+                          )
+                            throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                          for (const artifact of item.artifacts || []) {
+                            if (!artifact.frames?.length) continue;
+                            const matches =
+                              next.artifacts?.filter(
+                                (a) => a.id === artifact.id,
+                              ) || [];
+                            const oldMatches =
+                              item.artifacts?.filter(
+                                (a) => a.id === artifact.id,
+                              ) || [];
+                            const expected = comparableFramed
+                              .find((i) => i.id === item.id)
+                              ?.artifacts?.find((a) => a.id === artifact.id);
+                            if (
+                              matches.length !== 1 ||
+                              oldMatches.length !== 1 ||
+                              !expected ||
+                              JSON.stringify(sansFrames(matches[0])) !==
+                                JSON.stringify(sansFrames(expected))
+                            )
+                              throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                          }
+                        }
+                        const nextLibrary = {
+                          ...incoming.library,
+                          items: incoming.library.items.map((item) => ({
+                            ...item,
+                            blob: data.items.find((i) => i.id === item.id)
+                              ?.blob,
+                            ...(item.artifacts
+                              ? {
+                                  artifacts: item.artifacts.map((artifact) => {
+                                    const old = data.items
+                                      .find((i) => i.id === item.id)
+                                      ?.artifacts?.find(
+                                        (a) => a.id === artifact.id,
+                                      );
+                                    return {
+                                      ...sansFrames(artifact),
+                                      ...(old?.frames?.length
+                                        ? { frames: old.frames }
+                                        : {}),
+                                    };
+                                  }),
+                                }
+                              : {}),
+                          })),
+                        };
+                        commit(nextLibrary, data);
+                        await saveQueue.current;
+                        if (
+                          blocked.current ||
+                          pending.current ||
+                          currentData.current !== nextLibrary
+                        )
                           throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      } catch { throw Error("SYNC_LOCAL_SAVE_FAILED"); }
-                    }}
-                  />
-                  <RAGManager key={`rag:${profile.account}:${spaceId}`} items={data.items} spaces={data.spaces} workspaceId={spaceId||"main"} locale={locale}/>
-                  <section className="lm-panel">
-                    <h3>{t.featureStatus}</h3>
-                    {(
-                      [
-                        [lc.tutor, providers?.capabilities?.tutor],
-                        [lc.multimodal, providers?.capabilities?.media],
+                        // Library persistence yields to focus completion and other-tab edits.
+                        // Recompare both the latest render and storage before restoring either.
+                        const latestLocal = syncLocalSnapshot.current;
+                        if (
+                          latestLocal.account !== profile.account ||
+                          JSON.stringify(latestLocal.learning) !==
+                            observedLearning ||
+                          JSON.stringify(latestLocal.preferences) !==
+                            observedPreferences ||
+                          localStorage.getItem(learningKey(profile.account)) !==
+                            savedLearningBefore ||
+                          localStorage.getItem(
+                            preferenceKey(profile.account),
+                          ) !== savedPreferencesBefore
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const nextLearning = {
+                          ...incoming.learning,
+                          focus: latestLocal.learning.focus,
+                          alarm: latestLocal.learning.alarm,
+                          lastAlarmId: latestLocal.learning.lastAlarmId,
+                        };
+                        learning.update(nextLearning, true);
+                        try {
+                          if (
+                            JSON.stringify(
+                              parseLearning(
+                                JSON.parse(
+                                  localStorage.getItem(
+                                    learningKey(profile.account),
+                                  ) || "null",
+                                ),
+                              ),
+                            ) !== JSON.stringify(parseLearning(nextLearning))
+                          )
+                            throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        } catch {
+                          throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        }
+                        personalization.update(incoming.preferences, true);
+                        try {
+                          const saved = normalizeSyncEnvelope({
+                            version: 1,
+                            library: nextLibrary,
+                            learning: JSON.parse(
+                              localStorage.getItem(
+                                learningKey(profile.account),
+                              ) || "null",
+                            ),
+                            preferences: JSON.parse(
+                              localStorage.getItem(
+                                preferenceKey(profile.account),
+                              ) || "null",
+                            ),
+                          });
+                          if (
+                            JSON.stringify(saved) !==
+                            JSON.stringify(normalizeSyncEnvelope(incoming))
+                          )
+                            throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        } catch {
+                          throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        }
+                      }}
+                    />
+                  </details>
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="sources"
+                  >
+                    <summary>
+                      <span>
+                        <strong>{settingsText.sources}</strong>
+                        <small>{settingsText.sourceHint}</small>
+                      </span>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <RAGManager
+                      key={`rag:${profile.account}:${spaceId}`}
+                      items={data.items}
+                      spaces={data.spaces}
+                      workspaceId={spaceId || "main"}
+                      locale={locale}
+                    />
+                  </details>
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="capabilities"
+                  >
+                    <summary>
+                      <strong>{settingsText.services}</strong>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <div className="lm-panel">
+                      {(
                         [
-                          lc.speech,
-                          providers?.capabilities?.speech ||
-                            providers?.capabilities?.transcription,
-                        ],
-                      ] as const
-                    ).map(([label, available]) => (
-                      <div className="lm-service" key={label}>
-                        <strong>{label}</strong>
-                        <span className={available ? "ready" : ""}>
-                          {available
-                            ? productCopy[locale].available
-                            : lc.notAvailable}
-                        </span>
-                      </div>
-                    ))}
-                  </section>
+                          [lc.tutor, providers?.capabilities?.tutor],
+                          [lc.multimodal, providers?.capabilities?.media],
+                          [
+                            lc.speech,
+                            providers?.capabilities?.speech ||
+                              providers?.capabilities?.transcription,
+                          ],
+                        ] as const
+                      ).map(([label, available]) => (
+                        <div className="lm-service" key={label}>
+                          <strong>{label}</strong>
+                          <span className={available ? "ready" : ""}>
+                            {available
+                              ? productCopy[locale].available
+                              : lc.notAvailable}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
                   <section className="lm-panel">
                     <h3>{t.storage}</h3>
                     <p className="lm-help">
@@ -1865,7 +2179,9 @@ function Workspace({
             <a href="/terms">{lc.terms}</a>
             <a href="/data-deletion">{lc.deleteData}</a>
           </nav>
-          <span>v3.0 · {lc.localNote}</span>
+          <span>
+            v{packageInfo.version} · {lc.localNote}
+          </span>
         </footer>
       </div>
       {add && (

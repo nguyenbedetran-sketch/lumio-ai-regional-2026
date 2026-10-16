@@ -43,6 +43,7 @@ export async function runSummaryJobStep(
     release = authorizeStoredAI(lease.userId, lease.sessionVersion);
     await executeSummaryInput(lease.input, lease, {
       requestId: lease.requestId,
+      feature: "job.summary-part",
       signal: AbortSignal.any([controller.signal, AbortSignal.timeout(60000)]),
       onReserved: (reservation) =>
         store.startSummaryJobAttempt(lease, reservation.reservationId),

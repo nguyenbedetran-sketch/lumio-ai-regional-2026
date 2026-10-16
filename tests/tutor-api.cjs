@@ -86,6 +86,10 @@ const request = (body, path = "/api/ai", method = "POST") =>
     method,
     headers: {
       "Content-Type": "application/json",
+      "x-lumio-account": session
+        ? store.getUser(session.userId)?.storageKey || ""
+        : "",
+      "idempotency-key": crypto.randomUUID(),
       Origin: "http://127.0.0.1:3000",
     },
     body: method === "GET" ? undefined : JSON.stringify(body),

@@ -71,3 +71,52 @@ export const teachingPreferencesMigration = {
  PRIMARY KEY(organization_id,user_id)
 );`,
 };
+/** Preserve the current projection/IDs. Historical actors/times cannot be reconstructed. */
+export const teachingGradeHistoryMigration = {
+  version: 15,
+  sql: `
+CREATE TABLE teaching_grade_events (
+ sequence INTEGER PRIMARY KEY AUTOINCREMENT,id TEXT NOT NULL UNIQUE,
+ submission_id TEXT NOT NULL REFERENCES teaching_submissions(id),
+ submission_revision INTEGER NOT NULL CHECK(submission_revision>=1),
+ kind TEXT NOT NULL CHECK(kind IN ('grade','publish','legacy_snapshot')),
+ grade_version INTEGER NOT NULL CHECK(grade_version>=1),grade_event_id TEXT,
+ grades_json TEXT,score REAL,feedback TEXT,answers_digest TEXT,
+ actor_id TEXT REFERENCES users(id),recorded_at TEXT,confirmed_at TEXT,published_at TEXT,reason TEXT,
+ legacy INTEGER NOT NULL DEFAULT 0 CHECK(legacy IN(0,1)),
+ UNIQUE(id,submission_id),UNIQUE(submission_id,submission_revision,kind),UNIQUE(submission_id,grade_version,kind),
+ FOREIGN KEY(grade_event_id,submission_id) REFERENCES teaching_grade_events(id,submission_id),
+ CHECK(
+  (kind='grade' AND legacy=0 AND grade_event_id IS NULL AND grades_json IS NOT NULL AND score IS NOT NULL AND score>=0 AND feedback IS NOT NULL AND answers_digest IS NOT NULL AND length(answers_digest)=64 AND actor_id IS NOT NULL AND recorded_at IS NOT NULL AND confirmed_at IS NOT NULL AND published_at IS NULL) OR
+  (kind='publish' AND legacy=0 AND grade_event_id IS NOT NULL AND grades_json IS NULL AND score IS NULL AND feedback IS NULL AND answers_digest IS NULL AND actor_id IS NOT NULL AND recorded_at IS NOT NULL AND confirmed_at IS NULL AND published_at IS NOT NULL AND reason IS NULL) OR
+  (kind='legacy_snapshot' AND legacy=1 AND grade_event_id IS NULL AND grades_json IS NOT NULL AND score IS NOT NULL AND score>=0 AND feedback IS NOT NULL AND answers_digest IS NULL AND actor_id IS NULL AND recorded_at IS NULL AND reason IS NULL)
+ )
+);
+CREATE INDEX teaching_grade_events_submission ON teaching_grade_events(submission_id,sequence DESC);
+INSERT INTO teaching_grade_events(id,submission_id,submission_revision,kind,grade_version,grades_json,score,feedback,confirmed_at,published_at,legacy)
+ SELECT 'legacy-'||id,id,revision,'legacy_snapshot',1,grades_json,score,coalesce(feedback,''),confirmed_at,
+ CASE WHEN status='published' THEN published_at ELSE NULL END,1 FROM teaching_submissions
+ WHERE status IN('graded','published') AND grades_json IS NOT NULL AND score IS NOT NULL;
+CREATE TRIGGER teaching_grade_events_no_update BEFORE UPDATE ON teaching_grade_events BEGIN SELECT RAISE(ABORT,'TEACHING_HISTORY_IMMUTABLE'); END;
+CREATE TRIGGER teaching_grade_events_no_delete BEFORE DELETE ON teaching_grade_events BEGIN SELECT RAISE(ABORT,'TEACHING_HISTORY_IMMUTABLE'); END;
+`,
+};
+export const teachingAssessmentWindowsMigration = {
+  version: 16,
+  sql: `
+CREATE TABLE teaching_assessment_windows (
+ assignment_id TEXT NOT NULL PRIMARY KEY REFERENCES teaching_assignments(id) ON DELETE CASCADE,
+ root_assignment_id TEXT NOT NULL REFERENCES teaching_assignments(id),
+ parent_assignment_id TEXT REFERENCES teaching_assignments(id),attempt_no INTEGER NOT NULL CHECK(attempt_no BETWEEN 1 AND 3),
+ student_id TEXT REFERENCES users(id),available_from TEXT,available_until TEXT,
+ reason TEXT,acknowledged INTEGER NOT NULL DEFAULT 0 CHECK(acknowledged IN(0,1)),
+ created_by TEXT NOT NULL REFERENCES users(id),created_at TEXT NOT NULL,
+ UNIQUE(root_assignment_id,student_id,attempt_no),
+ CHECK((attempt_no=1 AND root_assignment_id=assignment_id AND parent_assignment_id IS NULL AND student_id IS NULL AND acknowledged=0 AND reason IS NULL) OR
+ (attempt_no>1 AND root_assignment_id!=assignment_id AND parent_assignment_id IS NOT NULL AND parent_assignment_id=root_assignment_id AND student_id IS NOT NULL AND available_from IS NOT NULL AND available_until IS NOT NULL AND acknowledged=1 AND reason IS NOT NULL))
+);
+CREATE INDEX teaching_assessment_windows_root ON teaching_assessment_windows(root_assignment_id,student_id,attempt_no);
+INSERT INTO teaching_assessment_windows(assignment_id,root_assignment_id,attempt_no,available_from,created_by,created_at)
+ SELECT id,id,1,issued_at,created_by,created_at FROM teaching_assignments;
+`,
+};
