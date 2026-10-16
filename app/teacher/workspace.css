@@ -1425,3 +1425,13 @@
     max-width: none;
   }
 }
+/* Native dialogs can be opened from a table cell; do not inherit its no-wrap text. */
+.tw-dialog {
+  white-space: normal;
+}
+[data-grade-history],
+[data-grade-history] > *,
+[data-grade-history] .tw-card-list {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}

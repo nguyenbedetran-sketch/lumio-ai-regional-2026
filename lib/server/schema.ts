@@ -6,6 +6,8 @@ import { aiHttpMigration } from "./ai-http-core";
 import {
   teachingMigration,
   teachingPreferencesMigration,
+  teachingGradeHistoryMigration,
+  teachingAssessmentWindowsMigration,
 } from "./teaching-schema";
 export const migrations = [
   {
@@ -161,6 +163,8 @@ ALTER TABLE tutor_turns ADD COLUMN needs_clarification INTEGER NOT NULL DEFAULT 
   teachingMigration,
   teachingPreferencesMigration,
   aiHttpMigration,
+  teachingGradeHistoryMigration,
+  teachingAssessmentWindowsMigration,
 ];
 
 export const flagDefinitions = [

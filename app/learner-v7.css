@@ -1,4 +1,50 @@
 /* Incremental navigation hierarchy; use the current product color tokens. */
+.lumio .lv7-settings-disclosure {
+  border: 1px solid var(--lm-line);
+  border-radius: 16px;
+  margin: 0 0 16px;
+  overflow: clip;
+}
+.lumio .lv7-settings-disclosure > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+.lumio .lv7-settings-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+.lumio .lv7-settings-disclosure > summary:focus-visible {
+  outline: 2px solid var(--lm-accent);
+  outline-offset: -4px;
+}
+.lumio .lv7-settings-disclosure > summary strong {
+  font-size: 15px;
+}
+.lumio .lv7-settings-disclosure > summary small {
+  display: block;
+  color: var(--lm-muted);
+  font-size: 13px;
+  margin-top: 5px;
+  line-height: 1.5;
+}
+.lumio .lv7-settings-disclosure > summary > svg {
+  flex: 0 0 auto;
+}
+.lumio .lv7-settings-disclosure[open] > summary {
+  border-bottom: 1px solid var(--lm-line);
+}
+.lumio .lv7-settings-disclosure[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.lumio .lv7-settings-disclosure > .lm-panel {
+  border: 0;
+  margin-bottom: 0;
+  border-radius: 0;
+}
 .lumio .lv7-nav-group {
   margin: 6px 0;
   border-top: 1px solid var(--lm-line);

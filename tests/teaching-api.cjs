@@ -335,7 +335,7 @@ let orgId,
         assert.equal(
           db
             .prepare(
-              "SELECT count(*) n FROM sqlite_master WHERE type='table' AND name LIKE 'teaching_%' AND name!='teaching_preferences'",
+              "SELECT count(*) n FROM sqlite_master WHERE type='table' AND name LIKE 'teaching_%' AND name NOT IN('teaching_preferences','teaching_grade_events','teaching_assessment_windows')",
             )
             .get().n,
           14,
@@ -1278,6 +1278,7 @@ let orgId,
             { questionId: shortId, points: 1.44, feedback: "Đủ." },
           ],
           feedback: "Updated confirmation",
+          reason: "Synthetic explicit regrade correction",
           confirmed: true,
         });
         const r = await get(student, orgId);
@@ -1318,6 +1319,7 @@ let orgId,
                 { questionId: shortId, points: 0, feedback: "" },
               ],
               feedback: "Should roll back",
+              reason: "Synthetic audit rollback regrade",
               confirmed: true,
             },
             503,

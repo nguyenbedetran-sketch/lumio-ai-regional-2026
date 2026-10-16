@@ -13,6 +13,8 @@ import type {
   TeachingMutationResult,
   TeachingAnalytics,
   TeachingPreferences,
+  TeachingGradeHistoryResponse,
+  TeachingGradeHistoryEvent,
 } from "../teaching/contracts";
 import { teachingLimits as limits } from "../teaching/contracts";
 import {
@@ -254,10 +256,17 @@ export function createTeachingStore({
     const submissions = bytes(
       "SELECT coalesce(sum(length(CAST(s.answers_json AS BLOB))+length(CAST(coalesce(s.grades_json,'') AS BLOB))+length(CAST(coalesce(s.feedback,'') AS BLOB))),0) n FROM teaching_submissions s JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?",
     );
+    const history = bytes(
+      "SELECT coalesce(sum(length(CAST(coalesce(e.grades_json,'')||coalesce(e.feedback,'')||coalesce(e.reason,'') AS BLOB))),0) n FROM teaching_grade_events e JOIN teaching_submissions s ON s.id=e.submission_id JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?",
+    );
+    const windows = bytes(
+      "SELECT coalesce(sum(length(CAST(coalesce(w.reason,'') AS BLOB))),0) n FROM teaching_assessment_windows w JOIN teaching_assignments a ON a.id=w.assignment_id WHERE a.organization_id=?",
+    );
     if (
       content > limits.activeContentBytesPerOrg ||
       communication > limits.communicationBytesPerOrg ||
-      content + communication + assignments + submissions >
+      history > limits.gradeHistoryBytesPerOrg ||
+      content + communication + assignments + submissions + history + windows >
         limits.workspaceBytesPerOrg
     )
       fail("TEACHING_STORAGE_LIMIT", 413);
@@ -480,17 +489,94 @@ export function createTeachingStore({
       fail("TEACHING_FORBIDDEN", 403);
     return a;
   }
-  const assignmentData = (a: Row) => ({
-    ...JSON.parse(a.data_json),
-    id: a.id,
-    orgId: a.organization_id,
-    classId: a.class_id,
-    status: a.status,
-    revision: Number(a.revision),
-    createdBy: a.created_by,
-    createdAt: a.created_at,
-    issuedAt: a.issued_at,
-  });
+  function assessmentWindow(a: Row) {
+    const w = one(
+      "SELECT * FROM teaching_assessment_windows WHERE assignment_id=?",
+      a.id,
+    );
+    if (!w) fail("TEACHING_HISTORY_INCONSISTENT", 409);
+    return w;
+  }
+  function windowTimestamp(raw: unknown) {
+    const value = str(raw, 40),
+      m =
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d{1,3})?)?(Z|[+-](?:0\d|1[0-4]):[0-5]\d)$/.exec(
+          value,
+        );
+    if (
+      !m ||
+      !Number.isFinite(Date.parse(value)) ||
+      Number(m[2]) < 1 ||
+      Number(m[2]) > 12 ||
+      Number(m[3]) < 1 ||
+      Number(m[3]) >
+        new Date(Date.UTC(Number(m[1]), Number(m[2]), 0)).getUTCDate() ||
+      Number(m[4]) > 23 ||
+      Number(m[5]) > 59 ||
+      Number(m[6] || 0) > 59 ||
+      /[+-]14:(?!00)/.test(value)
+    )
+      fail("TEACHING_INVALID_WINDOW");
+    return new Date(value).toISOString();
+  }
+  function parseWindow(d: Row, dueAt: string, required = false) {
+    const availableFrom =
+        d.availableFrom == null ? null : windowTimestamp(d.availableFrom),
+      availableUntil =
+        d.availableUntil == null ? null : windowTimestamp(d.availableUntil),
+      due = Date.parse(dueAt);
+    if (
+      (required && (!availableFrom || !availableUntil)) ||
+      (availableFrom &&
+        (Date.parse(availableFrom) > due ||
+          Date.parse(availableFrom) < now() - 366 * 86400000)) ||
+      (availableUntil &&
+        (Date.parse(availableUntil) < due ||
+          Date.parse(availableUntil) <= now() ||
+          Date.parse(availableUntil) > now() + 366 * 86400000)) ||
+      (availableFrom &&
+        availableUntil &&
+        Date.parse(availableFrom) >= Date.parse(availableUntil))
+    )
+      fail("TEACHING_INVALID_WINDOW");
+    return { availableFrom, availableUntil };
+  }
+  function submissionAvailability(s: Scope, a: Row, w: Row, existing?: Row) {
+    if (classFor(s, a.class_id).archived) return "class_archived" as const;
+    if (a.status !== "issued") return "closed" as const;
+    if (w.available_from && now() < Date.parse(w.available_from))
+      return "not_open" as const;
+    if (w.available_until && now() >= Date.parse(w.available_until))
+      return "closed" as const;
+    if (existing && existing.status !== "submitted") return "graded" as const;
+    if (
+      Date.parse(JSON.parse(a.data_json).dueAt) < now() &&
+      !JSON.parse(s.org.settings_json).allowLateSubmissions
+    )
+      return "due_passed" as const;
+    return "available" as const;
+  }
+  const assignmentData = (a: Row) => {
+    const w = assessmentWindow(a),
+      d = JSON.parse(a.data_json);
+    return {
+      ...d,
+      id: a.id,
+      orgId: a.organization_id,
+      classId: a.class_id,
+      status: a.status,
+      revision: Number(a.revision),
+      createdBy: a.created_by,
+      createdAt: a.created_at,
+      issuedAt: a.issued_at,
+      rootAssignmentId: w.root_assignment_id,
+      attemptNo: Number(w.attempt_no),
+      practiceRetake: Number(w.attempt_no) > 1,
+      availableFrom: w.available_from,
+      availableUntil: w.available_until,
+      questionCount: d.questions.length,
+    };
+  };
   function parseAssignment(s: Scope, raw: unknown) {
     const d = obj(raw);
     only(d, [
@@ -500,6 +586,8 @@ export function createTeachingStore({
       "questionIds",
       "target",
       "dueAt",
+      "availableFrom",
+      "availableUntil",
     ]);
     const classId = identifier(d.classId);
     classFor(s, classId, true);
@@ -571,6 +659,7 @@ export function createTeachingStore({
       questions,
       target: { kind, ids: targetIds },
       dueAt,
+      ...parseWindow(d, dueAt),
       maxPoints: questions.reduce((n, q) => n + q.maxPoints, 0),
     };
   }
@@ -838,6 +927,12 @@ export function createTeachingStore({
         ).map((r) => r.user_id);
       } else {
         data.target = { kind: data.target.kind, ids: [] };
+        const own = submissions.find(
+            (r) => r.assignment_id === a.id && r.student_id === u.id,
+          ),
+          w = assessmentWindow(a);
+        data.availability = submissionAvailability(s, a, w, own);
+        data.canSubmit = data.availability === "available";
         const published = submissions.some(
           (r) =>
             r.assignment_id === a.id &&
@@ -857,6 +952,11 @@ export function createTeachingStore({
               difficulty: question.difficulty,
             }),
           );
+        if (w.available_from && now() < Date.parse(w.available_from)) {
+          data.questions = [];
+          data.questionIds = [];
+          data.instructions = "";
+        }
       }
       return data;
     });
@@ -892,8 +992,28 @@ export function createTeachingStore({
         classId: r.class_id,
         revision: Number(r.revision),
       }));
-    const published = submissions.filter((r) => r.status === "published"),
+    const publishedByRoot = new Map<string, Row>();
+    for (const r of submissions.filter((r) => r.status === "published")) {
+      const a = assignments.find((a) => a.id === r.assignment_id)!,
+        w = assessmentWindow(a),
+        key = w.root_assignment_id + ":" + r.student_id,
+        old = publishedByRoot.get(key);
+      if (
+        !old ||
+        Number(
+          assessmentWindow(assignments.find((a) => a.id === old.assignment_id)!)
+            .attempt_no,
+        ) < Number(w.attempt_no)
+      )
+        publishedByRoot.set(key, r);
+    }
+    const published = [...publishedByRoot.values()],
+      evidenceIds = new Set(published.map((r) => r.id)),
       byStudent = new Map<string, Row[]>();
+    state.submissions = state.submissions.map((r) => ({
+      ...r,
+      countsTowardAnalytics: evidenceIds.has(r.id),
+    }));
     for (const r of published)
       byStudent.set(r.student_id, [...(byStudent.get(r.student_id) || []), r]);
     state.analytics = [...byStudent.entries()].map(([studentId, rows]) => {
@@ -919,7 +1039,7 @@ export function createTeachingStore({
             points: 0,
             max: 0,
           };
-          t.assignments.add(a.id);
+          t.assignments.add(assessmentWindow(a).root_assignment_id);
           t.points += grade.points;
           t.max += question.maxPoints;
           topics.set(question.topic, t);
@@ -1022,6 +1142,11 @@ export function createTeachingStore({
           assignmentFor(s, submission.assignment_id);
         } else if (old.action !== "class.join") requireStaff(s);
         const result = JSON.parse(old.result_json);
+        if (old.action === "assignment.retake") {
+          const retake = assignmentFor(s, identifier(result.id), true),
+            w = assessmentWindow(retake);
+          checkRecipients(retake.class_id, [w.student_id]);
+        }
         if (old.action === "invite.create") {
           const invite = one(
             "SELECT * FROM teaching_invites WHERE id=?",
@@ -1538,6 +1663,117 @@ export function createTeachingStore({
             );
             result = { id: existing!.id };
           }
+        } else if (b.action === "assignment.retake") {
+          const original = assignmentFor(
+              s,
+              identifier(b.originalAssignmentId),
+              true,
+            ),
+            w = assessmentWindow(original);
+          cas(original, b.expectedRevision);
+          classId = original.class_id;
+          classFor(s, original.class_id, true);
+          if (
+            w.root_assignment_id !== original.id ||
+            !["issued", "closed"].includes(original.status)
+          )
+            fail("TEACHING_RETAKE_ROOT_REQUIRED", 409);
+          if (b.sameQuestionsAcknowledged !== true)
+            fail("TEACHING_RETAKE_ACK_REQUIRED");
+          const studentId = identifier(b.studentId),
+            reason = str(b.reason, 1000),
+            availableUntil = windowTimestamp(b.availableUntil),
+            window = parseWindow(b, availableUntil, true);
+          checkRecipients(original.class_id, [studentId]);
+          if (
+            !one(
+              "SELECT 1 FROM teaching_assignment_targets WHERE assignment_id=? AND user_id=?",
+              original.id,
+              studentId,
+            )
+          )
+            fail("TEACHING_INVALID_RECIPIENT", 403);
+          if (
+            !one(
+              "SELECT 1 FROM teaching_submissions WHERE assignment_id=? AND student_id=? AND status IN('graded','published')",
+              original.id,
+              studentId,
+            )
+          )
+            fail("TEACHING_RETAKE_GRADE_REQUIRED", 409);
+          const prior = all(
+            "SELECT w.*,a.status assignment_status,s.status submission_status FROM teaching_assessment_windows w JOIN teaching_assignments a ON a.id=w.assignment_id LEFT JOIN teaching_submissions s ON s.assignment_id=a.id AND s.student_id=w.student_id WHERE w.root_assignment_id=? AND w.student_id=? ORDER BY w.attempt_no",
+            original.id,
+            studentId,
+          );
+          if (
+            prior.some(
+              (p) =>
+                p.submission_status === "submitted" ||
+                (p.assignment_status === "issued" &&
+                  !p.submission_status &&
+                  Date.parse(p.available_until) > now()),
+            )
+          )
+            fail("TEACHING_RETAKE_PENDING", 409);
+          const attemptNo = prior.length + 2;
+          if (attemptNo > 3) fail("TEACHING_RETAKE_LIMIT", 409);
+          if (
+            Number(
+              one(
+                "SELECT count(*) n FROM teaching_assignments WHERE organization_id=?",
+                orgId,
+              )!.n,
+            ) >= 200
+          )
+            fail("TEACHING_LIMIT", 409);
+          const id = randomUUID(),
+            data = JSON.parse(original.data_json),
+            createdAt = stamp(),
+            retakeData = {
+              ...data,
+              title:
+                String(data.title).slice(0, 150) +
+                " · Luyện tập lại · Lần " +
+                attemptNo,
+              target: { kind: "students", ids: [studentId] },
+              dueAt: availableUntil,
+              ...window,
+            };
+          before = { revision: original.revision, status: original.status };
+          run(
+            "INSERT INTO teaching_assignments(id,organization_id,class_id,data_json,status,created_by,created_at,issued_at) VALUES(?,?,?,?,'issued',?,?,?)",
+            id,
+            orgId,
+            classId,
+            JSON.stringify(retakeData),
+            userId,
+            createdAt,
+            createdAt,
+          );
+          run(
+            "INSERT INTO teaching_assignment_targets(assignment_id,user_id) VALUES(?,?)",
+            id,
+            studentId,
+          );
+          run(
+            "INSERT INTO teaching_assessment_windows(assignment_id,root_assignment_id,parent_assignment_id,attempt_no,student_id,available_from,available_until,reason,acknowledged,created_by,created_at) VALUES(?,?,?,?,?,?,?,?,1,?,?)",
+            id,
+            original.id,
+            original.id,
+            attemptNo,
+            studentId,
+            window.availableFrom,
+            window.availableUntil,
+            reason,
+            userId,
+            createdAt,
+          );
+          run(
+            "UPDATE teaching_assignments SET revision=revision+1 WHERE id=?",
+            original.id,
+          );
+          result = { id, rootAssignmentId: original.id, attemptNo };
         } else if (b.action.startsWith("assignment.")) {
           const action = b.action.split(".")[1],
             existing =
@@ -1580,6 +1816,23 @@ export function createTeachingStore({
               run(
                 "UPDATE teaching_assignments SET data_json=?,status='draft',revision=revision+1 WHERE id=?",
                 JSON.stringify(data),
+                id,
+              );
+            if (!existing)
+              run(
+                "INSERT INTO teaching_assessment_windows(assignment_id,root_assignment_id,attempt_no,available_from,available_until,created_by,created_at) VALUES(?,?,1,?,?,?,?)",
+                id,
+                id,
+                data.availableFrom,
+                data.availableUntil,
+                userId,
+                stamp(),
+              );
+            else
+              run(
+                "UPDATE teaching_assessment_windows SET available_from=?,available_until=? WHERE assignment_id=? AND attempt_no=1",
+                data.availableFrom,
+                data.availableUntil,
                 id,
               );
             result = { id };
@@ -1656,6 +1909,11 @@ export function createTeachingStore({
                 stamp(),
                 existing!.id,
               );
+              run(
+                "UPDATE teaching_assessment_windows SET available_from=coalesce(available_from,?) WHERE assignment_id=?",
+                stamp(),
+                existing!.id,
+              );
             } else
               run(
                 "UPDATE teaching_assignments SET status='reviewed',revision=revision+1 WHERE id=?",
@@ -1669,6 +1927,14 @@ export function createTeachingStore({
             data = JSON.parse(a.data_json);
           classId = a.class_id;
           classFor(s, a.class_id, true);
+          const availability = submissionAvailability(
+            s,
+            a,
+            assessmentWindow(a),
+          );
+          if (availability === "not_open") fail("TEACHING_NOT_OPEN", 409);
+          if (availability === "closed")
+            fail("TEACHING_ASSIGNMENT_CLOSED", 409);
           if (a.status !== "issued") fail("TEACHING_ASSIGNMENT_CLOSED", 409);
           const late = Date.parse(data.dueAt) < now();
           if (late && !JSON.parse(s.org.settings_json).allowLateSubmissions)
@@ -1749,14 +2015,63 @@ export function createTeachingStore({
               !row!.grades_json
             )
               fail("TEACHING_CONFIRMATION_REQUIRED", 409);
+            const gradeEvent = one(
+              "SELECT * FROM teaching_grade_events WHERE submission_id=? AND kind IN('grade','legacy_snapshot') ORDER BY grade_version DESC LIMIT 1",
+              row!.id,
+            );
+            if (
+              !gradeEvent ||
+              gradeEvent.grades_json !== row!.grades_json ||
+              Number(gradeEvent.score) !== Number(row!.score) ||
+              gradeEvent.feedback !== (row!.feedback || "") ||
+              (gradeEvent.answers_digest &&
+                gradeEvent.answers_digest !== hash(row!.answers_json))
+            )
+              fail("TEACHING_HISTORY_INCONSISTENT", 409);
+            const publishedAt = stamp();
             run(
               "UPDATE teaching_submissions SET status='published',published_at=?,revision=revision+1 WHERE id=?",
-              stamp(),
+              publishedAt,
               row!.id,
+            );
+            run(
+              "INSERT INTO teaching_grade_events(id,submission_id,submission_revision,kind,grade_version,grade_event_id,actor_id,recorded_at,published_at) VALUES(?,?,?,'publish',?,?,?,?,?)",
+              randomUUID(),
+              row!.id,
+              Number(row!.revision) + 1,
+              gradeEvent.grade_version,
+              gradeEvent.id,
+              userId,
+              publishedAt,
+              publishedAt,
             );
           } else {
             if (b.confirmed !== true)
               fail("TEACHING_CONFIRMATION_REQUIRED", 409);
+            const reason = b.reason === undefined ? "" : str(b.reason, 1000, 0),
+              priorGrade =
+                row!.grades_json !== null ||
+                row!.confirmed_at !== null ||
+                row!.score !== null;
+            if (priorGrade && !reason) fail("TEACHING_REGRADE_REASON_REQUIRED");
+            const gradeVersion =
+              Number(
+                one(
+                  "SELECT coalesce(max(grade_version),0) n FROM teaching_grade_events WHERE submission_id=?",
+                  row!.id,
+                )!.n,
+              ) + 1;
+            if (gradeVersion > limits.gradeVersionsPerSubmission)
+              fail("TEACHING_HISTORY_LIMIT", 409);
+            if (
+              Number(
+                one(
+                  "SELECT count(*) n FROM teaching_grade_events e JOIN teaching_submissions s ON s.id=e.submission_id JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=? AND e.kind IN('grade','legacy_snapshot')",
+                  orgId,
+                )!.n,
+              ) >= limits.gradeVersionsPerOrg
+            )
+              fail("TEACHING_HISTORY_LIMIT", 409);
             const data = JSON.parse(row!.data_json);
             if (
               !Array.isArray(b.grades) ||
@@ -1776,13 +2091,32 @@ export function createTeachingStore({
               score += points;
               return { questionId, points, feedback: str(g.feedback, 2000, 0) };
             });
+            const feedback = str(b.feedback, 5000, 0),
+              confirmedAt = stamp(),
+              roundedScore = Math.round(score * 100) / 100,
+              gradesJSON = JSON.stringify(grades);
             run(
               "UPDATE teaching_submissions SET grades_json=?,score=?,feedback=?,status='graded',confirmed_at=?,published_at=NULL,revision=revision+1 WHERE id=?",
-              JSON.stringify(grades),
-              Math.round(score * 100) / 100,
-              str(b.feedback, 5000, 0),
-              stamp(),
+              gradesJSON,
+              roundedScore,
+              feedback,
+              confirmedAt,
               row!.id,
+            );
+            run(
+              "INSERT INTO teaching_grade_events(id,submission_id,submission_revision,kind,grade_version,grades_json,score,feedback,answers_digest,actor_id,recorded_at,confirmed_at,reason) VALUES(?,?,?,'grade',?,?,?,?,?,?,?,?,?)",
+              randomUUID(),
+              row!.id,
+              Number(row!.revision) + 1,
+              gradeVersion,
+              gradesJSON,
+              roundedScore,
+              feedback,
+              hash(row!.answers_json),
+              userId,
+              confirmedAt,
+              confirmedAt,
+              reason || null,
             );
           }
           result = { id: row!.id };
@@ -2029,8 +2363,113 @@ export function createTeachingStore({
       ),
     };
   }
+  function gradeHistory(
+    userId: string,
+    version: number,
+    options: {
+      orgId: string;
+      submissionId: string;
+      limit?: number;
+      cursor?: string;
+    },
+  ): TeachingGradeHistoryResponse {
+    const u = actor(userId, version),
+      s = scope(u, identifier(options.orgId)),
+      submissionId = identifier(options.submissionId),
+      row = one(
+        "SELECT s.* FROM teaching_submissions s JOIN teaching_assignments a ON a.id=s.assignment_id WHERE s.id=? AND a.organization_id=?",
+        submissionId,
+        s.org.id,
+      );
+    if (!row) fail("TEACHING_NOT_FOUND", 404);
+    assignmentFor(s, row.assignment_id);
+    if (!s.staff && row.student_id !== u.id) fail("TEACHING_FORBIDDEN", 403);
+    const limit =
+      options.limit === undefined ? 20 : integer(options.limit, 1, 50);
+    let before = Number.MAX_SAFE_INTEGER;
+    if (options.cursor !== undefined) {
+      const cursor = str(options.cursor, 400);
+      if (
+        !/^[A-Za-z0-9_-]+$/.test(cursor) ||
+        Buffer.from(cursor, "base64url").toString("base64url") !== cursor
+      )
+        fail("INVALID_TEACHING_DATA");
+      let decoded: Record<string, unknown>;
+      try {
+        decoded = obj(
+          JSON.parse(Buffer.from(cursor, "base64url").toString("utf8")),
+        );
+      } catch {
+        fail("INVALID_TEACHING_DATA");
+      }
+      only(decoded, ["v", "s", "b"]);
+      if (decoded.v !== 1 || decoded.s !== submissionId)
+        fail("INVALID_TEACHING_DATA");
+      before = integer(decoded.b, 1, Number.MAX_SAFE_INTEGER);
+    }
+    const rows = all(
+      `SELECT e.*,g.grades_json linked_grades,g.score linked_score,g.feedback linked_feedback,u.name actor_name
+       FROM teaching_grade_events e LEFT JOIN teaching_grade_events g ON g.id=e.grade_event_id AND g.submission_id=e.submission_id
+       LEFT JOIN users u ON u.id=e.actor_id WHERE e.submission_id=? AND e.sequence<?
+       ${s.staff ? "" : "AND (e.kind='publish' OR (e.kind='legacy_snapshot' AND e.published_at IS NOT NULL))"}
+       ORDER BY e.sequence DESC LIMIT ?`,
+      submissionId,
+      before,
+      limit + 1,
+    );
+    const selected = rows.slice(0, limit);
+    const events: TeachingGradeHistoryEvent[] = selected.map((e) => ({
+      id: e.id,
+      kind: e.kind,
+      submissionRevision: Number(e.submission_revision),
+      gradeVersion: Number(e.grade_version),
+      score: Number(e.kind === "publish" ? e.linked_score : e.score),
+      grades: JSON.parse(
+        e.kind === "publish" ? e.linked_grades : e.grades_json,
+      ),
+      feedback: e.kind === "publish" ? e.linked_feedback : e.feedback,
+      publishedAt: e.published_at,
+      legacy: !!e.legacy,
+      ...(s.staff
+        ? {
+            recordedAt: e.recorded_at,
+            recordedBy: e.actor_id
+              ? { userId: e.actor_id, name: e.actor_name }
+              : null,
+            confirmedAt: e.confirmed_at,
+            reason: e.reason || "",
+          }
+        : {}),
+    }));
+    return {
+      submissionId,
+      events,
+      nextCursor:
+        rows.length > limit
+          ? Buffer.from(
+              JSON.stringify({
+                v: 1,
+                s: submissionId,
+                b: Number(selected.at(-1)!.sequence),
+              }),
+            ).toString("base64url")
+          : null,
+    };
+  }
   return {
     mutateTeaching: mutate,
+    readTeachingGradeHistory(
+      userId: string,
+      version: number,
+      options: {
+        orgId: string;
+        submissionId: string;
+        limit?: number;
+        cursor?: string;
+      },
+    ) {
+      return transaction(() => gradeHistory(userId, version, options));
+    },
     readTeaching(
       userId: string,
       version: number,
@@ -2085,6 +2524,10 @@ export function createTeachingStore({
               submittedAt: r.submittedAt,
               publishedAt: r.publishedAt ?? null,
               late: r.late,
+              rootAssignmentId: a.rootAssignmentId,
+              attemptNo: a.attemptNo,
+              practiceRetake: a.practiceRetake,
+              countsTowardAnalytics: r.countsTowardAnalytics === true,
             };
           });
         recordAudit({
@@ -2115,6 +2558,10 @@ export function createTeachingStore({
           "submittedAt",
           "publishedAt",
           "late",
+          "rootAssignmentId",
+          "attemptNo",
+          "practiceRetake",
+          "countsTowardAnalytics",
         ] as const;
         const cell = (value: unknown) => {
           let s = value === null || value === undefined ? "" : String(value);

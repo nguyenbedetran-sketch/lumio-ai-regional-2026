@@ -30,6 +30,7 @@ import {
 import type { AdminSnapshot } from "../../lib/server/admin-snapshot";
 import type { AuditEvent, AIUsageEvent, User } from "../../lib/server/types";
 import { TeacherReviewPanel } from "./teacher-review";
+import { UsageBreakdownPanel } from "./usage-breakdown";
 
 type Tab = "overview" | "users" | "teachers" | "usage" | "flags" | "audit";
 const formatNumber = (n: number | null) =>
@@ -692,6 +693,10 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                 </div>
                 <span className="ad-pill">Metadata only</span>
               </div>
+              <UsageBreakdownPanel
+                key={data.actor.accountKey}
+                accountKey={data.actor.accountKey}
+              />
               <UsageTable events={usage} />
               <Pagination
                 offset={usageOffset}
@@ -703,6 +708,7 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                   perform(async () => {
                     const result = await request<{ events: AIUsageEvent[] }>(
                       `/api/admin/usage?offset=${offset}`,
+                      { headers: { "X-Lumio-Account": data.actor.accountKey } },
                     );
                     setUsage(result.events);
                     setUsageOffset(offset);

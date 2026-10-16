@@ -1028,7 +1028,7 @@ const fingerprint = () =>
       () => {
         assert.deepEqual(store.runtimeHealth(), {
           ready: true,
-          schemaVersion: 14,
+          schemaVersion: 16,
         });
         const brokenPath = path.join(folder, "missing-teacher-table.sqlite"),
           broken = platform.createStore(brokenPath),

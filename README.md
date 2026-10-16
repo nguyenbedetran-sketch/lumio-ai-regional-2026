@@ -1,6 +1,8 @@
-# Lumio AI 3.2 — Teacher Workspace · AI26A0048
+# Lumio AI 3.3 RC — nâng cấp V6 + V7 · AI26A0048
 
-Source web hiện tại **3.2.0-teacher.1**, SQLite migrations **1–13**. Không viết lại hệ thống: Teacher Workspace mở rộng từ hồ sơ/quyền giáo viên của3.1, dùng cùng tài khoản, SQLite, AI Router, credit và nguồn. Có lớp/nhóm/mã mời/đồng giảng viên, giáo án và học liệu, ngân hàng câu hỏi, giao–nộp–chấm–công bố, phân tích kết quả đã công bố, thông báo/lịch, báo cáo và tùy chọn giáo viên. Các module học cá nhân từ V2/V3 vẫn được giữ. Mở [hướng dẫn3.2](TEACHER-WORKSPACE.md), [kế hoạch/audit và báo cáo thực tế](docs/teacher-workspace). APK/IPA/EXE và thử nghiệm người học thật không được tự coi là đã cập nhật hoặc xác nhận theo source web.
+Source nhánh nâng cấp hiện tại **3.3.0-rc.1**, SQLite migrations **1–16**. V6 và V7 là một backlog chung trên ứng dụng hiện có. Có thêm bảo vệ request AI/credit lặp, ràng buộc tài khoản, điều hướng gọn, trích dẫn đúng vị trí, lịch sử điểm bất biến, luyện lại có cửa sổ thời gian và kiểm cấu trúc/backup database. Đọc [hướng dẫn mở và nghiệm thu](docs/v7/REVIEW_GUIDE.vi.md), [audit](docs/PRODUCT_AUDIT.md), [checklist đang làm](docs/v7/CHECKLIST.md) và [kết quả thực tế](docs/v7/ACCEPTANCE_REPORT.md). Bản RC này chưa đồng nghĩa hoàn thành mọi mục V6/V7; public, native và biên nhận thi có gate riêng.
+
+Teacher Workspace3.2 được giữ và mở rộng: lớp/nhóm/mã mời/đồng giảng viên, giáo án/học liệu, ngân hàng câu hỏi, giao–nộp–chấm–công bố, phân tích kết quả đã công bố, thông báo/lịch, báo cáo và tùy chọn giáo viên. Các module học cá nhân V2/V3 vẫn có. [Tài liệu3.2 lịch sử](TEACHER-WORKSPACE.md) và [báo cáo3.2](docs/teacher-workspace) không phải bằng chứng cho bản RC mới. APK/IPA/EXE và thử nghiệm người học thật chưa được suy ra từ kiểm thử source web.
 
 Khu vực mới: [Teacher Workspace](https://lumio-ai-demo.onrender.com/teacher), [Góc học sinh](https://lumio-ai-demo.onrender.com/classroom), [Admin](https://lumio-ai-demo.onrender.com/admin). Giáo viên chưa được duyệt vẫn thấy hồ sơ đăng ký. Đọc [báo cáo bàn giao3.2](docs/teacher-workspace/FINAL-REPORT.md) để phân biệt kiểm thử tự động, AI thật, public và các giới hạn còn lại.
 

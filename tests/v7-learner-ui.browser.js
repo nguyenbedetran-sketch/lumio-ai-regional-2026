@@ -5,7 +5,8 @@ async (page) => {
     unexpected = [],
     aiRequests = [],
     external = [],
-    consoleErrors = [];
+    consoleErrors = [],
+    sourceSearches = [];
   const check = (ok, label) => {
     if (!ok) throw Error(label);
     passed.push(label);
@@ -153,6 +154,30 @@ async (page) => {
         },
       }),
     );
+    await page.route("**/api/rag/search", (r) => {
+      const body = r.request().postDataJSON();
+      sourceSearches.push(body);
+      check(
+        r.request().headers()["x-lumio-account"] === account &&
+          body.scope.mode === "lexical",
+        "Settings keyword search preserves canonical account and free lexical mode",
+      );
+      return r.fulfill({
+        json: {
+          hits: [
+            {
+              chunkId: ragRef.rag.chunkId,
+              documentId: ragRef.rag.documentId,
+              documentTitle: ragRef.rag.title,
+              text: ragQuote,
+              paragraph: 1,
+            },
+          ],
+          mode: "lexical",
+          credits: 0,
+        },
+      });
+    });
     await page.route("**/api/tutor/session?**", (r) =>
       latestSession
         ? r.fulfill({
@@ -417,6 +442,279 @@ async (page) => {
         "Exactly one active destination after: " + label,
       );
     }
+    // Settings keep common preferences prominent and advanced tools in native disclosures.
+    const settings = page.locator(".lm-settings-grid"),
+      disclosure = (id) => page.locator('[data-v7-settings="' + id + '"]');
+    await settings.waitFor();
+    check(
+      (await page.locator("[data-v7-settings]").count()) === 3,
+      "Settings contains one disclosure for sync, sources and capabilities",
+    );
+    for (const id of ["sync", "sources", "capabilities"]) {
+      const item = disclosure(id),
+        summary = item.locator(":scope > summary");
+      check(
+        (await item.getAttribute("open")) === null,
+        "Advanced settings starts collapsed: " + id,
+      );
+      await summary.focus();
+      await page.keyboard.press("Enter");
+      check(
+        (await item.getAttribute("open")) !== null,
+        "Enter expands native settings disclosure: " + id,
+      );
+      check(
+        await summary.evaluate(
+          (n) =>
+            document.activeElement === n &&
+            getComputedStyle(n).outlineStyle !== "none" &&
+            parseFloat(getComputedStyle(n).outlineOffset) < 0,
+        ),
+        "Keyboard focus stays visibly inset inside the clipped disclosure: " +
+          id,
+      );
+      if (id === "sync")
+        await summary.screenshot({
+          path: "docs/v7/qa-settings-keyboard-focus.png",
+        });
+
+      check(
+        await item
+          .locator(
+            id === "sync"
+              ? "[data-sync-panel]"
+              : id === "sources"
+                ? "[data-rag-manager]"
+                : ".lm-service",
+          )
+          .first()
+          .isVisible(),
+        "Expanded settings children remain visible and reachable: " + id,
+      );
+      await page.keyboard.press("Space");
+      check(
+        (await item.getAttribute("open")) === null,
+        "Space collapses native settings disclosure: " + id,
+      );
+    }
+    check(
+      (await settings
+        .getByRole("textbox", { name: "Tên hiển thị", exact: true })
+        .count()) === 1 && (await settings.getByRole("combobox").count()) === 4,
+      "Common name, language, AI language and appearance preferences are retained once",
+    );
+    check(
+      (await settings
+        .getByRole("button", { name: "Đăng xuất", exact: true })
+        .count()) === 1 &&
+        (await settings
+          .getByRole("button", { name: "Xuất bản sao", exact: true })
+          .count()) === 1 &&
+        (await settings
+          .getByRole("button", { name: "Nhập bản sao", exact: true })
+          .count()) === 1,
+      "Sign-out, export and import remain available without duplicate actions",
+    );
+    check(
+      (await settings.locator("[data-sync-panel]").count()) === 1 &&
+        (await settings.locator("[data-rag-manager]").count()) === 1 &&
+        (await disclosure("capabilities").locator(".lm-service").count()) === 3,
+      "Collapsing settings never duplicates or removes advanced tool instances",
+    );
+    await settings
+      .getByRole("textbox", { name: "Tên hiển thị", exact: true })
+      .fill("KIỂM THỬ · CÀI ĐẶT");
+    check(
+      (await page.evaluate(() => localStorage.getItem("lumio-name"))) ===
+        "KIỂM THỬ · CÀI ĐẶT",
+      "Name preference still persists from the simplified Settings page",
+    );
+    await settings
+      .getByRole("textbox", { name: "Tên hiển thị", exact: true })
+      .fill(session.user.name);
+    await settings
+      .getByRole("combobox", { name: "Ngôn ngữ AI trả lời", exact: true })
+      .selectOption("en");
+    check(
+      (await page.evaluate(() => localStorage.getItem("lumio-ai-language"))) ===
+        "en",
+      "AI reply language remains independently configurable",
+    );
+    await settings
+      .getByRole("combobox", { name: "Ngôn ngữ AI trả lời", exact: true })
+      .selectOption("vi");
+    await settings
+      .getByRole("combobox", { name: "Giao diện", exact: true })
+      .selectOption("dark");
+    await page.waitForFunction(
+      () => document.documentElement.dataset.theme === "dark",
+    );
+    check(
+      (await page.evaluate(() => localStorage.getItem("lumio-theme"))) ===
+        "dark",
+      "Theme preference still changes the live document and persists",
+    );
+    await settings
+      .getByRole("combobox", { name: "Giao diện", exact: true })
+      .selectOption("light");
+    const translated = {
+      vi: [
+        "Thiết bị & đồng bộ",
+        "Tra cứu nhiều học liệu",
+        "Khả năng AI hiện có",
+      ],
+      en: [
+        "Devices & sync",
+        "Search across sources",
+        "Available AI capabilities",
+      ],
+      "zh-CN": ["设备与同步", "跨资料检索", "可用AI功能"],
+      ja: ["デバイスと同期", "複数資料を検索", "利用可能なAI機能"],
+      ko: ["기기 및 동기화", "여러 자료 검색", "사용 가능한 AI 기능"],
+    };
+    for (const [locale, labels] of Object.entries(translated)) {
+      await page.locator(".lm-language select").selectOption(locale);
+      await page.waitForFunction(
+        ({ locale }) => document.documentElement.lang === locale,
+        { locale },
+      );
+      const actual = await page
+        .locator("[data-v7-settings] > summary strong")
+        .allTextContents();
+      check(
+        JSON.stringify(actual) === JSON.stringify(labels),
+        "Settings disclosure headings use the actual localized catalog: " +
+          locale,
+      );
+    }
+    await page.locator(".lm-language select").selectOption("vi");
+    await page.waitForFunction(() => document.documentElement.lang === "vi");
+    const privacy = settings.locator("section.lm-panel").filter({
+      has: page.getByRole("heading", { name: "Quyền riêng tư", exact: true }),
+    });
+    check(
+      !(await privacy.textContent()).includes(
+        "Không có nội dung được tải lên dịch vụ AI",
+      ) && (await privacy.textContent()).includes("AI"),
+      "Effective privacy catalog explains conditional AI processing instead of the stale unconditional statement",
+    );
+    const download = page.waitForEvent("download");
+    await settings
+      .getByRole("button", { name: "Xuất bản sao", exact: true })
+      .click();
+    check(
+      (await download).suggestedFilename().endsWith(".json"),
+      "Export backup remains a real browser JSON download after Settings grouping",
+    );
+    await page.locator(".lm-toast").waitFor({ state: "hidden" });
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.screenshot({
+      path: "docs/v7/qa-settings-desktop.png",
+      fullPage: true,
+    });
+    const sync = disclosure("sync");
+    await sync.locator(":scope > summary").focus();
+    await page.keyboard.press("Enter");
+    const consent = sync.getByRole("checkbox");
+    await consent.focus();
+    await page.keyboard.press("Space");
+    check(
+      (await consent.isChecked()) &&
+        !(await sync
+          .getByRole("button", { name: "Đồng bộ ngay", exact: true })
+          .isDisabled()),
+      "Sync consent and sync action remain keyboard-usable inside the disclosure",
+    );
+    await sync.locator(":scope > summary").focus();
+    await page.keyboard.press("Space");
+    await page.keyboard.press("Enter");
+    check(
+      await consent.isChecked(),
+      "Collapsing and reopening sync preserves its current consent state",
+    );
+    await consent.uncheck();
+    await sync.locator(":scope > summary").click();
+    const sources = disclosure("sources");
+    await sources.locator(":scope > summary").click();
+    const workspace = sources.getByRole("combobox", {
+      name: "Không gian học được lập chỉ mục",
+      exact: true,
+    });
+    await workspace.selectOption("qa-v7-space");
+    check(
+      (await workspace.inputValue()) === "qa-v7-space",
+      "Indexed workspace selector remains usable inside the sources disclosure",
+    );
+    await workspace.selectOption("main");
+    await sources
+      .getByRole("textbox", { name: "Tìm trong kho nguồn", exact: true })
+      .fill("tam giác vuông");
+    await sources.locator(":scope > summary").click();
+    await sources.locator(":scope > summary").focus();
+    await page.keyboard.press("Enter");
+    check(
+      (await sources
+        .getByRole("textbox", { name: "Tìm trong kho nguồn", exact: true })
+        .inputValue()) === "tam giác vuông",
+      "Closing the advanced sources section preserves an unfinished search query",
+    );
+    const search = sources.locator("form button");
+    check(
+      !!(await search.getAttribute("aria-label"))?.trim(),
+      "Indexed-source search has a meaningful accessible button name",
+    );
+    await search.click();
+    await sources.locator("blockquote").waitFor();
+    check(
+      (await sources.locator("blockquote").textContent()).includes(ragQuote) &&
+        sourceSearches.length === 1,
+      "Keyword search still displays the actual mocked retrieved excerpt after grouping",
+    );
+    await sources.locator(":scope > summary").click();
+    for (const width of [320, 375, 390, 768, 1024, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 1000 });
+      check(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= innerWidth + 2,
+        ),
+        "Collapsed Settings layout fits " + width + "px",
+      );
+    }
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.evaluate(() => scrollTo(0, 0));
+    await page.screenshot({
+      path: "docs/v7/qa-settings-mobile.png",
+      fullPage: true,
+    });
+    for (const id of ["sync", "sources", "capabilities"]) {
+      await disclosure(id).locator(":scope > summary").focus();
+      await page.keyboard.press("Enter");
+    }
+    check(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 2,
+      ),
+      "Expanded settings tools remain within a 390px phone viewport",
+    );
+    const indexedMetadata = sources
+      .getByRole("button", { name: /^Xóa bản chỉ mục/ })
+      .locator("..")
+      .locator(":scope > div");
+    check(
+      await indexedMetadata.evaluate(
+        (n) => n.getBoundingClientRect().width >= 120,
+      ),
+      "Indexed document metadata retains a readable width beside its mobile actions",
+    );
+
+    await page.screenshot({
+      path: "docs/v7/qa-settings-expanded-mobile.png",
+      fullPage: true,
+    });
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await sidebar
+      .locator("details.lv7-nav-group")
+      .evaluateAll((ns) => ns.forEach((n) => (n.open = true)));
     await sidebar
       .getByRole("button", { name: navLabels[0], exact: true })
       .click();
@@ -1113,12 +1411,17 @@ async (page) => {
       unexpectedRequests: unexpected,
       paidProviderRequests: 0,
       syntheticAIRequests: aiRequests.length,
+      syntheticKeywordSearches: sourceSearches.length,
       screenshots: [
         "docs/v7/qa-learner-desktop.png",
         "docs/v7/qa-learner-source-location.png",
         "docs/v7/qa-learner-source-mobile.png",
         "docs/v7/qa-learner-tutor-mobile.png",
         "docs/v7/qa-learner-tablet.png",
+        "docs/v7/qa-settings-desktop.png",
+        "docs/v7/qa-settings-mobile.png",
+        "docs/v7/qa-settings-expanded-mobile.png",
+        "docs/v7/qa-settings-keyboard-focus.png",
       ],
       scope:
         "Actual learner components/CSS/IndexedDB; synthetic account, authored sources and intercepted AI responses only. No server citation-proof or provider accuracy claim.",

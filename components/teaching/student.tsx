@@ -1,5 +1,11 @@
 "use client";
 import { MathText } from "../lumio/math-text";
+import { GradeHistoryButton } from "./grade-history";
+import {
+  AssessmentWindow,
+  AssignmentAttempt,
+  availabilityLabel,
+} from "./assessment-window";
 import { useEffect, useState } from "react";
 import {
   TeachingDraftBoundary,
@@ -315,9 +321,9 @@ function ClassroomAccount({
                           <Tag tone={own ? "green" : "amber"}>
                             {own
                               ? "Đã nộp"
-                              : assignment.status === "closed"
-                                ? "Đã đóng"
-                                : "Cần làm"}
+                              : assignment.availability
+                                ? availabilityLabel[assignment.availability]
+                                : "Cần tải lại trạng thái"}
                           </Tag>
                           <span className="tw-subtle">
                             Hạn {dateTime(assignment.dueAt)}
@@ -330,21 +336,36 @@ function ClassroomAccount({
                               (c) => c.id === assignment.classId,
                             )?.name
                           }{" "}
-                          · {assignment.questions.length} câu ·{" "}
-                          {assignment.maxPoints} điểm
+                          ·{" "}
+                          {assignment.questionCount ??
+                            assignment.questions.length}{" "}
+                          câu · {assignment.maxPoints} điểm
                         </p>
+                        <AssignmentAttempt assignment={assignment} />
+                        <AssessmentWindow assignment={assignment} />
+                        {assignment.practiceRetake && (
+                          <p className="tw-note">
+                            Luyện tập cùng câu hỏi đã giao, có thể gồm đáp án
+                            bạn đã xem. Bài và kết quả trước được giữ riêng; đây
+                            không phải đề thi mới bảo mật.
+                          </p>
+                        )}
                         <p style={{ marginTop: 10 }}>
                           {assignment.instructions}
                         </p>
                         <div className="tw-card-footer">
                           <Button
                             secondary
-                            disabled={!!own || assignment.status !== "issued"}
+                            disabled={!!own || assignment.canSubmit !== true}
                             onClick={() => setSelected(assignment)}
                           >
                             {own
                               ? "Chờ kết quả giáo viên công bố"
-                              : "Mở bài tập"}
+                              : assignment.canSubmit === true
+                                ? "Mở bài tập"
+                                : assignment.availability
+                                  ? availabilityLabel[assignment.availability]
+                                  : "Tải lại để kiểm tra"}
                             <ArrowRight size={14} />
                           </Button>
                         </div>
@@ -491,6 +512,21 @@ function ClassroomAccount({
                             Nộp lúc {dateTime(s.submittedAt)}
                             {s.late ? " · Nộp muộn" : ""}
                           </p>
+                          <p className="tw-subtle">
+                            Lần{" "}
+                            {data.assignments.find(
+                              (a) => a.id === s.assignmentId,
+                            )?.attemptNo || 1}
+                            {s.countsTowardAnalytics === false
+                              ? " · Giữ trong lịch sử, không cộng thêm bài đánh giá"
+                              : ""}
+                          </p>
+                          <GradeHistoryButton
+                            key={s.id + ":" + s.revision}
+                            client={client}
+                            submission={s}
+                            student
+                          />
                           {s.status === "published" ? (
                             <>
                               <h3>
@@ -575,7 +611,10 @@ function ClassroomAccount({
         data?.role === "STUDENT" &&
         selected.orgId === data.organization?.id &&
         data.assignments.some(
-          (a) => a.id === selected.id && a.revision === selected.revision,
+          (a) =>
+            a.id === selected.id &&
+            a.revision === selected.revision &&
+            a.canSubmit === true,
         ) && (
           <StudentAssignment
             client={client}
@@ -621,6 +660,14 @@ function StudentAssignment({
           {assignment.instructions} · Hạn {dateTime(assignment.dueAt)}. Câu trả
           lời chỉ gửi khi bạn bấm nộp; không tự gửi đến AI.
         </p>
+        <AssignmentAttempt assignment={assignment} />
+        <AssessmentWindow assignment={assignment} />
+        {assignment.practiceRetake && (
+          <p className="tw-note">
+            Đây là lần luyện lại cùng đề, không phải một bài đánh giá độc lập
+            mới. Kết quả lần trước vẫn được giữ.
+          </p>
+        )}
         {assignment.questions.map((question, index) => (
           <section className="tw-card tw-form" key={question.id}>
             <h3>

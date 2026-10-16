@@ -381,6 +381,7 @@ export function RAGManager({
         </select>
         <button
           className="lm-button primary"
+          aria-label={vi ? "Tìm trong kho nguồn" : "Search indexed sources"}
           disabled={
             busy ||
             !query.trim() ||

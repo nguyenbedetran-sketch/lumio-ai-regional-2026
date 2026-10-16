@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T00:22:45.733Z",
+  "checks": 9,
+  "cases": [
+    "Pinned local data is schema1/v5.2.0 with the reviewed immutable source commit",
+    "Whole-file and canonical JSON payload hashes match their declared values",
+    "34 provinces and3321 wards have globally unique string codes",
+    "Every ward belongs to its nested province and leading-zero codes remain intact",
+    "Reviewed2026 administrative display changes are present in the pinned reference",
+    "Reference records contain only code, display name and parent data",
+    "249 country/territory options have unique uppercase alpha2 codes and vi/en labels",
+    "Country labels are static data and provenance pins the reviewed archive integrity",
+    "Both source MIT licenses are redistributed and no verification claim is attached"
+  ],
+  "scope": "Local versioned community reference data only; not legal, teacher identity or employment verification. No network or provider calls."
+}

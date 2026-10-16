@@ -153,6 +153,20 @@ export interface TeachingAssignment {
   target: { kind: "class" | "groups" | "students"; ids: string[] };
   recipientIds?: string[];
   dueAt: string;
+  rootAssignmentId: string;
+  attemptNo: number;
+  practiceRetake: boolean;
+  availableFrom: string | null;
+  availableUntil: string | null;
+  questionCount: number;
+  canSubmit?: boolean;
+  availability?:
+    | "not_open"
+    | "closed"
+    | "due_passed"
+    | "graded"
+    | "class_archived"
+    | "available";
   status: "draft" | "reviewed" | "issued" | "closed";
   revision: number;
   createdBy: string;
@@ -168,6 +182,27 @@ export interface QuestionGrade {
   questionId: string;
   points: number;
   feedback: string;
+}
+/** Students receive only published public snapshots; private fields are omitted entirely. */
+export interface TeachingGradeHistoryEvent {
+  id: string;
+  kind: "grade" | "publish" | "legacy_snapshot";
+  submissionRevision: number;
+  gradeVersion: number;
+  score: number;
+  grades: QuestionGrade[];
+  feedback: string;
+  publishedAt: string | null;
+  legacy: boolean;
+  recordedAt?: string | null;
+  recordedBy?: { userId: string; name: string } | null;
+  confirmedAt?: string | null;
+  reason?: string;
+}
+export interface TeachingGradeHistoryResponse {
+  submissionId: string;
+  events: TeachingGradeHistoryEvent[];
+  nextCursor: string | null;
 }
 export interface TeachingSubmission {
   id: string;
@@ -187,6 +222,7 @@ export interface TeachingSubmission {
   feedback?: string;
   confirmedAt?: string | null;
   publishedAt?: string | null;
+  countsTowardAnalytics?: boolean;
 }
 export interface TeachingAnnouncement {
   id: string;
@@ -313,7 +349,7 @@ export type QuestionDraft = Pick<
 export type AssignmentDraft = Pick<
   TeachingAssignment,
   "classId" | "title" | "instructions" | "questionIds" | "target" | "dueAt"
->;
+> & { availableFrom?: string | null; availableUntil?: string | null };
 type Mutation = { requestId: string; orgId?: string };
 export type TeachingMutation = Mutation &
   (
@@ -411,6 +447,16 @@ export type TeachingMutation = Mutation &
       }
     | { action: "assignment.create"; draft: AssignmentDraft }
     | {
+        action: "assignment.retake";
+        originalAssignmentId: string;
+        expectedRevision: number;
+        studentId: string;
+        availableFrom: string;
+        availableUntil: string;
+        reason: string;
+        sameQuestionsAcknowledged: true;
+      }
+    | {
         action: "assignment.update";
         id: string;
         expectedRevision: number;
@@ -438,6 +484,7 @@ export type TeachingMutation = Mutation &
         grades: QuestionGrade[];
         feedback: string;
         confirmed: true;
+        reason?: string;
       }
     | { action: "submission.publish"; id: string; expectedRevision: number }
     | {
@@ -503,4 +550,7 @@ export const teachingLimits = {
   questionsPerAssignment: 30,
   recipientsPerAssignment: 200,
   bodyBytes: 768000,
+  gradeVersionsPerSubmission: 50,
+  gradeVersionsPerOrg: 10000,
+  gradeHistoryBytesPerOrg: 4 * 1024 * 1024,
 } as const;

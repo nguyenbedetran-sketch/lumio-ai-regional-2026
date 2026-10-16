@@ -78,6 +78,7 @@ import {
 import { accountHeaders } from "../../lib/ai/request-client";
 import { DraftBoundary, useDraftGuard } from "../shared/draft-guard";
 import packageInfo from "../../package.json";
+import { settingsCopy } from "../../lib/lumio/settings-copy-v7";
 import { AddContent, AddMode } from "./add-content";
 import { LearningView } from "./learning-view";
 import { BrandSymbol } from "./brand";
@@ -499,6 +500,7 @@ function Workspace({
   const learning = useLearning(profile.account);
   const draftGuard = useDraftGuard();
   const nc = navigationCopy(locale);
+  const settingsText = settingsCopy(locale);
   const sidebarRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLButtonElement>(null);
   const [deletingSource, setDeletingSource] = useState(false);
@@ -1520,251 +1522,286 @@ function Workspace({
                 </section>
                 <div>
                   <AccountConnections locale={locale} />
-                  <SyncPanel
-                    key={`sync:${profile.account}`}
-                    account={profile.account}
-                    locale={locale}
-                    disabled={
-                      libraryConflict ||
-                      status !== "saved" ||
-                      !learning.ready ||
-                      !!learning.error ||
-                      personalization.error
-                    }
-                    value={{
-                      version: 1,
-                      library: data,
-                      learning: learning.state,
-                      preferences: personalization.state,
-                    }}
-                    onApply={async (incoming: SyncEnvelope) => {
-                      if (
-                        currentData.current !== data ||
-                        blocked.current ||
-                        pending.current
-                      )
-                        throw Error("SYNC_LOCAL_CHANGED");
-                      const observedLearning = JSON.stringify(learning.state),
-                        observedPreferences = JSON.stringify(
-                          personalization.state,
-                        ),
-                        savedLearningBefore = localStorage.getItem(
-                          learningKey(profile.account),
-                        ),
-                        savedPreferencesBefore = localStorage.getItem(
-                          preferenceKey(profile.account),
-                        );
-                      if (
-                        (savedLearningBefore !== null &&
-                          JSON.stringify(
-                            parseLearning(JSON.parse(savedLearningBefore)),
-                          ) !== observedLearning) ||
-                        (savedPreferencesBefore !== null &&
-                          JSON.stringify(
-                            parsePreferences(
-                              JSON.parse(savedPreferencesBefore),
-                            ),
-                          ) !== observedPreferences)
-                      )
-                        throw Error("SYNC_LOCAL_CHANGED");
-                      const sourceKey = (item: LearningItem) =>
-                        JSON.stringify([
-                          item.kind,
-                          item.text,
-                          item.url,
-                          item.fileName,
-                          item.sourceEvidence,
-                        ]);
-                      const framedItems = data.items.filter((item) =>
-                        item.artifacts?.some(
-                          (artifact) => artifact.frames?.length,
-                        ),
-                      );
-                      // Compare the same normalized, media-free artifact contract that
-                      // is sent to sync; a restored page claim is not a new frame source.
-                      const comparableFramed = framedItems.length
-                        ? normalizeSyncEnvelope({
-                            ...incoming,
-                            library: { ...data, items: framedItems },
-                          }).library.items
-                        : [];
-                      const sansFrames = (
-                        artifact: NonNullable<
-                          LearningItem["artifacts"]
-                        >[number],
-                      ) => {
-                        const { frames, ...content } = artifact;
-                        return content;
-                      };
-                      // Sync never destroys a device-only attachment or attaches it to a changed source.
-                      for (const item of data.items.filter(
-                        (i) =>
-                          i.blob ||
-                          i.artifacts?.some(
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="sync"
+                  >
+                    <summary>
+                      <span>
+                        <strong>{settingsText.sync}</strong>
+                        <small>{settingsText.syncHint}</small>
+                      </span>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <SyncPanel
+                      key={`sync:${profile.account}`}
+                      account={profile.account}
+                      locale={locale}
+                      disabled={
+                        libraryConflict ||
+                        status !== "saved" ||
+                        !learning.ready ||
+                        !!learning.error ||
+                        personalization.error
+                      }
+                      value={{
+                        version: 1,
+                        library: data,
+                        learning: learning.state,
+                        preferences: personalization.state,
+                      }}
+                      onApply={async (incoming: SyncEnvelope) => {
+                        if (
+                          currentData.current !== data ||
+                          blocked.current ||
+                          pending.current
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const observedLearning = JSON.stringify(learning.state),
+                          observedPreferences = JSON.stringify(
+                            personalization.state,
+                          ),
+                          savedLearningBefore = localStorage.getItem(
+                            learningKey(profile.account),
+                          ),
+                          savedPreferencesBefore = localStorage.getItem(
+                            preferenceKey(profile.account),
+                          );
+                        if (
+                          (savedLearningBefore !== null &&
+                            JSON.stringify(
+                              parseLearning(JSON.parse(savedLearningBefore)),
+                            ) !== observedLearning) ||
+                          (savedPreferencesBefore !== null &&
+                            JSON.stringify(
+                              parsePreferences(
+                                JSON.parse(savedPreferencesBefore),
+                              ),
+                            ) !== observedPreferences)
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const sourceKey = (item: LearningItem) =>
+                          JSON.stringify([
+                            item.kind,
+                            item.text,
+                            item.url,
+                            item.fileName,
+                            item.sourceEvidence,
+                          ]);
+                        const framedItems = data.items.filter((item) =>
+                          item.artifacts?.some(
                             (artifact) => artifact.frames?.length,
                           ),
-                      )) {
-                        const next = incoming.library.items.find(
-                          (i) => i.id === item.id,
                         );
-                        if (
-                          !next ||
-                          data.items.filter((i) => i.id === item.id).length !==
-                            1 ||
-                          incoming.library.items.filter((i) => i.id === item.id)
-                            .length !== 1 ||
-                          sourceKey(next) !== sourceKey(item)
-                        )
-                          throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
-                        for (const artifact of item.artifacts || []) {
-                          if (!artifact.frames?.length) continue;
-                          const matches =
-                            next.artifacts?.filter(
-                              (a) => a.id === artifact.id,
-                            ) || [];
-                          const oldMatches =
-                            item.artifacts?.filter(
-                              (a) => a.id === artifact.id,
-                            ) || [];
-                          const expected = comparableFramed
-                            .find((i) => i.id === item.id)
-                            ?.artifacts?.find((a) => a.id === artifact.id);
+                        // Compare the same normalized, media-free artifact contract that
+                        // is sent to sync; a restored page claim is not a new frame source.
+                        const comparableFramed = framedItems.length
+                          ? normalizeSyncEnvelope({
+                              ...incoming,
+                              library: { ...data, items: framedItems },
+                            }).library.items
+                          : [];
+                        const sansFrames = (
+                          artifact: NonNullable<
+                            LearningItem["artifacts"]
+                          >[number],
+                        ) => {
+                          const { frames, ...content } = artifact;
+                          return content;
+                        };
+                        // Sync never destroys a device-only attachment or attaches it to a changed source.
+                        for (const item of data.items.filter(
+                          (i) =>
+                            i.blob ||
+                            i.artifacts?.some(
+                              (artifact) => artifact.frames?.length,
+                            ),
+                        )) {
+                          const next = incoming.library.items.find(
+                            (i) => i.id === item.id,
+                          );
                           if (
-                            matches.length !== 1 ||
-                            oldMatches.length !== 1 ||
-                            !expected ||
-                            JSON.stringify(sansFrames(matches[0])) !==
-                              JSON.stringify(sansFrames(expected))
+                            !next ||
+                            data.items.filter((i) => i.id === item.id)
+                              .length !== 1 ||
+                            incoming.library.items.filter(
+                              (i) => i.id === item.id,
+                            ).length !== 1 ||
+                            sourceKey(next) !== sourceKey(item)
                           )
                             throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                          for (const artifact of item.artifacts || []) {
+                            if (!artifact.frames?.length) continue;
+                            const matches =
+                              next.artifacts?.filter(
+                                (a) => a.id === artifact.id,
+                              ) || [];
+                            const oldMatches =
+                              item.artifacts?.filter(
+                                (a) => a.id === artifact.id,
+                              ) || [];
+                            const expected = comparableFramed
+                              .find((i) => i.id === item.id)
+                              ?.artifacts?.find((a) => a.id === artifact.id);
+                            if (
+                              matches.length !== 1 ||
+                              oldMatches.length !== 1 ||
+                              !expected ||
+                              JSON.stringify(sansFrames(matches[0])) !==
+                                JSON.stringify(sansFrames(expected))
+                            )
+                              throw Error("SYNC_LOCAL_ATTACHMENTS_CONFLICT");
+                          }
                         }
-                      }
-                      const nextLibrary = {
-                        ...incoming.library,
-                        items: incoming.library.items.map((item) => ({
-                          ...item,
-                          blob: data.items.find((i) => i.id === item.id)?.blob,
-                          ...(item.artifacts
-                            ? {
-                                artifacts: item.artifacts.map((artifact) => {
-                                  const old = data.items
-                                    .find((i) => i.id === item.id)
-                                    ?.artifacts?.find(
-                                      (a) => a.id === artifact.id,
-                                    );
-                                  return {
-                                    ...sansFrames(artifact),
-                                    ...(old?.frames?.length
-                                      ? { frames: old.frames }
-                                      : {}),
-                                  };
-                                }),
-                              }
-                            : {}),
-                        })),
-                      };
-                      commit(nextLibrary, data);
-                      await saveQueue.current;
-                      if (
-                        blocked.current ||
-                        pending.current ||
-                        currentData.current !== nextLibrary
-                      )
-                        throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      // Library persistence yields to focus completion and other-tab edits.
-                      // Recompare both the latest render and storage before restoring either.
-                      const latestLocal = syncLocalSnapshot.current;
-                      if (
-                        latestLocal.account !== profile.account ||
-                        JSON.stringify(latestLocal.learning) !==
-                          observedLearning ||
-                        JSON.stringify(latestLocal.preferences) !==
-                          observedPreferences ||
-                        localStorage.getItem(learningKey(profile.account)) !==
-                          savedLearningBefore ||
-                        localStorage.getItem(preferenceKey(profile.account)) !==
-                          savedPreferencesBefore
-                      )
-                        throw Error("SYNC_LOCAL_CHANGED");
-                      const nextLearning = {
-                        ...incoming.learning,
-                        focus: latestLocal.learning.focus,
-                        alarm: latestLocal.learning.alarm,
-                        lastAlarmId: latestLocal.learning.lastAlarmId,
-                      };
-                      learning.update(nextLearning, true);
-                      try {
+                        const nextLibrary = {
+                          ...incoming.library,
+                          items: incoming.library.items.map((item) => ({
+                            ...item,
+                            blob: data.items.find((i) => i.id === item.id)
+                              ?.blob,
+                            ...(item.artifacts
+                              ? {
+                                  artifacts: item.artifacts.map((artifact) => {
+                                    const old = data.items
+                                      .find((i) => i.id === item.id)
+                                      ?.artifacts?.find(
+                                        (a) => a.id === artifact.id,
+                                      );
+                                    return {
+                                      ...sansFrames(artifact),
+                                      ...(old?.frames?.length
+                                        ? { frames: old.frames }
+                                        : {}),
+                                    };
+                                  }),
+                                }
+                              : {}),
+                          })),
+                        };
+                        commit(nextLibrary, data);
+                        await saveQueue.current;
                         if (
-                          JSON.stringify(
-                            parseLearning(
-                              JSON.parse(
-                                localStorage.getItem(
-                                  learningKey(profile.account),
-                                ) || "null",
+                          blocked.current ||
+                          pending.current ||
+                          currentData.current !== nextLibrary
+                        )
+                          throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        // Library persistence yields to focus completion and other-tab edits.
+                        // Recompare both the latest render and storage before restoring either.
+                        const latestLocal = syncLocalSnapshot.current;
+                        if (
+                          latestLocal.account !== profile.account ||
+                          JSON.stringify(latestLocal.learning) !==
+                            observedLearning ||
+                          JSON.stringify(latestLocal.preferences) !==
+                            observedPreferences ||
+                          localStorage.getItem(learningKey(profile.account)) !==
+                            savedLearningBefore ||
+                          localStorage.getItem(
+                            preferenceKey(profile.account),
+                          ) !== savedPreferencesBefore
+                        )
+                          throw Error("SYNC_LOCAL_CHANGED");
+                        const nextLearning = {
+                          ...incoming.learning,
+                          focus: latestLocal.learning.focus,
+                          alarm: latestLocal.learning.alarm,
+                          lastAlarmId: latestLocal.learning.lastAlarmId,
+                        };
+                        learning.update(nextLearning, true);
+                        try {
+                          if (
+                            JSON.stringify(
+                              parseLearning(
+                                JSON.parse(
+                                  localStorage.getItem(
+                                    learningKey(profile.account),
+                                  ) || "null",
+                                ),
                               ),
+                            ) !== JSON.stringify(parseLearning(nextLearning))
+                          )
+                            throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        } catch {
+                          throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        }
+                        personalization.update(incoming.preferences, true);
+                        try {
+                          const saved = normalizeSyncEnvelope({
+                            version: 1,
+                            library: nextLibrary,
+                            learning: JSON.parse(
+                              localStorage.getItem(
+                                learningKey(profile.account),
+                              ) || "null",
                             ),
-                          ) !== JSON.stringify(parseLearning(nextLearning))
-                        )
+                            preferences: JSON.parse(
+                              localStorage.getItem(
+                                preferenceKey(profile.account),
+                              ) || "null",
+                            ),
+                          });
+                          if (
+                            JSON.stringify(saved) !==
+                            JSON.stringify(normalizeSyncEnvelope(incoming))
+                          )
+                            throw Error("SYNC_LOCAL_SAVE_FAILED");
+                        } catch {
                           throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      } catch {
-                        throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      }
-                      personalization.update(incoming.preferences, true);
-                      try {
-                        const saved = normalizeSyncEnvelope({
-                          version: 1,
-                          library: nextLibrary,
-                          learning: JSON.parse(
-                            localStorage.getItem(
-                              learningKey(profile.account),
-                            ) || "null",
-                          ),
-                          preferences: JSON.parse(
-                            localStorage.getItem(
-                              preferenceKey(profile.account),
-                            ) || "null",
-                          ),
-                        });
-                        if (
-                          JSON.stringify(saved) !==
-                          JSON.stringify(normalizeSyncEnvelope(incoming))
-                        )
-                          throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      } catch {
-                        throw Error("SYNC_LOCAL_SAVE_FAILED");
-                      }
-                    }}
-                  />
-                  <RAGManager
-                    key={`rag:${profile.account}:${spaceId}`}
-                    items={data.items}
-                    spaces={data.spaces}
-                    workspaceId={spaceId || "main"}
-                    locale={locale}
-                  />
-                  <section className="lm-panel">
-                    <h3>{t.featureStatus}</h3>
-                    {(
-                      [
-                        [lc.tutor, providers?.capabilities?.tutor],
-                        [lc.multimodal, providers?.capabilities?.media],
+                        }
+                      }}
+                    />
+                  </details>
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="sources"
+                  >
+                    <summary>
+                      <span>
+                        <strong>{settingsText.sources}</strong>
+                        <small>{settingsText.sourceHint}</small>
+                      </span>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <RAGManager
+                      key={`rag:${profile.account}:${spaceId}`}
+                      items={data.items}
+                      spaces={data.spaces}
+                      workspaceId={spaceId || "main"}
+                      locale={locale}
+                    />
+                  </details>
+                  <details
+                    className="lv7-settings-disclosure"
+                    data-v7-settings="capabilities"
+                  >
+                    <summary>
+                      <strong>{settingsText.services}</strong>
+                      <ChevronDown size={18} aria-hidden="true" />
+                    </summary>
+                    <div className="lm-panel">
+                      {(
                         [
-                          lc.speech,
-                          providers?.capabilities?.speech ||
-                            providers?.capabilities?.transcription,
-                        ],
-                      ] as const
-                    ).map(([label, available]) => (
-                      <div className="lm-service" key={label}>
-                        <strong>{label}</strong>
-                        <span className={available ? "ready" : ""}>
-                          {available
-                            ? productCopy[locale].available
-                            : lc.notAvailable}
-                        </span>
-                      </div>
-                    ))}
-                  </section>
+                          [lc.tutor, providers?.capabilities?.tutor],
+                          [lc.multimodal, providers?.capabilities?.media],
+                          [
+                            lc.speech,
+                            providers?.capabilities?.speech ||
+                              providers?.capabilities?.transcription,
+                          ],
+                        ] as const
+                      ).map(([label, available]) => (
+                        <div className="lm-service" key={label}>
+                          <strong>{label}</strong>
+                          <span className={available ? "ready" : ""}>
+                            {available
+                              ? productCopy[locale].available
+                              : lc.notAvailable}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </details>
                   <section className="lm-panel">
                     <h3>{t.storage}</h3>
                     <p className="lm-help">

@@ -1,0 +1,266 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T00:13:22.779Z",
+  "appVersion": "3.3.0-rc.1",
+  "command": "pnpm test:v7:ui",
+  "commandExitCode": 0,
+  "browserChecks": {
+    "teacher": 129,
+    "learner": 172,
+    "gradeHistory": 47,
+    "practice": 36,
+    "totalAcrossSuites": 384
+  },
+  "additionalChecks": {
+    "sharedTeachingSSRAndPure": 32,
+    "practiceFocusedSSRAndPure": 15,
+    "learnerSyntax": 6,
+    "note": "The shared 32-check teaching fixture is reused by three suites and is counted once here."
+  },
+  "suites": [
+    {
+      "scope": "teacher",
+      "report": "docs/v7/qa-teaching-ui-report.json",
+      "sha256": "99a828659ce88f3839053c122fe2ae3259731dfac7722cf88bc5597b81efbdd6",
+      "checkedAt": "2026-10-16T00:12:08.353Z",
+      "browserChecks": 129,
+      "unitChecks": 32,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 0,
+      "screenshots": [
+        "docs/v7/qa-teaching-desktop.png",
+        "docs/v7/qa-teaching-tablet.png",
+        "docs/v7/qa-teaching-mobile.png",
+        "docs/v7/qa-classroom-mobile.png"
+      ]
+    },
+    {
+      "scope": "learner",
+      "report": "docs/v7/qa-learner-ui-report.json",
+      "sha256": "443477255fc56d1d0cf9480e340f7de48dc66b0fa0ac8ca76d94a8e182be12bf",
+      "checkedAt": "2026-10-16T00:12:28.977Z",
+      "browserChecks": 172,
+      "unitChecks": 0,
+      "syntaxChecks": 6,
+      "reusedBaselineChecks": 0,
+      "screenshots": [
+        "docs/v7/qa-learner-desktop.png",
+        "docs/v7/qa-learner-source-location.png",
+        "docs/v7/qa-learner-source-mobile.png",
+        "docs/v7/qa-learner-tutor-mobile.png",
+        "docs/v7/qa-learner-tablet.png",
+        "docs/v7/qa-settings-desktop.png",
+        "docs/v7/qa-settings-mobile.png",
+        "docs/v7/qa-settings-expanded-mobile.png",
+        "docs/v7/qa-settings-keyboard-focus.png"
+      ]
+    },
+    {
+      "scope": "gradeHistory",
+      "report": "docs/v7/qa-grade-history-ui-report.json",
+      "sha256": "6427ab643176bdbe93430e52e99f109de0f003d68c59ff27931b98b7e652d5d4",
+      "checkedAt": "2026-10-16T00:12:39.549Z",
+      "browserChecks": 47,
+      "unitChecks": 0,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 32,
+      "screenshots": [
+        "docs/v7/qa-grade-history-teacher-desktop.png",
+        "docs/v7/qa-grade-history-student-mobile.png"
+      ]
+    },
+    {
+      "scope": "practice",
+      "report": "docs/v7/qa-practice-ui-report.json",
+      "sha256": "c1769841cb34f474cfb27bac69a2f2d36aba3ad491baafa7d859657a7213f46a",
+      "checkedAt": "2026-10-16T00:12:50.242Z",
+      "browserChecks": 36,
+      "unitChecks": 15,
+      "syntaxChecks": 0,
+      "reusedBaselineChecks": 32,
+      "screenshots": [
+        "docs/v7/qa-practice-teacher-desktop.png",
+        "docs/v7/qa-practice-review-desktop.png",
+        "docs/v7/qa-practice-student-mobile.png"
+      ]
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "docs/v7/qa-teaching-desktop.png",
+      "width": 1440,
+      "height": 1040,
+      "bytes": 88923,
+      "sha256": "f3d35b6c893df2b812ab3a88c0943fcb1f0223f8ca6b4e3e294666887a13ab57",
+      "modifiedAt": "2026-10-16T00:12:07.089Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-teaching-tablet.png",
+      "width": 768,
+      "height": 1638,
+      "bytes": 78060,
+      "sha256": "67164916986ee5ef7940065954e13f1b1f51789a9dda4cf0180df4c0ca9594c8",
+      "modifiedAt": "2026-10-16T00:12:07.197Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-teaching-mobile.png",
+      "width": 390,
+      "height": 1741,
+      "bytes": 72721,
+      "sha256": "caafaf2a71fc0a56eb787bff79b38be99c79a6a6dfec625e1d6ee12097d64703",
+      "modifiedAt": "2026-10-16T00:12:07.294Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-classroom-mobile.png",
+      "width": 390,
+      "height": 974,
+      "bytes": 43160,
+      "sha256": "4bc1334804a1e45ae091047d4f665cbcddc2da38a916f5eed773604edd7d86a0",
+      "modifiedAt": "2026-10-16T00:12:07.441Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-learner-desktop.png",
+      "width": 1440,
+      "height": 2931,
+      "bytes": 516326,
+      "sha256": "060e4d31ccd3fbbe39c0acbe41f2ff55518cc8520ac58920342ec37c7ca10e4f",
+      "modifiedAt": "2026-10-16T00:12:23.898Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-learner-source-location.png",
+      "width": 1440,
+      "height": 1338,
+      "bytes": 106706,
+      "sha256": "1cc05051675b8db913abfec0d64dc1ef04139dcac0631ceeaa959e52ae56de40",
+      "modifiedAt": "2026-10-16T00:12:24.945Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-learner-source-mobile.png",
+      "width": 390,
+      "height": 1316,
+      "bytes": 48930,
+      "sha256": "986ff063762eb375956d2cffe4eded66cd5899274494c627f5877e73afc07f66",
+      "modifiedAt": "2026-10-16T00:12:25.099Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-learner-tutor-mobile.png",
+      "width": 390,
+      "height": 3341,
+      "bytes": 192280,
+      "sha256": "0eacfeaab0c14073981e7ce195e8e44ef10afc20ee8f69c6e04513702965257f",
+      "modifiedAt": "2026-10-16T00:12:26.393Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-learner-tablet.png",
+      "width": 768,
+      "height": 3162,
+      "bytes": 251139,
+      "sha256": "4130928b952a38beb23db1345cba02c3ffb6cc38902646818e69aa1c6b5cd2c1",
+      "modifiedAt": "2026-10-16T00:12:26.576Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-settings-desktop.png",
+      "width": 1440,
+      "height": 1565,
+      "bytes": 171128,
+      "sha256": "2ba4754cf4da16e9413cbcc0cfe529848c28beb9317b56bf0001c922c05d677d",
+      "modifiedAt": "2026-10-16T00:12:21.861Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-settings-mobile.png",
+      "width": 390,
+      "height": 2532,
+      "bytes": 112158,
+      "sha256": "0e8cd5488d4aab8e6856e31d519889c9ce4ce8f2611afa7fd7f59325594710f5",
+      "modifiedAt": "2026-10-16T00:12:22.491Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-settings-expanded-mobile.png",
+      "width": 390,
+      "height": 4866,
+      "bytes": 214300,
+      "sha256": "599fb155d70f6ba7bf6a37e036c92a580cff0e0c74451f94787620ddf0874d2a",
+      "modifiedAt": "2026-10-16T00:12:22.698Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-settings-keyboard-focus.png",
+      "width": 610,
+      "height": 88,
+      "bytes": 5209,
+      "sha256": "55d688961ef1eee137a06d8a5a73ccf4f23ec10739c7378515e24df7e3cf9201",
+      "modifiedAt": "2026-10-16T00:12:16.957Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-grade-history-teacher-desktop.png",
+      "width": 1440,
+      "height": 1034,
+      "bytes": 145679,
+      "sha256": "dbd8affa473815b284e8385cf9729060a16e6e8b056752d5ff0b7d6062cde9a5",
+      "modifiedAt": "2026-10-16T00:12:36.149Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-grade-history-student-mobile.png",
+      "width": 390,
+      "height": 894,
+      "bytes": 65583,
+      "sha256": "cd94553427544c7f0253a3bca0d9da342bce943bf54a36efb026812e1cdb56f1",
+      "modifiedAt": "2026-10-16T00:12:36.913Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-practice-teacher-desktop.png",
+      "width": 1440,
+      "height": 1300,
+      "bytes": 86321,
+      "sha256": "5b02b4cf73ee1236ba80b83689447ec4219a8c8eff6fac21b6ee2bdda3fb4f4d",
+      "modifiedAt": "2026-10-16T00:12:48.457Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-practice-review-desktop.png",
+      "width": 1440,
+      "height": 1034,
+      "bytes": 162497,
+      "sha256": "f6c86318c0a4f52525a02efcf0fe83ab6191e138ef2a90f13607773ee1596c47",
+      "modifiedAt": "2026-10-16T00:12:47.933Z",
+      "visuallyReviewed": true
+    },
+    {
+      "file": "docs/v7/qa-practice-student-mobile.png",
+      "width": 390,
+      "height": 1369,
+      "bytes": 59410,
+      "sha256": "2e0b7ac0f9ab23218036c34f65a40dfbc4743e1ef9e383620815803564383c68",
+      "modifiedAt": "2026-10-16T00:12:48.819Z",
+      "visuallyReviewed": true
+    }
+  ],
+  "versionEvidence": {
+    "packageVersion": "3.3.0-rc.1",
+    "learnerFixtureIncludesCurrentPackageVersion": true,
+    "learnerScreenshotFooterVisuallyConfirmed": "3.3.0-rc.1",
+    "teacherStudentScreenshotVersionLabel": "No visible build version label; bundled from the current integrated source."
+  },
+  "runtimeErrors": 0,
+  "paidProviderRequests": 0,
+  "actualStudents": 0,
+  "scope": "Actual components/CSS/browser storage with isolated synthetic accounts and intercepted HTTP. This does not establish live provider accuracy, backend tenant/UTC enforcement, native-device behavior or public deployment.",
+  "notes": [
+    "All 18 current screenshots were opened for visual review; narrow source titles, Settings index actions, dialog wrapping and keyboard focus were checked.",
+    "Package manager printed an existing node_modules/lockfile workspace-sync warning; no install or runtime change was performed during the concurrent production build."
+  ]
+}

@@ -1,6 +1,6 @@
-# Phase E: assessment history and controlled retakes — read-only proposal
+# Phase E: assessment history and controlled retakes
 
-Audited 2026-10-16 against the authoritative release-repo working tree. No runtime changes or full-suite execution in this phase. This document proposes work; it is not evidence of implemented retakes/history.
+Audited 2026-10-16 against the authoritative release-repo working tree. The audit/proposal below preserves the original findings. E1 grade history is now implemented as migration15, with24 actual-handler/SQLite checks and47 browser checks PASS using synthetic accounts. Retake/window work is a separate E2 increment under migration16 and is not yet accepted. See CHECKLIST.md and ACCEPTANCE_REPORT.md for the latest execution status; the proposal itself is not completion evidence.
 
 ## Current verified design and concrete gaps
 
@@ -18,7 +18,9 @@ Implement append-only grade events first, then controlled **teacher-issued pract
 
 Same-question retakes after answer publication are practice: previously seen answer keys cannot be made secret again. Require an explicit teacher acknowledgement and show that limitation. Do not claim a secure fresh exam. Teachers wanting different questions create a new reviewed assignment.
 
-## Proposed migration15 (not allocated/applied yet)
+## Migration allocation (proposal split into two increments)
+
+Migration15 implements the grade-event table and its two append-only guards. Migration16 is reserved for the assessment-window/retake table. Existing historical SQL is immutable; operational integrity and backup contracts must track each version separately.
 
 1. `teaching_grade_events`: id, submission_id FK, submission_revision, kind (grade/publish/legacy_snapshot), grade_version, grades_json, score, feedback, answers_digest, actor_id FK nullable only for migrated legacy snapshots, recorded_at, reason, UNIQUE(submission_id,submission_revision,kind). Store assessment content only in this teacher/private table, never the general audit log. Grade events capture full bounded grade/feedback and a digest of the immutable submitted answers; publish events point to the grade version and do not duplicate a new grading decision. INSERT only, with UPDATE/DELETE refusal triggers. No cascading delete that silently removes history. Seed existing graded/published rows as explicitly labelled legacy snapshots; old grader/time that cannot be proved stays unknown, never invented.
 2. `teaching_assessment_windows`: assignment_id PK/FK, root_assignment_id FK, parent_assignment_id FK nullable, attempt_no1..3, student_id FK nullable for base assignments, available_from, available_until nullable, revision, created_by FK, created_at. UNIQUE(root_assignment_id,student_id,attempt_no). CHECK: a base is attempt1 with root=self, parent/studentNULL; a child has parent/student and attempt2..3. Existing issued assignments default to their issued time with no hard closing window, preserving legacy late policy. New child windows have a required hard end. Add FK/lookup indexes, current schema health/backup required-table updates and capacity accounting.

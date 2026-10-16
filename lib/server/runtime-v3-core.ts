@@ -2,6 +2,7 @@ import { createHash, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { normalizeSyncEnvelope, type SyncSnapshot } from "../sync/contracts";
 import { PlatformError, type User } from "./types";
+import { assertDatabaseIntegrity } from "./database-integrity";
 type Context = {
   db: DatabaseSync;
   now: () => number;
@@ -230,53 +231,8 @@ export function createRuntimeV3Store({
     });
   }
   function runtimeHealth() {
-    const version = Number(
-      db.prepare("SELECT max(version) version FROM schema_migrations").get()
-        ?.version || 0,
-    );
-    for (const table of [
-      "users",
-      "identities",
-      "feature_flags",
-      "billing_accounts",
-      "billing_reservations",
-      "billing_ledger",
-      "ai_usage",
-      "ai_http_requests",
-      "mobile_sessions",
-      "tutor_sessions",
-      "tutor_turns",
-      "runtime_rate_windows",
-      "runtime_ai_leases",
-      "sync_snapshots",
-      "sync_operations",
-      "rag_documents",
-      "rag_chunks",
-      "rag_snapshots",
-      "summary_jobs",
-      "summary_job_parts",
-      "teacher_applications",
-      "teacher_credentials",
-      "teacher_application_operations",
-      "teaching_organizations",
-      "teaching_classes",
-      "teaching_class_teachers",
-      "teaching_enrollments",
-      "teaching_groups",
-      "teaching_group_members",
-      "teaching_invites",
-      "teaching_content",
-      "teaching_assignments",
-      "teaching_assignment_targets",
-      "teaching_submissions",
-      "teaching_announcements",
-      "teaching_events",
-      "teaching_operations",
-      "teaching_preferences",
-    ]) {
-      db.prepare("SELECT 1 FROM " + table + " LIMIT 1").get();
-    }
-    return { ready: version === 14, schemaVersion: version };
+    const { schemaVersion } = assertDatabaseIntegrity(db);
+    return { ready: true, schemaVersion };
   }
   return {
     acquireRuntimeAILease,

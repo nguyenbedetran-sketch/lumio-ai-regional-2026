@@ -505,6 +505,12 @@ async (page) => {
       state.assignments.push({
         ...b.draft,
         id: "qa-assignment",
+        rootAssignmentId: "qa-assignment",
+        attemptNo: 1,
+        practiceRetake: false,
+        questionCount: questions.length,
+        canSubmit: true,
+        availability: "available",
         orgId: "qa-org",
         questions,
         status: "draft",
@@ -855,7 +861,7 @@ async (page) => {
     .getByRole("combobox", { name: "Lớp nhận bài", exact: true })
     .selectOption("qa-class");
   await dialog()
-    .locator('input[type="datetime-local"]')
+    .getByRole("textbox", { name: "Hạn nộp (giờ trên thiết bị)", exact: true })
     .fill("2099-01-01T10:00");
   await dialog()
     .getByRole("textbox", { name: "Hướng dẫn", exact: true })
