@@ -1,0 +1,106 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T23:43:35.415Z",
+  "passed": 24,
+  "checks": [
+    {
+      "name": "First grade appends private immutable event; student sees no unpublished grade/history",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit publish exposes only own public grade projection without reason/actor/hash/rubric",
+      "status": "PASS"
+    },
+    {
+      "name": "Regrade requires bounded explicit reason and leaves current and historical state unchanged on rejection",
+      "status": "PASS"
+    },
+    {
+      "name": "Regrade preserves original published event and hides new draft until explicit republish",
+      "status": "PASS"
+    },
+    {
+      "name": "CAS and request replay append exactly one grade/publication event",
+      "status": "PASS"
+    },
+    {
+      "name": "History rejects tenant, sibling student, unrelated approved teacher and global admin without membership",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical account headers, Origin/fetch-site/native boundaries protect read and mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "Bounded cursor pagination has no duplicates and cannot be moved to another submission",
+      "status": "PASS"
+    },
+    {
+      "name": "Append-only database triggers reject UPDATE/DELETE without changing event bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Event-insert fault rolls back grade projection, event, audit and idempotency atomically",
+      "status": "PASS"
+    },
+    {
+      "name": "Publish-event fault restores graded/private status and permits explicit retry",
+      "status": "PASS"
+    },
+    {
+      "name": "Audit failure rolls back otherwise valid new history and projection",
+      "status": "PASS"
+    },
+    {
+      "name": "An assigned teacher can read; removing the class assignment blocks history and old operation replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Student enrollment removal blocks own published history and prior submit replay; restore preserves history",
+      "status": "PASS"
+    },
+    {
+      "name": "Revoked session blocks history and grading before any new event",
+      "status": "PASS"
+    },
+    {
+      "name": "Current teacher credential revocation blocks history, grade and lost-ACK replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Independent SQLite connection sees grade CAS/replay without duplicating an event",
+      "status": "PASS"
+    },
+    {
+      "name": "A disabled actor cannot read history or replay a previously successful grade",
+      "status": "PASS"
+    },
+    {
+      "name": "Removing organization membership blocks history and successful grade replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Archived classes preserve authorized history but do not expose it to sibling students",
+      "status": "PASS"
+    },
+    {
+      "name": "Publication refuses a projection/history mismatch and leaves history/private status unchanged",
+      "status": "PASS"
+    },
+    {
+      "name": "Grade version bound rejects further regrades without changing projection/history/audit/request log",
+      "status": "PASS"
+    },
+    {
+      "name": "Schema14 migration seeds truthful legacy snapshot without modifying original submission/source/private data",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual bounded grade writes reach the organization history quota and rollback the denied write",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual teaching/history Request handlers and temporary SQLite, synthetic users and OAuth session. No network/provider calls or real student/teacher records.",
+  "providerRequests": 0,
+  "productionDeployment": "NOT_TESTED"
+}

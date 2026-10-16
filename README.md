@@ -1,4 +1,8 @@
-# Lumio AI 3.4 RC — nâng cấp V8 · AI26A0048
+# Lumio AI 3.5 RC — nâng cấp V9 · AI26A0048
+
+**V9 đang nghiệm thu, chưa thay thế bản public/lần nộp5 bên dưới.** Candidate3.5.0-rc.1 giữ schema18, làm gọn Home, thống nhất token forest/violet/lime, theme trước paint và skeleton từ trạng thái tải thật. Adapter libSQL canonical tách dữ liệu máy chủ khỏi hosting; có deadline, cô lập tiến trình native và không fallback local hoặc tự thử lại lệnh ghi. Kiểm thử local không thay bằng chứng Turso, cutover và redeploy. Theo dõi [checklist](docs/v9/CHECKLIST.md), [kế hoạch](docs/v9/PLAN.md) và [database](docs/v9/DATABASE.md).
+
+## Bản V8 hiện được ghi nhận trên public và cổng thi
 
 **Cổng thi xác nhận lần nộp 5 lúc 22:21:45 ngày 16/10/2026 (UTC+7), “Bản dùng để chấm”.** [Dùng thử website](https://lumio-ai-demo.onrender.com/), [PDF minh chứng 6 trang](https://drive.google.com/file/d/1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2/view), [thư mục minh chứng](https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG) và [biên nhận/bàn giao lần5](docs/v8/FINAL_RELEASE_2026-10-16.md).
 
@@ -56,17 +60,17 @@ Hồ sơ gửi lên luôn **chờ duyệt**. `/admin` → **Xét duyệt giáo v
 
 Quyền giáo viên là credential riêng do admin xét **bản khai**, không phải xác minh danh tính/công tác chính thức; API luôn trả `identityVerified:false`. Nó không đổi USER thành ADMIN và không tự cấp quyền đọc dữ liệu học sinh. Teacher Workspace 3.2 có lớp, giao–nộp–chấm–công bố và phân tích kết quả; mỗi thao tác còn kiểm tư cách thành viên tổ chức và phân công lớp. Xem phạm vi và giới hạn trong [nghiệm thu](docs/teacher-workspace/ACCEPTANCE.md).
 
-Hồ sơ/credential giáo viên không nằm trong sync/thư viện local và **không tự hết hạn sau bảy ngày, chưa có endpoint tự xóa hồ sơ**. Xóa dữ liệu trình duyệt/snapshot không xóa bản khai server; liên hệ người phụ trách dự án để xử lý. DB và backup có thể chứa thông tin khai báo riêng, không đưa vào GitHub/minh chứng. Render Free có thể mất cả hồ sơ và quyền. [Backend/27 kiểm tra](docs/v3/08-TEACHER-BACKEND.md) · [Nguồn danh mục](docs/v3/09-LOCATION-DATA.md).
+Hồ sơ/credential giáo viên không nằm trong sync/thư viện local và **không tự hết hạn sau bảy ngày, chưa có endpoint tự xóa hồ sơ**. Xóa dữ liệu trình duyệt/snapshot không xóa bản khai server; liên hệ người phụ trách dự án để xử lý. DB và backup có thể chứa thông tin khai báo riêng, không đưa vào GitHub/minh chứng. Khi dùng SQLite local trên Render Free, cả hồ sơ và quyền có thể mất. V9 có cấu hình database riêng nhưng chưa được xác nhận public ở mốc này. [Backend/27 kiểm tra](docs/v3/08-TEACHER-BACKEND.md) · [Nguồn danh mục](docs/v3/09-LOCATION-DATA.md).
 
 UI tổng hợp và public là các phép kiểm tra riêng. Public3.1 đã mở form249 quốc gia/34 tỉnh và queue admin rỗng bằng Google OAuth thật; **không gửi hay duyệt hồ sơ giáo viên thật**. Approve/reject/revoke được thử trong fixtures riêng; không xác nhận danh tính/công tác chính thức.
 
 ## Chọn đúng chế độ
 
-| Chế độ            | Lệnh/cấu hình                                                       | Phạm vi                                                       |
-| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Phát triển local  | `pnpm dev`                                                          | Học liệu local; AI/OAuth cần env riêng; database server local |
-| Public UI-only cũ | `render.yaml`, `node scripts/start-public-demo.cjs`                 | Tắt AI/tài khoản/database; không phải bằng chứng AI thật      |
-| Khu vực có AI     | `render-regional.yaml`, `node scripts/start-regional.cjs` sau build | AI thật qua tài khoản/credit; SQLite tạm có thể reset         |
+| Chế độ            | Lệnh/cấu hình                                                       | Phạm vi                                                                  |
+| ----------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Phát triển local  | `pnpm dev`                                                          | Học liệu local; AI/OAuth cần env riêng; database server local            |
+| Public UI-only cũ | `render.yaml`, `node scripts/start-public-demo.cjs`                 | Tắt AI/tài khoản/database; không phải bằng chứng AI thật                 |
+| Khu vực có AI     | `render-regional.yaml`, `node scripts/start-regional.cjs` sau build | AI qua tài khoản/credit; V9 cần database Turso riêng, secret phía server |
 
 ```sh
 pnpm install --frozen-lockfile
@@ -80,7 +84,7 @@ Giới hạn: 15 lượt/phút, 150 lượt/ngày UTC và 1 yêu cầu đang ch�
 
 Render Free có thể mất SQLite khi ngủ/restart/deploy: tài khoản, liên kết, ví, nhật ký, phiên gia sư, bản đồng bộ/chỉ mục, hàng đợi và hồ sơ/quyền giáo viên có thể reset. Học liệu trình duyệt lưu riêng; hãy xuất JSON và giữ file gốc. Phiên gia sư, bản đồng bộ, chỉ mục và tác vụ có thời hạn tối đa 7 ngày theo quy tắc module; dọn khi truy cập/worker, host tạm có thể mất sớm hơn. Quy tắc này không áp dụng cho bản khai/credential giáo viên hoặc nhật ký tài khoản. Bản đồng bộ không chứa file gốc, và chưa phải dịch vụ lưu bền vững. Không bật cờ storage bền vững giả trên Render Free. Chưa có adapter PostgreSQL thật.
 
-Migration chạy khi khởi tạo store; bản source hiện tại yêu cầu **schema17/49 bảng/53 định nghĩa versioned/sáu guard cũ**. `/api/health` kiểm contract DB/version, không xác nhận AI đúng hay full build/public đã đạt. Backup CLI Node24 nhận genuine13–17 không migrate/seed nguồn; chỉ restored copy mở bằng runtime mới mới nâng17. Giữ snapshot và artifact cũ đúng cặp khi rollback; không xóa history/table để ép build cũ chạy. [Runbook17](docs/v7/OPERATIONS_RUNBOOK.md) có 23 kiểm tra ops local, giới hạn riêng tư/free host và [checkpoint16/21 lịch sử](docs/v7/reports/operations-integrity-schema16.json).
+Migration chạy khi khởi tạo store; source V9 yêu cầu **schema18/51 bảng/sáu guard bất biến**. `/api/health` kiểm contract DB/version, không xác nhận AI đúng hay full build/public đã đạt. Backup CLI Node24 nhận genuine13–18 không migrate/seed nguồn; chỉ restored copy mở bằng runtime mới mới nâng18. Giữ snapshot và artifact cũ đúng cặp khi rollback; không xóa history/table để ép build cũ chạy. [Runbook17 lịch sử](docs/v7/OPERATIONS_RUNBOOK.md) và [checkpoint16/21](docs/v7/reports/operations-integrity-schema16.json) không thay kiểm chứng database mới.
 
 [Journal F02a1](docs/v7/PROVIDER_ATTEMPT_ACCEPTANCE.md) ghi metadata mỗi dispatch routeAI text/multimodal của learner/teacher/summary jobs; chưa gồm embedding/voice hoặc backfill lịch sử. Admin → Hoạt động AI tách **Kết quả yêu cầu** và **Từng lần gọi AI**, cùng quyền/account/no-store hiện có. Token/cost thiếu giữ null, chi phí chưa có rate luôn chưa biết; journal không thay ledger credit hoặc hóa đơn. Terminal quá 31 ngày dọn tối đa 200 mỗi prepare; unresolved không tự purge và có cap 64/account, 2048 toàn DB, 100000 tổng. Khối dung lượng đếm mọi tuổi; bản ghi còn giữ đầu tiên không phải ngày bật instrumentation. DB/backup có metadata tài khoản riêng, không công khai. Chưa suy ra full regression/build/public17 từ các gate module.
 

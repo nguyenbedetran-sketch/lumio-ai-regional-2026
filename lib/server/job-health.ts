@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 
 export const jobStatuses = [
   "queued",

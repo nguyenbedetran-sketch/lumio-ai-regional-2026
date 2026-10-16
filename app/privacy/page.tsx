@@ -1,5 +1,7 @@
 import { PolicyShell } from "../../components/lumio/policy-shell";
 import { pageMetadata } from "../../lib/metadata";
+import { configuredStorageMode } from "../../lib/lumio/storage-status";
+export const dynamic = "force-dynamic";
 export const metadata = pageMetadata({
   title: "Quyền riêng tư",
   description:
@@ -7,23 +9,39 @@ export const metadata = pageMetadata({
   path: "/privacy",
 });
 export default function PrivacyPage() {
+  // Describe configuration without opening the database or inspecting credentials.
+  const storageMode = configuredStorageMode(process.env.LUMIO_DATABASE_MODE);
+  const localDatabase = storageMode === "local-sqlite";
   return (
     <PolicyShell
       title="Dữ liệu của bạn, rõ ràng từ đầu."
       subtitle="Trang này mô tả cách bản Lumio AI hiện tại xử lý thông tin khi bạn đăng nhập và học tập."
-      updatedAt="16/10/2026"
+      updatedAt="17/10/2026"
     >
       <section>
         <h2>Phạm vi bản dự thi</h2>
         <p>
           Đây là bản dùng thử phục vụ cuộc thi, không phải dịch vụ lưu trữ lâu
-          dài. Trên máy chủ Render miễn phí, cơ sở dữ liệu tạm có thể bị đặt lại
-          khi dịch vụ ngủ, khởi động lại hoặc triển khai. Phiên đăng nhập, liên
-          kết tài khoản, số dư credit và phiên gia sư có thể mất sớm hơn thời
-          hạn phiên; dữ liệu học trong trình duyệt là một nơi lưu riêng. Hãy giữ
-          tệp gốc và bản xuất nếu cần; không dùng bản thử nghiệm làm nơi lưu duy
-          nhất cho bài học quan trọng.
+          dài.{" "}
+          {localDatabase
+            ? "Cấu hình hiện tại dùng SQLite trên máy chạy web. Trên máy chủ Render miễn phí, cơ sở dữ liệu tạm có thể bị đặt lại khi dịch vụ ngủ, khởi động lại hoặc triển khai. Phiên đăng nhập, liên kết tài khoản, số dư credit và phiên gia sư có thể mất sớm hơn thời hạn phiên."
+            : storageMode === "remote-libsql"
+              ? "Cấu hình hiện tại chọn cơ sở dữ liệu từ xa, tách khỏi máy chạy web. Hosting miễn phí vẫn có thể ngủ, khởi động lại hoặc gián đoạn kết nối; việc máy web khởi động lại không đồng nghĩa tự xóa database riêng. Đây là mô tả cấu hình, không xác nhận kết nối đang hoạt động, sao lưu tự động, SLA hay khả năng khôi phục đã được kiểm chứng."
+              : "Chưa xác định được chế độ cơ sở dữ liệu từ cấu hình hiện tại. Trang này không xác nhận kết nối, nơi lưu dữ liệu máy chủ hoặc khả năng khôi phục; dịch vụ có thể không sẵn sàng khi cấu hình chưa hợp lệ."}{" "}
+          Dữ liệu học trong trình duyệt là một nơi lưu riêng. Chọn cơ sở dữ liệu
+          từ xa không tự gửi dữ liệu tới AI. Hãy giữ tệp gốc và bản xuất nếu
+          cần; không dùng bản thử nghiệm làm nơi lưu duy nhất cho bài học quan
+          trọng.
         </p>
+        {storageMode === "remote-libsql" && (
+          <p>
+            Dịch vụ database được cấu hình là Turso Cloud. Dữ liệu máy chủ nêu
+            trên trang này, gồm tài khoản, hồ sơ giáo viên, lớp, bài nộp, kết
+            quả được phép lưu và nhật ký vận hành, được xử lý tại dịch vụ
+            database bên ngoài này. Đây là nơi lưu dữ liệu của Lumio, tách biệt
+            với các dịch vụ AI được gọi theo yêu cầu của bạn.
+          </p>
+        )}
       </section>
       <section>
         <h2>1. Dữ liệu đăng nhập</h2>
@@ -58,8 +76,12 @@ export default function PrivacyPage() {
           dữ liệu học sinh. Hồ sơ, kết quả và thao tác xét duyệt lưu riêng trong
           cơ sở dữ liệu; không áp dụng thời hạn bảy ngày của bản đồng bộ học
           tập. Bản hiện tại chưa có nút tự xóa hồ sơ giáo viên; xóa dữ liệu học
-          trên trình duyệt không xóa hồ sơ này. Trên hosting miễn phí, dữ liệu
-          vẫn có thể mất khi dịch vụ được tạo lại.
+          trên trình duyệt không xóa hồ sơ này.{" "}
+          {localDatabase
+            ? "Trên hosting miễn phí, dữ liệu vẫn có thể mất khi dịch vụ được tạo lại."
+            : storageMode === "remote-libsql"
+              ? "Database riêng vẫn cần được người vận hành bảo vệ và sao lưu; không có cam kết lưu trữ lâu dài trong bản thử nghiệm."
+              : "Nơi lưu trên máy chủ cần được xác nhận; không có cam kết lưu trữ lâu dài trong bản thử nghiệm."}
         </p>
       </section>
       <section>
@@ -96,9 +118,12 @@ export default function PrivacyPage() {
           Dữ liệu lớp chưa có thời hạn xóa tự động. Lưu trữ/đóng lớp không đồng
           nghĩa xóa toàn bộ bài làm và nhật ký; liên hệ người phụ trách để xử lý
           yêu cầu dữ liệu. Bản xuất CSV hoặc bản in PDF là bản sao riêng mà
-          người tải phải bảo quản. Hosting miễn phí vẫn có thể làm mất dữ liệu
-          máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính thức hoặc bản
-          sao duy nhất.
+          người tải phải bảo quản.{" "}
+          {localDatabase
+            ? "Hosting miễn phí vẫn có thể làm mất dữ liệu máy chủ;"
+            : "Hosting miễn phí vẫn có thể gián đoạn; không dùng dữ liệu máy chủ thay cho bản sao lưu đã kiểm tra;"}{" "}
+          chưa dùng bản thử nghiệm này làm sổ điểm chính thức hoặc bản sao duy
+          nhất.
         </p>
         <p>
           Mỗi lần chấm và công bố lưu một phiên bản lịch sử riêng; sửa điểm
@@ -166,11 +191,13 @@ export default function PrivacyPage() {
         </p>
         <p>
           Bản đồng bộ có thời hạn 7 ngày tính từ lần ghi thành công gần nhất.
-          Hết hạn được kiểm tra/dọn khi truy cập, chưa phải lịch xóa nền. Máy
-          chủ preview dùng cơ sở dữ liệu tạm nên có thể mất dữ liệu sớm hơn khi
-          khởi động lại hoặc triển khai. Xung đột cần được xử lý trước khi ghi
-          tiếp; không dùng bản thử nghiệm làm bản sao lưu duy nhất. Thư viện cục
-          bộ và bản đồng bộ là hai nơi lưu riêng, không tự xóa lẫn nhau.
+          Hết hạn được kiểm tra/dọn khi truy cập, chưa phải lịch xóa nền.{" "}
+          {localDatabase
+            ? "Máy chủ preview dùng cơ sở dữ liệu tạm nên có thể mất dữ liệu sớm hơn khi khởi động lại hoặc triển khai."
+            : "Thời hạn này không thay đổi theo chế độ lưu trữ; hosting miễn phí hoặc kết nối có thể gián đoạn, và bản thử nghiệm không bảo đảm sao lưu hay khôi phục."}{" "}
+          Xung đột cần được xử lý trước khi ghi tiếp; không dùng bản thử nghiệm
+          làm bản sao lưu duy nhất. Thư viện cục bộ và bản đồng bộ là hai nơi
+          lưu riêng, không tự xóa lẫn nhau.
         </p>
         <p>
           Bạn có thể chọn “Xóa bản máy chủ” trong công cụ đồng bộ để bỏ bản đồng
@@ -221,7 +248,10 @@ export default function PrivacyPage() {
           thay đổi điểm số. Khi xóa phản hồi, các lựa chọn được xóa ngay; mã băm
           thao tác và phiên bản vẫn giữ để chống xử lý trùng cho đến khi xóa
           phiên hoặc dọn hết hạn. Việc dọn dùng cùng thời hạn tối đa bảy ngày
-          của phiên, có thể mất sớm hơn trên hosting miễn phí.
+          của phiên
+          {localDatabase
+            ? ", có thể mất sớm hơn trên hosting miễn phí."
+            : "; chế độ lưu trữ không thay đổi thời hạn này và không tạo cam kết sao lưu."}
         </p>
         <p>
           Phòng giọng nói chỉ dùng học liệu khi bạn chủ động chọn và gửi. Trình
@@ -250,9 +280,12 @@ export default function PrivacyPage() {
           tra và các đoạn chia nhỏ được lưu trên máy chủ Lumio theo tài khoản và
           không gian. Đây không phải tải lên tệp gốc hay xác nhận đã đọc những
           trang/ảnh chưa trích xuất được. Các tài liệu chỉ mục, vector nếu có và
-          bản chụp đoạn truy xuất có thời hạn 7 ngày; dọn khi truy cập. Preview
-          có thể đặt lại dữ liệu sớm hơn. Bạn có thể xóa từng tài liệu đã lập
-          chỉ mục trong công cụ tra cứu; việc đó không xóa bản gốc cục bộ.
+          bản chụp đoạn truy xuất có thời hạn 7 ngày; dọn khi truy cập.{" "}
+          {localDatabase
+            ? "Preview có thể đặt lại dữ liệu sớm hơn."
+            : "Chế độ lưu trữ không thay đổi thời hạn này; kết nối và dịch vụ vẫn có thể gián đoạn."}{" "}
+          Bạn có thể xóa từng tài liệu đã lập chỉ mục trong công cụ tra cứu;
+          việc đó không xóa bản gốc cục bộ.
         </p>
         <p>
           Tra cứu từ khóa chạy trên máy chủ Lumio. Chỉ khi bạn đồng ý riêng với
@@ -281,9 +314,13 @@ export default function PrivacyPage() {
           có thể tự thử lại tối đa 3 lần; bạn đã đồng ý việc gửi này khi tạo tác
           vụ. Có thể hủy xử lý tiếp hoặc xóa tác vụ đã dừng/hoàn tất trong bảng
           quản lý. Yêu cầu đang gửi có thể đã được nhà cung cấp tiếp nhận;
-          hủy/xóa tại Lumio không thu hồi dữ liệu đã gửi ra ngoài. Hosting miễn
-          phí có thể ngủ/reset và mất hàng đợi, nên không cam kết xử lý liên tục
-          hoặc lưu bền vững. Hãy tải kết quả/bản sao khi cần giữ lâu.
+          hủy/xóa tại Lumio không thu hồi dữ liệu đã gửi ra ngoài.{" "}
+          {localDatabase
+            ? "Hosting miễn phí có thể ngủ/reset và mất hàng đợi, nên không cam kết xử lý liên tục hoặc lưu bền vững."
+            : storageMode === "remote-libsql"
+              ? "Dù cấu hình chọn lưu hàng đợi trong database riêng, hosting miễn phí có thể ngủ hoặc dừng worker. Không cam kết xử lý liên tục, sao lưu tự động hoặc khả năng khôi phục."
+              : "Nơi lưu hàng đợi chưa được xác nhận. Hosting miễn phí có thể ngủ hoặc dừng worker; không cam kết xử lý liên tục, sao lưu tự động hoặc khả năng khôi phục."}{" "}
+          Hãy tải kết quả/bản sao khi cần giữ lâu.
         </p>
       </section>
       <section>

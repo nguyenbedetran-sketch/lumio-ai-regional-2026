@@ -1,4 +1,6 @@
 import { DatabaseSync } from "node:sqlite";
+import { databaseConfiguration, type DatabaseConnection } from "./database-connection";
+import { openConfiguredRemoteDatabase, quarantineRemoteDatabase } from "./database-factory";
 import { mkdirSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
@@ -92,40 +94,58 @@ const positiveMetric = (value: unknown, integer = true): number | null =>
 
 export function createStore(
   filename: string,
-  options: { adminEmails?: string[]; now?: () => number } = {},
+  options: { adminEmails?: string[]; now?: () => number; database?: DatabaseConnection } = {},
 ) {
-  if (filename !== ":memory:")
+  if (!options.database && filename !== ":memory:")
     mkdirSync(dirname(resolve(filename)), { recursive: true });
-  const db = new DatabaseSync(filename);
+  const db: DatabaseConnection = options.database || new DatabaseSync(filename);
   const now = options.now || Date.now;
   const stamp = () => new Date(now()).toISOString();
   function transaction<T>(fn: () => T): T {
-    db.exec("BEGIN IMMEDIATE");
+    db.beginTransaction?.();
+    let began = false;
     try {
+      db.exec("BEGIN IMMEDIATE");
+      began = true;
       const result = fn();
+      if (result && typeof (result as { then?: unknown }).then === "function")
+        throw new Error("ASYNC_TRANSACTION_UNSUPPORTED");
       db.exec("COMMIT");
       return result;
     } catch (e) {
-      db.exec("ROLLBACK");
+      // Never replace an unknown COMMIT outcome with a second rollback error.
+      // A poisoned connection must not receive any further SQL.
+      if (began && !db.poisoned) {
+        try { db.exec("ROLLBACK"); } catch { /* Keep the original operation error. */ }
+      }
       throw e;
+    } finally {
+      db.endTransaction?.();
     }
   }
   try {
+    db.beginBootstrap?.();
     if (migrations.some((migration, index) => migration.version !== index + 1))
       throw new Error("SCHEMA_CONTRACT_OUTDATED");
     // Reject future/gapped schemas and missing immutable guards before even
     // enabling WAL or seeding. A failed old-runtime rollback must stay read-only.
-    assertDatabaseIntegrity(db, {
+    const initialSchema = assertDatabaseIntegrity(db, {
       allowPrefix: true,
       maximumVersion: migrations.length,
     });
-    db.exec(
-      "PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;",
-    );
+    db.exec(db.mode === "remote-libsql"
+      ? "PRAGMA foreign_keys = ON;"
+      : "PRAGMA foreign_keys = ON; PRAGMA journal_mode = WAL; PRAGMA busy_timeout = 5000;");
+    if (db.prepare("PRAGMA foreign_keys").get()?.foreign_keys !== 1)
+      throw new Error("DATABASE_FOREIGN_KEYS_REQUIRED");
     db.exec(
       "CREATE TABLE IF NOT EXISTS schema_migrations (version INTEGER PRIMARY KEY, applied_at TEXT NOT NULL)",
     );
     for (const migration of migrations) {
+      // The complete existing prefix was just validated read-only. Avoid 18
+      // no-op write transactions on every remote process restart; pending
+      // migrations still recheck under their own BEGIN IMMEDIATE lock.
+      if (migration.version <= initialSchema.schemaVersion) continue;
       // A second process can initialize the same database, so check under the write lock.
       transaction(() => {
         if (
@@ -141,13 +161,20 @@ export function createStore(
       });
     }
     assertDatabaseIntegrity(db, { maximumVersion: migrations.length });
-    for (const flag of flagDefinitions)
+    const presentFlags = new Set(db.prepare(
+      `SELECT key FROM feature_flags WHERE key IN (${flagDefinitions.map(() => "?").join(",")})`,
+    ).all(...flagDefinitions.map((flag) => flag.key)).map((row) => row.key));
+    for (const flag of flagDefinitions) {
+      if (presentFlags.has(flag.key)) continue;
       db.prepare(
         "INSERT OR IGNORE INTO feature_flags(key,enabled,description,updated_at) VALUES (?,?,?,?)",
       ).run(flag.key, Number(flag.enabled), flag.description, stamp());
+    }
   } catch (error) {
-    db.close();
+    try { db.close(); } catch { /* Preserve the bootstrap failure. */ }
     throw error;
+  } finally {
+    db.endBootstrap?.();
   }
 
   const getUser = (id: string) =>
@@ -686,7 +713,8 @@ export function createStore(
       },
       days,
       generatedAt: stamp(),
-      storage: "SQLite · một máy chủ" as const,
+      storage: db.mode === "remote-libsql" ? "libSQL · database riêng" : "SQLite · một máy chủ",
+      storageMode: db.mode || "local-sqlite" as const,
       auditCount: Number(
         db.prepare("SELECT count(*) count FROM audit_events").get()!.count,
       ),
@@ -735,6 +763,8 @@ export function createStore(
       recordAudit,
     }),
     close: () => db.close(),
+    databaseMode: db.mode || "local-sqlite" as const,
+    databaseAvailable: () => !db.poisoned,
     getUser,
     getUserByStorageKey,
     findIdentity,
@@ -779,7 +809,9 @@ const rootGlobal = globalThis as typeof globalThis & {
 export function getStore(): PlatformStore {
   if (isPublicDemo()) throw new PlatformError("PUBLIC_DEMO_ONLY", 403);
   if (!rootGlobal.__lumioPlatformStore) {
+    const configured = databaseConfiguration();
     if (
+      configured.mode === "local-sqlite" &&
       process.env.NODE_ENV === "production" &&
       !(
         (process.env.LUMIO_ALLOW_LOCAL_DB_PRODUCTION === "true" ||
@@ -788,10 +820,19 @@ export function getStore(): PlatformStore {
       )
     )
       throw new PlatformError("PERSISTENT_DATABASE_REQUIRED", 503);
-    rootGlobal.__lumioPlatformStore = createStore(
-      process.env.LUMIO_DB_PATH ||
-        resolve(process.cwd(), ".data", "lumio.sqlite"),
-    );
+    if (configured.mode === "remote-libsql") {
+      const database = openConfiguredRemoteDatabase(configured);
+      try {
+        rootGlobal.__lumioPlatformStore = createStore(":remote:", { database });
+      } catch (error) {
+        quarantineRemoteDatabase();
+        throw error;
+      }
+    } else {
+      rootGlobal.__lumioPlatformStore = createStore(
+        process.env.LUMIO_DB_PATH || resolve(process.cwd(), ".data", "lumio.sqlite"),
+      );
+    }
   }
   return rootGlobal.__lumioPlatformStore;
 }

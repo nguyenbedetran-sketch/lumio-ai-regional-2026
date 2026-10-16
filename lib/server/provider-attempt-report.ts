@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import type { UsageDimension } from "./usage-report";
 import { PlatformError } from "./types";
 import { PROVIDER_ATTEMPT_LIMITS } from "./provider-attempt-core";

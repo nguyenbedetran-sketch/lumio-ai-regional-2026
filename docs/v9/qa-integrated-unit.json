@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-16T23:49:37.287Z",
+  "command": "pnpm test:all",
+  "exitCode": 0,
+  "scope": "Local aggregate suites through V9; synthetic databases and intercepted provider transport. No Turso or public persistence claim.",
+  "archivedGeneratedReports": 32,
+  "nativeChecks": 11,
+  "independentFaultChecks": 14,
+  "themeChecks": 7,
+  "storageDisclosureChecks": 18
+}

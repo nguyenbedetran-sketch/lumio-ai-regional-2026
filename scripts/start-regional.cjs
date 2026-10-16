@@ -18,7 +18,9 @@ if (!Number.isSafeInteger(port) || port<1024 || port>65535) stop('invalid port')
 // Do not silently enable the durable-production override on an ephemeral host.
 process.env.LUMIO_ALLOW_LOCAL_DB_PRODUCTION='false';
 process.env.LUMIO_DB_PATH ||= resolve(process.cwd(),'.data','regional-preview.sqlite');
-console.log('Lumio regional competition preview. Server accounts/credits/tutor sessions may reset on free-host restart. Payments disabled.');
+console.log(process.env.LUMIO_DATABASE_MODE === 'remote-libsql'
+  ? 'Lumio regional competition preview. Remote database configured; readiness is checked by the server. Free hosting may sleep. Payments disabled.'
+  : 'Lumio regional competition preview. Server accounts/credits/tutor sessions may reset on free-host restart. Payments disabled.');
 const child=spawn(process.execPath,[require.resolve('next/dist/bin/next'),'start','--hostname','0.0.0.0','--port',String(port)],{cwd:process.cwd(),env:process.env,stdio:'inherit',windowsHide:true});
 for (const signal of ['SIGINT','SIGTERM']) process.on(signal,()=>child.kill(signal));
 child.on('error',()=>stop('server could not start'));

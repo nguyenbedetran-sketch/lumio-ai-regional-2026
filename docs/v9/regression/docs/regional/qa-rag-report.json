@@ -1,0 +1,31 @@
+{
+  "checkedAt": "2026-10-16T23:42:48.981Z",
+  "status": "PASS",
+  "passed": 23,
+  "checks": [
+    "Account-scoped lexical index preserves paragraph provenance without provider calls",
+    "Lists, search, snapshot and deletion deny another account at every store boundary",
+    "Workspace namespace is checked independently of document id",
+    "Indexing the same source is idempotent and does not discard semantic vectors or change revision",
+    "Out-of-corpus query returns no evidence instead of unrelated fallback chunks",
+    "A stored snapshot is immutable across follow-up questions",
+    "Snapshot ownership and session version cannot be supplied by the caller",
+    "References map exact retrieved excerpts back to original document offsets, never model locations",
+    "Only server-signed extraction proof can give indexed PDF physical page metadata",
+    "Source revision changes invalidate existing snapshots before another provider turn",
+    "Deletion removes retrieval copies and invalidates cached snapshots",
+    "Exact numeric disagreement warning preserves competing source documents",
+    "Document and account chunk budgets reject excess rather than silently dropping text",
+    "Character budget counts UTF-16 consistently for supplementary Unicode",
+    "Snapshot count is bounded per actor",
+    "Seven-day retention expires both documents and snapshots",
+    "A stale captured session version cannot index, delete, search or commit retrieved data",
+    "Lexical ranking supports Vietnamese diacritics and documents its exact token baseline",
+    "Hybrid rank uses both rank lists without fabricating evidence",
+    "Embedding response is validated by model, dimension, finite values, unique index and count",
+    "Disabled embeddings and over-limit inputs make no paid transport request",
+    "Server embedding assignment checks owner, revision and vectors; identical reindex keeps vectors",
+    "Input contract ignores forged server retrieval context and validates selected scope"
+  ],
+  "scope": "Actual SQLite and retrieval/validation; synthetic vectors for algorithm tests, no paid calls."
+}

@@ -1,4 +1,4 @@
-# Free competition preview only. Stateful data is ephemeral; no paid services.
+# Free competition preview. Canonical database configured separately; no paid plan.
 # Set server secrets in Render Environment, never commit their values.
 services:
   - type: web
@@ -19,6 +19,12 @@ services:
         value: "true"
       - key: LUMIO_AI_ENABLED
         value: "true"
+      - key: LUMIO_DATABASE_MODE
+        value: remote-libsql
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
       - key: LUMIO_PUBLIC_INDEXING
         value: "false"
       - key: NEXT_TELEMETRY_DISABLED

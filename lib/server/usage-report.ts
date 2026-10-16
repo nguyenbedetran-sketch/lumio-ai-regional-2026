@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { PlatformError } from "./types";
 
 export type UsageDimension = "model" | "task" | "user";

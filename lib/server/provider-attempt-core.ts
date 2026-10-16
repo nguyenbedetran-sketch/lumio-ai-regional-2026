@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { PlatformError, type User } from "./types";
 import {
   PROVIDER_ATTEMPT_FEATURES,

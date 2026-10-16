@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-16T23:42:55.321Z",
+  "status": "PASS",
+  "passed": 7,
+  "checks": [
+    "Chat and semantic reservations settle together and identical retries do not rerun the callback",
+    "Duplicate or repeated primary ids are rejected without consuming any reservation",
+    "A settled primary cannot be reused to charge a newly held additional reservation",
+    "Cross-account additional reservation ids cannot join a settlement group",
+    "Callback failure rolls back both ledger settlements before the caller refunds the two holds",
+    "A refunded additional reservation prevents the primary from being settled",
+    "Group size and malformed id values are bounded before any ledger mutation"
+  ],
+  "scope": "Actual isolated SQLite ledger with synthetic accounts, no payments/provider calls."
+}

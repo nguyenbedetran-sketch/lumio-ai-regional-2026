@@ -1,0 +1,138 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T23:43:23.869Z",
+  "passed": 32,
+  "checks": [
+    {
+      "name": "Lexical search stays free without UUID or AI feature and creates no receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage omitted keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage observed zero keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage observed positive keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage malformed string keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage negative keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: missing/stale account or invalid UUID stops before provider, hold and paid quota",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: lost ACK returns completed metadata receipt with one provider, charge and quota slot",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: concurrent identical requests have one dispatch and persisted in-progress receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: provider failure refunds once and same uncertain intent never dispatches again",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: cancellation after provider response rolls back hold and produces no excerpts/vectors",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: canonical session revocation at provider settlement prevents result and charge",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: receipt commit fault atomically restores credit and embedding state",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: changed source during provider call refunds and does not commit stale evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "embed: deletion during provider call refunds without restoring erased content",
+      "status": "PASS"
+    },
+    {
+      "name": "search: missing/stale account or invalid UUID stops before provider, hold and paid quota",
+      "status": "PASS"
+    },
+    {
+      "name": "search: lost ACK returns completed metadata receipt with one provider, charge and quota slot",
+      "status": "PASS"
+    },
+    {
+      "name": "search: concurrent identical requests have one dispatch and persisted in-progress receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "search: provider failure refunds once and same uncertain intent never dispatches again",
+      "status": "PASS"
+    },
+    {
+      "name": "search: cancellation after provider response rolls back hold and produces no excerpts/vectors",
+      "status": "PASS"
+    },
+    {
+      "name": "search: canonical session revocation at provider settlement prevents result and charge",
+      "status": "PASS"
+    },
+    {
+      "name": "search: receipt commit fault atomically restores credit and embedding state",
+      "status": "PASS"
+    },
+    {
+      "name": "search: changed source during provider call refunds and does not commit stale evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "search: deletion during provider call refunds without restoring erased content",
+      "status": "PASS"
+    },
+    {
+      "name": "A fresh unchanged embedding key stays free without a receipt or paid quota",
+      "status": "PASS"
+    },
+    {
+      "name": "Fingerprint binds canonical document revision/model and query; changed paid intent cannot reuse key",
+      "status": "PASS"
+    },
+    {
+      "name": "Embedding model configuration is part of the immutable paid intent",
+      "status": "PASS"
+    },
+    {
+      "name": "Identical UUIDs remain account scoped and cannot retrieve another account's result",
+      "status": "PASS"
+    },
+    {
+      "name": "Query whitespace/key casing/JSON field order preserve the same paid search intent",
+      "status": "PASS"
+    },
+    {
+      "name": "Native pairing user binding and receipt account ownership hold for paid RAG endpoints",
+      "status": "PASS"
+    },
+    {
+      "name": "Abandoned paid embedding lease fences late commit and refunds without automatic rerun",
+      "status": "PASS"
+    },
+    {
+      "name": "Paid RAG receipts survive SQLite reopen and contain only digest/metadata, never source or vectors",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual authenticated RAG/embed/receipt handlers and temporary SQLite/ledger/metadata receipt transactions. Synthetic OAuth session and fake embedding provider transport only; no real provider calls, public deployment or native device claim.",
+  "providerRequests": 0,
+  "productionDeployment": "NOT_TESTED"
+}

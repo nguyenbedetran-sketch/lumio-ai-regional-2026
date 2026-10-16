@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "passed": 34,
+  "checkedAt": "2026-10-16T23:44:25.096Z",
+  "scope": "Authored deterministic local fixtures, no provider requests, real students, diagnoses, calibrated mastery or proven learning improvement",
+  "checks": [
+    {
+      "name": "Shuffling answer positions preserves canonical identity and answer value",
+      "status": "PASS"
+    },
+    {
+      "name": "Copied shuffled first-choice records cannot inflate distinct-question count",
+      "status": "PASS"
+    },
+    {
+      "name": "Answer-letter explanations cannot split the identity of an ordinary MCQ",
+      "status": "PASS"
+    },
+    {
+      "name": "Different correct answer, prompt or options changes question identity",
+      "status": "PASS"
+    },
+    {
+      "name": "Whitespace and NFC equivalents deduplicate without algebraic equivalence claims",
+      "status": "PASS"
+    },
+    {
+      "name": "Positional dependencies retain ordered identity rather than unsafe shuffling",
+      "status": "PASS"
+    },
+    {
+      "name": "Old q1 evidence stays readable and observed history is untouched but inference is excluded",
+      "status": "PASS"
+    },
+    {
+      "name": "A known legacy MCQ remains previously seen even after its choices rotate",
+      "status": "PASS"
+    },
+    {
+      "name": "Malformed optional prior snapshots cannot crash canonical exposure detection",
+      "status": "PASS"
+    },
+    {
+      "name": "Excluding an attempt changes inference only and restoration recovers the same observations",
+      "status": "PASS"
+    },
+    {
+      "name": "Exclusions operate across copied attempt IDs and never affect another library",
+      "status": "PASS"
+    },
+    {
+      "name": "Exclusion and focus controls are bounded, cloned, and backward-compatible",
+      "status": "PASS"
+    },
+    {
+      "name": "Actually overdue cards precede unseen cards regardless of array order",
+      "status": "PASS"
+    },
+    {
+      "name": "Postponing a review creates no event, adaptive review, score or mastery data",
+      "status": "PASS"
+    },
+    {
+      "name": "Manual future scheduling also supports unseen cards without fabricating first review",
+      "status": "PASS"
+    },
+    {
+      "name": "Restoring the adaptive schedule brings a truly overdue card back",
+      "status": "PASS"
+    },
+    {
+      "name": "Edited or deleted cards invalidate manual schedules safely",
+      "status": "PASS"
+    },
+    {
+      "name": "Manual schedules reject past, malformed and overlong dates without changing state",
+      "status": "PASS"
+    },
+    {
+      "name": "Override parser rejects duplicate keys, wrong identities and malformed timestamps",
+      "status": "PASS"
+    },
+    {
+      "name": "Old learning data remain readable and optional overrides round trip",
+      "status": "PASS"
+    },
+    {
+      "name": "Recommendation due counts honor the same manual deferral as review queue",
+      "status": "PASS"
+    },
+    {
+      "name": "Empty library creates no invented plan or resource",
+      "status": "PASS"
+    },
+    {
+      "name": "Daily plan has one primary and at most two distinct-material alternatives",
+      "status": "PASS"
+    },
+    {
+      "name": "Overdue cards become a factual primary action with observed count",
+      "status": "PASS"
+    },
+    {
+      "name": "Learner focus overrides order explicitly without overwriting skill results",
+      "status": "PASS"
+    },
+    {
+      "name": "Opt-out prevents inferred profile and ignores stored focus preference",
+      "status": "PASS"
+    },
+    {
+      "name": "Unknown subjects never produce diagnosed skill or invented prerequisite actions",
+      "status": "PASS"
+    },
+    {
+      "name": "Excluded weak-topic evidence stops driving inferred practice while its recorded score remains",
+      "status": "PASS"
+    },
+    {
+      "name": "Sync retains overrides, exclusions and focus without changing observed scores",
+      "status": "PASS"
+    },
+    {
+      "name": "Concurrent manual schedule edits conflict rather than silently overwriting",
+      "status": "PASS"
+    },
+    {
+      "name": "Old 7244-style normalization cannot delete unsupported V8 controls during merge",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit [] and focus null clear V8 controls rather than preserving them",
+      "status": "PASS"
+    },
+    {
+      "name": "Excluding prior evidence never turns a retry into new independent evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "All five locales expose usable plan, privacy and scheduling controls",
+      "status": "PASS"
+    }
+  ]
+}

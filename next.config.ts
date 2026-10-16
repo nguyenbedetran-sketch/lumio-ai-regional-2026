@@ -2,10 +2,20 @@ import type { NextConfig } from "next";
 export default function config(phase: string): NextConfig {
   return {
     output: "standalone",
-    serverExternalPackages: ["unpdf", "fflate", "htmlparser2"],
+    serverExternalPackages: ["unpdf", "fflate", "htmlparser2", "libsql"],
     // The isolated document worker resolves fflate's Node export at runtime.
     // Next's trace otherwise omits lib/node.cjs from the standalone package.
     outputFileTracingIncludes: {
+      "/*": [
+        "./scripts/database-worker.cjs",
+        "./scripts/database-child.cjs",
+        "./node_modules/@libsql/**/*",
+        "./node_modules/.pnpm/libsql@*/node_modules/libsql/**/*",
+        "./node_modules/.pnpm/libsql@*/node_modules/@neon-rs/**/*",
+        "./node_modules/.pnpm/libsql@*/node_modules/detect-libc/**/*",
+        "./node_modules/.pnpm/libsql@*/node_modules/@libsql/**/*",
+        "./node_modules/.pnpm/@libsql+*/node_modules/@libsql/**/*",
+      ],
       "/api/ingest-document": [
         "./node_modules/fflate/**/*",
         "./node_modules/.pnpm/fflate@*/node_modules/fflate/**/*",

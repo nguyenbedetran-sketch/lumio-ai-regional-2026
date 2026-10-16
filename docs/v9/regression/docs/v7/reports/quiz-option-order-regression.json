@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T23:44:03.170Z",
+  "packageVersion": "3.5.0-rc.1",
+  "passed": 14,
+  "cases": [
+    "All-safe validated batches preserve identity and have balanced correct positions across every original key/permutation",
+    "Input rows, option arrays and reference objects remain immutable",
+    "Retry identity ignores provider IDs, object key insertion and source metadata",
+    "Explicit option letters and ordinal positions are preserved in five supported languages",
+    "Prompt and option dependencies prevent invalid all-above and combined-letter rotation",
+    "Bare mathematical symbols and equations never trigger generic letter matching",
+    "Unicode typography/fullwidth and format controls cannot hide explicit positional cues or rewrite mathematical content",
+    "Fixed positional questions stay untouched while safe questions balance around their occupied slots",
+    "Unavoidable fixed-position imbalance is preserved instead of creating a refundable paid retry",
+    "Contract applies rotation only after original answer/options/metadata validation",
+    "Positional contract output remains review-required with a specific warning and unchanged explanation",
+    "Teacher chat/structured generation branch is not changed by learner quiz positioning",
+    "Specific positional warning renders safely in all five locales and is absent for a normal quiz",
+    "Saved live all-A quiz replays offline to balanced keys without changing any answer, reference or raw evidence"
+  ],
+  "propertyBatches": 960,
+  "propertyQuestions": 5280,
+  "replay": {
+    "originalFinalSHA256": "37eb74bb0d9b247beb38dceeeb1e9b9f4884c1e230d809bfba75e71ea382da0e",
+    "originalCorrectIndices": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "offlineNormalizedCorrectIndices": [
+      1,
+      2,
+      3,
+      3,
+      0
+    ],
+    "positionCounts": [
+      1,
+      1,
+      1,
+      2
+    ],
+    "preservedIndices": [
+      4
+    ],
+    "positionalReviewWarningEmittedByContract": true,
+    "rawUnmodified": true,
+    "newProviderRequests": 0,
+    "note": "Offline repair replay, not a new live result or semantic-dedup repair."
+  },
+  "helperProvenance": {
+    "precedingTargetedLiveHelperSHA256": "3e90571d8d2032edfc5bf0778302357b019e82a7074f8a9add070c635cfa52c1",
+    "currentHelperSHA256": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+    "note": "The targeted live report finished before the subsequent matching-only Unicode cue repair. No extra provider run was made for that repair."
+  },
+  "paidProviderRequests": 0,
+  "scope": "Deterministic pure/contract/SSR tests and offline replay of saved authored live output. No new provider, public deployment, real students, semantic dedup or secure exam shuffle."
+}

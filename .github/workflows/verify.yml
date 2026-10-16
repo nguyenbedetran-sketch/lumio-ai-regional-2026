@@ -2,7 +2,8 @@ name: Verify Lumio
 
 on:
   push:
-    branches: [main, "codex/v6-v7-upgrade", "codex/v8-evolution"]
+    branches:
+      [main, "codex/v6-v7-upgrade", "codex/v8-evolution", "codex/v9-aurora"]
   pull_request:
   workflow_dispatch:
 
@@ -42,6 +43,8 @@ jobs:
         run: pnpm test:all
       - name: Compile the production application
         run: pnpm build
+      - name: Verify generated standalone native database process on Linux
+        run: node scripts/test-v9-database-standalone.cjs
       - name: Check generated and source TypeScript
         run: pnpm typecheck
 

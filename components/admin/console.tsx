@@ -57,6 +57,13 @@ const errorMessages: Record<string, string> = {
   REASON_REQUIRED: "Hãy nhập lý do từ 8 đến 300 ký tự.",
   INVALID_ORIGIN: "Yêu cầu không đến từ địa chỉ ứng dụng đã cấu hình.",
   PERSISTENT_DATABASE_REQUIRED: "Máy chủ cần cấu hình cơ sở dữ liệu bền vững.",
+  DATABASE_WRITE_OUTCOME_UNKNOWN:
+    "Chưa xác nhận kết quả lưu. Tải lại để đối chiếu trước khi thử lại; không tạo yêu cầu mới.",
+  DATABASE_TIMEOUT:
+    "Database phản hồi quá hạn. Giữ nội dung và kiểm tra lại trạng thái.",
+  DATABASE_UNAVAILABLE: "Chưa kết nối được database. Giữ nội dung đang nhập.",
+  DATABASE_CONNECTION_POISONED:
+    "Kết nối database cần được quản trị khởi động lại. Chưa xác nhận thay đổi.",
 };
 async function request<T>(url: string, options?: RequestInit): Promise<T> {
   const result = await fetch(url, {
@@ -455,7 +462,11 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                   </div>
                   <StatusLine
                     name="Cơ sở dữ liệu"
-                    value="SQLite đang hoạt động"
+                    value={
+                      dashboard.storageMode === "remote-libsql"
+                        ? "libSQL từ xa đang kết nối"
+                        : "SQLite đang hoạt động"
+                    }
                   />
                   <StatusLine
                     name="Nhật ký kiểm toán"
@@ -463,7 +474,11 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                   />
                   <StatusLine
                     name="Phạm vi lưu trữ"
-                    value="Một máy chủ"
+                    value={
+                      dashboard.storageMode === "remote-libsql"
+                        ? "Database tách khỏi hosting"
+                        : "Một máy chủ"
+                    }
                     neutral
                   />
                   <StatusLine
@@ -474,8 +489,9 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                   <div className="ad-storage-note">
                     <LockKeyhole size={16} />
                     <p>
-                      Bản local. Cần chuyển sang cơ sở dữ liệu dùng chung trước
-                      khi chạy nhiều máy chủ.
+                      {dashboard.storageMode === "remote-libsql"
+                        ? "Dữ liệu máy chủ được lưu ở database riêng. Hosting Free vẫn có thể ngủ; trạng thái kết nối không chứng minh sao lưu hoặc khả năng khôi phục."
+                        : "Bản local. Cần chuyển sang cơ sở dữ liệu dùng chung trước khi chạy nhiều máy chủ."}
                     </p>
                   </div>
                 </section>

@@ -9,6 +9,14 @@ import type {
 type WithoutRequest<T> = T extends unknown ? Omit<T, "requestId"> : never;
 export type TeachingCommand = WithoutRequest<TeachingMutation>;
 const messages: Record<string, string> = {
+  DATABASE_WRITE_OUTCOME_UNKNOWN:
+    "Chưa xác nhận kết quả lưu. Giữ bản nháp, tải lại để kiểm tra trước khi thử lại; lần thử cùng nội dung giữ nguyên mã yêu cầu.",
+  DATABASE_TIMEOUT:
+    "Database phản hồi quá hạn. Chưa xác nhận thay đổi; giữ bản nháp và tải lại để kiểm tra.",
+  DATABASE_UNAVAILABLE:
+    "Chưa kết nối được database. Giữ nội dung đang nhập và kiểm tra lại trạng thái trước khi gửi tiếp.",
+  DATABASE_CONNECTION_POISONED:
+    "Kết nối database cần được quản trị khởi động lại. Giữ bản nháp; chưa xác nhận thay đổi.",
   INVALID_ASSESSMENT_BLUEPRINT:
     "Ma trận cần 1–12 dòng, tổng từ 1–30 câu. Kiểm tra chủ đề, dạng và độ khó.",
   DUPLICATE_BLUEPRINT_CELL:

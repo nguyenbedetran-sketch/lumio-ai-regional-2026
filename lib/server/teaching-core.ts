@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { createHash, createHmac, randomUUID } from "node:crypto";
 import type { User, AuditInput, OrganizationRole } from "./types";
 import type {

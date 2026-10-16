@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "capturedAt": "2026-10-16T23:49:09.496Z",
+  "scope": "Existing suites executed through tests/v9-database-native-preload.cjs using actual libsql0.5.29 native child/IPC and synthetic local SQLite files. Read-only inspection helpers retain node:sqlite. Local test WAL/busy PRAGMAs are not remote behavior. No real Turso or provider calls.",
+  "suites": [
+    {
+      "suite": "admin",
+      "passed": 18,
+      "exitCode": 0
+    },
+    {
+      "suite": "auth-security",
+      "passed": 9,
+      "exitCode": 0
+    },
+    {
+      "suite": "billing",
+      "passed": 14,
+      "exitCode": 0
+    },
+    {
+      "suite": "teacher-api",
+      "passed": 27,
+      "exitCode": 0
+    },
+    {
+      "suite": "teaching-api",
+      "passed": 49,
+      "exitCode": 0
+    },
+    {
+      "suite": "runtime-sync",
+      "passed": 17,
+      "exitCode": 0
+    },
+    {
+      "suite": "summary-jobs",
+      "passed": 23,
+      "exitCode": 0
+    },
+    {
+      "suite": "tutor",
+      "passed": 24,
+      "exitCode": 0
+    }
+  ],
+  "passed": 181,
+  "providerTransport": "mocked in suites which exercise providers",
+  "externalDatabaseCalls": 0
+}

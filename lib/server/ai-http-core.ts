@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { PlatformError, type User } from "./types";
 export const AI_HTTP_LIMITS = {
   leaseMs: 180000,

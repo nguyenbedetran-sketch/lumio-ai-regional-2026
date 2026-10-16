@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-16T23:42:50.621Z",
+  "status": "PASS",
+  "passed": 21,
+  "checks": [
+    "Canonical GET works without Origin; cross-site and unauthenticated reads are denied",
+    "Indexing requires explicit storage consent and same-origin write",
+    "Search and vector indexing deny foreign document ids before transport",
+    "Lexical search returns verbatim source and costs zero credits",
+    "No evidence creates no provider call or credit debit",
+    "Actual AI route maps model quote to owner-bound document provenance and snapshot",
+    "Follow-up reuses immutable retrieval text instead of searching the new student response",
+    "Full-solution gate is still enforced for retrieved sources before three hints",
+    "Changed source revision rejects old tutor snapshot before paid transport",
+    "Deletion during provider generation prevents response commit and refunds credits",
+    "Optional embeddings require external consent; successful vectors debit exactly two credits atomically",
+    "Embedding provider error refunds reservation and preserves lexical index",
+    "Hybrid search is explicit, combines vectors and lexical hits, and debits two credits",
+    "Failed first RAG hint returns its immutable snapshot and can retry without resetting the exercise",
+    "Repeated embedding request for current source is idempotent with no extra transport or debit",
+    "Session revocation during document embedding rolls back vector assignment and refunds credits",
+    "Session revocation during semantic search rejects excerpts and refunds query credits",
+    "A source update between precheck and settlement is rejected inside the atomic tutor transaction",
+    "Source changes during query embedding cannot be billed as a hybrid result from stale vectors",
+    "A failed first-turn semantic embedding refunds both chat and query reservations",
+    "Hybrid tutoring debits both costs once and follow-ups do not embed the question again"
+  ],
+  "scope": "Actual route/SQLite/ledger with explicit synthetic auth and mocked provider transport; zero paid requests."
+}

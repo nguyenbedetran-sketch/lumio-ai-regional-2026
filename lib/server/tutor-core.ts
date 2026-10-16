@@ -1,5 +1,5 @@
 import { createHash, randomUUID } from "node:crypto";
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import type { AIInput } from "../ai/contracts";
 import type { SourceReference } from "../ai/grounding";
 import { AIError } from "../ai/contracts";

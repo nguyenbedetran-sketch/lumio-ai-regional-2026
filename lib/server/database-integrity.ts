@@ -1,4 +1,4 @@
-import type { DatabaseSync } from "node:sqlite";
+import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 
 // Canonical metadata derived from migrations1–18 using SQLite itself.
 // Update together with a reviewed migration; tests compare against fresh schema.
@@ -585,6 +585,12 @@ export const DATABASE_GUARDS: readonly {
 
 type DatabaseReader = Pick<DatabaseSync, "prepare">;
 type IntegrityOptions = { allowPrefix?: boolean; maximumVersion?: number };
+type SchemaRow = { name: unknown; type: unknown; tbl_name: unknown; sql: unknown };
+// A fresh read per invocation, not a cache. Remote health needs two round trips
+// (schema + history), while preserving every existing SQL/type/guard check.
+function readSchema(db: DatabaseReader): SchemaRow[] {
+  return db.prepare("SELECT name,type,tbl_name,sql FROM sqlite_schema").all() as SchemaRow[];
+}
 // Preserve literal contents and SQL structure. Only normalize platform line
 // endings, surrounding whitespace and SQLite's discarded terminal semicolon.
 export function normalizedGuardSQL(value: unknown): string {
@@ -615,6 +621,13 @@ export function assertDatabaseHistory(
   db: DatabaseReader,
   options: IntegrityOptions = {},
 ): number {
+  return historyFromSchema(db, options, readSchema(db));
+}
+function historyFromSchema(
+  db: DatabaseReader,
+  options: IntegrityOptions,
+  schema: SchemaRow[],
+): number {
   const maximum = options.maximumVersion ?? DATABASE_SCHEMA_VERSION;
   if (
     !Number.isSafeInteger(maximum) ||
@@ -622,17 +635,13 @@ export function assertDatabaseHistory(
     maximum > DATABASE_SCHEMA_VERSION
   )
     throw new Error("SCHEMA_CONTRACT_OUTDATED");
-  const present = db
-    .prepare(
-      "SELECT 1 FROM sqlite_schema WHERE type='table' AND name='schema_migrations'",
-    )
-    .get();
+  const tables = schema.filter((row) => row.type === "table");
+  const present = tables.some((row) => row.name === "schema_migrations");
+  // Only SQLite's literal reserved prefix is internal. SQL LIKE 'sqlite_%'
+  // treats '_' as a wildcard and could disguise a foreign table named sqlitex.
+  const applicationTables = tables.filter((row) => !/^sqlite_/i.test(String(row.name)));
   if (!present) {
-    const populated = db
-      .prepare(
-        "SELECT 1 FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%' LIMIT 1",
-      )
-      .get();
+    const populated = applicationTables.length > 0;
     if (populated || !options.allowPrefix)
       throw new Error("SCHEMA_NOT_SUPPORTED");
     return 0;
@@ -643,11 +652,7 @@ export function assertDatabaseHistory(
     .map((row) => row.version);
   if (
     versions.length === 0 &&
-    db
-      .prepare(
-        "SELECT 1 FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%' AND name!='schema_migrations' LIMIT 1",
-      )
-      .get()
+    applicationTables.some((row) => row.name !== "schema_migrations")
   )
     throw new Error("SCHEMA_NOT_SUPPORTED");
   if (
@@ -668,11 +673,10 @@ export function assertDatabaseIntegrity(
   db: DatabaseReader,
   options: IntegrityOptions = {},
 ) {
-  const version = assertDatabaseHistory(db, options);
+  const schema = readSchema(db);
+  const version = historyFromSchema(db, options, schema);
   for (const table of DATABASE_TABLES) {
-    const actual = db
-      .prepare("SELECT type,sql FROM sqlite_schema WHERE name=?")
-      .get(table.name);
+    const actual = schema.find((row) => row.name === table.name);
     // The empty bootstrap migration table is valid before migration1; any
     // known future application object contradicts the declared history.
     const bootstrap = version === 0 && table.name === "schema_migrations";
@@ -694,9 +698,7 @@ export function assertDatabaseIntegrity(
       throw new Error("DATABASE_TABLE_INVALID:" + table.name);
   }
   for (const guard of DATABASE_GUARDS) {
-    const actual = db
-      .prepare("SELECT type,tbl_name,sql FROM sqlite_schema WHERE name=?")
-      .get(guard.name);
+    const actual = schema.find((row) => row.name === guard.name);
     if (guard.since > version) {
       if (actual) throw new Error("DATABASE_FUTURE_OBJECT:" + guard.name);
       continue;

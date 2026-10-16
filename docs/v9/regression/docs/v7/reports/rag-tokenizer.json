@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkedAt": "2026-10-16T23:43:26.040Z",
+  "tokenizerVersion": "unicode-bigram-1",
+  "passed": 20,
+  "checks": [
+    {
+      "name": "Latin and Vietnamese legacy token normalization is preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "vi: native-script lexical retrieval finds the authored source",
+      "status": "PASS"
+    },
+    {
+      "name": "en: native-script lexical retrieval finds the authored source",
+      "status": "PASS"
+    },
+    {
+      "name": "zh-CN: native-script lexical retrieval finds the authored source",
+      "status": "PASS"
+    },
+    {
+      "name": "ja: native-script lexical retrieval finds the authored source",
+      "status": "PASS"
+    },
+    {
+      "name": "ko: native-script lexical retrieval finds the authored source",
+      "status": "PASS"
+    },
+    {
+      "name": "Mixed Latin/CJK runs split without losing either script",
+      "status": "PASS"
+    },
+    {
+      "name": "Korean composed and decomposed syllables normalize identically",
+      "status": "PASS"
+    },
+    {
+      "name": "Japanese kana voicing is preserved rather than accent-stripped",
+      "status": "PASS"
+    },
+    {
+      "name": "Supplementary Han characters remain whole code points",
+      "status": "PASS"
+    },
+    {
+      "name": "Multi-character queries use adjacent bigrams, not isolated common characters",
+      "status": "PASS"
+    },
+    {
+      "name": "A deliberate one-character query remains searchable in a document",
+      "status": "PASS"
+    },
+    {
+      "name": "No bigram crosses a punctuation, whitespace or Latin-script boundary",
+      "status": "PASS"
+    },
+    {
+      "name": "Query terms are unique and bounded to forty",
+      "status": "PASS"
+    },
+    {
+      "name": "Input, token and token-length bounds prevent unbounded lexical allocation",
+      "status": "PASS"
+    },
+    {
+      "name": "Stop words, empty text, punctuation and emoji do not fabricate hits",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing evidence in each authored language remains empty",
+      "status": "PASS"
+    },
+    {
+      "name": "Numeric conflict warning still works in Latin and East Asian text",
+      "status": "PASS"
+    },
+    {
+      "name": "Isolated SQLite CJK retrieval preserves exact source offsets and actor scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Offline test makes no network/provider request",
+      "status": "PASS"
+    }
+  ],
+  "actualProviderRequests": 0,
+  "networkAttempts": 0,
+  "scope": "Deterministic tokenizer/ranking with authored fixtures and one isolated in-memory SQLite provenance/ACL flow. Not semantic retrieval, real provider, OAuth, student trial or public-deployment validation.",
+  "limits": {
+    "inputCharacters": 120000,
+    "queryCharacters": 4000,
+    "terms": 8192,
+    "queryTerms": 40,
+    "termCharacters": 64
+  },
+  "limitations": [
+    "Bigrams are lexical overlap, not word segmentation, translation or calibrated relevance.",
+    "Single-character searches can have low precision; no guarantee of semantic coverage.",
+    "Input/query/token caps are intentional lexical resource bounds; original source/citation text is unchanged."
+  ]
+}
