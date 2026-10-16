@@ -1,0 +1,29 @@
+{
+  "status": "CONFIRMED_BY_PORTAL",
+  "submissionNumber": 5,
+  "team": "AI26A0048",
+  "group": "Bảng A · Miền Trung",
+  "portal": "https://ai.tainangviet.vn/dashboard/regional",
+  "portalAcknowledgement": "Đã ghi nhận lần nộp số 5 lúc 22:21:45 16/10/2026.",
+  "submittedAtLocal": "2026-10-16T22:21:45+07:00",
+  "submittedAtUtc": "2026-10-16T15:21:45Z",
+  "historyLabel": "Lần 5 · Bản dùng để chấm",
+  "historyCount": 5,
+  "sourceUrl": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026",
+  "evidenceUrl": "https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+  "publicUrl": "https://lumio-ai-demo.onrender.com/",
+  "version": "3.4.0-rc.1",
+  "runtimeCommit": "89ddd072f0d34ede54a55053c51f3c394783e5e9",
+  "ci": {"runId": 38918173559, "conclusion": "success"},
+  "render": {"serviceId": "srv-danebeek1f9s738epav0", "deployId": "dep-db93j23bc2fs73cnss9g", "plan": "Free", "liveAtLocal": "2026-10-16T21:51:50+07:00"},
+  "artifactsPresentBeforeSubmission": [
+    {"name": "LAN5-FINAL-LUMIO-AI-3.4-SOURCE-89ddd07.zip", "driveId": "1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz", "bytes": 20887193, "sha256": "70fe45717ebf12fc4a660404ef754b96694cec4217d5bf582eb3eefce33315f5"},
+    {"name": "LAN5-FINAL-LUMIO-AI-3.4-MINH-CHUNG-89ddd07.pdf", "driveId": "1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2", "bytes": 555457, "sha256": "62bae5145ec0f66ee82d75cc9b2ab52bd873eb4862f640db2731f7a1a2f753ed"},
+    {"name": "LAN5-FINAL-LUMIO-AI-3.4-EVIDENCE-89ddd07.zip", "driveId": "1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ", "bytes": 23386511, "sha256": "972a0d962425f610df1ebede184b6607e254c5462ea0ce7536fee61d3ddeab90"}
+  ],
+  "deliveryVerification": "All three file metadata readbacks matched expected sizes and exact parent, with anyone-reader permission. Folder listing contained all three. Anonymous no-cookie viewer requests returned HTTP 200 with expected filenames before submission. This is not a remote binary hash comparison.",
+  "screenshot": "submission5-confirmed.jpg",
+  "clickCount": 1,
+  "previousReceiptsRetained": [1, 2, 3, 4],
+  "scope": "The portal accepted two URLs and made attempt5 the current grading entry. It does not download those links, certify product completion or award a result. PDF and evidence ZIP were frozen before submission and truthfully retain a pending receipt snapshot; this post-submission receipt supersedes only that pending status."
+}

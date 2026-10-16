@@ -1,0 +1,69 @@
+{
+  "status": "PASS_SCOPED_DRIVE_DELIVERY",
+  "checkedAt": "2026-10-16T15:26:23.699Z",
+  "folder": "https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+  "folderFileCount": 25,
+  "files": [
+    {
+      "id": "1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-SOURCE-89ddd07.zip",
+      "bytes": 20887193,
+      "url": "https://drive.google.com/file/d/1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    },
+    {
+      "id": "1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-MINH-CHUNG-89ddd07.pdf",
+      "bytes": 555457,
+      "url": "https://drive.google.com/file/d/1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    },
+    {
+      "id": "1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-EVIDENCE-89ddd07.zip",
+      "bytes": 23386511,
+      "url": "https://drive.google.com/file/d/1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    },
+    {
+      "id": "1_yJWiljZlBJs-vJMPIhnIcB-OnTXjl3G",
+      "name": "LAN5-Submission-confirmed.jpg",
+      "bytes": 235656,
+      "url": "https://drive.google.com/file/d/1_yJWiljZlBJs-vJMPIhnIcB-OnTXjl3G/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    },
+    {
+      "id": "1xU1rE34euYFfB6aUKL3aMu9mawmtYYuy",
+      "name": "LAN5-SUBMISSION-RECEIPT.json",
+      "bytes": 2415,
+      "url": "https://drive.google.com/file/d/1xU1rE34euYFfB6aUKL3aMu9mawmtYYuy/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    },
+    {
+      "id": "1WzgMS5oPgu612GY5Masf-gIe9EV2Ycap",
+      "name": "LAN5-FINAL-00-DOC-TRUOC.txt",
+      "bytes": 3124,
+      "url": "https://drive.google.com/file/d/1WzgMS5oPgu612GY5Masf-gIe9EV2Ycap/view?usp=drivesdk",
+      "parent": "1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG",
+      "anyoneReader": true,
+      "listed": true,
+      "sizeMatches": true
+    }
+  ],
+  "scope": "Read-back metadata and final folder listing for all six LAN5 uploads; existing sharing retained. Anonymous viewer check separately covers source ZIP, PDF, evidence ZIP. No remote binary hash comparison."
+}

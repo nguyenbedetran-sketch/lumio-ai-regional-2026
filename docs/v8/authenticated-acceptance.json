@@ -1,0 +1,100 @@
+{
+  "status": "PASS_SCOPED_PUBLIC_ACCEPTANCE",
+  "checkedAt": "2026-10-16T15:16:09.296774+00:00",
+  "commit": "89ddd072f0d34ede54a55053c51f3c394783e5e9",
+  "url": "https://lumio-ai-demo.onrender.com/",
+  "method": "Manual UI through the authorized Chrome session, plus separate unauthenticated HTTP report. No fabricated participants or private database export.",
+  "observations": [
+    {
+      "area": "Google sign-in",
+      "result": "PASS",
+      "detail": "Existing owner signed in through Google OAuth and returned to public Lumio. No password or OTP handled."
+    },
+    {
+      "area": "Source-aware entry",
+      "result": "PASS",
+      "detail": "Home selected the existing authored math source and opened an unsent tutor draft. AI was invoked only by the explicit Hỏi Lumio button."
+    },
+    {
+      "area": "Actual tutor call 1",
+      "result": "PASS",
+      "detail": "For 3x - 6 = 9, response suggested adding 6 to both sides, asked for the new equation and withheld the final solution. Accepted progress 1/3; full solution stayed locked."
+    },
+    {
+      "area": "Actual tutor call 2",
+      "result": "PASS",
+      "detail": "Dễ hiểu hơn explained two sides with 5 + 2 = 3 + 4, asked one question and withheld the original problem solution. Help turn did not increase the gate: still 1/3."
+    },
+    {
+      "area": "Source location",
+      "result": "PASS_WITH_LIMIT",
+      "detail": "Citation §3 opened the exact authored paragraph in Tài liệu gốc. Exact quote matches the source, but does not prove every generated definition or example is directly stated there or always correct."
+    },
+    {
+      "area": "Private feedback",
+      "result": "PASS",
+      "detail": "Saved Hữu ích on the second assistant turn, received private-save acknowledgement, reloaded and found the selected helpful feedback and both turns restored. No extra AI call or credit debit observed. Real deletion was not exercised."
+    },
+    {
+      "area": "Credit ledger",
+      "result": "PASS",
+      "detail": "One trial grant +200; two reserves -4 each with zero additional settlement. Available 192, held 0. No merchant payment was enabled."
+    },
+    {
+      "area": "Provider journal",
+      "result": "PASS_WITH_LIMIT",
+      "detail": "Two prepared calls, two HTTP responses, zero HTTP errors or unresolved outcomes. Requested OpenAI gpt-5-mini alias; response model names differ from requested alias. 3463 input + 1306 output = 4769 reported tokens. USD cost unknown, not zero."
+    },
+    {
+      "area": "Teacher bank and class",
+      "result": "PASS",
+      "detail": "Owner created clearly labelled NGHIỆM THU V8 organisation/class with zero students, authored and reviewed one basic linear-equation MCQ (2x + 3 = 11; x = 4). No student records, invitation, real grading or learning-effect claim."
+    },
+    {
+      "area": "Blueprint draft",
+      "result": "PASS_SCOPED",
+      "detail": "UI preview requesting two matching questions from a one-question bank showed shortage one and no draft. Missing date/instructions were correctly blocked by native validation. After valid date and instructions, one-question composition saved on server as editable Nháp; refresh preserved it, 1 question/1 point, zero recipients. No issue/publication action. Server shortage rejection is covered by isolated handler tests, not this manual preview."
+    },
+    {
+      "area": "Whole-set preflight",
+      "result": "PASS",
+      "detail": "Saved draft displayed actual topic, basic difficulty, MCQ distribution and warned 0/1 questions had source excerpts. It did not claim structural checks verify the answer or age suitability."
+    },
+    {
+      "area": "Admin jobs",
+      "result": "PASS_SCOPED",
+      "detail": "Authorized Kiểm tra hàng đợi returned aggregate zero retained jobs with status/lease/wait counts, explicitly not worker liveness or backup proof. No document or student names returned by the panel."
+    },
+    {
+      "area": "Mobile viewport",
+      "result": "PASS_SCOPED",
+      "detail": "Public Home and Voice checked at actual CSS viewport 390 x 900; no document horizontal overflow. Drawer navigation worked. Voice restored the explicit authored-source selection after bootstrap. Screenshots show visible top viewport, not full page. Temporary viewport reset afterward."
+    },
+    {
+      "area": "Console",
+      "result": "PASS_SCOPED",
+      "detail": "Captured error logs returned empty arrays for public, teacher, mobile and admin tabs at the end of the scoped acceptance. Not proof of every route or long-running operation."
+    }
+  ],
+  "providerCalls": 2,
+  "reportedTokens": {
+    "input": 3463,
+    "output": 1306,
+    "total": 4769
+  },
+  "costUsd": null,
+  "credits": {
+    "trialGrant": 200,
+    "debited": 8,
+    "available": 192,
+    "held": 0
+  },
+  "realStudents": 0,
+  "limits": [
+    "Two authored-source tutoring calls are not a model-quality benchmark or a real student pilot.",
+    "No microphone, speaker, recording, STT, TTS, Zoom loopback or native mobile device call was performed.",
+    "No independent second-account teacher/student cross-organisation scenario on public; isolated API/database regression covers those boundaries.",
+    "Render Free SQLite is ephemeral competition-preview storage; no durable multi-server database or off-host recovery validation.",
+    "Teacher shortage screenshot excluded because the visible viewport showed native date validation rather than the shortage panel."
+  ]
+}

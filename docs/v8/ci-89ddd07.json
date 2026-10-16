@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T14:50:31.636511+00:00",
+  "commit": "89ddd072f0d34ede54a55053c51f3c394783e5e9",
+  "runId": 38918173559,
+  "jobId": 117030941226,
+  "url": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026/actions/runs/38918173559",
+  "conclusion": "success",
+  "steps": [
+    "checkout exactrevision",
+    "Node24.19.0",
+    "pnpm11.25.0",
+    "frozenlockfileinstall",
+    "test:all",
+    "Next production build",
+    "TypeScript"
+  ],
+  "scope": "GitHub CI deterministic/isolated testing; no provider or production state validation"
+}

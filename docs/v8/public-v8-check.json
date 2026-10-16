@@ -1,0 +1,655 @@
+{
+  "checkedAt": "2026-10-16T14:52:40.804Z",
+  "baseURL": "https://lumio-ai-demo.onrender.com",
+  "expectedVersion": "3.4.0-rc.1",
+  "expectedMergedCommit": "89ddd072f0d34ede54a55053c51f3c394783e5e9",
+  "commitVerification": "NOT_TESTED: health does not expose a commit; root verifies Render separately",
+  "scope": "Real HTTPS unauthenticated GETs plus one empty guest feedback POST expected to fail before mutation. No cookies, valid mutation payload, provider calls, authorization bypass, load test or pentest. Readiness does not prove semantic AI accuracy, durable storage, or a production migration.",
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "latencyMs": 437,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 70,
+      "bodySha256": "ee5104ae32a1a6fee7525941261567a484a9929284a62ac0ef78827dd7b63459"
+    },
+    {
+      "method": "GET",
+      "path": "/api/config",
+      "status": 200,
+      "latencyMs": 103,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-store",
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 160,
+      "bodySha256": "cdf5af27fe5ce580574b66ce0d8c93b21ca301f42958ce4e7d786624128ece32"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing/catalog",
+      "status": 200,
+      "latencyMs": 116,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 1918,
+      "bodySha256": "42306c1b0f8570a332af2ee4699c2d36c634b4e3b8e51007d3e4d869b45bc22d"
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/providers",
+      "status": 200,
+      "latencyMs": 115,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": null,
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 419,
+      "bodySha256": "b096f1a486f4638d7e4e0d02a9f6b6bb08bd73de84f7dcd2744dd0812e796b24"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/jobs",
+      "status": 401,
+      "latencyMs": 105,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "d8a07a7cbd7f42ed264269e82d0f56b94f6af5c1b0c422cca4d241e3b4dd00eb",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin",
+      "status": 401,
+      "latencyMs": 109,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "4c54545e6e85d8b083fa8714392e896ec91a625e8cf1c626d49360a0b4a930c5",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/usage?summary=1&dimension=model&days=7&scope=attempts",
+      "status": 401,
+      "latencyMs": 107,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "7849263daa125dd4f3ceb9f9bd76c7f50806d7522f6811f1d26d9120108c4ede",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/admin/teachers",
+      "status": 401,
+      "latencyMs": 101,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "f14ff92484f179ef6d308a6c14e13b472e13ea79332298a5ecb467c6e1a6eb84",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/teacher-application",
+      "status": 401,
+      "latencyMs": 111,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "e8f7a97d339b9e278bc99dc51ff6db5bbf03fff677276895db03e9cd31318a7b",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/teaching",
+      "status": 401,
+      "latencyMs": 110,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "20e90bbda13e0810567d0a573bf3e19173e584db64451bcfcbbce3481e9113c9",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/teaching/export",
+      "status": 401,
+      "latencyMs": 116,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "1caf5a76a71a51c44af33d14b89c9e4afd67c228f5ce9febd91e405adf5ecbf0",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/teaching/grade-history",
+      "status": 401,
+      "latencyMs": 109,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "07ad5f0f5cc68e14aecf17d28734fb3da3b90aca6f2d28369ba8513f2a7f9cdb",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/sync",
+      "status": 401,
+      "latencyMs": 102,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "21235cf55ff0783b4defbb5bc157e40504cc1be7fc20dec1d84618de417da2f0",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing",
+      "status": 401,
+      "latencyMs": 110,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "273d1efd1463705d9dca35f24995d26218a30ae99290935837410077e3725dcc",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/rag/documents",
+      "status": 401,
+      "latencyMs": 108,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "9e14e3ef324e7595d9f6f7f504b663149a9c76586f0c9280e685b0081438c9a5",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/summary-jobs",
+      "status": 401,
+      "latencyMs": 109,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "e403259265360f1c6dbd2a01f53a913dd0465dee111d9b0ba2b7f0c69f6f86a4",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/tutor/session",
+      "status": 401,
+      "latencyMs": 114,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "a028b58dd5b814171921f0435b82f0a5fd6c0a42543f411b219527ddc66781df",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/request?key=6319d9e8-619e-4cb8-b42c-45aad09412ad",
+      "status": 401,
+      "latencyMs": 103,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "no-store",
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "78e57f0a0af2c166e3abc78423fe36cab2239f4dac8ca1399959370759167b34",
+      "errorCode": "SIGN_IN_REQUIRED"
+    },
+    {
+      "method": "POST",
+      "path": "/api/tutor/feedback",
+      "status": 401,
+      "latencyMs": 114,
+      "headers": {
+        "content-type": "application/json",
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 79,
+      "bodySha256": "ba85a9f9db95b102895f907a9e9b6846b2901e13a3673a042438f41f8da26f5a"
+    },
+    {
+      "method": "GET",
+      "path": "/admin",
+      "status": 200,
+      "latencyMs": 511,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 14131,
+      "bodySha256": "2dda388d223a3ca018307c1e8aeb9232cbfddf13183d8f66900aed19b4d3d9ef"
+    },
+    {
+      "method": "GET",
+      "path": "/teacher",
+      "status": 200,
+      "latencyMs": 202,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 19286,
+      "bodySha256": "2a472e330071f080b4b84a0d52f02a44e7c5faded8428f5393e7908146502f1f"
+    },
+    {
+      "method": "GET",
+      "path": "/classroom",
+      "status": 200,
+      "latencyMs": 895,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "x-content-type-options": null,
+        "x-robots-tag": "noindex, nofollow, noarchive",
+        "location": null
+      },
+      "bodyBytes": 14085,
+      "bodySha256": "eadc2ac3f20a621602fe09c0389c9032a6bc307b4ad325b289da9533e09ea8b3"
+    }
+  ],
+  "checks": [
+    {
+      "name": "Public readiness returns the expected app version and competition-preview mode",
+      "status": "PASS"
+    },
+    {
+      "name": "Readiness is no-store and nosniff",
+      "status": "PASS"
+    },
+    {
+      "name": "Health does not claim to expose commit or database version",
+      "status": "PASS"
+    },
+    {
+      "name": "Public configuration enables regional preview, Google sign-in and core AI capabilities",
+      "status": "PASS"
+    },
+    {
+      "name": "Public configuration has no credential values",
+      "status": "PASS"
+    },
+    {
+      "name": "Public configuration is no-store",
+      "status": "PASS"
+    },
+    {
+      "name": "Payments remain unconfigured and every catalog checkout is disabled",
+      "status": "PASS"
+    },
+    {
+      "name": "Public Google OAuth provider uses the existing HTTPS public origin",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/admin/jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/admin/jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/admin/jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/admin",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/admin",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/admin",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/admin/usage?summary=1&dimension=model&days=7&scope=attempts",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/admin/usage?summary=1&dimension=model&days=7&scope=attempts",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/admin/usage?summary=1&dimension=model&days=7&scope=attempts",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/admin/teachers",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/admin/teachers",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/admin/teachers",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/teacher-application",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/teacher-application",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/teacher-application",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/teaching",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/teaching",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/teaching",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/teaching/export",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/teaching/export",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/teaching/export",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/teaching/grade-history",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/teaching/grade-history",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/teaching/grade-history",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/sync",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/billing",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/billing",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/billing",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/rag/documents",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/rag/documents",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/rag/documents",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/summary-jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/summary-jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/summary-jobs",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/tutor/session",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/tutor/session",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/tutor/session",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot read /api/ai/request?key=6319d9e8-619e-4cb8-b42c-45aad09412ad",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error is no-store for /api/ai/request?key=6319d9e8-619e-4cb8-b42c-45aad09412ad",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest error excludes private collections for /api/ai/request?key=6319d9e8-619e-4cb8-b42c-45aad09412ad",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest cannot write turn feedback",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest feedback error is no-store",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest feedback error exposes no private state",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest page /admin offers a sign-in gate",
+      "status": "PASS"
+    },
+    {
+      "name": "Private page /admin is noindex",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest page /teacher offers a sign-in gate",
+      "status": "PASS"
+    },
+    {
+      "name": "Private page /teacher is noindex",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest page /classroom offers a sign-in gate",
+      "status": "PASS"
+    },
+    {
+      "name": "Private page /classroom is noindex",
+      "status": "PASS"
+    }
+  ],
+  "providerCalls": 0,
+  "health": {
+    "status": "ready",
+    "version": "3.4.0-rc.1",
+    "mode": "competition-preview"
+  },
+  "publicConfiguration": {
+    "google": true,
+    "facebook": true,
+    "competitionPreview": true,
+    "ai": true,
+    "capabilities": {
+      "tutor": true,
+      "summary": true,
+      "media": true,
+      "transcription": true,
+      "speech": true
+    }
+  },
+  "payments": {
+    "paymentProviderConfigured": false,
+    "competitionPreview": true,
+    "plans": [
+      {
+        "id": "free",
+        "checkoutAvailable": false
+      },
+      {
+        "id": "plus",
+        "checkoutAvailable": false
+      },
+      {
+        "id": "premium",
+        "checkoutAvailable": false
+      },
+      {
+        "id": "pro",
+        "checkoutAvailable": false
+      }
+    ],
+    "packs": [
+      {
+        "id": "pack_small",
+        "checkoutAvailable": false
+      },
+      {
+        "id": "pack_medium",
+        "checkoutAvailable": false
+      },
+      {
+        "id": "pack_large",
+        "checkoutAvailable": false
+      }
+    ]
+  },
+  "publicAuthProviders": [
+    "google",
+    "facebook"
+  ],
+  "passed": 59,
+  "failed": 0,
+  "status": "PASS",
+  "finishedAt": "2026-10-16T14:52:44.816Z"
+}

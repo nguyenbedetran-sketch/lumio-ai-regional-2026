@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T15:21:29.407934+00:00",
+  "scope": "Anonymous no-cookie viewer HTML status/title for the exact three uploaded file IDs; not a binary download/hash comparison. Separate connector metadata verifies parent, size, reader permission and folder listing.",
+  "files": [
+    {
+      "id": "1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-SOURCE-89ddd07.zip",
+      "url": "https://drive.google.com/file/d/1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz/view",
+      "status": 200,
+      "finalUrl": "https://drive.google.com/file/d/1JKXOMZXtEHKFqMHlMnJc0YW3S2wdCzqz/view",
+      "title": "LAN5-FINAL-LUMIO-AI-3.4-SOURCE-89ddd07.zip - Google Drive",
+      "expectedNamePresent": true,
+      "requestUsedCookies": false,
+      "pass": true
+    },
+    {
+      "id": "1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-MINH-CHUNG-89ddd07.pdf",
+      "url": "https://drive.google.com/file/d/1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2/view",
+      "status": 200,
+      "finalUrl": "https://drive.google.com/file/d/1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2/view",
+      "title": "LAN5-FINAL-LUMIO-AI-3.4-MINH-CHUNG-89ddd07.pdf - Google Drive",
+      "expectedNamePresent": true,
+      "requestUsedCookies": false,
+      "pass": true
+    },
+    {
+      "id": "1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ",
+      "name": "LAN5-FINAL-LUMIO-AI-3.4-EVIDENCE-89ddd07.zip",
+      "url": "https://drive.google.com/file/d/1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ/view",
+      "status": 200,
+      "finalUrl": "https://drive.google.com/file/d/1CtYhTv7_Qk9TogjCZjh5dPZr4KyU3WyJ/view",
+      "title": "LAN5-FINAL-LUMIO-AI-3.4-EVIDENCE-89ddd07.zip - Google Drive",
+      "expectedNamePresent": true,
+      "requestUsedCookies": false,
+      "pass": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T15:19:50.859067+00:00",
+  "file": "lumio-ai-evidence-submission5-89ddd072f0d3.zip",
+  "sha256": "972a0d962425f610df1ebede184b6607e254c5462ea0ce7536fee61d3ddeab90",
+  "crc": "PASS",
+  "filesCompared": 1050,
+  "configuredSecretValuesChecked": 6,
+  "matchingFiles": [],
+  "scope": "Exact configured local server credential-byte comparison of final ZIP and nested source ZIP. Not exhaustive secret discovery or proof of remote contents."
+}
