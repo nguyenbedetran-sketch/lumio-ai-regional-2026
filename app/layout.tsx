@@ -22,11 +22,18 @@ import "./premium-v3.css";
 import "./regional.css";
 import "./learner-v7.css";
 import { publicSiteSchema, siteMetadata } from "../lib/metadata";
+import { themeBootstrapScript } from "../lib/lumio/theme";
 export const metadata = siteMetadata;
 export default function Layout({ children }: { children: React.ReactNode }) {
   const schema = publicSiteSchema();
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
+      <head>
+        <script
+          id="lumio-theme-bootstrap"
+          dangerouslySetInnerHTML={{ __html: themeBootstrapScript }}
+        />
+      </head>
       <body>
         {children}
         {schema && (

@@ -1,8 +1,5 @@
 /* Lumio 1.4 shell. Short, finite motion; the resting UI is always visible. */
-.lumio {
-  --lm-shadow-soft: 0 8px 28px rgb(25 48 39 / 5%);
-  --lm-ease: cubic-bezier(0.2, 0.75, 0.2, 1);
-}
+/* Palette, depth and motion tokens live in experience.css. */
 .lumio .lm-sidebar {
   box-shadow: 0 16px 45px rgb(16 37 30 / 12%);
   scrollbar-width: thin;
@@ -76,7 +73,7 @@
   min-height: 46px;
 }
 .lumio :is(button, input, select, textarea, a):focus-visible {
-  outline: 3px solid var(--lm-accent);
+  outline: 3px solid var(--lm-focus);
   outline-offset: 3px;
 }
 .lumio .lm-button {
@@ -178,28 +175,48 @@
   .lumio
     :is(
       .lm-content-card,
+      .lm-space-card,
+      .lm-new-space,
+      .lm-action-grid > button,
+      .lx-rating-grid button,
+      .lx-hero-button,
       .lm-button,
       .lm-nav button,
       .lm-nav-single,
       .lm-icon
     ) {
     transition:
-      transform 220ms var(--lm-ease),
-      box-shadow 220ms var(--lm-ease),
-      border-color 160ms,
-      background-color 160ms;
+      transform var(--lm-duration-hover) var(--lm-ease),
+      box-shadow var(--lm-duration-hover) var(--lm-ease),
+      border-color var(--lm-duration-hover) var(--lm-ease),
+      background-color var(--lm-duration-hover) var(--lm-ease);
   }
 }
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  html[data-motion="full"] .lumio .lm-content-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 32px rgb(25 48 39 / 10%);
-  }
-  html[data-motion="full"] .lumio .lm-button:not(:disabled):hover {
+  html:not([data-motion="off"]):not([data-motion="subtle"])
+    .lumio
+    :is(
+      .lm-content-card,
+      .lm-space-card,
+      .lm-new-space,
+      .lm-action-grid > button
+    ):hover {
     transform: translateY(-2px);
+    box-shadow: var(--lm-shadow-soft);
   }
-  html[data-motion="full"] .lumio .lm-button:not(:disabled):active {
-    transform: translateY(0) scale(0.98);
+  html:not([data-motion="off"]):not([data-motion="subtle"])
+    .lumio
+    :is(.lm-button, .lm-icon, .lx-hero-button, .lx-rating-grid button):not(
+      :disabled
+    ):hover {
+    transform: translateY(-1px);
+  }
+  html:not([data-motion="off"]):not([data-motion="subtle"])
+    .lumio
+    :is(.lm-button, .lm-icon, .lx-hero-button, .lx-rating-grid button):not(
+      :disabled
+    ):active {
+    transform: translateY(0);
   }
 }
 html[data-motion="off"] .lumio *,
@@ -208,6 +225,23 @@ html[data-motion="off"] .lumio *::after {
   animation: none !important;
   transition: none !important;
   scroll-behavior: auto !important;
+}
+/* Stop hover/press transforms as well as timelines. Do not reset structural
+ * transforms such as flipped flashcards, selected graphs or drawer placement. */
+html:is([data-motion="off"], [data-motion="subtle"])
+  .lumio
+  :is(
+    .lm-content-card,
+    .lm-space-card,
+    .lm-new-space,
+    .lm-action-grid > button,
+    .lm-button,
+    .lm-icon,
+    .lx-hero-button,
+    .lx-rating-grid button,
+    [data-home-material]
+  ):is(:hover, :active) {
+  transform: none !important;
 }
 html[data-motion="subtle"]
   .lumio
@@ -236,6 +270,20 @@ html[data-motion="subtle"] .lumio .lm-motion-preview i {
     animation: none !important;
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+  .lumio
+    :is(
+      .lm-content-card,
+      .lm-space-card,
+      .lm-new-space,
+      .lm-action-grid > button,
+      .lm-button,
+      .lm-icon,
+      .lx-hero-button,
+      .lx-rating-grid button,
+      [data-home-material]
+    ):is(:hover, :active) {
+    transform: none !important;
   }
 }
 @media (max-width: 780px) {

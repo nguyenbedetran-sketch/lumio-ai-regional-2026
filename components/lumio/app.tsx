@@ -104,8 +104,13 @@ import { usePersonalization } from "./use-personalization";
 import { parsePreferences } from "../../lib/lumio/recommendations";
 import { BillingPanel } from "./billing";
 import { billingCopy } from "../../lib/lumio/billing-copy";
-import { publicDemoCopy } from "../../lib/lumio/public-demo-copy";
-import { competitionCopy } from "../../lib/lumio/competition-copy";
+import { PreviewNotice } from "./preview-notice";
+import { LoadingSkeleton } from "./LoadingSkeleton";
+import {
+  normalizeThemePreference,
+  readThemePreference,
+  resolveTheme,
+} from "../../lib/lumio/theme";
 import { stripSkillEvidence } from "../../lib/lumio/skill-evidence";
 import { SyncPanel } from "./sync-panel";
 import { RAGManager } from "./rag-manager";
@@ -254,7 +259,7 @@ export default function LumioApp() {
     [login, setLogin] = useState(false),
     [ready, setReady] = useState(false),
     [facebookLocalHost, setFacebookLocalHost] = useState(false),
-    [theme, setTheme] = useState("light");
+    [theme, setTheme] = useState("system");
   const t = catalogs[locale];
   const navCopy = navigationCopy(locale);
   useEffect(() => {
@@ -265,8 +270,8 @@ export default function LumioApp() {
         name: localStorage.getItem("lumio-name") || "",
         account: "guest",
       });
-      setTheme(localStorage.getItem("lumio-theme") || "light");
     } catch {}
+    setTheme(readThemePreference());
     setReady(true);
     setFacebookLocalHost(
       process.env.NODE_ENV !== "production" &&
@@ -304,14 +309,14 @@ export default function LumioApp() {
     if (!ready) return;
     const mq = matchMedia("(prefers-color-scheme: dark)");
     const apply = () =>
-      (document.documentElement.dataset.theme =
-        theme === "dark" || (theme === "system" && mq.matches)
-          ? "dark"
-          : "light");
+      (document.documentElement.dataset.theme = resolveTheme(
+        normalizeThemePreference(theme),
+        mq.matches,
+      ));
     apply();
     mq.addEventListener("change", apply);
     try {
-      localStorage.setItem("lumio-theme", theme);
+      localStorage.setItem("lumio-theme", normalizeThemePreference(theme));
     } catch {}
     return () => mq.removeEventListener("change", apply);
   }, [theme, ready]);
@@ -356,10 +361,7 @@ export default function LumioApp() {
           </DraftBoundary>
         </AccountScope.Provider>
       ) : (
-        <div className="lm-loading">
-          <LumioLogo />
-          <p>{t.loading}</p>
-        </div>
+        <LoadingSkeleton label={t.loading} />
       )}
       {login && (
         <Dialog title="Lumio AI" close={() => setLogin(false)} label={t.close}>
@@ -947,12 +949,7 @@ function Workspace({
       </div>
     );
   if (!data || !learning.ready)
-    return (
-      <div className="lm-loading">
-        <LumioLogo />
-        <p>{t.loading}</p>
-      </div>
-    );
+    return <LoadingSkeleton label={t.loading} />;
   const item = data.items.find((i) => i.id === selected),
     space = data.spaces.find((s) => s.id === spaceId),
     name = profile.name || t.guestName;
@@ -1268,31 +1265,14 @@ function Workspace({
           </div>
         </header>
         {providers?.competitionPreview && (
-          <section
-            className="lm-competition-banner"
-            aria-label={competitionCopy[locale].title}
-            data-competition-preview
-          >
-            <ShieldCheck size={20} aria-hidden="true" />
-            <div>
-              <strong>{competitionCopy[locale].title}</strong>
-              <p>{competitionCopy[locale].detail}</p>
-            </div>
-          </section>
+          <PreviewNotice
+            locale={locale}
+            kind="competition"
+            storage={providers.storage}
+          />
         )}
         {providers?.publicDemo && (
-          <section
-            className="lm-public-demo-banner"
-            aria-labelledby="lm-public-demo-title"
-          >
-            <Globe size={22} aria-hidden="true" />
-            <div>
-              <strong id="lm-public-demo-title">
-                {publicDemoCopy[locale].title}
-              </strong>
-              <p>{publicDemoCopy[locale].description}</p>
-            </div>
-          </section>
+          <PreviewNotice locale={locale} kind="demo" />
         )}
         <main
           ref={contentRef}

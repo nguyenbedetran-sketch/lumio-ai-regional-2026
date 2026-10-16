@@ -3,9 +3,9 @@ const fs = require("node:fs"),
   path = require("node:path"),
   ts = require("typescript"),
   assert = require("node:assert/strict");
-const root = path.resolve(__dirname, ".."),
-  folder = path.join(root, "work/v7-learner-ui");
-function build() {
+const root = path.resolve(__dirname, "..");
+function build(options = {}) {
+  const folder = options.folder || path.join(root, "work/v7-learner-ui");
   fs.mkdirSync(folder, { recursive: true });
   const modules = [],
     ids = new Map(),
@@ -74,6 +74,12 @@ function build() {
         return `__require(${bundle(target)})`;
       },
     );
+    if (
+      options.holdLibraryRead &&
+      filename === path.join(root, "lib/lumio/storage.ts")
+    )
+      source +=
+        "\nmodule.exports.loadLibrarySnapshot=(...args)=>window.__v9ReadLibrary(...args);";
     modules[id] = `function(module,exports,__require){${source}\n}`;
     return id;
   }
@@ -82,7 +88,7 @@ function build() {
     app = bundle(path.join(root, "components/lumio/app.tsx"));
   fs.writeFileSync(
     path.join(folder, "fixture.js"),
-    `(()=>{const process={env:{NODE_ENV:'production'}},modules=[${modules.join(",")}],cache={};function __require(id){if(cache[id])return cache[id].exports;const m=cache[id]={exports:{}};modules[id](m,m.exports,__require);return m.exports;}const React=__require(${react}),{createRoot}=__require(${client}),LumioApp=__require(${app}).default,root=createRoot(document.getElementById('root'));let mount=0;window.__learnerSignIns=0;window.__learnerSignOuts=0;window.__mountLearner=function(session){window.__learnerSession=session;root.render(React.createElement(LumioApp,{key:++mount}));};window.__mountLearner(null);})();`,
+    `(()=>{${options.holdLibraryRead ? "window.__v9LibraryReads=[];window.__v9ReadLibrary=account=>new Promise((resolve,reject)=>window.__v9LibraryReads.push({account,resolve,reject}));window.__v9FinishLibrary=ok=>window.__v9LibraryReads.splice(0).forEach(v=>ok?v.resolve({revision:0,data:{version:1,items:[],spaces:[]}}):v.reject(Error('SYNTHETIC_LIBRARY_READ_FAILED')));" : ""}const process={env:{NODE_ENV:'production'}},modules=[${modules.join(",")}],cache={};function __require(id){if(cache[id])return cache[id].exports;const m=cache[id]={exports:{}};modules[id](m,m.exports,__require);return m.exports;}const React=__require(${react}),{createRoot}=__require(${client}),LumioApp=__require(${app}).default,root=createRoot(document.getElementById('root'));let mount=0;window.__learnerSignIns=0;window.__learnerSignOuts=0;window.__mountLearner=function(session){window.__learnerSession=session;root.render(React.createElement(LumioApp,{key:++mount}));};window.__mountLearner(null);})();`,
   );
   const layout = fs.readFileSync(path.join(root, "app/layout.tsx"), "utf8"),
     css =

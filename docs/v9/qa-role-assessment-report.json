@@ -1,0 +1,988 @@
+{
+  "status": "PASS",
+  "v9Layout": [
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Tên bài tập",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lớp nhận bài",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh ",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫn",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Đối tượng",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "ratio": 5.25,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(244, 247, 236)",
+          "fontSize": 11
+        },
+        {
+          "text": "Cần xem lại: 1 câu chưa gắn trích đoạn nguồn. Đối chiếu nội dung và đáp án ",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        },
+        {
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đá",
+          "ratio": 5.28,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    }
+  ],
+  "v9Findings": [
+    {
+      "label": "assessment-editor",
+      "code": "THEME_NOT_INHERITED",
+      "backgrounds": {
+        "light": "rgb(245, 245, 240)",
+        "dark": "rgb(245, 245, 240)"
+      }
+    }
+  ],
+  "passed": 19,
+  "cases": [
+    "Live matrix preview reports exact authorized-bank shortage",
+    "Complete matrix preview shows actual count",
+    "Composition transparently identifies local deterministic bank selection",
+    "Mutation remains bound to current teacher account and organization 1",
+    "Server shortage details render without losing teacher form",
+    "Form is retained after rejected composition",
+    "Mutation remains bound to current teacher account and organization 2",
+    "Composition request sends requirements and class revision, not caller-selected IDs",
+    "Retry uses the existing idempotency request ID",
+    "Created assessment remains a draft without recipients",
+    "Assignment card shows actual topic/type/difficulty distribution",
+    "No implicit review or publish request is sent",
+    "Ordinary draft edit recalculates the current distribution",
+    "Mutation remains bound to current teacher account and organization 3",
+    "Composed draft reuses the normal CAS update path",
+    "Mobile teacher editor does not overflow the page horizontally",
+    "Mobile save action remains available",
+    "No browser runtime errors in blueprint and draft editing",
+    "Fixture contacts no external service or live API"
+  ],
+  "errors": [],
+  "providerRequests": 0,
+  "scope": "Actual teacher React/CSS and browser interaction with synthetic HTTP. Backend behavior is covered separately by isolated SQLite handler tests.",
+  "checkedAt": "2026-10-16T23:53:17.108Z",
+  "fixtureChecks": 32,
+  "isolation": "Current actual React/CSS + authored identity/HTTP fixtures, isolated Edge session/output files. No auth browser, live server, real students, provider or public writes.",
+  "layoutStatus": "FINDINGS"
+}

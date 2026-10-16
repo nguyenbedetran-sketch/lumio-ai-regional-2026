@@ -1,15 +1,4 @@
-:root {
-  --lm-bg: #fff;
-  --lm-side: #f8f9fb;
-  --lm-soft: #f5f6fa;
-  --lm-text: #252934;
-  --lm-muted: #818692;
-  --lm-line: #e9ebf0;
-  --lm-accent: #5365df;
-  --lm-tint: #eff1fe;
-  --lm-shadow: 0 4px 16px #16234904;
-  color-scheme: light;
-}
+/* Shared semantic palette is defined once in experience.css. */
 * {
   box-sizing: border-box;
 }
@@ -41,7 +30,7 @@ input,
 textarea,
 select {
   background: var(--lm-bg);
-  border: 1px solid var(--lm-line);
+  border: 1px solid var(--lm-control-line);
   border-radius: 10px;
   padding: 11px 13px;
   min-width: 0;
@@ -59,15 +48,15 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 3px solid #8998ff;
+  outline: 3px solid var(--lm-focus);
   outline-offset: 3px;
 }
 button,
 a {
   transition:
-    background 0.15s,
-    border-color 0.15s,
-    transform 0.15s;
+    background-color var(--lm-duration-hover) var(--lm-ease),
+    border-color var(--lm-duration-hover) var(--lm-ease),
+    transform var(--lm-duration-hover) var(--lm-ease);
 }
 a {
   text-decoration: none;
@@ -366,7 +355,7 @@ video {
   gap: 8px;
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid var(--lm-line);
+  border: 1px solid var(--lm-control-line);
   background: var(--lm-bg);
   border-radius: 9px;
   padding: 9px 14px;
@@ -375,25 +364,17 @@ video {
 }
 .lm-button:hover {
   background: var(--lm-soft);
-  border-color: #cbd1eb;
-}
-.lm-button.primary {
-  color: white;
-  background: var(--lm-accent);
   border-color: var(--lm-accent);
-}
-.lm-button.primary:hover {
-  background: #4355d0;
 }
 .lm-button.plain {
   border-color: transparent;
   background: none;
   color: var(--lm-muted);
 }
-.lm-button.danger-fill {
-  background: #bf4949;
-  color: #fff;
-  border-color: #bf4949;
+.lumio .lm-button.danger-fill {
+  background: var(--lm-danger-action);
+  color: var(--lm-on-danger);
+  border-color: var(--lm-danger-action);
 }
 .lm-login-button {
   font-size: 12px;
@@ -415,7 +396,7 @@ video {
   color: var(--lm-accent);
 }
 .lm-icon.danger {
-  color: #b17777;
+  color: var(--lm-error);
 }
 .lm-content {
   max-width: 1350px;
@@ -991,10 +972,10 @@ video {
 }
 .lm-error {
   font-size: 13px;
-  background: #fff0ed;
-  color: #a44943;
+  background: var(--lm-error-bg);
+  color: var(--lm-error);
   padding: 13px;
-  border: 1px solid #f2d8d4;
+  border: 1px solid var(--lm-error);
   border-radius: 9px;
   margin: 15px 0;
 }
@@ -1622,17 +1603,6 @@ video {
 .lm-mobile-backdrop {
   display: none;
 }
-[data-theme="dark"] {
-  --lm-bg: #171a22;
-  --lm-side: #13161d;
-  --lm-soft: #212530;
-  --lm-text: #e1e5ef;
-  --lm-muted: #929bad;
-  --lm-line: #2b303e;
-  --lm-accent: #8b99f5;
-  --lm-tint: #272d47;
-  color-scheme: dark;
-}
 [data-theme="dark"] .lm-nav button,
 [data-theme="dark"] .lm-nav-single {
   color: #a3adc1;
@@ -1671,11 +1641,6 @@ video {
 [data-theme="dark"] .lm-avatar {
   background: #313953;
   color: #b7c3ff;
-}
-[data-theme="dark"] .lm-error {
-  background: #3a2627;
-  color: #f3b2a7;
-  border-color: #604047;
 }
 [data-theme="dark"] .lm-answers .correct {
   background: #203c2c;

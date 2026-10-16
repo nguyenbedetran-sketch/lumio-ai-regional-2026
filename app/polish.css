@@ -1,14 +1,4 @@
-:root {
-  --lm-bg: #fff;
-  --lm-side: #ffffffd9;
-  --lm-soft: #f4f6fc;
-  --lm-text: #222840;
-  --lm-muted: #6e7890;
-  --lm-line: #e7eaf4;
-  --lm-accent: #6055df;
-  --lm-tint: #eeecff;
-  --lm-shadow: 0 5px 20px #273b7207;
-}
+/* Shared semantic palette is defined once in experience.css. */
 body {
   background: #f5f6fc;
 }
@@ -799,16 +789,6 @@ body {
     transform: translateX(0);
   }
 }
-:root[data-theme="dark"] {
-  --lm-bg: #1d2032;
-  --lm-side: #1d2032;
-  --lm-soft: #272a40;
-  --lm-text: #ebe8f5;
-  --lm-muted: #a1a8bd;
-  --lm-line: #383b52;
-  --lm-accent: #b2a3ff;
-  --lm-tint: #332e50;
-}
 [data-theme="dark"] body {
   background: #131524;
 }
@@ -822,8 +802,7 @@ body {
 [data-theme="dark"] .lm-learning,
 [data-theme="dark"] .lm-composer,
 [data-theme="dark"] .lm-ai-result,
-[data-theme="dark"] .lm-oauth,
-[data-theme="dark"] .lm-topbar .lm-button {
+[data-theme="dark"] .lm-oauth {
   background: #1d2032;
   border-color: #35364d;
 }

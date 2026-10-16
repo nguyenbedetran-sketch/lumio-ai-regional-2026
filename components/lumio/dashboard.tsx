@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -41,17 +41,19 @@ import {
 import { homeV8Copy } from "../../lib/lumio/home-v8-copy";
 import { useDraft } from "../shared/draft-guard";
 import styles from "./home-v8.module.css";
-export function useLocalClock() {
+export function useLocalClock(observation?: LearningState) {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
     const tick = () => setNow(new Date());
+    // A newly recorded event must not wait for the next periodic clock tick.
+    tick();
     const timer = setInterval(tick, 30000);
     document.addEventListener("visibilitychange", tick);
     return () => {
       clearInterval(timer);
       document.removeEventListener("visibilitychange", tick);
     };
-  }, []);
+  }, [observation]);
   return now;
 }
 export function StreakCalendar({
@@ -65,14 +67,15 @@ export function StreakCalendar({
   state: LearningState;
   snapshot?: Date;
 }) {
-  const clock = useLocalClock(),
+  const clock = useLocalClock(state),
     now = snapshot || clock,
     c = focusCopy[locale],
+    homeCopy = homeV8Copy[locale],
     copy = learningCopy[locale],
     m = learningMetrics(items, state, now);
   return (
     <section
-      className={`lx-streak-card ${m.todayActive ? "is-active" : ""}`}
+      className={`lx-streak-card ${styles.streak} ${m.todayActive ? "is-active" : ""}`}
       aria-label={copy.streak}
     >
       <div className="lx-streak-symbol" aria-hidden="true">
@@ -82,9 +85,12 @@ export function StreakCalendar({
       <div className="lx-streak-copy">
         <strong>
           {m.streak} {copy.days} ·{" "}
-          {m.todayActive ? c.streakToday : c.streakPending}
+          {m.todayActive ? homeCopy.streakRecorded : homeCopy.streakNeutral}
         </strong>
-        <p>{c.streakHint}</p>
+        <details className={styles.streakExplanation}>
+          <summary>{homeCopy.streakDetails}</summary>
+          <p>{c.streakHint}</p>
+        </details>
       </div>
       <div className="lx-streak-week">
         {m.week.map((day, index) => (
@@ -122,7 +128,7 @@ export function ActivityChart({
   locale: Locale;
   snapshot?: Date;
 }) {
-  const clock = useLocalClock(),
+  const clock = useLocalClock(state),
     now = snapshot || clock,
     c = learningCopy[locale],
     metrics = learningMetrics(items, state, now),
@@ -189,12 +195,13 @@ export function Dashboard({
   onControls?: () => void;
   storageError?: boolean;
 }) {
-  const now = useLocalClock(),
+  const now = useLocalClock(state),
     c = homeV8Copy[locale],
     copy = dashboardCopy[locale];
   const mode = useDashboardMotion();
   const insight = dashboardInsights(items, state, now);
   const [question, setQuestion] = useState("");
+  const inputId = useId();
   const [sourceId, setSourceId] = useState("");
   const draft = useDraft(c.tutor, false, () => setQuestion(""));
   const source = items.find((i) => i.id === sourceId) || insight.recent[0];
@@ -237,11 +244,27 @@ export function Dashboard({
                 </span>
                 <h2>{c.tutor}</h2>
               </div>
+              <p id={`${inputId}-example`} className={styles.example}>
+                {c.example}
+              </p>
               <textarea
+                id={inputId}
+                aria-keyshortcuts="Control+Enter Meta+Enter"
+                aria-describedby={`${inputId}-example ${inputId}-disclosure`}
                 aria-label={c.tutor}
                 placeholder={c.question}
                 maxLength={2000}
                 value={question}
+                onKeyDown={(event) => {
+                  if (
+                    event.key === "Enter" &&
+                    (event.ctrlKey || event.metaKey) &&
+                    !event.nativeEvent.isComposing
+                  ) {
+                    event.preventDefault();
+                    event.currentTarget.form?.requestSubmit();
+                  }
+                }}
                 onChange={(event) => {
                   setQuestion(event.target.value);
                   event.target.value.trim()
@@ -251,7 +274,10 @@ export function Dashboard({
               />
               <div className={styles.composeActions}>
                 <label>
-                  {c.source}
+                  <span className={styles.sourceLabel}>
+                    <BookOpen size={14} aria-hidden="true" />
+                    {c.source}
+                  </span>
                   <select
                     value={source?.id || ""}
                     onChange={(e) => setSourceId(e.target.value)}
@@ -273,7 +299,12 @@ export function Dashboard({
                   <ArrowUpRight size={16} />
                 </button>
               </div>
-              <p className={styles.muted}>{c.disclosure}</p>
+              <div className={styles.composerFooter}>
+                <p id={`${inputId}-disclosure`} className={styles.muted}>
+                  {c.disclosure}
+                </p>
+                <span className={styles.shortcut}>{c.shortcut}</span>
+              </div>
             </form>
             <div data-dash-reveal>
               <DailyLearningPlan
@@ -307,6 +338,8 @@ export function Dashboard({
                         className={styles.material}
                         key={item.id}
                         onClick={() => open(item)}
+                        aria-label={`${c.openMaterial}: ${item.title}`}
+                        title={item.title}
                         data-home-material
                       >
                         <span
@@ -317,7 +350,7 @@ export function Dashboard({
                         </span>
                         <strong>{item.title}</strong>
                         <span className={styles.materialFooter}>
-                          <small>{c.saved}</small>
+                          <small>{c.openMaterial}</small>
                           <ArrowUpRight size={16} />
                         </span>
                       </button>
@@ -353,17 +386,32 @@ export function Dashboard({
                 <h2>{c.goals}</h2>
                 <Target size={19} aria-hidden="true" />
               </div>
-              <div className={styles.metric}>
-                <strong>
-                  <DashboardCounter
+              {insight.goals.length > 0 ? (
+                <>
+                  <div className={styles.metric}>
+                    <strong>
+                      <DashboardCounter
+                        value={insight.completedGoals}
+                        locale={locale}
+                        mode={mode}
+                      />{" "}
+                      / {insight.goals.length}
+                    </strong>
+                    <span>{copy.goalProgress}</span>
+                  </div>
+                  <progress
+                    className={styles.goalProgress}
                     value={insight.completedGoals}
-                    locale={locale}
-                    mode={mode}
-                  />
-                  /{insight.goals.length}
-                </strong>
-                <span>{copy.goalProgress}</span>
-              </div>
+                    max={insight.goals.length}
+                    aria-label={copy.goalProgress}
+                  >
+                    {insight.completedGoals}/{insight.goals.length}
+                  </progress>
+                  <p className={styles.goalHint}>{c.goalHint}</p>
+                </>
+              ) : (
+                <p className={styles.goalEmpty}>{c.goalEmpty}</p>
+              )}
               {insight.goals.length ? (
                 <div className={styles.goals}>
                   {insight.goals.slice(0, 3).map((task) => (

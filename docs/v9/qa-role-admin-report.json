@@ -1,0 +1,623 @@
+{
+  "status": "PASS",
+  "v9Layout": [
+    {
+      "label": "admin",
+      "theme": "light",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "light",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "light",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "light",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "dark",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "dark",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "dark",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "admin",
+      "theme": "dark",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(12, 17, 22)",
+      "text": "rgb(236, 242, 245)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 1,
+      "contrast": [
+        {
+          "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải xác minh da",
+          "ratio": 7.76,
+          "minimum": 4.5,
+          "color": "rgb(152, 168, 180)",
+          "background": "rgb(12, 17, 22)",
+          "fontSize": 12
+        },
+        {
+          "text": "Người gửi / Trường",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Địa phương",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trạng thái",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Ngày gửi",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        },
+        {
+          "text": "Chi tiết hồ sơ",
+          "ratio": 7.18,
+          "minimum": 4.5,
+          "color": "rgb(156, 177, 189)",
+          "background": "rgb(24, 35, 43)",
+          "fontSize": 10
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "Lumio CONSOLE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 2,
+        "shadow": "none"
+      }
+    }
+  ],
+  "v9Findings": [
+    {
+      "label": "admin",
+      "code": "THEME_NOT_INHERITED",
+      "backgrounds": {
+        "light": "rgb(12, 17, 22)",
+        "dark": "rgb(12, 17, 22)"
+      }
+    }
+  ],
+  "passed": 31,
+  "cases": [
+    "Empty real queue shows no seeded teachers or invented counts",
+    "Manual declaration review is distinct from identity and school verification",
+    "Queue honors server pagination and displays returned total",
+    "Next-page request uses the server offset rather than filtering one loaded page",
+    "Location search runs on the server and resets pagination",
+    "Sort selection is included in the server request",
+    "Details render declared field: Việt Nam",
+    "Details render declared field: Đà Nẵng",
+    "Details render declared field: Phường kiểm thử",
+    "Details render declared field: Trung học cơ sở",
+    "Details render declared field: Toán, Khoa học tự nhiên",
+    "Declared text is escaped rather than rendered as HTML",
+    "Optional evidence is an explicit safe link and is never auto-fetched",
+    "Choosing approve only opens a review confirmation and does not mutate access",
+    "Decision requires an adequate review note",
+    "Approval sends note, canonical revision and idempotency ID to the guarded API",
+    "Reviewed application leaves the pending filter while the decision remains visible",
+    "Teacher approval does not promise admin or private student access",
+    "Concurrent revisions show an actionable conflict and do not claim a completed revoke",
+    "Explicit refresh uses the current revision before a successful revoke",
+    "Lost-ACK retry reuses the same ID and does not apply the decision twice",
+    "Administrator cannot self-review their own teacher declaration",
+    "Successful review refreshes the admin audit view",
+    "Read-only permission exposes details without review controls",
+    "Teacher queue and detail fit a 390px viewport with contained table scrolling ",
+    "Unrecognized backend errors never echo arbitrary details or secrets",
+    "DEV has no private teacher queue entry point",
+    "Refresh during a pending review clears stale detail and releases the UI lock",
+    "Late review responses cannot attach old decisions after the context has refreshed",
+    "No runtime errors during filtering, review, retries, permissions or mobile rendering",
+    "No evidence link, provider or external service was contacted"
+  ],
+  "errors": [],
+  "paidProviderRequests": 0,
+  "actualTeacherAccounts": 0,
+  "reviewMutations": 4,
+  "syntheticHTTPRequests": 6,
+  "screenshots": [
+    "docs/v9/qa-role-teacher-admin-desktop.png",
+    "docs/v9/qa-role-teacher-admin-mobile.png"
+  ],
+  "scope": "Actual React/CSS admin components with explicitly synthetic applicants and intercepted API responses; backend security is tested separately",
+  "checkedAt": "2026-10-16T23:53:26.889Z",
+  "fixtureChecks": 3,
+  "isolation": "Current actual React/CSS + authored identity/HTTP fixtures, isolated Edge session/output files. No auth browser, live server, real students, provider or public writes.",
+  "layoutStatus": "FINDINGS"
+}

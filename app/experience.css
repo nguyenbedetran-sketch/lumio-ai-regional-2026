@@ -1,18 +1,172 @@
-/* Lumio learning studio: warm paper, deep ink, quiet mint. */
+/* Lumio Aurora: one semantic palette shared by existing learner components.
+ * Forest surfaces, lime actions, and localized violet AI accents. */
 :root {
-  --lm-bg: #fff;
-  --lm-side: #fff;
-  --lm-soft: #f1f3ed;
-  --lm-text: #1e302f;
-  --lm-muted: #73807b;
-  --lm-line: #e2e7de;
-  --lm-accent: #366d61;
-  --lm-tint: #ecf3e8;
-  --lx-paper: #f5f6f0;
-  --lx-ink: #172f30;
-  --lx-mint: #d2f5a6;
-  --lx-card: #fff;
-  --lm-shadow: 0 8px 22px #203a2205;
+  color-scheme: dark;
+  --lm-canvas: #101916;
+  --lm-surface: #1b2521;
+  --lm-surface-raised: #24312b;
+  --lm-fg: #edf3e8;
+  --lm-fg-secondary: #c8d4ca;
+  --lm-fg-muted: #a3b3a8;
+  --lm-border: #46594d;
+  --lm-control-line: #718675;
+  --lm-link: #afd1bd;
+  --lm-link-surface: #263c30;
+  --lm-primary: #c8f29a;
+  --lm-primary-hover: #d7f9b4;
+  --lm-primary-pressed: #b6dc87;
+  --lm-primary-line: #c8f29a;
+  --lm-on-primary: #172719;
+  --lm-ai: #b7a8ff;
+  --lm-ai-tint: #302b43;
+  --lm-ai-line: #8275ad;
+  --lm-success: #8cd8b0;
+  --lm-success-bg: #20392d;
+  --lm-warning: #ffcc85;
+  --lm-warning-bg: #3d3020;
+  --lm-error: #ffb4ae;
+  --lm-error-bg: #422724;
+  --lm-danger-action: #a33436;
+  --lm-on-danger: #fff7f6;
+  --lm-info: #afcbf1;
+  --lm-info-bg: #253342;
+  --lm-focus: #c8f29a;
+  --lm-disabled-bg: #303d34;
+  --lm-disabled-fg: #a3b3a8;
+  --lm-chart-1: #afd1bd;
+  --lm-chart-2: #b7a8ff;
+  --lm-chart-3: #c8f29a;
+  --lm-chart-4: #ffcc85;
+  --lm-shadow-soft: 0 5px 18px rgb(0 0 0 / 13%);
+  --lm-duration-hover: 180ms;
+  --lm-duration-state: 220ms;
+  --lm-duration-panel: 280ms;
+  --lm-ease: cubic-bezier(0.2, 0.75, 0.2, 1);
+  --lm-radius-control: 12px;
+  --lm-radius-card: 20px;
+  /* Compatibility names used throughout the current product. */
+  --lm-bg: var(--lm-surface);
+  --lm-side: var(--lm-canvas);
+  --lm-soft: var(--lm-surface-raised);
+  --lm-text: var(--lm-fg);
+  --lm-muted: var(--lm-fg-muted);
+  --lm-line: var(--lm-border);
+  --lm-accent: var(--lm-link);
+  --lm-tint: var(--lm-link-surface);
+  --lm-panel: var(--lm-surface);
+  --lx-paper: var(--lm-canvas);
+  --lx-ink: var(--lm-text);
+  --lx-mint: var(--lm-primary);
+  --lx-card: var(--lm-surface);
+  --lm-shadow: var(--lm-shadow-soft);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --lm-canvas: #f1f5ee;
+  --lm-surface: #ffffff;
+  --lm-surface-raised: #e8efe4;
+  --lm-fg: #1d2f26;
+  --lm-fg-secondary: #42564a;
+  --lm-fg-muted: #566b5e;
+  --lm-border: #c8d4c9;
+  --lm-control-line: #778b7d;
+  --lm-link: #315f4d;
+  --lm-link-surface: #eaf1e7;
+  --lm-primary-line: #5e792f;
+  --lm-ai: #6550a8;
+  --lm-ai-tint: #efeafb;
+  --lm-ai-line: #8f7bbd;
+  --lm-success: #246643;
+  --lm-success-bg: #e0f3e7;
+  --lm-warning: #805014;
+  --lm-warning-bg: #fff0d7;
+  --lm-error: #a13234;
+  --lm-error-bg: #ffebe8;
+  --lm-info: #315b87;
+  --lm-info-bg: #e6effb;
+  --lm-focus: #6550a8;
+  --lm-disabled-bg: #e2e8de;
+  --lm-disabled-fg: #68786b;
+  --lm-chart-1: #315f4d;
+  --lm-chart-2: #6550a8;
+  --lm-chart-3: #536c25;
+  --lm-chart-4: #805014;
+  --lm-shadow-soft: 0 5px 18px rgb(25 48 39 / 5%);
+}
+/* Before the existing theme effect runs, honor a light system preference.
+ * Explicit persisted theme attributes always take precedence. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color-scheme: light;
+    --lm-canvas: #f1f5ee;
+    --lm-surface: #ffffff;
+    --lm-surface-raised: #e8efe4;
+    --lm-fg: #1d2f26;
+    --lm-fg-secondary: #42564a;
+    --lm-fg-muted: #566b5e;
+    --lm-border: #c8d4c9;
+    --lm-control-line: #778b7d;
+    --lm-link: #315f4d;
+    --lm-link-surface: #eaf1e7;
+    --lm-primary-line: #5e792f;
+    --lm-ai: #6550a8;
+    --lm-ai-tint: #efeafb;
+    --lm-ai-line: #8f7bbd;
+    --lm-success: #246643;
+    --lm-success-bg: #e0f3e7;
+    --lm-warning: #805014;
+    --lm-warning-bg: #fff0d7;
+    --lm-error: #a13234;
+    --lm-error-bg: #ffebe8;
+    --lm-info: #315b87;
+    --lm-info-bg: #e6effb;
+    --lm-focus: #6550a8;
+    --lm-disabled-bg: #e2e8de;
+    --lm-disabled-fg: #68786b;
+    --lm-chart-1: #315f4d;
+    --lm-chart-2: #6550a8;
+    --lm-chart-3: #536c25;
+    --lm-chart-4: #805014;
+    --lm-shadow-soft: 0 5px 18px rgb(25 48 39 / 5%);
+  }
+}
+/* Shared utilities consume the same palette; they do not imply a successful
+ * operation. Components keep their existing text/icons and source of truth. */
+:root .lumio .lm-ai-surface {
+  color: var(--lm-text);
+  background: var(--lm-ai-tint);
+  border-color: var(--lm-ai-line);
+}
+.lm-ai-label {
+  color: var(--lm-ai);
+}
+.lm-status-success {
+  color: var(--lm-success);
+  background: var(--lm-success-bg);
+}
+.lm-status-warning {
+  color: var(--lm-warning);
+  background: var(--lm-warning-bg);
+}
+.lm-status-error {
+  color: var(--lm-error);
+  background: var(--lm-error-bg);
+}
+.lm-status-info {
+  color: var(--lm-info);
+  background: var(--lm-info-bg);
+}
+.lumio ::placeholder {
+  color: var(--lm-muted);
+  opacity: 1;
+}
+.lumio ::selection {
+  color: var(--lm-text);
+  background: var(--lm-ai-tint);
+}
+.lumio input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+.lumio select {
+  min-height: 44px;
 }
 body,
 .lumio {
@@ -202,24 +356,26 @@ body,
   box-shadow: none;
   font-weight: 550;
 }
-.lm-button.primary,
+.lumio .lm-button.primary,
 .lm-idea button:not(:disabled) {
-  background: #376e60;
-  border-color: #376e60;
-  color: #fff;
+  background: var(--lm-primary);
+  border-color: var(--lm-primary-line);
+  color: var(--lm-on-primary);
   box-shadow: none;
 }
-.lm-button.primary:hover {
-  background: #2b5b4f;
-  border-color: #2b5b4f;
+.lumio .lm-button.primary:not(:disabled):hover {
+  background: var(--lm-primary-hover);
+  border-color: var(--lm-primary-line);
 }
-.lm-button.primary:disabled {
-  background: #b4c4bb;
-  border-color: #b4c4bb;
+.lumio .lm-button.primary:disabled {
+  background: var(--lm-disabled-bg);
+  border-color: var(--lm-border);
+  color: var(--lm-disabled-fg);
+  opacity: 1;
 }
 .lm-button:focus-visible,
 .lx-hero-button:focus-visible {
-  outline-color: #80bd92;
+  outline-color: var(--lm-focus);
 }
 .lm-panel,
 .lm-learning {
@@ -554,16 +710,15 @@ body,
   justify-content: center;
   min-height: 43px;
   border-radius: 10px;
-  background: #d2f5a6;
-  color: #27412b;
+  background: var(--lm-primary);
+  color: var(--lm-on-primary);
   padding: 11px 16px;
   font-size: 12px;
   font-weight: 650;
   margin-top: 24px;
 }
 .lx-hero-button:hover {
-  background: #e0ffbe;
-  transform: translateY(-2px);
+  background: var(--lm-primary-hover);
 }
 .lx-orbital {
   position: relative;
@@ -1834,19 +1989,6 @@ body,
     opacity: 1;
   }
 }
-[data-theme="dark"] {
-  --lm-bg: #1c2826;
-  --lm-side: #192623;
-  --lm-soft: #26342e;
-  --lm-text: #dfe8d9;
-  --lm-muted: #8fa28f;
-  --lm-line: #334237;
-  --lm-accent: #a6c489;
-  --lm-tint: #2b3f2e;
-  --lx-paper: #15211f;
-  --lx-card: #1e2c27;
-  color-scheme: dark;
-}
 [data-theme="dark"] body,
 [data-theme="dark"] .lumio {
   background: var(--lx-paper);
@@ -1879,12 +2021,6 @@ body,
   background: var(--lx-card);
   border-color: var(--lm-line);
 }
-[data-theme="dark"] .lm-button.primary {
-  background: #bddca2;
-  color: #24402c;
-  border-color: #bddca2;
-}
-[data-theme="dark"] .lm-topbar .lm-button,
 [data-theme="dark"] .lm-space-card,
 [data-theme="dark"] .lm-content-card {
   background: var(--lx-card);

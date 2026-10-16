@@ -1,5 +1,14 @@
 import type { Locale } from "./i18n";
 const en = {
+  example: "Try: explain this idea with a simple example.",
+  shortcut: "Ctrl / ⌘ + Enter opens the draft",
+  openMaterial: "Open material",
+  goalHint: "Goals you mark complete, not a knowledge score.",
+  goalEmpty: "No goals set yet",
+  streakRecorded: "Learning recorded today.",
+  streakNeutral: "Every learning moment counts.",
+  streakDetails: "How activity is counted",
+
   welcome: "A little progress, every day.",
   intro: "Your materials. A thoughtful next step. Room to understand.",
   tutor: "What would you like to understand?",
@@ -28,6 +37,15 @@ type Copy = { [K in keyof typeof en]: string };
 export const homeV8Copy: Record<Locale, Copy> = {
   en,
   vi: {
+    example: "Ví dụ: giải thích ý này bằng một ví dụ đơn giản.",
+    shortcut: "Ctrl / ⌘ + Enter để mở bản nháp",
+    openMaterial: "Mở học liệu",
+    goalHint: "Mục tiêu bạn tự đánh dấu, không phải điểm kiến thức.",
+    goalEmpty: "Chưa đặt mục tiêu",
+    streakRecorded: "Đã ghi nhận hoạt động hôm nay.",
+    streakNeutral: "Mỗi lần học đều đáng ghi nhận.",
+    streakDetails: "Cách tính hoạt động",
+
     welcome: "Mỗi ngày, hiểu thêm một chút.",
     intro: "Học liệu của bạn. Một bước học vừa sức. Không gian để hiểu sâu.",
     tutor: "Hôm nay bạn muốn hiểu điều gì?",
@@ -54,6 +72,15 @@ export const homeV8Copy: Record<Locale, Copy> = {
     controls: "Tùy chỉnh học tập",
   },
   "zh-CN": {
+    example: "例如：用一个简单的例子解释这个概念。",
+    shortcut: "Ctrl / ⌘ + Enter 打开草稿",
+    openMaterial: "打开资料",
+    goalHint: "由你标记完成的目标，不是知识得分。",
+    goalEmpty: "尚未设置目标",
+    streakRecorded: "今天已记录学习活动。",
+    streakNeutral: "每一次学习都值得记录。",
+    streakDetails: "活动的记录方式",
+
     welcome: "每天，多理解一点。",
     intro: "你的资料，合适的下一步，深入理解的空间。",
     tutor: "今天想理解什么？",
@@ -77,6 +104,15 @@ export const homeV8Copy: Record<Locale, Copy> = {
     controls: "学习偏好",
   },
   ja: {
+    example: "例：この考え方を簡単な例で説明してください。",
+    shortcut: "Ctrl / ⌘ + Enter で下書きを開く",
+    openMaterial: "教材を開く",
+    goalHint: "自分で完了を付けた目標で、知識の点数ではありません。",
+    goalEmpty: "目標はまだありません",
+    streakRecorded: "今日の学習を記録しました。",
+    streakNeutral: "少しの学習も大切な一歩。",
+    streakDetails: "活動の数え方",
+
     welcome: "毎日、少しずつ理解を深める。",
     intro: "自分の教材から、無理のない次の一歩へ。",
     tutor: "今日は何を理解したいですか？",
@@ -102,6 +138,15 @@ export const homeV8Copy: Record<Locale, Copy> = {
     controls: "学習の設定",
   },
   ko: {
+    example: "예: 이 개념을 간단한 예로 설명해 주세요.",
+    shortcut: "Ctrl / ⌘ + Enter로 초안 열기",
+    openMaterial: "자료 열기",
+    goalHint: "직접 완료 표시한 목표이며 지식 점수가 아니에요.",
+    goalEmpty: "아직 목표가 없어요",
+    streakRecorded: "오늘의 학습이 기록되었어요.",
+    streakNeutral: "작은 학습도 소중한 한 걸음이에요.",
+    streakDetails: "활동 기록 방법",
+
     welcome: "매일, 조금 더 깊이 이해해요.",
     intro: "내 학습 자료에서 시작하는 알맞은 다음 단계.",
     tutor: "오늘 무엇을 이해하고 싶나요?",

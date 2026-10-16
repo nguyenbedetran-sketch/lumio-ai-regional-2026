@@ -72,14 +72,14 @@ export function DashboardReveal({
           const animation = entry.target.animate(
             mode === "full"
               ? [
-                  { transform: "translateY(18px) scale(.985)", opacity: 0.78 },
-                  { transform: "translateY(0) scale(1)", opacity: 1 },
+                  { transform: "translateY(6px)", opacity: 0.9 },
+                  { transform: "translateY(0)", opacity: 1 },
                 ]
               : [{ opacity: 0.85 }, { opacity: 1 }],
             {
-              duration: mode === "full" ? 580 : 180,
-              delay: Math.min(stagger++ * 65, 195),
-              easing: "cubic-bezier(.18,.75,.23,1)",
+              duration: mode === "full" ? 280 : 180,
+              delay: Math.min(stagger++ * 32, 64),
+              easing: "cubic-bezier(.2,.75,.2,1)",
               fill: "none",
             },
           );
@@ -104,11 +104,10 @@ export function DashboardReveal({
   );
 }
 
-/** Screen readers and motion-off always receive the current metric, never an animated estimate. */
+/** Every motion mode and assistive technology receives the saved metric, never an animated estimate. */
 export function DashboardCounter({
   value,
   locale,
-  mode,
   suffix = "",
 }: {
   value: number;
@@ -116,38 +115,14 @@ export function DashboardCounter({
   mode: DashboardMotionMode;
   suffix?: string;
 }) {
-  const [display, setDisplay] = useState(value);
-  const previous = useRef(value);
-  useEffect(() => {
-    const from = previous.current;
-    previous.current = value;
-    if (mode !== "full" || from === value) {
-      setDisplay(value);
-      return;
-    }
-    let frame = 0;
-    const start = performance.now();
-    const tick = (time: number) => {
-      const progress = Math.min(1, (time - start) / 480);
-      setDisplay(
-        progress === 1
-          ? value
-          : Math.round(from + (value - from) * (1 - Math.pow(1 - progress, 3))),
-      );
-      if (progress < 1) frame = requestAnimationFrame(tick);
-    };
-    frame = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(frame);
-  }, [value, mode]);
+  // Counts are actual saved observations; no interpolated or placeholder values.
   const format = (number: number) =>
     new Intl.NumberFormat(locale, {
       maximumFractionDigits: Number.isInteger(value) ? 0 : 1,
     }).format(number) + suffix;
   return (
     <span className="dv-counter">
-      <span aria-hidden="true">
-        {format(mode === "full" ? display : value)}
-      </span>
+      <span aria-hidden="true">{format(value)}</span>
       <span className="dv-sr-only">{format(value)}</span>
     </span>
   );
@@ -188,9 +163,9 @@ export function LearningConstellation({
           { strokeDasharray: `${length} ${length}`, strokeDashoffset: 0 },
         ],
         {
-          duration: 850,
-          delay: index * 80,
-          easing: "cubic-bezier(.2,.6,.3,1)",
+          duration: 280,
+          delay: Math.min(index * 32, 64),
+          easing: "cubic-bezier(.2,.75,.2,1)",
           fill: "none",
         },
       );

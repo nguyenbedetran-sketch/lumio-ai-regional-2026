@@ -27,7 +27,7 @@ export function Progress({
   state: LearningState;
   open: (item: LearningItem) => void;
 }) {
-  const now = useLocalClock(),
+  const now = useLocalClock(state),
     c = learningCopy[locale],
     m = learningMetrics(items, state, now);
   return (

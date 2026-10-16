@@ -1,0 +1,342 @@
+{
+  "status": "PASS",
+  "passed": 94,
+  "checks": [
+    "dark: heading computed text contrast >=4.5",
+    "dark: secondary computed text contrast >=4.5",
+    "dark: body-text computed text contrast >=4.5",
+    "dark: muted computed text contrast >=4.5",
+    "dark: primary computed text contrast >=4.5",
+    "dark: topbar-primary computed text contrast >=4.5",
+    "dark: secondary-button computed text contrast >=4.5",
+    "dark: danger computed text contrast >=4.5",
+    "dark: ai-label computed text contrast >=4.5",
+    "dark: ai-body computed text contrast >=4.5",
+    "dark: success computed text contrast >=4.5",
+    "dark: warning computed text contrast >=4.5",
+    "dark: error computed text contrast >=4.5",
+    "dark: info computed text contrast >=4.5",
+    "dark: existing-error computed text contrast >=4.5",
+    "dark: input effective control boundary >=3",
+    "dark: select effective control boundary >=3",
+    "dark: textarea effective control boundary >=3",
+    "dark: secondary-button effective control boundary >=3",
+    "dark: primary effective control boundary >=3",
+    "dark: topbar-primary effective control boundary >=3",
+    "dark: chart1 marker contrast >=3",
+    "dark: chart2 marker contrast >=3",
+    "dark: chart3 marker contrast >=3",
+    "dark: chart4 marker contrast >=3",
+    "dark: keyboard primary focus ring is visible against surface",
+    "dark: native disclosure has visible keyboard focus",
+    "dark: shared input target is at least44px",
+    "dark: placeholder contrast remains readable",
+    "dark: localized AI surface survives existing panel cascade",
+    "light: heading computed text contrast >=4.5",
+    "light: secondary computed text contrast >=4.5",
+    "light: body-text computed text contrast >=4.5",
+    "light: muted computed text contrast >=4.5",
+    "light: primary computed text contrast >=4.5",
+    "light: topbar-primary computed text contrast >=4.5",
+    "light: secondary-button computed text contrast >=4.5",
+    "light: danger computed text contrast >=4.5",
+    "light: ai-label computed text contrast >=4.5",
+    "light: ai-body computed text contrast >=4.5",
+    "light: success computed text contrast >=4.5",
+    "light: warning computed text contrast >=4.5",
+    "light: error computed text contrast >=4.5",
+    "light: info computed text contrast >=4.5",
+    "light: existing-error computed text contrast >=4.5",
+    "light: input effective control boundary >=3",
+    "light: select effective control boundary >=3",
+    "light: textarea effective control boundary >=3",
+    "light: secondary-button effective control boundary >=3",
+    "light: primary effective control boundary >=3",
+    "light: topbar-primary effective control boundary >=3",
+    "light: chart1 marker contrast >=3",
+    "light: chart2 marker contrast >=3",
+    "light: chart3 marker contrast >=3",
+    "light: chart4 marker contrast >=3",
+    "light: keyboard primary focus ring is visible against surface",
+    "light: native disclosure has visible keyboard focus",
+    "light: shared input target is at least44px",
+    "light: placeholder contrast remains readable",
+    "light: localized AI surface survives existing panel cascade",
+    "No stored theme honors light system before JavaScript theme resolution",
+    "Explicit dark theme wins over light system preference",
+    "Full motion card lifts at most2px without scale",
+    "Shared hover durations stay between150 and220ms",
+    "Button press feedback does not scale the button",
+    "off: card has no hover transform",
+    "off: space has no hover transform",
+    "off: action has no hover transform",
+    "off: primary has no hover transform",
+    "off: icon has no hover transform",
+    "User motion-off removes transitions",
+    "Motion preference preserves structural layout transform",
+    "subtle: card has no hover transform",
+    "subtle: space has no hover transform",
+    "subtle: action has no hover transform",
+    "subtle: primary has no hover transform",
+    "subtle: icon has no hover transform",
+    "Motion preference preserves structural layout transform",
+    "OS reduced motion suppresses card hover transform",
+    "OS reduced motion suppresses space hover transform",
+    "OS reduced motion suppresses action hover transform",
+    "OS reduced motion suppresses primary hover transform",
+    "OS reduced motion suppresses icon hover transform",
+    "OS reduced motion removes shared transitions",
+    "Representative shared controls fit320px without horizontal overflow",
+    "Representative shared controls fit360px without horizontal overflow",
+    "Representative shared controls fit390px without horizontal overflow",
+    "Representative shared controls fit430px without horizontal overflow",
+    "Representative shared controls fit768px without horizontal overflow",
+    "Representative shared controls fit1024px without horizontal overflow",
+    "Representative shared controls fit1440px without horizontal overflow",
+    "Disabled control preserves native disabled semantics",
+    "No browser runtime errors",
+    "No external or product API requests"
+  ],
+  "ratios": [
+    {
+      "theme": "dark",
+      "target": "heading",
+      "ratio": 15.85,
+      "foreground": "rgb(237, 243, 232)",
+      "background": "rgb(16, 25, 22)"
+    },
+    {
+      "theme": "dark",
+      "target": "secondary",
+      "ratio": 11.71,
+      "foreground": "rgb(200, 212, 202)",
+      "background": "rgb(16, 25, 22)"
+    },
+    {
+      "theme": "dark",
+      "target": "body-text",
+      "ratio": 13.94,
+      "foreground": "rgb(237, 243, 232)",
+      "background": "rgb(27, 37, 33)"
+    },
+    {
+      "theme": "dark",
+      "target": "muted",
+      "ratio": 7.18,
+      "foreground": "rgb(163, 179, 168)",
+      "background": "rgb(27, 37, 33)"
+    },
+    {
+      "theme": "dark",
+      "target": "primary",
+      "ratio": 12.4,
+      "foreground": "rgb(23, 39, 25)",
+      "background": "rgb(200, 242, 154)"
+    },
+    {
+      "theme": "dark",
+      "target": "topbar-primary",
+      "ratio": 12.4,
+      "foreground": "rgb(23, 39, 25)",
+      "background": "rgb(200, 242, 154)"
+    },
+    {
+      "theme": "dark",
+      "target": "secondary-button",
+      "ratio": 13.94,
+      "foreground": "rgb(237, 243, 232)",
+      "background": "rgb(27, 37, 33)"
+    },
+    {
+      "theme": "dark",
+      "target": "danger",
+      "ratio": 6.41,
+      "foreground": "rgb(255, 247, 246)",
+      "background": "rgb(163, 52, 54)"
+    },
+    {
+      "theme": "dark",
+      "target": "ai-label",
+      "ratio": 6.48,
+      "foreground": "rgb(183, 168, 255)",
+      "background": "rgb(48, 43, 67)"
+    },
+    {
+      "theme": "dark",
+      "target": "ai-body",
+      "ratio": 11.97,
+      "foreground": "rgb(237, 243, 232)",
+      "background": "rgb(48, 43, 67)"
+    },
+    {
+      "theme": "dark",
+      "target": "success",
+      "ratio": 7.46,
+      "foreground": "rgb(140, 216, 176)",
+      "background": "rgb(32, 57, 45)"
+    },
+    {
+      "theme": "dark",
+      "target": "warning",
+      "ratio": 8.66,
+      "foreground": "rgb(255, 204, 133)",
+      "background": "rgb(61, 48, 32)"
+    },
+    {
+      "theme": "dark",
+      "target": "error",
+      "ratio": 8.01,
+      "foreground": "rgb(255, 180, 174)",
+      "background": "rgb(66, 39, 36)"
+    },
+    {
+      "theme": "dark",
+      "target": "info",
+      "ratio": 7.75,
+      "foreground": "rgb(175, 203, 241)",
+      "background": "rgb(37, 51, 66)"
+    },
+    {
+      "theme": "dark",
+      "target": "existing-error",
+      "ratio": 8.01,
+      "foreground": "rgb(255, 180, 174)",
+      "background": "rgb(66, 39, 36)"
+    },
+    {
+      "theme": "light",
+      "target": "heading",
+      "ratio": 12.8,
+      "foreground": "rgb(29, 47, 38)",
+      "background": "rgb(241, 245, 238)"
+    },
+    {
+      "theme": "light",
+      "target": "secondary",
+      "ratio": 7.15,
+      "foreground": "rgb(66, 86, 74)",
+      "background": "rgb(241, 245, 238)"
+    },
+    {
+      "theme": "light",
+      "target": "body-text",
+      "ratio": 14.12,
+      "foreground": "rgb(29, 47, 38)",
+      "background": "rgb(255, 255, 255)"
+    },
+    {
+      "theme": "light",
+      "target": "muted",
+      "ratio": 5.74,
+      "foreground": "rgb(86, 107, 94)",
+      "background": "rgb(255, 255, 255)"
+    },
+    {
+      "theme": "light",
+      "target": "primary",
+      "ratio": 12.4,
+      "foreground": "rgb(23, 39, 25)",
+      "background": "rgb(200, 242, 154)"
+    },
+    {
+      "theme": "light",
+      "target": "topbar-primary",
+      "ratio": 12.4,
+      "foreground": "rgb(23, 39, 25)",
+      "background": "rgb(200, 242, 154)"
+    },
+    {
+      "theme": "light",
+      "target": "secondary-button",
+      "ratio": 14.12,
+      "foreground": "rgb(29, 47, 38)",
+      "background": "rgb(255, 255, 255)"
+    },
+    {
+      "theme": "light",
+      "target": "danger",
+      "ratio": 6.41,
+      "foreground": "rgb(255, 247, 246)",
+      "background": "rgb(163, 52, 54)"
+    },
+    {
+      "theme": "light",
+      "target": "ai-label",
+      "ratio": 5.46,
+      "foreground": "rgb(101, 80, 168)",
+      "background": "rgb(239, 234, 251)"
+    },
+    {
+      "theme": "light",
+      "target": "ai-body",
+      "ratio": 11.99,
+      "foreground": "rgb(29, 47, 38)",
+      "background": "rgb(239, 234, 251)"
+    },
+    {
+      "theme": "light",
+      "target": "success",
+      "ratio": 5.94,
+      "foreground": "rgb(36, 102, 67)",
+      "background": "rgb(224, 243, 231)"
+    },
+    {
+      "theme": "light",
+      "target": "warning",
+      "ratio": 6.08,
+      "foreground": "rgb(128, 80, 20)",
+      "background": "rgb(255, 240, 215)"
+    },
+    {
+      "theme": "light",
+      "target": "error",
+      "ratio": 6.06,
+      "foreground": "rgb(161, 50, 52)",
+      "background": "rgb(255, 235, 232)"
+    },
+    {
+      "theme": "light",
+      "target": "info",
+      "ratio": 6.08,
+      "foreground": "rgb(49, 91, 135)",
+      "background": "rgb(230, 239, 251)"
+    },
+    {
+      "theme": "light",
+      "target": "existing-error",
+      "ratio": 6.06,
+      "foreground": "rgb(161, 50, 52)",
+      "background": "rgb(255, 235, 232)"
+    }
+  ],
+  "errors": [],
+  "requests": [],
+  "scope": "Actual full imported product CSS on labelled representative semantic DOM in isolated Edge; no product workflow/auth/provider/device/WCAG certification or learning-effect claim",
+  "checkedAt": "2026-10-16T23:16:34.741Z",
+  "cssFiles": [
+    "app\\lumio.css",
+    "app\\ai.css",
+    "app\\motion.css",
+    "app\\polish.css",
+    "node_modules\\.pnpm\\katex@0.18.2\\node_modules\\katex\\dist\\katex.min.css",
+    "app\\experience.css",
+    "app\\connections.css",
+    "app\\learning-extra.css",
+    "app\\studio.css",
+    "app\\personalization.css",
+    "app\\billing.css",
+    "app\\public-demo.css",
+    "app\\mobile.css",
+    "app\\motion-v2.css",
+    "app\\voice.css",
+    "app\\meeting.css",
+    "app\\full-summary.css",
+    "app\\command-menu.css",
+    "app\\dashboard-v3.css",
+    "app\\study-v3.css",
+    "app\\premium-v3.css",
+    "app\\regional.css",
+    "app\\learner-v7.css"
+  ],
+  "cssSha256": "aae5b2ee79e0f5a04dba9d2b1e395ddc78b7073a7b1419f27fe56fbc8c5e285d"
+}

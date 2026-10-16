@@ -1,6 +1,7 @@
 import type { StudyArtifact } from "../ai/summary";
 import type { SourceEvidence, SourceReference } from "../ai/grounding";
 import type { SkillAttemptEvidence } from "./skill-evidence";
+import type { StorageStatus } from "./storage-status";
 export type ContentKind = "text" | "pdf" | "image" | "audio" | "video" | "link";
 export type Flashcard = {
   id: string;
@@ -65,6 +66,7 @@ export type LibraryState = {
   spaces: Space[];
 };
 export type ProviderStatus = {
+  storage?: StorageStatus;
   competitionPreview?: boolean;
   publicDemo?: boolean;
   desktop?: boolean;

@@ -1,0 +1,922 @@
+{
+  "status": "PASS",
+  "v9Layout": [
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tên bài tập",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        },
+        {
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "ratio": 11.56,
+          "minimum": 4.5,
+          "color": "rgb(32, 62, 52)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 12
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Đóng biểu mẫu",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    }
+  ],
+  "v9Findings": [
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "code": "SAMPLED_TEXT_CONTRAST",
+      "samples": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        }
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "code": "SAMPLED_TEXT_CONTRAST",
+      "samples": [
+        {
+          "text": "Xem phân bố & kiểm tra đề",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Chỉnh sửa",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Duyệt đề & đối tượng",
+          "ratio": 3.66,
+          "minimum": 4.5,
+          "color": "rgb(115, 141, 88)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        }
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "code": "THEME_NOT_INHERITED",
+      "backgrounds": {
+        "light": "rgb(245, 245, 240)",
+        "dark": "rgb(245, 245, 240)"
+      }
+    }
+  ],
+  "passed": 19,
+  "cases": [
+    "Live matrix preview reports exact authorized-bank shortage",
+    "Complete matrix preview shows actual count",
+    "Composition transparently identifies local deterministic bank selection",
+    "Mutation remains bound to current teacher account and organization 1",
+    "Server shortage details render without losing teacher form",
+    "Form is retained after rejected composition",
+    "Mutation remains bound to current teacher account and organization 2",
+    "Composition request sends requirements and class revision, not caller-selected IDs",
+    "Retry uses the existing idempotency request ID",
+    "Created assessment remains a draft without recipients",
+    "Assignment card shows actual topic/type/difficulty distribution",
+    "No implicit review or publish request is sent",
+    "Ordinary draft edit recalculates the current distribution",
+    "Mutation remains bound to current teacher account and organization 3",
+    "Composed draft reuses the normal CAS update path",
+    "Mobile teacher editor does not overflow the page horizontally",
+    "Mobile save action remains available",
+    "No browser runtime errors in blueprint and draft editing",
+    "Fixture contacts no external service or live API"
+  ],
+  "errors": [],
+  "providerRequests": 0,
+  "scope": "Actual teacher React/CSS and browser interaction with synthetic HTTP. Backend behavior is covered separately by isolated SQLite handler tests.",
+  "checkedAt": "2026-10-16T23:49:53.739Z",
+  "fixtureChecks": 32,
+  "isolation": "Current actual React/CSS + authored identity/HTTP fixtures, isolated Edge session/output files. No auth browser, live server, real students, provider or public writes.",
+  "layoutStatus": "FINDINGS"
+}

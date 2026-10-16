@@ -1,0 +1,1675 @@
+{
+  "status": "PASS",
+  "v9Layout": [
+    {
+      "label": "teacher",
+      "theme": "light",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 9
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 9
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 9
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 9
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "light",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 9
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 9
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 9
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 9
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "light",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 11
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 11
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "light",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 11
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 11
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "dark",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 9
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 9
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 9
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 9
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "dark",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 9
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 9
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 9
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 9
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "dark",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 11
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 11
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "teacher",
+      "theme": "dark",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 2,
+      "contrast": [
+        {
+          "text": "Lớp đang giảng dạy",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 11
+        },
+        {
+          "text": "Từ danh sách lớp đã tạo",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 10
+        },
+        {
+          "text": "Học sinh tham gia",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 11
+        },
+        {
+          "text": "Tài khoản đã vào lớp",
+          "ratio": 5.08,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 244, 235)",
+          "fontSize": 10
+        },
+        {
+          "text": "Bài cần chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài nộp chưa chấm",
+          "ratio": 5.19,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(249, 244, 232)",
+          "fontSize": 10
+        },
+        {
+          "text": "Kết quả đã công bố",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 11
+        },
+        {
+          "text": "Trung bình 100.0%",
+          "ratio": 5.07,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(242, 241, 248)",
+          "fontSize": 10
+        },
+        {
+          "text": "Xem tất cả",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Mở lịch",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioTEACHER SPACE",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "light",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "light",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "light",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "light",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "dark",
+      "width": 320,
+      "viewport": 320,
+      "pageWidth": 320,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "dark",
+      "width": 390,
+      "viewport": 390,
+      "pageWidth": 390,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "dark",
+      "width": 768,
+      "viewport": 768,
+      "pageWidth": 768,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    },
+    {
+      "label": "classroom",
+      "theme": "dark",
+      "width": 1440,
+      "viewport": 1440,
+      "pageWidth": 1440,
+      "background": "rgb(245, 245, 240)",
+      "text": "rgb(32, 62, 52)",
+      "fontFamily": "Inter, \"Segoe UI\", sans-serif",
+      "clippedHeaderControls": [],
+      "controlCount": 4,
+      "contrast": [
+        {
+          "text": "Bài tập",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Học liệu",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bài giảng",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Bảng tin",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch lớp",
+          "ratio": 5.2,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(245, 245, 240)",
+          "fontSize": 11
+        },
+        {
+          "text": "Kết quả",
+          "ratio": 4.98,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(237, 242, 225)",
+          "fontSize": 11
+        },
+        {
+          "text": "Lịch sử kết quả đã công bố",
+          "ratio": 5.64,
+          "minimum": 4.5,
+          "color": "rgb(92, 106, 97)",
+          "background": "rgb(255, 254, 250)",
+          "fontSize": 14
+        },
+        {
+          "text": "Nghiệm của 2x+3=112x+3=112x+3=11 là gì?1 điểm ·",
+          "ratio": 6.25,
+          "minimum": 4.5,
+          "color": "rgb(80, 96, 75)",
+          "background": "rgb(246, 247, 240)",
+          "fontSize": 13
+        }
+      ],
+      "focus": {
+        "tag": "A",
+        "name": "LumioCLASSROOM",
+        "visible": true,
+        "outline": "solid",
+        "outlineWidth": 3,
+        "shadow": "none"
+      }
+    }
+  ],
+  "v9Findings": [
+    {
+      "label": "teacher",
+      "code": "THEME_NOT_INHERITED",
+      "backgrounds": {
+        "light": "rgb(245, 245, 240)",
+        "dark": "rgb(245, 245, 240)"
+      }
+    },
+    {
+      "label": "classroom",
+      "code": "THEME_NOT_INHERITED",
+      "backgrounds": {
+        "light": "rgb(245, 245, 240)",
+        "dark": "rgb(245, 245, 240)"
+      }
+    }
+  ],
+  "passed": 129,
+  "cases": [
+    "All twelve teacher destinations remain in the navigation model",
+    "New account contains no seeded classes, students or fabricated metrics",
+    "Five primary teacher destinations replace twelve equal-priority entries",
+    "Dashboard counts reflect an actually empty organization",
+    "Escape on a dirty teacher form stages a decision without sending a mutation",
+    "Discard dialog focuses the safe keep-editing action",
+    "Native discard modal contains keyboard focus",
+    "Keeping a draft preserves the controlled form value",
+    "Escape cancels the discard decision before closing the editor",
+    "Explicit discard closes a draft without pretending it was saved",
+    "Discarding an editor restores focus to its connected trigger",
+    "A discarded class draft does not become a phantom persisted class",
+    "Create-class form persists canonical class fields through the API",
+    "Class invitation is returned only by the explicit create action",
+    "File-text import populates the editor and saves supplied text without fake extraction claims",
+    "Teaching material requires review before explicit sharing",
+    "Lesson studio supports editable objectives and sections, review then publish",
+    "Editor sends only allowed draft fields",
+    "Existing lesson can be edited without sending server metadata as draft fields",
+    "Question bank keeps answer keys in a draft until teacher review",
+    "Assignment creation freezes reviewed questions and requires review before issuing",
+    "Student joins through an invite and the member record appears only afterward",
+    "Student assignment form renders choices without teacher keys or rubric",
+    "Student question formulas use the shared safe math renderer",
+    "Production KaTeX stylesheet hides the accessible MathML duplicate in visual formulas",
+    "Denied student submission clears both cached class data and the private open assignment modal",
+    "First student submission uses revision0 rather than assignment revision",
+    "Student confirmation sends selected answers to the canonical submission action",
+    "Unpublished scores and comments remain hidden in student results",
+    "Teacher confirms per-question scores before saving grading",
+    "Publishing grades is a separate teacher action",
+    "One published assessment cannot be presented as topic mastery",
+    "Announcements and calendar persist real form inputs through their own actions",
+    "AI generation is gated by fresh explicit outbound-data consent",
+    "AI request carries a UUIDv4 billing key",
+    "Teacher AI preview renders TeX while keeping HTML-shaped provider output inert",
+    "AI assistant sends minimized context and does not auto-save or publish a draft",
+    "Keeping an unsaved AI draft preserves its generated result",
+    "AI request carries a UUIDv4 billing key",
+    "Uncertain AI network result is never automatically retried",
+    "AI request carries a UUIDv4 billing key",
+    "Manual uncertain retry retains its billing UUID and explains a finalized lost draft",
+    "Published results enable reports while empty reports stay disabled",
+    "CSV report is a real browser download",
+    "Organization settings persist with their canonical revision",
+    "Preference mutation survives a lost acknowledgement without clearing the form",
+    "Manual mutation retry reuses request ID and accepts one persisted receipt",
+    "Saved subject, grade and language initialize a new AI draft form",
+    "Persisted AI-disabled preference also gates the generation UI",
+    "Group membership uses only enrolled student IDs",
+    "Co-teacher assignment sends a canonical teacher account ID",
+    "Class tabs support End with one roving tab stop",
+    "Class tab and current panel are bidirectionally linked",
+    "invite.revoke is not sent before an explicit confirmation",
+    "invite.revoke cancel keeps current access/data",
+    "invite.revoke sends one existing idempotent mutation after confirmation",
+    "enrollment.remove is not sent before an explicit confirmation",
+    "enrollment.remove cancel keeps current access/data",
+    "enrollment.remove sends one existing idempotent mutation after confirmation",
+    "enrollment.restore is not sent before an explicit confirmation",
+    "enrollment.restore cancel keeps current access/data",
+    "enrollment.restore sends one existing idempotent mutation after confirmation",
+    "group.delete is not sent before an explicit confirmation",
+    "group.delete cancel keeps current access/data",
+    "group.delete sends one existing idempotent mutation after confirmation",
+    "teacher.remove is not sent before an explicit confirmation",
+    "teacher.remove cancel keeps current access/data",
+    "teacher.remove sends one existing idempotent mutation after confirmation",
+    "Unsaved settings register a native page-leave warning without storing their text",
+    "A route link is held before navigation when settings are unsaved",
+    "Canceling module navigation preserves a settings draft and sends no save",
+    "Confirmed module discard restores only the last saved settings",
+    "member.role is not sent before an explicit confirmation",
+    "member.role cancel keeps current access/data",
+    "member.role sends one existing idempotent mutation after confirmation",
+    "Member removal also waits for its explicit review dialog",
+    "Communication tabs activate with ArrowRight",
+    "event.delete is not sent before an explicit confirmation",
+    "event.delete cancel keeps current access/data",
+    "event.delete sends one existing idempotent mutation after confirmation",
+    "Forbidden responses display safe actionable copy without reflecting private error fields",
+    "A denied reload removes cached private classes until access is reconfirmed",
+    "Reduced-motion preference disables entry animation for accessible reading",
+    "Teacher layout stays within 320px",
+    "Primary teacher controls remain visible and touchable at 320px",
+    "Teacher workspace selector and refresh stay on screen at 320px",
+    "Teacher layout stays within 375px",
+    "Primary teacher controls remain visible and touchable at 375px",
+    "Teacher workspace selector and refresh stay on screen at 375px",
+    "Teacher layout stays within 390px",
+    "Primary teacher controls remain visible and touchable at 390px",
+    "Teacher workspace selector and refresh stay on screen at 390px",
+    "Teacher layout stays within 768px",
+    "Primary teacher controls remain visible and touchable at 768px",
+    "Teacher workspace selector and refresh stay on screen at 768px",
+    "Teacher layout stays within 1024px",
+    "Primary teacher controls remain visible and touchable at 1024px",
+    "Teacher workspace selector and refresh stay on screen at 1024px",
+    "Teacher layout stays within 1280px",
+    "Primary teacher controls remain visible and touchable at 1280px",
+    "Teacher workspace selector and refresh stay on screen at 1280px",
+    "Teacher layout stays within 1440px",
+    "Primary teacher controls remain visible and touchable at 1440px",
+    "Teacher workspace selector and refresh stay on screen at 1440px",
+    "Existing destination reachable: Tổng quan",
+    "Existing destination reachable: Lớp học",
+    "Existing destination reachable: Studio bài giảng",
+    "Existing destination reachable: Bài tập",
+    "Existing destination reachable: Ngân hàng câu hỏi",
+    "Existing destination reachable: Chấm & nhận xét",
+    "Existing destination reachable: Tiến bộ học tập",
+    "Existing destination reachable: Thư viện giảng dạy",
+    "Existing destination reachable: Bảng tin & lịch",
+    "Existing destination reachable: Trợ lý giảng dạy",
+    "Existing destination reachable: Báo cáo",
+    "Existing destination reachable: Cài đặt",
+    "Teacher shell fits a 768px tablet viewport",
+    "Teacher shell fits a 390px phone viewport",
+    "Classroom tabs support Home keyboard activation",
+    "Classroom tabs support End with one focusable active tab",
+    "Student sees the score only after the separate publication action",
+    "Student classroom fits a 390px phone viewport",
+    "Student mobile header keeps join, organization and refresh controls fully on screen",
+    "Reload resolves the membership-only directory with an explicit authorized organization GET",
+    "Existing single organization reloads real class counts and admin role instead of misleading empty onboarding",
+    "Reload restores an existing class without creating any duplicate organization or mutation",
+    "Account change clears the previous teacher's private class content",
+    "No runtime errors across the twelve modules and student workflow",
+    "No external evidence, AI provider or payment was contacted"
+  ],
+  "errors": [],
+  "paidProviderRequests": 0,
+  "actualStudents": 0,
+  "mutations": 36,
+  "generationMocks": 3,
+  "screenshots": [
+    "docs/v9/qa-role-teaching-desktop.png",
+    "docs/v9/qa-role-teaching-tablet.png",
+    "docs/v9/qa-role-teaching-mobile.png",
+    "docs/v9/qa-role-classroom-mobile.png"
+  ],
+  "scope": "Actual components and browser storage/DOM with synthetic HTTP; real backend/compiled tests are separate evidence",
+  "checkedAt": "2026-10-16T23:53:03.931Z",
+  "fixtureChecks": 32,
+  "isolation": "Current actual React/CSS + authored identity/HTTP fixtures, isolated Edge session/output files. No auth browser, live server, real students, provider or public writes.",
+  "layoutStatus": "FINDINGS"
+}

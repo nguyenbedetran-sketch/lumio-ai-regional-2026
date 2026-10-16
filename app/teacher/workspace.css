@@ -633,7 +633,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  color: #9aab8b;
+  color: var(--tw-muted);
   font-size: 11px;
 }
 .tw-stat > strong {
@@ -646,7 +646,7 @@
 }
 .tw-stat p {
   font-size: 10px;
-  color: #929d8a;
+  color: var(--tw-muted);
 }
 .tw-stat.indigo {
   background: #f2f1f8;
@@ -748,7 +748,7 @@
   gap: 5px;
   background: none;
   border: 0;
-  color: #738d58;
+  color: var(--tw-muted);
   font-size: 11px;
   font-weight: 550;
   padding: 4px 0;
@@ -778,7 +778,7 @@
 .tw-field > span {
   font-size: 11px;
   font-weight: 550;
-  color: #68805c;
+  color: var(--tw-muted);
 }
 .tw-field small {
   font-size: 10px;
@@ -813,7 +813,7 @@
   background: #f4f7ec;
   font-size: 11px;
   line-height: 1.7;
-  color: #76876b;
+  color: var(--tw-muted);
 }
 .tw-check input {
   margin-top: 4px;
@@ -977,12 +977,12 @@
   background: none;
   border: 1px solid transparent;
   border-radius: 8px;
-  color: #8a9880;
+  color: var(--tw-muted);
 }
 .tw-tabs button[aria-selected="true"] {
   border-color: #d9e2cb;
   background: #edf2e1;
-  color: #6d8452;
+  color: var(--tw-muted);
 }
 .tw-code {
   display: flex;
@@ -1012,6 +1012,9 @@
   color: #50604b;
   font-size: 13px;
   line-height: 1.8;
+}
+.tw-card p.tw-note {
+  color: var(--tw-muted);
 }
 .tw-editor {
   min-height: 280px !important;
