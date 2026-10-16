@@ -145,7 +145,7 @@
   ],
   "scope": "Actual components and browser storage/DOM with synthetic HTTP; real backend/compiled tests are separate evidence",
   "unitChecks": 32,
-  "checkedAt": "2026-10-16T00:12:08.353Z",
+  "checkedAt": "2026-10-16T00:37:09.225Z",
   "tool": "@playwright/cli@0.1.21",
   "mode": "Actual teaching and student React/CSS; intercepted synthetic HTTP only; no product auth bypass, real students, payments or provider calls"
 }

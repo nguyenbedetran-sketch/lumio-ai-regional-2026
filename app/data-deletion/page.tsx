@@ -11,7 +11,7 @@ export default function DataDeletionPage() {
     <PolicyShell
       title="Bạn muốn xóa dữ liệu?"
       subtitle="Dữ liệu trên thiết bị và dữ liệu tài khoản trên máy chủ cần được xử lý riêng."
-      updatedAt="15/10/2026"
+      updatedAt="16/10/2026"
     >
       <section>
         <h2>1. Xóa nội dung học trên thiết bị</h2>
@@ -49,10 +49,13 @@ export default function DataDeletionPage() {
           Những bản xuất/đồng bộ ở nơi khác cần được xử lý riêng.
         </p>
         <p>
-          Xóa thư viện cục bộ không tự xóa bản đồng bộ văn bản hoặc những học
-          liệu đã lập chỉ mục để tra cứu. Công cụ tra cứu cho phép xóa từng tài
-          liệu khỏi chỉ mục cùng các đoạn/vector liên quan; bản gốc trên thiết
-          bị vẫn giữ. Trong Cài đặt, công cụ đồng bộ có nút “Xóa bản máy chủ”:
+          Xóa dữ liệu trang web trong trình duyệt không tự xóa bản đồng bộ hoặc
+          chỉ mục trên máy chủ. Khi đang đăng nhập, nút Xóa học liệu trong Lumio
+          còn yêu cầu xóa các bản chỉ mục của học liệu đó thuộc tài khoản bạn ở
+          mọi không gian đã lập chỉ mục; nếu bước máy chủ thất bại, ứng dụng
+          giữ học liệu để bạn thử lại. Công cụ tra cứu cũng cho phép xóa riêng
+          từng tài liệu khỏi chỉ mục cùng các đoạn/vector liên quan mà giữ bản
+          gốc trên thiết bị. Trong Cài đặt, công cụ đồng bộ có nút “Xóa bản máy chủ”:
           nút này xóa bản đồng bộ và dấu vết thao tác chống trùng của tài khoản,
           không xóa tài khoản, phiên gia sư hay sổ credit. Thiết bị khác phải
           đối chiếu lại trước khi gửi dữ liệu. Tắt đồng bộ hoặc đăng xuất không
@@ -116,6 +119,15 @@ export default function DataDeletionPage() {
           để xác định quyền sở hữu, phạm vi và các bản xuất cần xử lý. Hiện
           chưa có quy trình tự động hoàn tất yêu cầu xóa toàn bộ lớp và
           nhật ký; không xem việc host miễn phí reset là xác nhận đã xóa.
+        </p>
+        <p>
+          Lịch sử các lần chấm/công bố được thiết kế chỉ ghi thêm, không có nút
+          tự xóa hoặc hạn bảy ngày. Sửa điểm hay cấp lần luyện lại giữ các bản
+          trước, cùng lý do nội bộ và khung giờ đã lưu. Sao lưu cơ sở dữ liệu
+          của người vận hành cũng có thể chứa dữ liệu riêng này; xóa thư viện,
+          phiên gia sư, chỉ mục hoặc bản đồng bộ không xóa chúng. Người phụ
+          trách phải xác định và thông báo phạm vi xử lý, không xem thao tác
+          khóa tài khoản là xóa lịch sử điểm.
         </p>
       </section>
       <section>

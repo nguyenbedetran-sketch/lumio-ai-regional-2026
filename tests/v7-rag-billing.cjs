@@ -226,6 +226,55 @@ const count = (f) =>
         assert.equal(daily(f), 0);
       },
     );
+    for (const sample of [
+      { name: "omitted", value: undefined, expected: null },
+      { name: "observed zero", value: 0, expected: 0 },
+      { name: "observed positive", value: 7, expected: 7 },
+      { name: "malformed string", value: "7", expected: null },
+      { name: "negative", value: -3, expected: null },
+    ]) {
+      await check(
+        "Hybrid query token usage " +
+          sample.name +
+          " keeps unknown distinct from observed0 without changing charge/replay",
+        async () => {
+          const f = fixture(true),
+            key = crypto.randomUUID();
+          transport = async (url, init) => {
+            const body = await success(url, init).json();
+            if (sample.value === undefined) delete body.usage;
+            else body.usage = { total_tokens: sample.value };
+            return Response.json(body);
+          };
+          const result = await send(f, "search", key);
+          assert.equal(result.credits, 2);
+          const event = store
+            .listUsage(100)
+            .find((event) => event.requestId === result.requestId);
+          assert.ok(event);
+          assert.equal(event.inputTokens, sample.expected);
+          assert.equal(
+            db
+              .prepare("SELECT input_tokens FROM ai_usage WHERE request_id=?")
+              .get(result.requestId).input_tokens,
+            sample.expected,
+          );
+          assert.equal(wallet(f).balance, 198);
+          assert.equal(wallet(f).reserved, 0);
+          assert.equal(count(f), 1);
+          assert.equal(daily(f), 1);
+          await send(f, "search", key, 409, "AI_REQUEST_COMPLETED");
+          assert.equal(calls, 1);
+          assert.equal(wallet(f).balance, 198);
+          assert.equal(
+            db
+              .prepare("SELECT count(*) n FROM ai_usage WHERE request_id=?")
+              .get(result.requestId).n,
+            1,
+          );
+        },
+      );
+    }
     for (const kind of ["embed", "search"]) {
       await check(
         kind +

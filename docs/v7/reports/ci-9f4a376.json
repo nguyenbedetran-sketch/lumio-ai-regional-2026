@@ -1,0 +1,11 @@
+{
+  "scope": "Remote GitHub Actions verification of this exact commit; not current uncommitted D04 work or provider/device/public-deployment acceptance",
+  "headSha": "9f4a37635bea5fd549d7af90d8b1f0237ea23521",
+  "branch": "codex/v6-v7-upgrade",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026/actions/runs/38829782331",
+  "createdAt": "2026-10-16T00:29:40Z",
+  "updatedAt": "2026-10-16T00:32:08Z",
+  "runAttempt": 1
+}

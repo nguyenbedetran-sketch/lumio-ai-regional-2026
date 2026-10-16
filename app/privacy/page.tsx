@@ -11,7 +11,7 @@ export default function PrivacyPage() {
     <PolicyShell
       title="Dữ liệu của bạn, rõ ràng từ đầu."
       subtitle="Trang này mô tả cách bản Lumio AI hiện tại xử lý thông tin khi bạn đăng nhập và học tập."
-      updatedAt="15/10/2026"
+      updatedAt="16/10/2026"
     >
       <section>
         <h2>Phạm vi bản dự thi</h2>
@@ -99,6 +99,15 @@ export default function PrivacyPage() {
           riêng mà người tải phải bảo quản. Hosting miễn phí vẫn có thể làm
           mất dữ liệu máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính
           thức hoặc bản sao duy nhất.
+        </p>
+        <p>
+          Mỗi lần chấm và công bố lưu một phiên bản lịch sử riêng; sửa điểm
+          không ghi đè bản cũ. Lý do điều chỉnh điểm hoặc cho luyện lại, người
+          thực hiện và khung giờ mở/đóng bài cũng lưu trên máy chủ. Học sinh chỉ
+          xem lịch sử kết quả đã công bố của chính mình, không xem lý do nội
+          bộ. Những bản ghi này không có hạn bảy ngày hoặc nút tự xóa; sao lưu
+          cơ sở dữ liệu của người vận hành có thể chứa chúng và cần được xử lý
+          riêng.
         </p>
       </section>
       <section>

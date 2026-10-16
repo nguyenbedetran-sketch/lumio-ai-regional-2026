@@ -2,6 +2,7 @@ import { youtubeURL } from "../ingestion/youtube";
 import { parseRagScope, type RagScope, type RagSnapshot } from "../rag/types";
 import { validateSummary, type StudySummary } from "./summary";
 import { MATH_STYLES, type MathStyle } from "./math-style";
+import { balanceQuizOptions } from "./quiz-option-order";
 import type {
   TutorContext,
   TutorReply,
@@ -427,13 +428,17 @@ export function validateStructured(
       ...(references.length ? { references } : {}),
     };
   });
-  return {
-    questions,
-    quality: contentQuality(
+  const ordered = balanceQuizOptions(questions),
+    quality = contentQuality(
       questions.length,
       questions.filter((q) => q.references?.length).length,
       !!input?.source.trim(),
       !!(input?.media || input?.youtubeUrl),
-    ),
+    );
+  if (ordered.preservedIndices.length)
+    quality.issues.push("positional-options-preserved");
+  return {
+    questions: ordered.questions,
+    quality,
   };
 }

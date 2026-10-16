@@ -2,7 +2,7 @@
 
 Status: **PASS_DETERMINISTIC_SCOPE**. Corpus `lumio-v7-authored-offline-1` v1.0.0.
 
-46/46 authored cases; 189 assertions. **0 actual provider requests**. This is validator/retrieval evidence, not a model accuracy score.
+46/46 authored cases; 219 assertions. **0 actual provider requests**. This is validator/retrieval evidence, not a model accuracy score.
 
 | Language | Cases | Passing | Generated language quality |
 |---|---:|---:|---|

@@ -193,7 +193,7 @@
   ],
   "scope": "Actual learner components/CSS/IndexedDB; synthetic account, authored sources and intercepted AI responses only. No server citation-proof or provider accuracy claim.",
   "syntaxChecks": 6,
-  "checkedAt": "2026-10-16T00:12:28.977Z",
+  "checkedAt": "2026-10-16T00:37:26.101Z",
   "tool": "@playwright/cli@0.1.21",
   "mode": "Actual learner React/CSS and browser IndexedDB with synthetic auth/HTTP only; no live account/provider/payment or submission"
 }

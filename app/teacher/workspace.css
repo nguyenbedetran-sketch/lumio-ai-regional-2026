@@ -3,7 +3,7 @@
   --tw-bg: #f5f5f0;
   --tw-paper: #fffefa;
   --tw-ink: #203e34;
-  --tw-muted: #718077;
+  --tw-muted: #5c6a61;
   --tw-line: #e0e6dd;
   --tw-green: #244d3d;
   --tw-lime: #d9ecac;
@@ -462,7 +462,7 @@
 .tw-button.danger {
   background: #f8eeea;
   border-color: #ead4ca;
-  color: #a16b59;
+  color: #81513e;
 }
 .tw-button.danger:hover:not(:disabled) {
   background: #f0e2da;
@@ -1009,8 +1009,8 @@
   background: #f6f7f0;
   border: 1px solid var(--tw-line);
   border-radius: 9px;
-  color: #8a967e;
-  font-size: 11px;
+  color: #50604b;
+  font-size: 13px;
   line-height: 1.8;
 }
 .tw-editor {

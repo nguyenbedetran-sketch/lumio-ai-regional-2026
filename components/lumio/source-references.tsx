@@ -31,6 +31,8 @@ const copies = {
     semantic:
       "Tính đúng đắn, điều kiện và ý nghĩa vẫn cần kiểm tra với tài liệu hoặc giáo viên.",
     additional: "Nguồn chưa đủ để kiểm chứng nội dung này.",
+    positional:
+      "Một số câu có nhắc chữ cái hoặc vị trí đáp án nên được giữ nguyên thứ tự. Hãy kiểm tra lại lời giải và vị trí đáp án; bộ câu hỏi có thể chưa phân bố đều.",
   },
   en: {
     title: "Check against your source",
@@ -49,6 +51,8 @@ const copies = {
     semantic:
       "Accuracy, conditions and meaning still need checking against the source or with a teacher.",
     additional: "The available source cannot verify this content.",
+    positional:
+      "Some questions refer to option letters or positions, so their order was preserved. Review the explanation and answer positions; this set may not be evenly distributed.",
   },
   "zh-CN": {
     title: "对照学习资料",
@@ -65,6 +69,8 @@ const copies = {
     cited: "项包含匹配原文",
     semantic: "准确性、条件和含义仍需对照来源或请老师核查。",
     additional: "现有来源无法验证这些内容。",
+    positional:
+      "部分题目引用了选项字母或位置，因此保留原顺序。请核对解释和答案位置；本组答案位置可能不均衡。",
   },
   ja: {
     title: "資料と照合",
@@ -82,6 +88,8 @@ const copies = {
     cited: "項目に一致する引用あり",
     semantic: "正確さ、条件、意味は資料や先生と確認してください。",
     additional: "この出典だけでは内容を検証できません。",
+    positional:
+      "選択肢の文字や位置に言及する問題は元の順序を保持しています。解説と正解の位置を確認してください。配置が均等でない場合があります。",
   },
   ko: {
     title: "학습 자료와 대조",
@@ -99,6 +107,8 @@ const copies = {
     cited: "항목에 대조 원문이 있어요",
     semantic: "정확성, 조건, 의미는 원본이나 선생님과 확인해야 해요.",
     additional: "현재 출처로는 이 내용을 검증할 수 없어요.",
+    positional:
+      "선택지 문자나 위치를 언급한 문항은 원래 순서를 유지했어요. 해설과 정답 위치를 확인하세요. 정답 위치가 고르게 분포하지 않을 수 있어요.",
   },
 };
 export function SourceReferences({
@@ -300,6 +310,9 @@ export function ContentQualityNotice({
           {c.semantic}{" "}
           {quality.citedItems < quality.totalItems ? c.additional : ""}
         </p>
+        {quality.issues?.includes("positional-options-preserved") && (
+          <p data-quiz-order-warning>{c.positional}</p>
+        )}
       </div>
     </aside>
   );

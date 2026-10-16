@@ -60,7 +60,7 @@
   ],
   "scope": "Actual teacher/student components with synthetic history/HTTP only; backend tenant/append-only correctness is separate evidence",
   "baselineUnitChecks": 32,
-  "checkedAt": "2026-10-16T00:12:39.549Z",
+  "checkedAt": "2026-10-16T00:37:34.704Z",
   "tool": "@playwright/cli@0.1.21",
   "mode": "Actual teaching/student React/CSS with synthetic history/auth/HTTP only; no real student grades, provider calls or public mutations"
 }

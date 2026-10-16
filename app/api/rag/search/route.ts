@@ -56,7 +56,7 @@ export async function POST(req: Request) {
       actor.user.sessionVersion,
     );
     let vector: { vector: number[]; model: string } | undefined;
-    let inputTokens = 0;
+    let inputTokens: number | undefined;
     if (scope.mode === "hybrid") {
       if (scope.consent !== true)
         throw new PlatformError("RAG_CONSENT_REQUIRED");
@@ -99,7 +99,7 @@ export async function POST(req: Request) {
       );
       vector = { vector: result.vectors[0], model: result.model };
       // Telemetry success is recorded only after the atomic result/credit commit below.
-      inputTokens = result.totalTokens || 0;
+      inputTokens = result.totalTokens;
     }
     const result = getStore().ragSearch(
       actor.user.id,

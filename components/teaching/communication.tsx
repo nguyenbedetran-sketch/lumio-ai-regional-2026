@@ -627,8 +627,10 @@ function PersonalPreferences({ client }: { client: TeachingClient }) {
           </label>
           <p className="tw-note">
             Cài đặt gắn với tài khoản giáo viên này và được lưu trên máy chủ.
-            Chỉ học liệu đã chọn được gửi khi bạn chủ động tạo với AI. Không
-            dùng cài đặt này để chia sẻ bài làm riêng của học sinh.
+            Khi bạn xác nhận gửi tới AI, yêu cầu, tùy chọn và học liệu đã chọn
+            được gửi; gợi ý nhận xét còn gửi đoạn bạn tự loại thông tin nhận
+            dạng nếu có. Không tự đính kèm bài làm hay hồ sơ học sinh; bạn vẫn
+            cần kiểm tra đoạn nhập trước khi gửi.
           </p>
           <Button
             type="submit"

@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "status": "PASS",
-  "checkedAt": "2026-10-16T00:23:02.901Z",
-  "passed": 11,
+  "checkedAt": "2026-10-16T04:52:34.130Z",
+  "passed": 13,
   "checks": [
     {
       "name": "Versioned corpus covers the five supported AI languages without empty categories",
@@ -10,6 +10,14 @@
     },
     {
       "name": "Actual provider and language-quality claims remain explicitly untested",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual normalization accepts valid key rotations in every locale while preserving the exact correct answer and source",
+      "status": "PASS"
+    },
+    {
+      "name": "A wrongly mapped key or altered question content fails the same evaluator identity assertion",
       "status": "PASS"
     },
     {
@@ -50,7 +58,7 @@
     }
   ],
   "corpusCases": 46,
-  "corpusAssertions": 189,
+  "corpusAssertions": 219,
   "actualProviderRequests": 0,
-  "scope": "Regression of evaluator coverage, false expectations, honest unknowns and deterministic execution. These eleven checks are not eleven additional AI answers."
+  "scope": "Regression of evaluator coverage, preserved answer identities under rotation, wrong mapped keys, false expectations, honest unknowns and deterministic execution. These 13 checks are not additional AI answers."
 }

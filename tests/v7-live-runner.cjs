@@ -412,6 +412,19 @@ async function runChecks() {
         );
         assert.equal(result.report.manualReview.status, "PENDING");
         assert.equal(result.report.manualReview.semanticAccuracyClaim, false);
+        for (const filename of [
+          "lib/ai/grounding.ts",
+          "lib/ai/summary.ts",
+          "lib/ai/quiz-option-order.ts",
+          "lib/tutor/math-exact.ts",
+        ])
+          assert.equal(
+            result.report.sourceHashes[filename],
+            crypto.createHash("sha256")
+              .update(fs.readFileSync(path.join(root, filename)))
+              .digest("hex"),
+          );
+        assert.match(result.report.sourceHashScope, /not a complete transitive/);
         assert.equal(global.fetch, priorFetch);
         assert.equal(process.env.LUMIO_AI_ENABLED, priorAI);
       },

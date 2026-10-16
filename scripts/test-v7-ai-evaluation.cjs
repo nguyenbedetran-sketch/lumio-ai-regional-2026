@@ -5,10 +5,14 @@ const path = require("node:path");
 const {
   corpusPath,
   validateCorpus,
+  assertPreservedQuestionIdentity,
   evaluateCorpus,
   writeReport,
 } = require("./evaluate-v7-ai.cjs");
 const corpus = JSON.parse(fs.readFileSync(corpusPath, "utf8"));
+const { load } = require("../tests/source-grounding.cjs"),
+  { validateInput, validateStructured } = load("lib/ai/contracts.ts"),
+  { sourceSegments } = load("lib/ai/grounding.ts");
 const checks = [],
   copy = () => structuredClone(corpus);
 const test = (name, run) => {
@@ -46,6 +50,76 @@ test("Actual provider and language-quality claims remain explicitly untested", (
     ),
   );
   assert.match(baseline.evidenceType, /not generated-model accuracy/);
+});
+function normalizedQuestion(row, shift) {
+  const source = row.source + "\n\n2x+3=11; x=4.",
+    segment = sourceSegments(source).find((s) => s.text.includes("2x+3=11")),
+    original = ["4", "2", "3", "5"],
+    options = Array(4);
+  original.forEach((option, index) => {
+    options[(index + shift) % 4] = option;
+  });
+  const authored = {
+      prompt: "2x+3=11",
+      options,
+      correct: shift,
+      explanation: row.explanation,
+      topic: row.topic,
+      difficulty: "beginner",
+      references: [{ segmentId: segment.id, quote: segment.text }],
+    },
+    input = validateInput({
+      task: "quiz",
+      source,
+      question: row.ask,
+      language: row.language,
+    }),
+    parsed = validateStructured(
+      "quiz",
+      JSON.stringify({ questions: [authored] }),
+      input,
+    );
+  return { authored, actual: parsed.questions[0], parsed };
+}
+test("Actual normalization accepts valid key rotations in every locale while preserving the exact correct answer and source", () => {
+  let moved = 0;
+  for (const row of corpus.languages)
+    for (let shift = 0; shift < 4; shift++) {
+      const { authored, actual, parsed } = normalizedQuestion(row, shift);
+      assertPreservedQuestionIdentity(actual, authored);
+      assert.equal(actual.options[actual.correct], "4");
+      assert.equal(actual.references.length, 1);
+      assert.equal(actual.references[0].quote, "2x+3=11; x=4.");
+      assert.equal(parsed.quality.status, "review-required");
+      assert.ok(parsed.quality.issues.includes("semantic-review"));
+      if (actual.correct !== authored.correct) moved++;
+    }
+  assert.ok(
+    moved > 0,
+    "Exercise real option rotation, not just an unchanged key",
+  );
+});
+test("A wrongly mapped key or altered question content fails the same evaluator identity assertion", () => {
+  for (const row of corpus.languages)
+    for (let shift = 0; shift < 4; shift++) {
+      const { authored, actual } = normalizedQuestion(row, shift);
+      const wrongKey = { ...actual, correct: (actual.correct + 1) % 4 };
+      assert.notEqual(wrongKey.options[wrongKey.correct], "4");
+      assert.throws(() => assertPreservedQuestionIdentity(wrongKey, authored));
+      for (const change of [
+        { prompt: "An altered exercise" },
+        { explanation: "The incorrect answer is 2." },
+        {
+          options: actual.options.map((option) =>
+            option === "5" ? "6" : option,
+          ),
+        },
+        { correct: -1 },
+      ])
+        assert.throws(() =>
+          assertPreservedQuestionIdentity({ ...actual, ...change }, authored),
+        );
+    }
 });
 test("Missing, duplicate or unsupported corpus languages are rejected before evaluation", () => {
   for (const change of [
@@ -153,8 +227,7 @@ fs.writeFileSync(
       corpusCases: baseline.caseCount,
       corpusAssertions: baseline.assertionCount,
       actualProviderRequests: 0,
-      scope:
-        "Regression of evaluator coverage, false expectations, honest unknowns and deterministic execution. These eleven checks are not eleven additional AI answers.",
+      scope: `Regression of evaluator coverage, preserved answer identities under rotation, wrong mapped keys, false expectations, honest unknowns and deterministic execution. These ${checks.length} checks are not additional AI answers.`,
     },
     null,
     2,

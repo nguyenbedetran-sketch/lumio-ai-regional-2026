@@ -86,6 +86,30 @@ function validateCorpus(corpus) {
   }
   return true;
 }
+/** Presentation may rotate validated options; the authored truth must not move
+ * to a different option identity or acquire different question content. */
+function assertPreservedQuestionIdentity(
+  actual,
+  authored,
+  equal = assert.deepEqual,
+) {
+  equal(actual.prompt, authored.prompt);
+  equal(actual.explanation, authored.explanation);
+  equal(actual.topic, authored.topic);
+  equal(actual.difficulty, authored.difficulty);
+  equal(
+    Number.isInteger(actual.correct) &&
+      actual.correct >= 0 &&
+      actual.correct < actual.options.length,
+    true,
+  );
+  equal([...actual.options].sort(), [...authored.options].sort());
+  equal(
+    actual.options[actual.correct],
+    authored.options[authored.correct],
+    "The mapped correct option must retain the authored answer identity",
+  );
+}
 function evaluateCorpus(corpus) {
   validateCorpus(corpus);
   const startedAt = new Date().toISOString(),
@@ -274,7 +298,11 @@ function evaluateCorpus(corpus) {
             JSON.stringify(response),
             input,
           );
-          equal(parsed.questions[0].correct, 0);
+          assertPreservedQuestionIdentity(
+            parsed.questions[0],
+            response.questions[0],
+            equal,
+          );
           equal(parsed.questions[0].references.length, 1);
           equal(parsed.quality.status, "review-required");
           truth(parsed.quality.issues.includes("semantic-review"));
@@ -522,7 +550,13 @@ function writeReport(report) {
   ].join("\n");
   fs.writeFileSync(path.join(directory, "ai-evaluation.md"), md);
 }
-module.exports = { corpusPath, validateCorpus, evaluateCorpus, writeReport };
+module.exports = {
+  corpusPath,
+  validateCorpus,
+  assertPreservedQuestionIdentity,
+  evaluateCorpus,
+  writeReport,
+};
 if (require.main === module) {
   try {
     const args = process.argv.slice(2);

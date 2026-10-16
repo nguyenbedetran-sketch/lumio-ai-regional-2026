@@ -70,3 +70,25 @@ The three isolated real-provider runs used **64 actual HTTP attempts** total:39 
 - Two evaluator defects were independently reproduced offline: duplicate numeric candidates were compared as arrays instead of sets, and full-phase HTTP errors bypassed normal error classification. The runner was repaired and24 regressions passed. A separate derived report rechecked the immutable original transcripts; these particular defects did not change the original run's technical classifications. It does not replace the semantic findings.
 
 Reports: `v7-live-tutor-acceptance-20261016.json`, `v7-live-tutor-review.json`, `v7-live-tutor-technical-correction.json`, `v7-live-tutor-targeted-20261016.json`, `v7-live-tutor-targeted-review.json`, `v7-live-content-20261016.json`, `v7-live-content-review.json` in reports/. Raw original/targeted/content SHA-256 values are recorded by their separate reviews. Source-content fixes, remaining V6 work, remote CI, public acceptance, release packages and final competition receipt4 remain pending.
+
+## D04/F02a0 follow-up checkpoint
+
+The subsequent source-size/conflict prompt fix and safe deterministic quiz-option rotation are implemented in the existing learner pipeline. Explicit positional explanations retain their order with a five-language warning. Unicode/fullwidth/smart-quote cue regressions preserve exact original strings and bare mathematical labels. The matching-only Unicode repair happened after the new live generation; that boundary is recorded rather than retroactively calling it live-tested.
+
+Six additional actual provider HTTP calls bring the total to **70**, not70 model successes or a correctness rate. All six raw/delivered outputs were independently read by a developer, with7/7 exact nested quote offsets. The short source produced1 card/1 quiz/1 chapter rather than padded items, and the20/30 summary explicitly kept their context/time/cause unknown. The specific invented chronology and duplicate short-source items did not recur in these outputs. One quiz preserves exact correct-option identity after rotation; a single question cannot demonstrate balanced distribution generally. The canary was absent in this one injection case. Presentation repetition and broader semantic/injection reliability remain unproven. No real learners or teachers participated.
+
+Raw: [targeted content](reports/v7-live-content-targeted-20261016.json), SHA256 `643df53502ef9a949b9d418e8723b026e802c85e587319df2602b4d3fa846145`. [Separate review](reports/v7-live-content-targeted-review.json) records actual observations, original comparison and version limits. Both original raw reports and their earlier findings remain unchanged.
+
+| Gate | Actual result / scope |
+| --- | --- |
+| Content prompt |12 PASS; intercepted router, unchanged teacher requested-count contract |
+| Quiz option safety |14 groups,960 batches/5280 question identities PASS; immutable options/correct-answer identity, positional and Unicode safety; no provider calls |
+| Offline evaluator |13 runner checks;46/46 authored cases,219 internal assertions. The first full run failed an obsolete fixed-index expectation after safe rotation. The evaluator now checks exact answer/content identity; deliberately wrong mapped keys still fail. Historical failure log retained |
+| RAG usage precision |32 billing checks PASS, including absent/0/positive/string/negative usage; SQL NULL distinguishes unknown from observed0, with unchanged2-credit settlement and duplicate protection |
+| Current full regression |`pnpm test:all` exit0 after the evaluator correction; not a model-accuracy benchmark |
+| Current production compilation |`pnpm build` exit0, compiled successfully18.2s; existing pnpm workspace-layout warning only. `pnpm typecheck` exit0; lint UNCONFIGURED |
+| Compiled HTTP |11 grouped workflows PASS on the rebuilt Next server and isolated SQLite; synthetic sessions, not Google OAuth |
+| Current integrated UI |390 browser checks:129 teacher,172 learner,47 history,42 practice; shared32 counted once +15 practice +6 syntax.19 accepted captures hashed; contact-sheet layout review and individual desktop/mobile confirmation review. Note6.252:1/13px, confirmation action5.789:1 and sampled muted text5.205:1. Scoped samples, not full WCAG conformance |
+| Remote verification |Earlier exact9f4a376 GitHub run successful. The next D04 commit requires its own run; prior CI is not proof of uncommitted changes |
+
+Additional copy makes accepted hint counts distinct from correct/useful learning, teacher AI excerpts explicit, immutable grade history/backups clear and browser clearing distinct from signed-in index deletion. The next [provider-attempt accounting design](AI_ATTEMPT_ACCOUNTING_PLAN.md) remains design-only beyond the tested unknown-token fix. Deployment, public/OAuth smoke, real participants/devices, durable external storage, merchant billing, final packages and receipt4 remain incomplete. [Local gate manifest](reports/local-gates-d04.json) records command results and evidence hashes.

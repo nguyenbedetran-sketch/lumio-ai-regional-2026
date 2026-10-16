@@ -639,13 +639,19 @@ async function runEvaluation(
             })),
           )),
     ];
+    report.sourceHashScope =
+      "Selected route, generation, validation, source-grounding and math files at run start; not a complete transitive dependency manifest or proof of deployed source.";
     report.sourceHashes = Object.fromEntries(
       [
         "app/api/ai/route.ts",
         "lib/ai/router.ts",
         "lib/ai/contracts.ts",
+        "lib/ai/grounding.ts",
+        "lib/ai/summary.ts",
+        "lib/ai/quiz-option-order.ts",
         "lib/tutor/policy.ts",
         "lib/tutor/math.ts",
+        "lib/tutor/math-exact.ts",
         "lib/server/schema.ts",
         "lib/server/database-integrity.ts",
         "lib/tutor/reference-problems.ts",

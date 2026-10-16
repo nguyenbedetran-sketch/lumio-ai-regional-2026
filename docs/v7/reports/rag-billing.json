@@ -1,10 +1,30 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T00:23:00.706Z",
-  "passed": 27,
+  "checkedAt": "2026-10-16T04:52:31.950Z",
+  "passed": 32,
   "checks": [
     {
       "name": "Lexical search stays free without UUID or AI feature and creates no receipt",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage omitted keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage observed zero keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage observed positive keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage malformed string keeps unknown distinct from observed0 without changing charge/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Hybrid query token usage negative keeps unknown distinct from observed0 without changing charge/replay",
       "status": "PASS"
     },
     {

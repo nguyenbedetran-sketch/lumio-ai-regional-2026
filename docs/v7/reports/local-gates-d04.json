@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "status": "PASS_SCOPED_LOCAL_CHECKPOINT",
+  "recordedAt": "2026-10-16T04:56:13.125783+00:00",
+  "packageVersion": "3.3.0-rc.1",
+  "schemaVersion": 16,
+  "parentCommit": "9f4a37635bea5fd549d7af90d8b1f0237ea23521",
+  "sourceState": "Parent commit plus D04/F02a0 working-tree changes. Each local command exit code was checked separately; no deployment claim.",
+  "commands": [
+    {
+      "command": "pnpm test:all",
+      "exitCode": 0,
+      "privateLogName": "phase-d04-regression-final.log",
+      "privateLogSHA256": "c194f751c102f8140651a81b4389b86396f40b3ce9e0f26b52ea8244acee2dc0"
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0,
+      "privateLogName": "phase-d04-build.log",
+      "privateLogSHA256": "8b9008754cfe3f5b0ab5e3e85a516b266752492400e88dfddfb851d2499dce1d"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "privateLogName": "phase-d04-typecheck.log",
+      "privateLogSHA256": "b44f2360adc3011eb0f76b39bc9515c47ea67dbc0d214e076a9a018b7a780957"
+    },
+    {
+      "command": "node scripts/test-teaching-production.cjs",
+      "exitCode": 0,
+      "privateLogName": "phase-d04-http.log",
+      "privateLogSHA256": "300b7b5d126058f3877e477b46404e70418959d6085d183429d5f41b57f8bcbd"
+    }
+  ],
+  "initialFullRegression": {
+    "exitCode": 1,
+    "privateLogName": "phase-d04-regression.log",
+    "sha256": "6eafa62269bdf026ec67e561327cf001c285b7ce0263bef8d21e426af47a116a",
+    "finding": "Five locale positive quiz cases expected index0 instead of preserved correct-option identity. Evaluator repaired with explicit wrong-key sensitivity, then full regression passed."
+  },
+  "browserEvidence": {
+    "manifest": "docs/v7/qa-integrated-ui-report.json",
+    "sha256": "ec6e77789ab459596b83ea66155f86012da437bfe8e51ad629ecf0f816771ce3",
+    "browserChecks": 390,
+    "capturedImages": 19,
+    "syntheticAccountsAndHTTP": true,
+    "fullAccessibilityCertification": false
+  },
+  "providerEvidence": {
+    "actualHTTPAttemptsAcrossFourRuns": 70,
+    "targetedContentRaw": "docs/v7/reports/v7-live-content-targeted-20261016.json",
+    "rawSHA256": "643df53502ef9a949b9d418e8723b026e802c85e587319df2602b4d3fa846145",
+    "semanticReview": "docs/v7/reports/v7-live-content-targeted-review.json",
+    "reviewSHA256": "0167ccf5bdc556e91dec9081056d2c7ec05c0206d2cb5f1830a05baf9b616141",
+    "additionalCallsDuringThisRegression": 0
+  },
+  "selectedSourceHashes": {
+    "app/api/rag/search/route.ts": "e36f6d13870227acdfecd7fcd4a7f91e654400188d77a09a9e3c42687963d51d",
+    "lib/ai/router.ts": "6e8eb19890949a14434260d7bbe302f7460dc1e3138f40b29f904134cde4ea98",
+    "lib/ai/contracts.ts": "021c088a1201d33ad4a4847b61bd2eee4957a2f44c09f627401d0b207c581058",
+    "lib/ai/grounding.ts": "664e0f198b59116dcd68d006b0a8f6e550af192823f009d17a6b72d4db7ea0a8",
+    "lib/ai/quiz-option-order.ts": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+    "lib/tutor/policy.ts": "483bc34e5b0dccde113a5d36a8a16537ab20295aedca266416ac4abf29fec94c",
+    "app/teacher/workspace.css": "9a3595fb01ffe967c29bf3cd81bc4a3639bf2e3f0311af550107ff91d61eeacb",
+    "scripts/evaluate-v7-live.cjs": "e4dab9bf4ad64c36be05e5ec5c375d60af9dcc942f0dde0c65ec371f3d2b363d",
+    "scripts/evaluate-v7-ai.cjs": "cbd551bd0cc90bd42e7a05784f80b6df191134316c2a3a3d83345a5163cb43d7"
+  },
+  "limits": [
+    "Selected file hashes are not a complete transitive source manifest.",
+    "Only the recorded DOM color pairs meet the scoped contrast threshold; no full WCAG claim.",
+    "No public release, OAuth/device/real student or teacher pilot, durable external storage, merchant payment or competition submission4.",
+    "No lint script is configured.",
+    "Pre-existing pnpm workspace-layout warning remains in local build; new exact-commit remote CI still required."
+  ]
+}

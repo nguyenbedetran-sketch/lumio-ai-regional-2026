@@ -3,6 +3,7 @@ async (page) => {
   const cases = [],
     errors = [],
     writes = [],
+    contrastSamples = [],
     receipts = new Map(),
     clone = (x) => JSON.parse(JSON.stringify(x));
   const check = (ok, label) => {
@@ -231,6 +232,52 @@ async (page) => {
       page.getByRole("dialog", { name: "Cho luyện lại cùng đề", exact: true }),
     review = () =>
       page.getByRole("dialog", { name: "Xác nhận lần luyện lại", exact: true });
+  async function contrastSample(locator, label) {
+    const sample = await locator.evaluate((element) => {
+      const rgba = (value) => {
+        const parts = value.match(/[\d.]+/g)?.map(Number) || [];
+        if (parts.length < 3) throw Error("UNSUPPORTED_COMPUTED_COLOR");
+        return [parts[0], parts[1], parts[2], parts[3] ?? 1];
+      };
+      const background = (node) => {
+        if (!node) return [255, 255, 255];
+        const style = getComputedStyle(node),
+          color = rgba(style.backgroundColor);
+        if (style.backgroundImage !== "none")
+          throw Error("CONTRAST_SAMPLE_HAS_IMAGE");
+        if (color[3] === 1) return color.slice(0, 3);
+        const behind = background(node.parentElement);
+        return color
+          .slice(0, 3)
+          .map((channel, i) => channel * color[3] + behind[i] * (1 - color[3]));
+      };
+      const luminance = (rgb) => {
+        const linear = rgb.map((value) => {
+          const channel = value / 255;
+          return channel <= 0.04045
+            ? channel / 12.92
+            : ((channel + 0.055) / 1.055) ** 2.4;
+        });
+        return linear[0] * 0.2126 + linear[1] * 0.7152 + linear[2] * 0.0722;
+      };
+      const style = getComputedStyle(element),
+        foreground = rgba(style.color),
+        bg = background(element);
+      if (foreground[3] !== 1) throw Error("TRANSLUCENT_FOREGROUND_SAMPLE");
+      const a = luminance(foreground.slice(0, 3)),
+        b = luminance(bg);
+      return {
+        foreground: style.color,
+        background: bg,
+        ratio: (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05),
+        fontSizePx: parseFloat(style.fontSize),
+        fontWeight: style.fontWeight,
+      };
+    });
+    const result = { label, ...sample };
+    contrastSamples.push(result);
+    return result;
+  }
   async function fillRetake() {
     await retake()
       .getByLabel("Mở lần luyện lại (giờ trên thiết bị)")
@@ -502,10 +549,60 @@ async (page) => {
         (await review().textContent()).includes("Ôn lại sau nhận xét"),
       "Final retake review shows the actual window and reason before authorization",
     );
+    await page.mouse.move(0, 0);
+    const noteContrast = await contrastSample(
+        review().locator(".tw-note"),
+        "desktop-confirmation-note",
+      ),
+      actionContrast = await contrastSample(
+        review().getByRole("button", {
+          name: "Tạo lần luyện lại",
+          exact: true,
+        }),
+        "desktop-confirmation-action",
+      ),
+      mutedContrast = await contrastSample(
+        page.locator("main .tw-muted").first(),
+        "teacher-muted-description",
+      );
+    check(
+      noteContrast.ratio >= 4.5,
+      "Critical confirmation note computed foreground/background reaches at least4.5:1",
+    );
+    check(
+      noteContrast.fontSizePx >= 13,
+      "Critical confirmation note uses at least13px computed text",
+    );
+    check(
+      actionContrast.ratio >= 4.5,
+      "Enabled confirmation action text reaches at least4.5:1 computed contrast",
+    );
+    check(
+      mutedContrast.ratio >= 4.5,
+      "Teacher muted description reaches at least4.5:1 against its actual inherited background",
+    );
     await page.screenshot({
       path: "docs/v7/qa-practice-review-desktop.png",
       fullPage: true,
     });
+    await page.setViewportSize({ width: 390, height: 844 });
+    const mobileContrast = await contrastSample(
+      review().locator(".tw-note"),
+      "mobile-confirmation-note",
+    );
+    check(
+      mobileContrast.ratio >= 4.5 && mobileContrast.fontSizePx >= 13,
+      "Mobile critical confirmation keeps the measured contrast and readable font floor",
+    );
+    check(
+      await review().evaluate((d) => d.scrollWidth <= d.clientWidth + 2),
+      "Larger confirmation text wraps without horizontal dialog clipping at390px",
+    );
+    await page.screenshot({
+      path: "docs/v7/qa-practice-review-mobile.png",
+      fullPage: true,
+    });
+    await page.setViewportSize({ width: 1440, height: 1000 });
     check(
       writes.length === 2,
       "Acknowledgements and first review stage do not send a retake mutation",
@@ -703,9 +800,15 @@ async (page) => {
       syntheticMutations: writes.length,
       paidProviderRequests: 0,
       actualStudents: 0,
+      contrastSamples,
+      contrastScope:
+        "Computed CSS samples for confirmation note/action and teacher muted text only; not full WCAG conformance or all-state/color/device coverage.",
+      contrastReference:
+        "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html",
       screenshots: [
         "docs/v7/qa-practice-teacher-desktop.png",
         "docs/v7/qa-practice-review-desktop.png",
+        "docs/v7/qa-practice-review-mobile.png",
         "docs/v7/qa-practice-student-mobile.png",
       ],
       scope:

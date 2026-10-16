@@ -55,16 +55,16 @@ Trong `/admin` → **Hoạt động AI**, mở **Phân tích sử dụng theo mo
 
 ## 5. Xem minh chứng đúng loại
 
-[Báo cáo UI tích hợp](qa-integrated-ui-report.json) ghi phiên bản `3.3.0-rc.1`, hash/timestamp báo cáo và 18 ảnh mới. Các bộ kiểm tra dùng React/CSS thật, browser storage thật, **tài khoản/lớp/đáp án và HTTP tổng hợp có nhãn**, không seed dữ liệu giả vào database sản phẩm:
+[Báo cáo UI tích hợp](qa-integrated-ui-report.json) ghi phiên bản `3.3.0-rc.1`, hash/timestamp báo cáo và 19 ảnh mới. Các bộ kiểm tra dùng React/CSS thật, browser storage thật, **tài khoản/lớp/đáp án và HTTP tổng hợp có nhãn**, không seed dữ liệu giả vào database sản phẩm:
 
-| Luồng                                  | Báo cáo / ảnh tiêu biểu                                                                                                                                      |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Giáo viên                              | [129 kiểm tra browser](qa-teaching-ui-report.json) · [desktop](qa-teaching-desktop.png) · [mobile](qa-teaching-mobile.png)                                   |
-| Học cá nhân, nguồn, bản nháp, Settings | [172 kiểm tra browser](qa-learner-ui-report.json) · [vị trí trích dẫn](qa-learner-source-location.png) · [Settings mobile](qa-settings-mobile.png)           |
-| E1 lịch sử/chấm lại                    | [47 kiểm tra browser](qa-grade-history-ui-report.json) · [giáo viên](qa-grade-history-teacher-desktop.png) · [học sinh](qa-grade-history-student-mobile.png) |
-| E2 luyện lại                           | [36 kiểm tra browser](qa-practice-ui-report.json) · [xác nhận](qa-practice-review-desktop.png) · [kết quả cũ/mới](qa-practice-student-mobile.png)            |
+| Luồng                                  | Báo cáo / ảnh tiêu biểu                                                                                                                                                                              |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Giáo viên                              | [129 kiểm tra browser](qa-teaching-ui-report.json) · [desktop](qa-teaching-desktop.png) · [mobile](qa-teaching-mobile.png)                                                                           |
+| Học cá nhân, nguồn, bản nháp, Settings | [172 kiểm tra browser](qa-learner-ui-report.json) · [vị trí trích dẫn](qa-learner-source-location.png) · [Settings mobile](qa-settings-mobile.png)                                                   |
+| E1 lịch sử/chấm lại                    | [47 kiểm tra browser](qa-grade-history-ui-report.json) · [giáo viên](qa-grade-history-teacher-desktop.png) · [học sinh](qa-grade-history-student-mobile.png)                                         |
+| E2 luyện lại                           | [42 kiểm tra browser](qa-practice-ui-report.json) · [xác nhận](qa-practice-review-desktop.png) · [xác nhận mobile](qa-practice-review-mobile.png) · [kết quả cũ/mới](qa-practice-student-mobile.png) |
 
-Tổng là **384 kiểm tra browser**; 32 kiểm tra SSR/pure dùng chung chỉ tính một lần, thêm 15 kiểm tra E2 và 6 kiểm tra cú pháp learner. Có kiểm tra tại 7 độ rộng 320–1440px, bàn phím, focus, giữ/bỏ nháp, mất phản hồi và đổi tài khoản. Muốn chạy lại trong profile Edge cô lập:
+Tổng là **390 kiểm tra browser**; 32 kiểm tra SSR/pure dùng chung chỉ tính một lần, thêm 15 kiểm tra E2 và 6 kiểm tra cú pháp learner. Có kiểm tra tại 7 độ rộng 320–1440px, bàn phím, focus, giữ/bỏ nháp, mất phản hồi và đổi tài khoản. Phần chữ quan trọng trong hộp xác nhận đã đo tương phản trực tiếp trên DOM desktop/mobile; đây không phải chứng nhận WCAG toàn ứng dụng. Muốn chạy lại trong profile Edge cô lập:
 
 ```powershell
 pnpm test:v7:ui
@@ -72,7 +72,7 @@ pnpm test:v7:ui
 
 Không cần mở dev server cho bốn fixture này. Chạy sẽ cập nhật báo cáo/ảnh local của chúng. Không dùng ảnh lỗi ban đầu có tên `current-failure`/`initial-failure` làm ảnh nghiệm thu cuối. Handler/SQLite/quyền/rollback có các bộ kiểm tra riêng; UI giả lập không thay chúng. [Nghiệm thu và giới hạn](ACCEPTANCE_REPORT.md) · [Ma trận phạm vi](FEATURE_MATRIX.md).
 
-**Không suy rộng:** các ảnh/report trên không chứng minh OAuth thật, chất lượng provider thật, URL public mới, điện thoại vật lý, thanh toán, học sinh thật hay hiệu quả học tập. Các bằng chứng lịch sử 3.1/3.2 không tự trở thành xác nhận 3.3. Runner provider V7 hiện mới được chuẩn bị/kiểm tra offline; [quy trình riêng](LIVE_PROVIDER_ACCEPTANCE.md). Cần bằng chứng đúng phiên bản cho từng bước trước phát hành/nộp.
+**Không suy rộng:** các ảnh/report UI trên không chứng minh OAuth thật, chất lượng provider thật, URL public mới, điện thoại vật lý, thanh toán, học sinh thật hay hiệu quả học tập. Các bằng chứng lịch sử 3.1/3.2 không tự trở thành xác nhận 3.3. V7 có [lượt nội dung AI thật local riêng](reports/v7-live-content-targeted-20261016.json), dùng nguồn tự soạn và principal tổng hợp; không phải OAuth/public hay thử nghiệm người học. [Review lần đầu](reports/v7-live-content-review.json) giữ nguyên các lỗi nội dung đã phát hiện; request thành công không tự thành semantic PASS. Xem [quy trình riêng](LIVE_PROVIDER_ACCEPTANCE.md) và báo cáo review đúng lần chạy trước khi suy rộng.
 
 ## 6. Những phần chưa được nhận là hoàn tất
 
