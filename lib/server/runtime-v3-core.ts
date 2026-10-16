@@ -1,6 +1,10 @@
 import { createHash, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
-import { normalizeSyncEnvelope, type SyncSnapshot } from "../sync/contracts";
+import {
+  normalizeSyncEnvelope,
+  preserveOptionalLearningFields,
+  type SyncSnapshot,
+} from "../sync/contracts";
 import { PlatformError, type User } from "./types";
 import { assertDatabaseIntegrity } from "./database-integrity";
 type Context = {
@@ -161,11 +165,15 @@ export function createRuntimeV3Store({
         400,
       );
     }
-    const payload = JSON.stringify(data),
-      hash = digest(payload),
-      fingerprint = digest(
-        JSON.stringify([input.epoch, input.expectedRevision, hash]),
-      );
+    // Replay identity is the exact normalized incoming intent, independent of
+    // later revisions of fields an older writer cannot express.
+    const fingerprint = digest(
+      JSON.stringify([
+        input.epoch,
+        input.expectedRevision,
+        digest(JSON.stringify(data)),
+      ]),
+    );
     owner(userId, version);
     transaction(purgeExpiredSync);
     return transaction(() => {
@@ -194,6 +202,26 @@ export function createRuntimeV3Store({
         Number(row.revision) !== input.expectedRevision
       )
         throw new PlatformError("SYNC_CONFLICT", 409);
+      let stored;
+      try {
+        stored = normalizeSyncEnvelope(
+          preserveOptionalLearningFields(
+            row.payload_json
+              ? normalizeSyncEnvelope(JSON.parse(String(row.payload_json)))
+              : null,
+            data,
+          ),
+        );
+      } catch (e) {
+        throw new PlatformError(
+          e instanceof Error && e.message === "SYNC_TOO_LARGE"
+            ? "SYNC_TOO_LARGE"
+            : "INVALID_SYNC_DATA",
+          400,
+        );
+      }
+      const payload = JSON.stringify(stored),
+        hash = digest(payload);
       const revision = Number(row.revision) + 1,
         result = { epoch: input.epoch, revision, digest: hash };
       db.prepare(

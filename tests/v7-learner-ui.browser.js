@@ -783,6 +783,17 @@ async (page) => {
       path: "docs/v7/qa-learner-desktop.png",
       fullPage: true,
     });
+    if (
+      (await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .getAttribute("open")) === null
+    )
+      await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .locator(":scope > summary")
+        .click();
     await page.locator(".lm-action-grid button").nth(2).click();
     let editor = page.getByRole("dialog", { name: "Dán văn bản", exact: true });
     await editor.waitFor();
@@ -850,6 +861,17 @@ async (page) => {
         });
       };
     });
+    if (
+      (await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .getAttribute("open")) === null
+    )
+      await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .locator(":scope > summary")
+        .click();
     await page.locator(".lm-action-grid button").first().click();
     const upload = page.getByRole("dialog", {
       name: "Tải tài liệu",
@@ -927,6 +949,17 @@ async (page) => {
       File.prototype.text = window.__originalFileText;
       delete window.__releaseDelayedRead;
     });
+    if (
+      (await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .getAttribute("open")) === null
+    )
+      await page
+        .locator("details")
+        .filter({ has: page.locator(".lx-materials") })
+        .locator(":scope > summary")
+        .click();
     await page.locator(".lm-action-grid button").first().click();
     await upload.waitFor();
     await upload

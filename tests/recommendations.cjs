@@ -27,6 +27,7 @@ function load(file, dependencies = {}) {
 const learningEngine = load("lib/lumio/learning-engine.ts");
 const r = load("lib/lumio/recommendations.ts", {
     "./learning-engine": learningEngine,
+    "./skill-taxonomy": load("lib/lumio/skill-taxonomy.ts"),
   }),
   now = Date.parse("2026-09-20T12:00:00Z"),
   at = new Date(now).toISOString();

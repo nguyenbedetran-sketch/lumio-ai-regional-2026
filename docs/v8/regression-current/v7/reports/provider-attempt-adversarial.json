@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkedAt": "2026-10-16T14:38:43.900Z",
+  "passed": 15,
+  "checks": [
+    {
+      "name": "A failed SQLite prepare stops before dispatch and cannot cause fallback",
+      "status": "PASS"
+    },
+    {
+      "name": "Terminal SQLite and warning failures cannot replace a successful response with another paid dispatch",
+      "status": "PASS"
+    },
+    {
+      "name": "HTTP error metadata is captured before the one existing fallback and both dispatch ordinals persist",
+      "status": "PASS"
+    },
+    {
+      "name": "A non-JSON HTTP error records status without inventing model or zero usage",
+      "status": "PASS"
+    },
+    {
+      "name": "Oversized response cleanup failure cannot turn a bounded rejection into a paid fallback",
+      "status": "PASS"
+    },
+    {
+      "name": "Observed zero survives while missing totals and malformed token values remain null",
+      "status": "PASS"
+    },
+    {
+      "name": "An incomplete successful HTTP response retains observed usage even though the answer is rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Cancellation after dispatch records unknown receipt/cost and prevents fallback",
+      "status": "PASS"
+    },
+    {
+      "name": "Prepared observation finalizes after revocation/refund, but a new dispatch is rejected and terminal CAS never rewrites it",
+      "status": "PASS"
+    },
+    {
+      "name": "Observer recreation and connection reopen preserve a durable ordinal instead of restarting it",
+      "status": "PASS"
+    },
+    {
+      "name": "Foreign actor/request/task and client-only observer metadata cannot forge a journal context",
+      "status": "PASS"
+    },
+    {
+      "name": "Unresolved capacity refuses dispatch without silently dropping the prepare record",
+      "status": "PASS"
+    },
+    {
+      "name": "Expired terminal retention commits even when old unresolved rows prevent a new dispatch",
+      "status": "PASS"
+    },
+    {
+      "name": "Genuine migration13–16 prefixes are checked read-only and upgrade copies to18 with original immutable guards intact",
+      "status": "PASS"
+    },
+    {
+      "name": "A journal table falsely attached to schema16 is rejected before startup writes",
+      "status": "PASS"
+    }
+  ],
+  "actualProviderCalls": 0,
+  "scope": "Actual temporary SQLite/reservation/journal/Router and migration-prefix tests with injected transport, simulated SQLite faults and synthetic account data. Not real provider receipt, invoice, OAuth, public HTTP, device, teacher/student, billing settlement HTTP-handler or full production crash recovery validation."
+}

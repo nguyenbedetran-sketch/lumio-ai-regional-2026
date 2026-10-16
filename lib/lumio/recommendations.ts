@@ -1,6 +1,7 @@
 import type { LearningItem } from "./types";
 import type { LearningState } from "./learning-engine";
 import { cardFingerprint } from "./learning-engine";
+import { skillById, type SkillId } from "./skill-taxonomy";
 
 export type Feedback = { itemId: string; value: 0 | 1; at: string };
 export type RecommendationDifficulty =
@@ -29,6 +30,9 @@ export type Preferences = {
   controls?: RecommendationControls;
   outcomes?: RecommendationOutcome[];
   skillTracking?: boolean;
+  excludedSkillAttemptIds?: string[];
+  /** null explicitly clears a focus; absence can come from an older client. */
+  studyFocusSkillId?: SkillId | null;
 };
 export const emptyPreferences = (): Preferences => ({
   version: 1,
@@ -48,6 +52,23 @@ export function parsePreferences(raw: unknown): Preferences {
   )
     throw new Error("INVALID_PREFERENCES");
   if (p.skillTracking !== undefined && typeof p.skillTracking !== "boolean")
+    throw new Error("INVALID_PREFERENCES");
+  if (
+    p.excludedSkillAttemptIds !== undefined &&
+    (!Array.isArray(p.excludedSkillAttemptIds) ||
+      p.excludedSkillAttemptIds.length > 1000 ||
+      new Set(p.excludedSkillAttemptIds).size !==
+        p.excludedSkillAttemptIds.length ||
+      p.excludedSkillAttemptIds.some(
+        (id) => typeof id !== "string" || !id.trim() || id.length > 100,
+      ))
+  )
+    throw new Error("INVALID_PREFERENCES");
+  if (
+    p.studyFocusSkillId !== undefined &&
+    p.studyFocusSkillId !== null &&
+    (typeof p.studyFocusSkillId !== "string" || !skillById(p.studyFocusSkillId))
+  )
     throw new Error("INVALID_PREFERENCES");
   const ids = new Set<string>();
   for (const f of p.feedback) {
@@ -107,6 +128,12 @@ export function parsePreferences(raw: unknown): Preferences {
     ...(p.skillTracking === undefined
       ? {}
       : { skillTracking: p.skillTracking }),
+    ...(p.excludedSkillAttemptIds === undefined
+      ? {}
+      : { excludedSkillAttemptIds: [...p.excludedSkillAttemptIds] }),
+    ...(p.studyFocusSkillId === undefined
+      ? {}
+      : { studyFocusSkillId: p.studyFocusSkillId }),
     feedback: p.feedback.map((f) => ({
       itemId: f.itemId,
       value: f.value,
@@ -333,17 +360,19 @@ export function recommendationEvidence(
   learning: LearningState,
   now: number,
 ) {
-  const due = learning.reviews.filter(
-    (r) =>
-      r.itemId === item.id &&
-      item.cards.some(
-        (c) =>
-          c.id === r.cardId &&
-          cardFingerprint(c.front, c.back) === r.fingerprint,
-      ) &&
-      Number.isFinite(Date.parse(r.dueAt)) &&
-      Date.parse(r.dueAt) <= now,
-  ).length;
+  const due = item.cards.filter((c) => {
+    const fp = cardFingerprint(c.front, c.back),
+      r = learning.reviews.find(
+        (r) =>
+          r.itemId === item.id && r.cardId === c.id && r.fingerprint === fp,
+      ),
+      override = learning.reviewOverrides?.find(
+        (r) =>
+          r.itemId === item.id && r.cardId === c.id && r.fingerprint === fp,
+      ),
+      at = override?.dueAt || r?.dueAt;
+    return !!at && Number.isFinite(Date.parse(at)) && Date.parse(at) <= now;
+  }).length;
   const attempts = item.attempts
     .filter(
       (a) =>

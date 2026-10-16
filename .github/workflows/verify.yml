@@ -2,7 +2,7 @@ name: Verify Lumio
 
 on:
   push:
-    branches: [main, "codex/v6-v7-upgrade"]
+    branches: [main, "codex/v6-v7-upgrade", "codex/v8-evolution"]
   pull_request:
   workflow_dispatch:
 

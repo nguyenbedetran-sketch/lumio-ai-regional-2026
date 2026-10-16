@@ -61,8 +61,9 @@ const en = {
   permissionHint:
     "Allow microphone access in your browser to start. No recording is sent until you choose Transcribe.",
   privacy:
-    "Transcription sends your recording for processing. Sending a question shares the transcript, the last 6 messages and any selected source with Lumio AI. Each completed stage uses credits.",
-  local: "This conversation stays in this tab until you save or download it.",
+    "Transcribe sends the selected recording for processing. Ask sends your reviewed question and only the chosen source; the server loads the owned conversation history. Read aloud sends the reply text for speech. Each completed stage uses credits.",
+  local:
+    "Tutor text and feedback are retained on the server for up to 7 days; expired sessions are physically cleaned on tutor access. Audio remains in this tab until saved or downloaded. The browser stores an account/source-bound session pointer, not the transcript.",
   speechLimit:
     "Audio reads the first 3,000 characters of this reply. The complete answer remains below.",
   questionLimit: "Shorten the question to 4,000 characters before sending.",
@@ -71,6 +72,17 @@ const en = {
   invalidAudio: "Choose a supported audio file of up to 8 MB.",
   emptyAudio: "No audio was captured. Try a slightly longer recording.",
   playbackBlocked: "Your reply is ready. Press play to listen.",
+  sourcePicker: "Choose a source for this conversation",
+  sourceHelp:
+    "Starts without a source; returning restores your previous selection. Only the selected text is sent when you ask; source matches do not prove answer correctness.",
+  extractFirst: "Open material and extract its text first",
+  restored: "Conversation restored from your private seven-day tutor session.",
+  restoreFailed:
+    "Could not restore the session. Retry before starting another paid request.",
+  retryRestore: "Retry restoring",
+  deleteSession: "Delete this server conversation",
+  deleteFailed:
+    "Could not delete the server session. Your conversation is still shown.",
   source: "Using your selected material",
   noSource: "Open conversation",
   retry: "Try again",
@@ -140,9 +152,9 @@ const vi: Copy = {
   permissionHint:
     "Cho phép micro trên trình duyệt để bắt đầu. Bản ghi chỉ được gửi khi bạn chọn Chuyển thành văn bản.",
   privacy:
-    "Chép lời sẽ gửi bản ghi để xử lý. Khi gửi câu hỏi, bản chép lời, 6 tin nhắn gần nhất và nguồn đang chọn được gửi tới Lumio AI. Mỗi bước hoàn tất dùng credit.",
+    "Chuyển thành văn bản gửi bản ghi đã chọn để xử lý. Hỏi Lumio gửi câu hỏi đã xem lại và đúng nguồn được chọn; máy chủ đọc lịch sử phiên của bạn. Đọc thành tiếng gửi nội dung câu trả lời để tạo âm thanh. Mỗi bước hoàn tất dùng credit.",
   local:
-    "Cuộc trò chuyện chỉ nằm trong tab này đến khi bạn lưu hoặc tải xuống.",
+    "Văn bản gia sư và phản hồi được lưu trên máy chủ tối đa 7 ngày; phiên hết hạn được dọn khi có truy cập gia sư. Âm thanh ở tab này đến khi bạn lưu/tải. Trình duyệt chỉ giữ con trỏ phiên theo tài khoản/nguồn, không lưu bản hội thoại.",
   speechLimit:
     "Âm thanh đọc 3.000 ký tự đầu của câu trả lời. Bản đầy đủ vẫn hiển thị bên dưới.",
   questionLimit: "Rút gọn câu hỏi còn tối đa 4.000 ký tự trước khi gửi.",
@@ -151,6 +163,17 @@ const vi: Copy = {
   invalidAudio: "Chọn tệp âm thanh được hỗ trợ, tối đa 8 MB.",
   emptyAudio: "Chưa thu được âm thanh. Hãy thử ghi lâu hơn một chút.",
   playbackBlocked: "Câu trả lời đã sẵn sàng. Nhấn phát để nghe.",
+  sourcePicker: "Chọn nguồn cho cuộc trò chuyện",
+  sourceHelp:
+    "Ban đầu không chọn nguồn; khi quay lại sẽ khôi phục lựa chọn trước của bạn. Chỉ văn bản được chọn mới gửi khi bạn hỏi; trích đoạn khớp không chứng minh câu trả lời đúng.",
+  extractFirst: "Mở học liệu và trích xuất văn bản trước",
+  restored: "Đã khôi phục phiên gia sư riêng trong thời hạn 7 ngày.",
+  restoreFailed:
+    "Chưa khôi phục được phiên. Thử lại trước khi gửi thêm yêu cầu dùng credit.",
+  retryRestore: "Thử khôi phục lại",
+  deleteSession: "Xóa cuộc trò chuyện trên máy chủ",
+  deleteFailed:
+    "Chưa xóa được phiên trên máy chủ. Cuộc trò chuyện vẫn được giữ hiển thị.",
   source: "Đang dùng học liệu đã chọn",
   noSource: "Trò chuyện tự do",
   retry: "Thử lại",

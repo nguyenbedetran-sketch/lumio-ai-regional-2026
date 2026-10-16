@@ -37,6 +37,12 @@ import {
   rebuildTeachingReferences,
 } from "../teaching/content-qa";
 import { AIError } from "../ai/contracts";
+import {
+  assertAssessmentReady,
+  composeAssessment,
+  parseAssessmentBlueprint,
+  AssessmentShortageError,
+} from "../teaching/assessment-plan";
 type Row = Record<string, any>;
 type Scope = {
   user: User;
@@ -611,18 +617,7 @@ export function createTeachingStore({
       } = q;
       return snapshot;
     });
-    if (
-      new Set(
-        questions.map((q) =>
-          q.prompt
-            .normalize("NFC")
-            .trim()
-            .replace(/\s+/g, " ")
-            .toLocaleLowerCase("vi"),
-        ),
-      ).size !== questions.length
-    )
-      fail("TEACHING_CONTENT_BLOCKED", 422);
+    const preflight = assertAssessmentReady(questions);
     const target = obj(d.target);
     only(target, ["kind", "ids"]);
     const kind = str(target.kind, 20),
@@ -660,7 +655,7 @@ export function createTeachingStore({
       target: { kind, ids: targetIds },
       dueAt,
       ...parseWindow(d, dueAt),
-      maxPoints: questions.reduce((n, q) => n + q.maxPoints, 0),
+      maxPoints: preflight.maxPoints,
     };
   }
   function submissionView(r: Row, staff: boolean) {
@@ -1777,7 +1772,7 @@ export function createTeachingStore({
         } else if (b.action.startsWith("assignment.")) {
           const action = b.action.split(".")[1],
             existing =
-              action === "create"
+              action === "create" || action === "compose"
                 ? undefined
                 : assignmentFor(s, identifier(b.id), true);
           if (existing) {
@@ -1785,10 +1780,43 @@ export function createTeachingStore({
             classId = existing.class_id;
             before = { revision: existing.revision, status: existing.status };
           }
-          if (action === "create" || action === "update") {
+          if (
+            action === "create" ||
+            action === "update" ||
+            action === "compose"
+          ) {
             if (existing && !["draft", "reviewed"].includes(existing.status))
               fail("TEACHING_ASSIGNMENT_IMMUTABLE", 409);
-            const data = parseAssignment(s, b.draft);
+            let rawDraft = b.draft;
+            if (action === "compose") {
+              const draft = obj(b.draft);
+              only(draft, [
+                "classId",
+                "title",
+                "instructions",
+                "target",
+                "dueAt",
+                "availableFrom",
+                "availableUntil",
+              ]);
+              const targetClass = classFor(s, identifier(draft.classId), true);
+              cas(targetClass, b.expectedClassRevision);
+              const cells = parseAssessmentBlueprint(b.blueprint);
+              // Filter before selecting or returning shortage counts: a private bank in another
+              // class/organization or another teacher's unbound draft must never be inferred.
+              const bank = all(
+                "SELECT * FROM teaching_content WHERE organization_id=? AND kind='question' AND status='reviewed' AND (class_id=? OR (class_id IS NULL AND (created_by=? OR ?=1))) ORDER BY id",
+                orgId,
+                targetClass.id,
+                u.id,
+                s.admin ? 1 : 0,
+              ).map((row) => contentView(row) as TeachingQuestion);
+              const plan = composeAssessment(cells, bank);
+              if (plan.shortages.length)
+                throw new AssessmentShortageError(plan.shortages);
+              rawDraft = { ...draft, questionIds: plan.questionIds };
+            }
+            const data = parseAssignment(s, rawDraft);
             if (existing && existing.class_id !== data.classId)
               fail("TEACHING_CLASS_MOVE_FORBIDDEN", 409);
             classId = data.classId;
@@ -1866,6 +1894,7 @@ export function createTeachingStore({
                 fail("TEACHING_SOURCE_CHANGED", 409);
               reviewContent(s, q);
             }
+            assertAssessmentReady(data.questions, data.maxPoints);
             if (action === "issue") {
               let targets: string[] = [];
               if (data.target.kind === "class")

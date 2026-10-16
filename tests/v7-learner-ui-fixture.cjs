@@ -25,10 +25,20 @@ function build() {
     if (filename.endsWith(".css")) {
       const mapping = {},
         prefix = "v7-" + path.basename(filename, ".module.css") + "-";
+      // Preserve explicit CSS Modules global selectors in this fixture.
+      const globals = [];
+      source = source.replace(/:global\(([^)]+)\)/g, (_m, selector) => {
+        globals.push(selector);
+        return "GLOBALSELECTOR" + (globals.length - 1) + "END";
+      });
       source = source.replace(/\.([a-zA-Z_][\w-]*)/g, (_m, c) => {
         mapping[c] = prefix + c;
         return "." + prefix + c;
       });
+      source = source.replace(
+        /GLOBALSELECTOR(\d+)END/g,
+        (_m, i) => globals[Number(i)],
+      );
       moduleCSS.push(source);
       modules[id] =
         `function(module){module.exports=${JSON.stringify(mapping)}}`;

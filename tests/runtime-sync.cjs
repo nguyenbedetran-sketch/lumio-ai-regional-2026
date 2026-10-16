@@ -2,11 +2,11 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('n
 const root=path.resolve(__dirname,'..'),cache=new Map();
 function load(relative){const file=path.resolve(root,relative);if(cache.has(file))return cache.get(file).exports;const module={exports:{}};cache.set(file,module);const code=ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;new Function('require','module','exports',code)(name=>name.startsWith('.')?load(path.relative(root,path.resolve(path.dirname(file),name+'.ts'))):require(name),module,module.exports);return module.exports;}
 const folder=fs.mkdtempSync(path.join(os.tmpdir(),'lumio-v3-sync-')),file=path.join(folder,'test.sqlite');
-let time=Date.UTC(2026,9,15,12),passed=0;
+let time=Date.UTC(2026,9,15,12),passed=0; const checks=[];
 const platform=load('lib/server/store.ts'),{mergeSync}=load('lib/sync/merge.ts'),{normalizeSyncEnvelope}=load('lib/sync/contracts.ts');
 let store=platform.createStore(file,{now:()=>time}),second=platform.createStore(file,{now:()=>time});
 const users=Array.from({length:5},(_,i)=>store.ensureIdentity({provider:'google',providerAccountId:'runtime-fixture-'+i,name:'Synthetic learner',emailVerified:false}));
-const check=(name,fn)=>{fn();passed++;console.log('PASS '+name);};
+const check=(name,fn)=>{fn();passed++;checks.push({name,status:'PASS'});console.log('PASS '+name);};
 const fails=(fn,code)=>assert.throws(fn,e=>e.code===code||e.message===code);
 const a=users[0],b=users[1],v=a.sessionVersion;
 const envelope=()=>({version:1,library:{version:1,items:[],spaces:[]},learning:{version:1,tasks:[],reviews:[],events:[],focus:null},preferences:{version:1,enabled:true,feedback:[]}});
@@ -26,4 +26,38 @@ check('Delete-versus-edit is a conflict; unchanged items can be deleted safely',
 check('Deleting server data invalidates the old epoch and cannot resurrect an old outbox',()=>{const current=store.syncRead(a.id,v);fails(()=>store.syncDelete(a.id,v,current.epoch,0),'SYNC_CONFLICT');store.syncDelete(a.id,v,current.epoch,current.revision);const fresh=store.syncRead(a.id,v);assert.notEqual(fresh.epoch,current.epoch);assert.equal(fresh.data,null);fails(()=>store.syncWrite(a.id,v,{epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-fixture-deleted-01',data:envelope()}),'SYNC_CONFLICT');});
 check('Seven-day expiry removes payload and generates a fresh sync epoch',()=>{const old=store.syncRead(b.id,1);store.syncWrite(b.id,1,{epoch:old.epoch,expectedRevision:0,requestId:'sync-fixture-expiry-001',data:envelope()});time+=7*86400000+1;const fresh=store.syncRead(b.id,1);assert.equal(fresh.data,null);assert.notEqual(fresh.epoch,old.epoch);});
 check('VACUUM backup and restore preserve schema, canonical accounts and sync state',()=>{const current=store.syncRead(a.id,v),data=envelope();data.library.items=[item('restore','Restore fixture')];store.syncWrite(a.id,v,{epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-fixture-restore-01',data});const backup=path.join(folder,'verified-backup.sqlite'),db=new DatabaseSync(file);db.exec("VACUUM INTO '"+backup.replaceAll("'","''")+"'");db.close();const restored=platform.createStore(backup,{now:()=>time});assert.equal(restored.getUser(a.id).storageKey,a.storageKey);assert.equal(restored.syncRead(a.id,v).data.library.items[0].title,'Restore fixture');restored.close();});
+const chosenSchedule=()=>({key:'cards:due',itemId:'cards',cardId:'due',fingerprint:'abc123',dueAt:new Date(time+86400000).toISOString(),updatedAt:new Date(time).toISOString()});
+let oldIntent,oldAck;
+check('Older direct PUT preserves unsupported V8 controls while applying opt-out preferences',()=>{
+  let current=store.syncRead(a.id,v);const data=envelope();
+  data.learning.reviewOverrides=[chosenSchedule()];
+  data.preferences.excludedSkillAttemptIds=['excluded-prior'];data.preferences.studyFocusSkillId='linear';
+  store.syncWrite(a.id,v,{epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-v8-controls-seed-001',data});
+  current=store.syncRead(a.id,v);const old=envelope();old.preferences.enabled=false;old.preferences.skillTracking=false;
+  oldIntent={epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-v8-old-writer-0001',data:old};
+  oldAck=store.syncWrite(a.id,v,oldIntent);const actual=store.syncRead(a.id,v).data;
+  assert.deepEqual(actual.learning.reviewOverrides,data.learning.reviewOverrides);
+  assert.deepEqual(actual.preferences.excludedSkillAttemptIds,['excluded-prior']);assert.equal(actual.preferences.studyFocusSkillId,'linear');
+  assert.equal(actual.preferences.enabled,false);assert.equal(actual.preferences.skillTracking,false);
+  assert.equal(oldAck.digest,store.syncRead(a.id,v).digest);
+});
+check('Explicit controls clear is retained and replaying an older intent never resurrects it',()=>{
+  const current=store.syncRead(a.id,v),data=current.data;data.learning.reviewOverrides=[];data.preferences.excludedSkillAttemptIds=[];data.preferences.studyFocusSkillId=null;
+  store.syncWrite(a.id,v,{epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-v8-explicit-clear-01',data});
+  assert.deepEqual(second.syncWrite(a.id,v,oldIntent),oldAck);
+  const actual=store.syncRead(a.id,v);assert.equal(actual.revision,current.revision+1);
+  assert.deepEqual(actual.data.learning.reviewOverrides,[]);assert.deepEqual(actual.data.preferences.excludedSkillAttemptIds,[]);assert.equal(actual.data.preferences.studyFocusSkillId,null);
+});
+check('Combined preserved payload enforces size cap with no snapshot or receipt mutation',()=>{
+  let current=store.syncRead(a.id,v);const seeded=envelope();
+  seeded.learning.reviewOverrides=Array.from({length:7000},(_,i)=>({...chosenSchedule(),key:'cards:c'+i,cardId:'c'+i}));
+  store.syncWrite(a.id,v,{epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-v8-size-seed-0001',data:seeded});
+  current=store.syncRead(a.id,v);const incoming=envelope();incoming.library.items=Array.from({length:3},(_,i)=>({...item('large'+i,'Large authored fixture'),text:'x'.repeat(200000),notes:'n'.repeat(200000)}));
+  assert.doesNotThrow(()=>normalizeSyncEnvelope(incoming));
+  const request={epoch:current.epoch,expectedRevision:current.revision,requestId:'sync-v8-size-rejected-01',data:incoming};
+  fails(()=>store.syncWrite(a.id,v,request),'SYNC_TOO_LARGE');
+  assert.deepEqual(store.syncRead(a.id,v),current);
+  const inspect=new DatabaseSync(file);assert.equal(inspect.prepare('SELECT count(*) AS n FROM sync_operations WHERE user_id=? AND request_id=?').get(a.id,request.requestId).n,0);inspect.close();
+});
+fs.mkdirSync(path.join(root,'docs/v8/reports'),{recursive:true});fs.writeFileSync(path.join(root,'docs/v8/reports/sync-compatibility.json'),JSON.stringify({status:'PASS',passed,checkedAt:new Date().toISOString(),scope:'Actual disposable SQLite stores, authored sync payloads, existing VACUUM restore; zero providers, no public deployment',checks},null,2)+'\n');
 store.close();second.close();console.log(`Runtime/sync: ${passed} checks passed with isolated real SQLite and a verified backup/restore. No provider calls.`);

@@ -1,14 +1,29 @@
-import { paidFetch } from "../ai/request-client";
+import { accountHeaders, paidFetch } from "../ai/request-client";
+import type { AIResult } from "../ai/contracts";
+import type { SourceEvidence, SourceReference } from "../ai/grounding";
+import type {
+  TutorIntent,
+  TutorTurnIdentity,
+  MathVerification,
+  TutorSessionView,
+} from "../tutor/types";
 import {
   recordingExtension,
   VOICE_LIMITS,
   type VoiceId,
   type VoiceLanguage,
 } from "./options";
+export type VoiceTutorResult = Pick<
+  AIResult,
+  "text" | "tutor" | "references" | "verification"
+>;
 export type VoiceTurn = {
   id: string;
   role: "user" | "assistant";
   text: string;
+  turn?: TutorTurnIdentity;
+  references?: SourceReference[];
+  verification?: MathVerification;
 };
 export async function responseError(response: Response) {
   const data = await response.json().catch(() => null);
@@ -38,6 +53,7 @@ export async function transcribeRecording(
   );
   if (!response.ok) throw await responseError(response);
   const result = await response.json();
+  signal.throwIfAborted();
   if (typeof result.text !== "string" || !result.text.trim())
     throw new Error("EMPTY_AI_OUTPUT");
   return result.text as string;
@@ -52,8 +68,18 @@ export async function askVoiceTutor(
   onTutorState?: (state: import("../tutor/types").TutorState) => void,
   guidance: "hints" | "full" = "hints",
   account = "guest",
+  options?: {
+    sourceEvidence?: SourceEvidence;
+    tutorIntent?: TutorIntent;
+    onResult?: (result: VoiceTutorResult) => void;
+    onRestored?: (session: TutorSessionView) => void;
+  },
 ) {
-  if (!question.trim() || question.length > VOICE_LIMITS.questionCharacters)
+  if (
+    !question.trim() ||
+    question.length > VOICE_LIMITS.questionCharacters ||
+    source.length > 200000
+  )
     throw new Error("INVALID_INPUT");
   const response = await paidFetch(
     "/api/ai",
@@ -66,22 +92,54 @@ export async function askVoiceTutor(
         mode: "tutor",
         language,
         question: question.trim(),
-        source: source.slice(0, 200000),
+        source,
+        sourceEvidence: options?.sourceEvidence,
+        ...(options?.tutorIntent && options.tutorIntent !== "progress"
+          ? { tutorIntent: options.tutorIntent }
+          : {}),
         tutorSessionId,
         guidance,
         goal: "This is a spoken tutoring conversation. Keep the reply concise and natural to read aloud; invite the learner to think before giving a full answer.",
-        history: turns
-          .slice(-6)
-          .map(({ role, text }) => ({ role, text: text.slice(0, 4000) })),
+        // Canonical history is loaded from the owned server session.
+        history: [],
       }),
     },
     account,
   );
-  if (!response.ok) throw await responseError(response);
   const result = await response.json();
+  signal.throwIfAborted();
+  if (
+    response.status === 409 &&
+    result.error === "AI_REQUEST_COMPLETED" &&
+    typeof result.receipt?.tutorSessionId === "string"
+  ) {
+    const restored = await fetch(
+      `/api/tutor/session?sessionId=${encodeURIComponent(result.receipt.tutorSessionId)}`,
+      { headers: accountHeaders(account), signal, cache: "no-store" },
+    );
+    if (!restored.ok) throw await responseError(restored);
+    const session = (await restored.json()) as TutorSessionView;
+    signal.throwIfAborted();
+    const turn = session.turns.at(-1);
+    if (!turn) throw new Error("EMPTY_AI_OUTPUT");
+    onTutorState?.(session);
+    options?.onRestored?.(session);
+    options?.onResult?.({
+      text: turn.assistant,
+      tutor: session,
+      references: turn.references,
+      verification: turn.verification,
+    });
+    return turn.assistant;
+  }
   if (result.tutor) onTutorState?.(result.tutor);
+  if (!response.ok)
+    throw new Error(
+      typeof result.error === "string" ? result.error : "PROVIDER_UNAVAILABLE",
+    );
   if (typeof result.text !== "string" || !result.text.trim())
     throw new Error("EMPTY_AI_OUTPUT");
+  options?.onResult?.(result as AIResult);
   return result.text as string;
 }
 export async function synthesizeVoice(
@@ -109,6 +167,7 @@ export async function synthesizeVoice(
   if (!response.headers.get("content-type")?.startsWith("audio/"))
     throw new Error("EMPTY_AI_OUTPUT");
   const blob = await response.blob();
+  signal.throwIfAborted();
   if (!blob.size || blob.size > 12 * 1024 * 1024)
     throw new Error("EMPTY_AI_OUTPUT");
   return blob;

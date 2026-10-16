@@ -7,6 +7,9 @@ import {
   cardKey,
   dueCards,
   scheduleReview,
+  cardFingerprint,
+  setReviewSchedule,
+  clearReviewSchedule,
   type LearningState,
   type ReviewRating,
 } from "../../lib/lumio/learning-engine";
@@ -15,6 +18,105 @@ import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
 import { reviewRatingForKey, shortcutMayRun } from "../../lib/lumio/study-v3";
 import { StudyFlipCard } from "./study-tools";
 import { SourceReferences } from "./source-references";
+import { learningPlanCopy } from "../../lib/lumio/learning-plan-copy";
+function ReviewScheduleControl({
+  card,
+  state,
+  update,
+  locale,
+  disabled = false,
+}: {
+  card: { itemId: string; cardId: string; fingerprint: string };
+  state: LearningState;
+  update: (fn: (old: LearningState) => LearningState) => void;
+  locale: Locale;
+  disabled?: boolean;
+}) {
+  const c = learningPlanCopy[locale],
+    id = useId(),
+    [when, setWhen] = useState(""),
+    [notice, setNotice] = useState("");
+  const chosen = state.reviewOverrides?.some(
+    (r) =>
+      r.key === cardKey(card.itemId, card.cardId) &&
+      r.fingerprint === card.fingerprint,
+  );
+  function schedule(date: Date) {
+    try {
+      const now = new Date();
+      if (
+        !Number.isFinite(date.getTime()) ||
+        date.getTime() < now.getTime() ||
+        date.getTime() - now.getTime() > 365 * 86400000
+      )
+        throw Error();
+      update((old) => setReviewSchedule(old, card, date, now));
+      setNotice(c.scheduled);
+    } catch {
+      setNotice(c.invalidDate);
+    }
+  }
+  return (
+    <details className="lski-method" data-review-schedule-control>
+      <summary>{c.manualTitle}</summary>
+      <p className="lm-help">{c.manualHint}</p>
+      <div
+        style={{
+          display: "flex",
+          gap: 12,
+          flexWrap: "wrap",
+          alignItems: "end",
+        }}
+      >
+        <button
+          className="lm-button"
+          disabled={disabled}
+          onClick={() => schedule(new Date(Date.now() + 86400000))}
+        >
+          {c.tomorrow}
+        </button>
+        <label
+          htmlFor={id}
+          style={{ display: "grid", gap: 6, maxWidth: "100%" }}
+        >
+          {c.date}
+          <input
+            id={id}
+            type="datetime-local"
+            value={when}
+            disabled={disabled}
+            onChange={(e) => setWhen(e.target.value)}
+            style={{ maxWidth: "100%", minHeight: 44, padding: 8 }}
+          />
+        </label>
+        <button
+          className="lm-button"
+          disabled={disabled || !when}
+          onClick={() => schedule(new Date(when))}
+        >
+          {c.apply}
+        </button>
+        {chosen && (
+          <button
+            className="lm-button"
+            disabled={disabled}
+            onClick={() => {
+              update((old) =>
+                clearReviewSchedule(old, cardKey(card.itemId, card.cardId)),
+              );
+              setNotice(c.reset);
+            }}
+          >
+            {c.clear}
+          </button>
+        )}
+      </div>
+      <p role="status" className="lm-help">
+        {disabled && notice ? c.unsavedSchedule : notice}
+      </p>
+    </details>
+  );
+}
 export function Review({
   locale,
   items,
@@ -22,6 +124,7 @@ export function Review({
   update,
   library,
   open,
+  storageError = false,
 }: {
   locale: Locale;
   items: LearningItem[];
@@ -29,6 +132,7 @@ export function Review({
   update: (fn: (old: LearningState) => LearningState) => void;
   library: () => void;
   open: (item: LearningItem) => void;
+  storageError?: boolean;
 }) {
   const c = learningCopy[locale],
     [revealed, setRevealed] = useState(false),
@@ -67,6 +171,13 @@ export function Review({
     update((old) => ({
       ...old,
       reviews: [...old.reviews.filter((r) => r.key !== next.key), next],
+      ...(old.reviewOverrides
+        ? {
+            reviewOverrides: old.reviewOverrides.filter(
+              (r) => r.key !== next.key,
+            ),
+          }
+        : {}),
       events: [
         ...old.events,
         {
@@ -82,13 +193,22 @@ export function Review({
     setCount((n) => n + 1);
     setNow(at);
   }
-  const scheduled = state.reviews
-    .filter((r) =>
-      items.some(
-        (i) =>
-          i.id === r.itemId &&
-          i.cards.some((c) => cardKey(i.id, c.id) === r.key),
-      ),
+  const scheduled = items
+    .flatMap((item) =>
+      item.cards.flatMap((card) => {
+        const key = cardKey(item.id, card.id),
+          fingerprint = cardFingerprint(card.front, card.back),
+          review = state.reviews.find(
+            (r) => r.key === key && r.fingerprint === fingerprint,
+          ),
+          override = state.reviewOverrides?.find(
+            (r) => r.key === key && r.fingerprint === fingerprint,
+          ),
+          dueAt = override?.dueAt || review?.dueAt;
+        return dueAt
+          ? [{ key, item, card, fingerprint, dueAt, manual: !!override }]
+          : [];
+      }),
     )
     .sort((a, b) => a.dueAt.localeCompare(b.dueAt))
     .slice(0, 8);
@@ -118,6 +238,11 @@ export function Review({
           {c.allCards}
         </span>
       </div>
+      {storageError && (
+        <p role="alert" className="lm-help" data-review-storage-warning>
+          {learningPlanCopy[locale].unsavedSchedule}
+        </p>
+      )}
       {current ? (
         <section
           className="lx-review-session"
@@ -151,6 +276,18 @@ export function Review({
             </button>
             <span>{c.reviewSource}</span>
           </div>
+          <ReviewScheduleControl
+            key={`${current.item.id}:${current.card.id}:${current.fingerprint}`}
+            card={{
+              itemId: current.item.id,
+              cardId: current.card.id,
+              fingerprint: current.fingerprint,
+            }}
+            state={state}
+            update={update}
+            locale={locale}
+            disabled={storageError}
+          />
           <StudyFlipCard
             front={current.card.front}
             back={current.card.back}
@@ -240,20 +377,46 @@ export function Review({
           <h2>{c.reviewSchedule}</h2>
           <p className="lx-caption">{c.reviewAlgorithm}</p>
           {scheduled.map((r) => {
-            const item = items.find((i) => i.id === r.itemId)!,
-              card = item.cards.find((c) => c.id === r.cardId)!;
+            const { item, card } = r;
             return (
-              <div key={r.key}>
-                <span>
-                  <strong>{card.front}</strong>
-                  <small>{item.title}</small>
-                </span>
-                <span>
-                  {new Intl.DateTimeFormat(locale, {
-                    dateStyle: "medium",
-                    timeStyle: "short",
-                  }).format(new Date(r.dueAt))}
-                </span>
+              <div key={r.key} style={{ display: "block", minWidth: 0 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    gap: 12,
+                    flexWrap: "wrap",
+                    minWidth: 0,
+                  }}
+                >
+                  <span style={{ minWidth: 0 }}>
+                    <strong>{card.front}</strong>
+                    <small>{item.title}</small>
+                  </span>
+                  <span>
+                    {new Intl.DateTimeFormat(locale, {
+                      dateStyle: "medium",
+                      timeStyle: "short",
+                    }).format(new Date(r.dueAt))}
+                    {r.manual && (
+                      <small>{learningPlanCopy[locale].manual}</small>
+                    )}
+                  </span>
+                </div>
+                {(!current ||
+                  r.key !== cardKey(current.item.id, current.card.id)) && (
+                  <ReviewScheduleControl
+                    card={{
+                      itemId: item.id,
+                      cardId: card.id,
+                      fingerprint: r.fingerprint,
+                    }}
+                    state={state}
+                    update={update}
+                    locale={locale}
+                    disabled={storageError}
+                  />
+                )}
               </div>
             );
           })}

@@ -22,6 +22,7 @@ import {
   type SkillId,
 } from "../../lib/lumio/skill-taxonomy";
 import { skillCopy } from "../../lib/lumio/skill-copy";
+import { learningPlanCopy } from "../../lib/lumio/learning-plan-copy";
 const positions = [
   [16, 12],
   [16, 36],
@@ -49,13 +50,32 @@ export function SkillEvidencePanel({
   onClearSkillEvidence?: () => void;
 }) {
   const c = skillCopy[locale],
+    pc = learningPlanCopy[locale],
     enabled = preferences.enabled && preferences.skillTracking !== false;
   const profile = useMemo(
-    () => buildSkillProfile(items, enabled),
-    [items, enabled],
+    () =>
+      buildSkillProfile(
+        items,
+        enabled,
+        Date.now(),
+        preferences.excludedSkillAttemptIds,
+      ),
+    [items, enabled, preferences.excludedSkillAttemptIds],
   );
   const [selected, setSelected] = useState<SkillId>("linear"),
-    [notice, setNotice] = useState("");
+    [notice, setNotice] = useState(""),
+    [recordLimit, setRecordLimit] = useState(20);
+  const records = [
+    ...new Map(
+      items.flatMap((item) =>
+        item.attempts.flatMap((attempt) =>
+          typeof attempt.skillEvidence?.attemptId === "string"
+            ? [[attempt.skillEvidence.attemptId, { item, attempt }] as const]
+            : [],
+        ),
+      ),
+    ).entries(),
+  ].sort((a, b) => b[1].attempt.date.localeCompare(a[1].attempt.date));
   const current = profile.skills.find((s) => s.id === selected)!,
     name = (id: SkillId) => skillLabel(id, locale);
   const suggestions = skillPracticeSuggestions(items, profile);
@@ -95,7 +115,10 @@ export function SkillEvidencePanel({
           onClick={() => {
             if (!window.confirm(c.clearConfirm)) return;
             onClearSkillEvidence?.();
-            setNotice(c.deleted);
+            // The library write may fail or conflict after this callback.
+            // Keep explicit exclusions even if old evidence is restored.
+            // The separate Restore All control remains the intentional reset.
+            setNotice(pc.clearRequested);
           }}
         >
           <Trash2 size={14} />
@@ -106,8 +129,97 @@ export function SkillEvidencePanel({
       <p className="lm-help" role="status" aria-live="polite">
         {notice}
       </p>
+      <details className="lski-method" data-evidence-inspector>
+        <summary>{pc.inspect}</summary>
+        <p>{pc.inspectHint}</p>
+        {!!preferences.excludedSkillAttemptIds?.length && (
+          <button
+            className="lm-button"
+            disabled={storageError}
+            onClick={() =>
+              update((p) => ({ ...p, excludedSkillAttemptIds: [] }))
+            }
+          >
+            {pc.restoreAll} ({preferences.excludedSkillAttemptIds.length})
+          </button>
+        )}
+        {!records.length && <p>{pc.noRecords}</p>}
+        {records.slice(0, recordLimit).map(([id, { item, attempt }]) => {
+          const excluded =
+            preferences.excludedSkillAttemptIds?.includes(id) || false;
+          return (
+            <article
+              key={id}
+              className="lski-evidence-row"
+              style={{
+                padding: "16px 0",
+                borderBottom: "1px solid var(--lm-line)",
+              }}
+            >
+              <strong>{item.title}</strong>
+              <p>
+                <time dateTime={attempt.date}>
+                  {attempt.date.slice(0, 16).replace("T", " ")} UTC
+                </time>{" "}
+                · {attempt.score}/{attempt.total} ·{" "}
+                {excluded ? pc.excluded : pc.included}
+              </p>
+              <p className="lm-help">
+                {[
+                  ...new Set(
+                    attempt.skillEvidence!.answers.flatMap((a) =>
+                      a.skillId ? [name(a.skillId)] : [],
+                    ),
+                  ),
+                ].join(" · ")}
+              </p>
+              {attempt.skillEvidence!.answers.some((a) =>
+                a.fingerprint.startsWith("q1:"),
+              ) && <p className="lm-help">{pc.legacy}</p>}
+              <button
+                className="lm-button"
+                disabled={
+                  storageError ||
+                  (!excluded &&
+                    (preferences.excludedSkillAttemptIds?.length || 0) >= 1000)
+                }
+                onClick={() =>
+                  update((p) => ({
+                    ...p,
+                    excludedSkillAttemptIds: excluded
+                      ? (p.excludedSkillAttemptIds || []).filter(
+                          (v) => v !== id,
+                        )
+                      : [
+                          ...(p.excludedSkillAttemptIds || []).filter(
+                            (v) => v !== id,
+                          ),
+                          id,
+                        ],
+                  }))
+                }
+              >
+                {excluded ? pc.restore : pc.exclude}
+              </button>
+            </article>
+          );
+        })}
+        {records.length > recordLimit && (
+          <button
+            className="lm-button"
+            onClick={() => setRecordLimit((n) => n + 20)}
+          >
+            {pc.showMore}
+          </button>
+        )}
+      </details>
       {enabled && (
         <>
+          {profile.legacyIdentityAnswers > 0 && (
+            <p className="lm-help">
+              {profile.legacyIdentityAnswers} · {pc.identityNote}
+            </p>
+          )}
           {suggestions.length > 0 && (
             <div className="lski-suggestions" data-skill-suggestions>
               <h3>{c.nextSteps}</h3>

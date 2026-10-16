@@ -624,9 +624,9 @@ async function main() {
         }),
     );
     await check(
-      "Genuine migration13–16 prefixes are checked read-only and upgrade copies to17 with original immutable guards intact",
+      "Genuine migration13–16 prefixes are checked read-only and upgrade copies to18 with original immutable guards intact",
       () => {
-        assert.equal(DATABASE_SCHEMA_VERSION, 17);
+        assert.equal(DATABASE_SCHEMA_VERSION, 18);
         for (const version of [13, 14, 15, 16]) {
           const file = path.join(folder, "prefix-" + version + ".sqlite"),
             db = openDatabase(file);
@@ -663,7 +663,7 @@ async function main() {
           const upgraded = openStore(file);
           upgraded.close();
           const current = openDatabase(file, { readOnly: true });
-          assert.equal(assertDatabaseIntegrity(current).schemaVersion, 17);
+          assert.equal(assertDatabaseIntegrity(current).schemaVersion, 18);
           assert.equal(
             current
               .prepare(

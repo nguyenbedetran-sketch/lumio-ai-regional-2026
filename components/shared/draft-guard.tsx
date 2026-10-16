@@ -186,10 +186,16 @@ export function DraftBoundary({
 export function useDraftGuard() {
   return useContext(DraftContext);
 }
-export function useDraft(label: string, initiallyDirty = false) {
+export function useDraft(
+  label: string,
+  initiallyDirty = false,
+  onDiscard?: () => void,
+) {
   const guard = useContext(DraftContext),
     id = useId(),
     dirty = useRef(initiallyDirty);
+  const discard = useRef(onDiscard);
+  discard.current = onDiscard;
   const publish = useCallback(
     () =>
       guard.register(id, {
@@ -197,6 +203,7 @@ export function useDraft(label: string, initiallyDirty = false) {
         dirty: dirty.current,
         reset: () => {
           dirty.current = false;
+          discard.current?.();
         },
       }),
     [guard, id, label],

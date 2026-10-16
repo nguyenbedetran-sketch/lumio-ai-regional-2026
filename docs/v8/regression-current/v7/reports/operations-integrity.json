@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T14:38:24.032Z",
+  "passed": 23,
+  "checks": [
+    {
+      "name": "Canonical contract matches all migrations and six exact immutable guards",
+      "status": "PASS"
+    },
+    {
+      "name": "Schema18 readiness is read-only and checks complete history plus actual guards",
+      "status": "PASS"
+    },
+    {
+      "name": "Real WAL backup and separate restore preserve private grades, snapshots, receipts and ledger bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Restored audit, credit ledger and grade history each reject UPDATE and DELETE",
+      "status": "PASS"
+    },
+    {
+      "name": "Each missing append-only guard fails startup, health contract and backup before creating output",
+      "status": "PASS"
+    },
+    {
+      "name": "A same-name weakened WHEN or harmless trigger is rejected rather than counted as a guard",
+      "status": "PASS"
+    },
+    {
+      "name": "Deleting only migration15 cannot disguise future grade objects as a valid schema14 backup",
+      "status": "PASS"
+    },
+    {
+      "name": "A known future guard alone is rejected even when every schema14 table is valid",
+      "status": "PASS"
+    },
+    {
+      "name": "A dummy grade table with both exact canonical triggers fails health, startup and backup without writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Same columns with a removed CHECK are rejected; SQL normalization preserves literals and token boundaries",
+      "status": "PASS"
+    },
+    {
+      "name": "Current runtime refuses a future schema before WAL, seeds, migrations or byte changes",
+      "status": "PASS"
+    },
+    {
+      "name": "Simulated hardened runtime14 refuses a schema18 database without rewriting identity, seed or schema bytes",
+      "status": "PASS"
+    },
+    {
+      "name": "Gapped and empty recorded histories on populated DBs fail before changing the file",
+      "status": "PASS"
+    },
+    {
+      "name": "A populated unversioned DB is not silently treated as a new database",
+      "status": "PASS"
+    },
+    {
+      "name": "Genuine13 inspect/backup/CLI restore keep source bytes and upgrade only the restored copy while preserving account/issued/submission/sync rows",
+      "status": "PASS"
+    },
+    {
+      "name": "A fake13 database retaining known migration14 receipt objects is rejected before inspect/backup/startup writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Schema14 operator backup stays usable and does not migrate or seed the source",
+      "status": "PASS"
+    },
+    {
+      "name": "Failed migration closes the DB and rolls back its schema/history before explicit retry",
+      "status": "PASS"
+    },
+    {
+      "name": "Deleting only migration16 cannot disguise known practice-window objects as genuine15",
+      "status": "PASS"
+    },
+    {
+      "name": "Genuine15 backup stays read-only, preserves its history guards, and upgrades only a separate copy",
+      "status": "PASS"
+    },
+    {
+      "name": "Genuine16 operator snapshot is read-only and only a restored copy gains an empty journal17",
+      "status": "PASS"
+    },
+    {
+      "name": "A fake16 retaining the known journal17 fails integrity/backup/startup without writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Snapshot CLI uses Node24 shared contract without a development compiler or migrations",
+      "status": "PASS"
+    }
+  ],
+  "schemaVersion": 18,
+  "providerRequests": 0,
+  "scope": "Actual temporary SQLite and native Node24 CLI. Authored private synthetic grade/receipt/sync/ledger rows, real VACUUM snapshots and separate restore; no production DB, providers, off-host transfer or disaster recovery.",
+  "notTested": [
+    "Actual Render host loss/recovery",
+    "Off-host backup schedule and RPO/RTO",
+    "Physical-device storage",
+    "Provider invoice reconciliation"
+  ]
+}

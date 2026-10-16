@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "passed": 19,
+  "cases": [
+    "Live matrix preview reports exact authorized-bank shortage",
+    "Complete matrix preview shows actual count",
+    "Composition transparently identifies local deterministic bank selection",
+    "Mutation remains bound to current teacher account and organization 1",
+    "Server shortage details render without losing teacher form",
+    "Form is retained after rejected composition",
+    "Mutation remains bound to current teacher account and organization 2",
+    "Composition request sends requirements and class revision, not caller-selected IDs",
+    "Retry uses the existing idempotency request ID",
+    "Created assessment remains a draft without recipients",
+    "Assignment card shows actual topic/type/difficulty distribution",
+    "No implicit review or publish request is sent",
+    "Ordinary draft edit recalculates the current distribution",
+    "Mutation remains bound to current teacher account and organization 3",
+    "Composed draft reuses the normal CAS update path",
+    "Mobile teacher editor does not overflow the page horizontally",
+    "Mobile save action remains available",
+    "No browser runtime errors in blueprint and draft editing",
+    "Fixture contacts no external service or live API"
+  ],
+  "errors": [],
+  "providerRequests": 0,
+  "scope": "Actual teacher React/CSS and browser interaction with synthetic HTTP. Backend behavior is covered separately by isolated SQLite handler tests.",
+  "baselineRenderChecks": 32,
+  "checkedAt": "2026-10-16T14:22:11.829Z"
+}

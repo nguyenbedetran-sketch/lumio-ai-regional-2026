@@ -6,7 +6,6 @@ import {
   Check,
   Circle,
   Flame,
-  Layers,
   Plus,
   Target,
   Timer,
@@ -18,7 +17,7 @@ import {
   Video,
   Sparkles,
 } from "lucide-react";
-import type { Locale } from "../../lib/lumio/i18n";
+import { catalogs, type Locale } from "../../lib/lumio/i18n";
 import type { LearningItem } from "../../lib/lumio/types";
 import {
   learningMetrics,
@@ -27,17 +26,21 @@ import {
 } from "../../lib/lumio/learning-engine";
 import { learningCopy } from "../../lib/lumio/learning-copy";
 import { focusCopy } from "../../lib/lumio/focus-copy";
-import {
-  dashboardInsights,
-  type DashboardAction,
-} from "../../lib/lumio/dashboard-insights";
+import { dashboardInsights } from "../../lib/lumio/dashboard-insights";
 import { dashboardCopy } from "../../lib/lumio/dashboard-v3-copy";
 import {
   DashboardCounter,
   DashboardReveal,
-  LearningConstellation,
   useDashboardMotion,
 } from "./dashboard-motion";
+import { DailyLearningPlan } from "./learning-plan";
+import {
+  emptyPreferences,
+  type Preferences,
+} from "../../lib/lumio/recommendations";
+import { homeV8Copy } from "../../lib/lumio/home-v8-copy";
+import { useDraft } from "../shared/draft-guard";
+import styles from "./home-v8.module.css";
 export function useLocalClock() {
   const [now, setNow] = useState(() => new Date());
   useEffect(() => {
@@ -163,6 +166,13 @@ export function Dashboard({
   navigate,
   toggleTask,
   open,
+  preferences,
+  onPreferences,
+  onAsk,
+  onAdd,
+  onSample,
+  onControls,
+  storageError = false,
 }: {
   locale: Locale;
   name: string;
@@ -171,469 +181,266 @@ export function Dashboard({
   navigate: Navigate;
   toggleTask: (task: StudyTask) => void;
   open: (item: LearningItem) => void;
+  preferences?: Preferences;
+  onPreferences?: (fn: (p: Preferences) => Preferences) => void;
+  onAsk?: (item: LearningItem, prompt: string) => void;
+  onAdd?: () => void;
+  onSample?: () => void;
+  onControls?: () => void;
+  storageError?: boolean;
 }) {
-  const now = useLocalClock();
-  const c = learningCopy[locale],
+  const now = useLocalClock(),
+    c = homeV8Copy[locale],
     copy = dashboardCopy[locale];
   const mode = useDashboardMotion();
   const insight = dashboardInsights(items, state, now);
-  const metrics = learningMetrics(items, state, now);
-  const { action, goals, completedGoals, goalPercent, due, recent } = insight;
-  const hasCards = items.some((item) =>
-    item.cards.some((card) => card.front.trim() && card.back.trim()),
-  );
-  const next = {
-    focus: {
-      title: copy.focusTitle,
-      reason: copy.focusReason,
-      button: copy.focusAction,
-      Icon: Timer,
-    },
-    review: {
-      title: copy.reviewTitle,
-      reason: copy.reviewReason,
-      button: copy.reviewAction,
-      Icon: Layers,
-    },
-    goal: {
-      title: copy.goalTitle,
-      reason: copy.goalReason,
-      button: copy.goalAction,
-      Icon: Target,
-    },
-    practice: {
-      title: copy.practiceTitle,
-      reason: copy.practiceReason,
-      button: copy.practiceAction,
-      Icon: Target,
-    },
-    continue: {
-      title: copy.continueTitle,
-      reason: copy.continueReason,
-      button: copy.continueAction,
-      Icon: BookOpen,
-    },
-    start: {
-      title: copy.startTitle,
-      reason: copy.startReason,
-      button: copy.startAction,
-      Icon: Sparkles,
-    },
-  }[action.kind];
-  const runAction = (selected: DashboardAction = action) => {
-    if (selected.kind === "focus") navigate("focus");
-    else if (selected.kind === "review") navigate("review");
-    else if (selected.kind === "goal")
-      selected.item ? open(selected.item) : navigate("planner");
-    else if (selected.kind === "practice" || selected.kind === "continue")
-      open(selected.item);
-    else navigate("library");
-  };
-  const actionContext =
-    action.kind === "goal"
-      ? action.task.title
-      : action.kind === "review"
-        ? `${due.length} ${c.due}`
-        : action.kind === "focus"
-          ? `${action.remainingMinutes} ${c.minuteUnit}`
-          : "item" in action
-            ? action.item.title
-            : "";
-  const weekActivity = metrics.week.reduce((sum, day) => sum + day.count, 0);
-  const focusMinutes = state.focus
-    ? Math.ceil(
-        (state.focus.deadline
-          ? Math.max(0, state.focus.deadline - now.getTime()) / 1000
-          : state.focus.remaining) / 60,
-      )
-    : 25;
+  const [question, setQuestion] = useState("");
+  const [sourceId, setSourceId] = useState("");
+  const draft = useDraft(c.tutor, false, () => setQuestion(""));
+  const source = items.find((i) => i.id === sourceId) || insight.recent[0];
+  const add = onAdd || (() => navigate("library"));
   return (
-    <div
-      className="lx-dashboard lv-dashboard dv-dashboard"
-      data-dashboard-motion={mode}
-    >
-      <DashboardReveal mode={mode}>
-        <section className="lx-hero dv-hero" data-dash-reveal>
-          <div className="lx-hero-copy dv-hero-copy">
-            <div className="lx-eyebrow">
-              <span />
-              <span className="dv-eyebrow-text">{copy.studio}</span>
-              <i>
-                {new Intl.DateTimeFormat(locale, {
-                  day: "numeric",
-                  month: "short",
-                }).format(now)}
-              </i>
-            </div>
-            <h1>
-              {copy.greeting}
-              <br />
-              <em>{copy.greetingAccent}</em>
-            </h1>
-            <p>
-              {name ? `${name.split(" ").slice(-2).join(" ")}, ` : ""}
-              {copy.heroHint}
-            </p>
-            <div className="dv-hero-actions">
-              <button className="lx-hero-button" onClick={() => runAction()}>
-                {next.button}
-                <ArrowUpRight size={19} />
-              </button>
-              <button
-                className="dv-hero-secondary"
-                onClick={() => navigate("progress")}
-              >
-                {copy.progressAction}
-                <ArrowRight size={16} />
-              </button>
-            </div>
-            <span className="dv-hero-proof">
-              <span />
-              <span>{copy.evidence}</span>
+    <DashboardReveal mode={mode}>
+      <div className={styles.home} data-home-v8 data-dashboard-motion={mode}>
+        <header className={styles.header} data-dash-reveal>
+          <div>
+            <span className={styles.eyebrow}>
+              LUMIO / {name || copy.studio}
             </span>
+            <h1>{c.welcome}</h1>
+            <p>{c.intro}</p>
           </div>
-          <LearningConstellation
-            locale={locale}
-            materials={items.length}
-            quizzes={insight.quizAttempts}
-            reviews={insight.reviewCount}
-            completedGoals={completedGoals}
-            goals={goals.length}
-            mode={mode}
-            navigate={navigate}
-          />
-        </section>
-
-        <section
-          className="lx-stat-strip dv-stats"
-          aria-label={c.achievements}
-          data-dash-reveal
-        >
-          {[
-            { Icon: Flame, value: metrics.streak, label: c.streak },
-            {
-              Icon: Target,
-              value: metrics.accuracy,
-              label: c.accuracy,
-              suffix: "%",
-            },
-            { Icon: Timer, value: metrics.focusMinutes, label: c.focusTime },
-            { Icon: Layers, value: metrics.reviews, label: c.reviewed },
-          ].map(({ Icon, value, label, suffix }) => (
-            <button key={label} onClick={() => navigate("progress")}>
-              <span className="lx-stat-icon">
-                <Icon size={19} />
-              </span>
-              <span>
-                <strong>
-                  {value === null ? (
-                    "—"
-                  ) : (
-                    <DashboardCounter
-                      value={value}
-                      locale={locale}
-                      mode={mode}
-                      suffix={suffix}
-                    />
-                  )}
-                </strong>
-                <small>{label}</small>
-              </span>
-              <ArrowUpRight size={15} />
-            </button>
-          ))}
-        </section>
-
-        <section
-          className={`dv-next-step kind-${action.kind}`}
-          aria-label={copy.nextLabel}
-          data-dash-reveal
-        >
-          <span className="dv-next-icon">
-            <next.Icon size={25} />
-          </span>
-          <div className="dv-next-content">
-            <span className="lx-kicker">{copy.nextLabel}</span>
-            <h2>{next.title}</h2>
-            <p>{next.reason}</p>
-            {actionContext && (
-              <span className="dv-next-context">{actionContext}</span>
-            )}
-            {action.kind === "practice" && (
-              <span className="dv-next-evidence">
-                {action.accuracy}% · {action.attempts} {c.attempts}
-              </span>
-            )}
-          </div>
-          <button className="dv-primary-button" onClick={() => runAction()}>
-            {next.button}
-            <ArrowRight size={17} />
+          <button className="lm-button" onClick={add}>
+            <Plus size={16} />
+            {c.add}
           </button>
-        </section>
-
-        <div className="dv-learning-grid">
-          <section className="lx-card dv-goals-card" data-dash-reveal>
-            <div className="lx-card-heading">
-              <div>
-                <span className="lx-kicker">01 / {c.todayLabel}</span>
-                <h2>{c.today}</h2>
-              </div>
-              <button
-                className="lx-round-button"
-                aria-label={c.addGoal}
-                onClick={() => navigate("planner")}
-              >
-                <Plus size={18} />
-              </button>
-            </div>
-            <div className="dv-day-progress">
-              <div className="dv-goal-ring">
-                <svg viewBox="0 0 100 100" aria-hidden="true">
-                  <circle cx="50" cy="50" r="41" className="track" />
-                  <circle
-                    cx="50"
-                    cy="50"
-                    r="41"
-                    className="fill"
-                    strokeDasharray="257.61"
-                    strokeDashoffset={257.61 * (1 - goalPercent / 100)}
-                  />
-                </svg>
-                <strong>
-                  {goals.length ? (
-                    <DashboardCounter
-                      value={goalPercent}
-                      locale={locale}
-                      mode={mode}
-                      suffix="%"
-                    />
-                  ) : (
-                    <Target size={25} />
-                  )}
-                </strong>
-              </div>
-              <div>
-                <h3>
-                  {goals.length
-                    ? goalPercent === 100
-                      ? copy.goalComplete
-                      : copy.todayProgress
-                    : copy.goalEmpty}
-                </h3>
-                <p>
-                  {goals.length
-                    ? `${completedGoals} / ${goals.length} ${c.done.toLowerCase()}`
-                    : c.noGoalsHint}
-                </p>
-                <progress
-                  className="dv-sr-only"
-                  value={completedGoals}
-                  max={goals.length || 1}
-                  aria-label={copy.goalProgress}
-                />
-              </div>
-            </div>
-            {goals.length ? (
-              <div className="lx-mini-goals dv-mini-goals">
-                {goals.slice(0, 4).map((goal) => {
-                  const linkedItem = items.find(
-                    (item) => item.id === goal.itemId,
-                  );
-                  return (
-                    <div key={goal.id} className={goal.done ? "done" : ""}>
-                      <button
-                        className="lx-check"
-                        aria-label={`${goal.done ? c.undo : c.complete}: ${goal.title}`}
-                        aria-pressed={goal.done}
-                        onClick={() => toggleTask(goal)}
-                      >
-                        {goal.done ? <Check size={16} /> : <Circle size={18} />}
-                      </button>
-                      <div>
-                        <strong>{goal.title}</strong>
-                        <small>
-                          {goal.minutes} {c.minuteUnit}
-                        </small>
-                      </div>
-                      {linkedItem && (
-                        <button
-                          className="lx-round-button"
-                          aria-label={`${c.open}: ${linkedItem.title}`}
-                          onClick={() => open(linkedItem)}
-                        >
-                          <ArrowUpRight size={16} />
-                        </button>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <button
-                className="dv-add-goal"
-                onClick={() => navigate("planner")}
-              >
-                <Plus size={17} />
-                {c.addGoal}
-                <ArrowRight size={16} />
-              </button>
-            )}
-            <button
-              className="lx-card-footer"
-              onClick={() => navigate("planner")}
-            >
-              <span>{c.planner}</span>
-              <ArrowRight size={16} />
-            </button>
-          </section>
-
-          <section className="lx-card dv-review-card" data-dash-reveal>
-            <div className="lx-card-heading">
-              <span className="lx-kicker">02 / {c.review}</span>
-              <span className="dv-review-symbol" aria-hidden="true">
-                <Layers size={22} />
-              </span>
-            </div>
-            <div className="dv-review-number">
-              <strong>
-                <DashboardCounter
-                  value={due.length}
-                  locale={locale}
-                  mode={mode}
-                />
-              </strong>
-              <span>
-                {due.length ? c.due : hasCards ? c.dueEmpty : copy.reviewEmpty}
-              </span>
-            </div>
-            <p>{hasCards ? c.reviewHint : c.noCardsHint}</p>
-            <div className="dv-review-cards" aria-hidden="true">
-              <i />
-              <i />
-              <i>
-                <span />
-                <span />
-                <Layers size={24} />
-              </i>
-            </div>
-            <button
-              className="dv-review-button"
-              onClick={() => navigate("review")}
-            >
-              {due.length ? c.startReview : c.reviewSchedule}
-              <ArrowUpRight size={18} />
-            </button>
-          </section>
-
-          <section className="lx-card dv-week-card" data-dash-reveal>
-            <div className="lx-card-heading">
-              <div>
-                <span className="lx-kicker">03 / {c.progress}</span>
-                <h2>{c.activity}</h2>
-              </div>
-              <button
-                className="lx-round-button"
-                aria-label={c.progress}
-                onClick={() => navigate("progress")}
-              >
-                <ArrowUpRight size={18} />
-              </button>
-            </div>
-            <div className="dv-week-total">
-              <strong>
-                <DashboardCounter
-                  value={weekActivity}
-                  locale={locale}
-                  mode={mode}
-                />
-              </strong>
-              <span>{copy.totalActivities}</span>
-            </div>
-            <ActivityChart
-              state={state}
-              items={items}
-              locale={locale}
-              snapshot={now}
-            />
-            <p>{weekActivity ? c.activityHint : copy.emptyActivity}</p>
-          </section>
-
-          <div className="dv-habit-stack" data-dash-reveal>
-            <StreakCalendar
-              locale={locale}
-              items={items}
-              state={state}
-              snapshot={now}
-            />
-            <button
-              className="lx-focus-preview dv-focus-preview"
-              onClick={() => navigate("focus")}
-            >
-              <span className="lx-focus-glyph">
-                <Timer size={28} />
-              </span>
-              <span>
-                <small>{c.focus}</small>
-                <strong>{c.focusTitle}</strong>
-              </span>
-              <span className="lx-focus-preview-time">
-                {focusMinutes}
-                <small>{c.minuteUnit}</small>
-              </span>
-              <ArrowUpRight size={20} />
-            </button>
-          </div>
-        </div>
-
-        {recent.length > 0 && (
-          <section className="dv-recent" data-dash-reveal>
-            <div className="dv-section-heading">
-              <div>
-                <span className="lx-kicker">LUMIO / {copy.materials}</span>
-                <h2>{copy.recentTitle}</h2>
-                <p>{copy.recentHint}</p>
-              </div>
-              <button
-                className="lx-text-button"
-                onClick={() => navigate("library")}
-              >
-                {c.library}
-                <ArrowRight size={16} />
-              </button>
-            </div>
-            <div className="dv-recent-grid">
-              {recent.map((item) => {
-                const Icon = materialIcons[item.kind];
-                return (
-                  <button
-                    key={item.id}
-                    className={`dv-recent-card kind-${item.kind}`}
-                    onClick={() => open(item)}
-                  >
-                    <span className="dv-recent-art" aria-hidden="true">
-                      <span className="dv-document-lines">
-                        <i />
-                        <i />
-                        <i />
-                      </span>
-                      <Icon size={25} />
-                      <span className="dv-art-spark" />
-                    </span>
-                    <span className="dv-recent-text">
-                      <small>{copy.savedMaterial}</small>
-                      <strong>{item.title}</strong>
-                      <span>
-                        {c.open}
-                        <ArrowUpRight size={15} />
-                      </span>
-                    </span>
-                  </button>
+        </header>
+        <div className={styles.layout}>
+          <div className={styles.main}>
+            <form
+              className={styles.composer}
+              data-dash-reveal
+              data-home-composer
+              onSubmit={(event) => {
+                event.preventDefault();
+                if (!source || !question.trim()) return;
+                draft.markClean();
+                (onAsk || ((item: LearningItem) => open(item)))(
+                  source,
+                  question.trim(),
                 );
-              })}
+              }}
+            >
+              <div className={styles.composerHeading}>
+                <span className={styles.spark} aria-hidden="true">
+                  <Sparkles size={22} />
+                </span>
+                <h2>{c.tutor}</h2>
+              </div>
+              <textarea
+                aria-label={c.tutor}
+                placeholder={c.question}
+                maxLength={2000}
+                value={question}
+                onChange={(event) => {
+                  setQuestion(event.target.value);
+                  event.target.value.trim()
+                    ? draft.markDirty()
+                    : draft.markClean();
+                }}
+              />
+              <div className={styles.composeActions}>
+                <label>
+                  {c.source}
+                  <select
+                    value={source?.id || ""}
+                    onChange={(e) => setSourceId(e.target.value)}
+                    disabled={!items.length}
+                  >
+                    {!items.length && <option value="">{c.noSource}</option>}
+                    {items.map((i) => (
+                      <option key={i.id} value={i.id}>
+                        {i.title}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <button
+                  className="lm-button primary"
+                  disabled={!source || !question.trim()}
+                >
+                  {c.ask}
+                  <ArrowUpRight size={16} />
+                </button>
+              </div>
+              <p className={styles.muted}>{c.disclosure}</p>
+            </form>
+            <div data-dash-reveal>
+              <DailyLearningPlan
+                items={items}
+                learning={state}
+                preferences={preferences || emptyPreferences()}
+                locale={locale}
+                open={open}
+                onReview={() => navigate("review")}
+                onPreferences={onPreferences}
+                storageError={storageError}
+              />
             </div>
-          </section>
-        )}
-      </DashboardReveal>
-    </div>
+            <section data-dash-reveal aria-label={c.recent}>
+              <div className={styles.heading}>
+                <h2>{c.recent}</h2>
+                <button
+                  className={styles.textButton}
+                  onClick={() => navigate("library")}
+                >
+                  {c.all}
+                  <ArrowRight size={15} />
+                </button>
+              </div>
+              {insight.recent.length ? (
+                <div className={styles.cards}>
+                  {insight.recent.map((item) => {
+                    const Icon = materialIcons[item.kind];
+                    return (
+                      <button
+                        className={styles.material}
+                        key={item.id}
+                        onClick={() => open(item)}
+                        data-home-material
+                      >
+                        <span
+                          className={styles.materialVisual}
+                          aria-hidden="true"
+                        >
+                          <Icon size={31} strokeWidth={1.5} />
+                        </span>
+                        <strong>{item.title}</strong>
+                        <span className={styles.materialFooter}>
+                          <small>{c.saved}</small>
+                          <ArrowUpRight size={16} />
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className={styles.empty}>
+                  <BookOpen size={32} aria-hidden="true" />
+                  <h3>{c.empty}</h3>
+                  <p className={styles.muted}>{c.emptyHint}</p>
+                  <button className="lm-button primary" onClick={add}>
+                    <Plus size={16} />
+                    {c.add}
+                  </button>
+                  {onSample && (
+                    <button className="lm-button" onClick={onSample}>
+                      {catalogs[locale].sample}
+                      <ArrowUpRight size={15} />
+                    </button>
+                  )}
+                </div>
+              )}
+            </section>
+          </div>
+          <aside className={styles.aside}>
+            <section
+              className={styles.panel}
+              data-dash-reveal
+              aria-label={c.goals}
+            >
+              <div className={styles.heading}>
+                <h2>{c.goals}</h2>
+                <Target size={19} aria-hidden="true" />
+              </div>
+              <div className={styles.metric}>
+                <strong>
+                  <DashboardCounter
+                    value={insight.completedGoals}
+                    locale={locale}
+                    mode={mode}
+                  />
+                  /{insight.goals.length}
+                </strong>
+                <span>{copy.goalProgress}</span>
+              </div>
+              {insight.goals.length ? (
+                <div className={styles.goals}>
+                  {insight.goals.slice(0, 3).map((task) => (
+                    <button
+                      key={task.id}
+                      className={styles.goal}
+                      aria-pressed={task.done}
+                      onClick={() => toggleTask(task)}
+                    >
+                      {task.done ? <Check size={17} /> : <Circle size={17} />}
+                      <span>{task.title}</span>
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className={styles.muted}>{c.noGoals}</p>
+              )}
+              <button
+                className={styles.textButton}
+                onClick={() => navigate("planner")}
+              >
+                {c.planner}
+                <ArrowRight size={15} />
+              </button>
+            </section>
+            <section
+              className={styles.panel}
+              data-dash-reveal
+              aria-label={learningCopy[locale].streak}
+            >
+              <StreakCalendar
+                locale={locale}
+                items={items}
+                state={state}
+                snapshot={now}
+              />
+            </section>
+            <section
+              className={styles.panel}
+              data-dash-reveal
+              aria-label={c.activity}
+            >
+              <div className={styles.heading}>
+                <h2>{c.activity}</h2>
+                <Timer size={18} aria-hidden="true" />
+              </div>
+              <ActivityChart
+                locale={locale}
+                items={items}
+                state={state}
+                snapshot={now}
+              />
+              <p className={styles.muted}>{c.activityHint}</p>
+              <div className={styles.footer}>
+                <button
+                  className={styles.textButton}
+                  onClick={() => navigate("progress")}
+                >
+                  {copy.progressAction}
+                  <ArrowUpRight size={14} />
+                </button>
+                <button
+                  className={styles.textButton}
+                  onClick={() => navigate("focus")}
+                >
+                  {c.focus}
+                </button>
+                {onControls && (
+                  <button className={styles.textButton} onClick={onControls}>
+                    {c.controls}
+                  </button>
+                )}
+              </div>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </DashboardReveal>
   );
 }

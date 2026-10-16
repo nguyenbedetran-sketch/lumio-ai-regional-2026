@@ -55,7 +55,19 @@ import {
   MathVerificationNotice,
   tutorUICopy,
 } from "./tutor-progress";
-import type { TutorState, MathVerification } from "../../lib/tutor/types";
+import type {
+  TutorState,
+  MathVerification,
+  TutorIntent,
+  TutorTurnIdentity,
+  TutorStoredTurn,
+  TutorSessionView,
+} from "../../lib/tutor/types";
+import {
+  TutorHelpIntent,
+  TutorTurnFeedback,
+  tutorSupportCopy,
+} from "./tutor-support";
 import type { SourceReference } from "../../lib/ai/grounding";
 import { RAGScopeSelector, ragError } from "./rag-manager";
 import { SummaryJobManager } from "./summary-job-manager";
@@ -73,6 +85,7 @@ export function AIPanel({
   t,
   locale,
   initialTask,
+  initialPrompt,
   update,
   onOpenSource,
   onActivity,
@@ -84,6 +97,7 @@ export function AIPanel({
   t: Messages;
   locale: Locale;
   initialTask: AITask;
+  initialPrompt?: string;
   update: (item: LearningItem) => void;
   onOpenSource?: (reference?: SourceReference) => void;
   onActivity?: (kind: "chat" | "summary") => void;
@@ -103,7 +117,7 @@ export function AIPanel({
   const [config, setConfig] = useState<ProviderStatus | null>(null),
     [task, setTask] = useState<AITask>(initialTask),
     [language, setLanguage] = useState<Locale>(locale),
-    [question, setQuestion] = useState(drafts?.question || ""),
+    [question, setQuestion] = useState(drafts?.question ?? initialPrompt ?? ""),
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [result, setResult] = useState<AIResult | null>(null),
@@ -113,10 +127,16 @@ export function AIPanel({
         text: string;
         references?: SourceReference[];
         verification?: MathVerification;
+        turn?: TutorTurnIdentity;
       }[]
     >([]),
     [notice, setNotice] = useState("");
   const [tutorState, setTutorState] = useState<TutorState | null>(null);
+  const [tutorIntent, setTutorIntent] = useState<TutorIntent>("progress");
+  const [continuity, setContinuity] = useState<{
+    lastQuestion: string | null;
+    lastStudentAttempt: string | null;
+  } | null>(null);
   const [restoringSession, setRestoringSession] = useState(true);
   const tutorSlot = useRef<string | null>(null);
   const tutorSourceStamp = useRef("");
@@ -156,11 +176,30 @@ export function AIPanel({
   const [readoutActive, setReadoutActive] = useState(false);
   const reading = useRef(false);
   itemRef.current = item;
+  function applyTutorSession(session: TutorSessionView) {
+    setTutorState(session);
+    setContinuity(session.continuity || null);
+    setHistory(
+      session.turns.slice(-100).flatMap((turn: TutorStoredTurn) => [
+        { role: "user" as const, text: turn.student },
+        {
+          role: "assistant" as const,
+          text: turn.assistant,
+          references: turn.references,
+          verification: turn.verification,
+          turn,
+        },
+      ]),
+    );
+  }
+
   useEffect(() => {
     const controller = new AbortController();
     let active = true;
     tutorSlot.current = null;
     setTutorState(null);
+    setTutorIntent("progress");
+    setContinuity(null);
     setHistory([]);
     setGuidance("hints");
     setResult(null);
@@ -283,27 +322,7 @@ export function AIPanel({
         }
         const session = await restored.json();
         if (!active || !Array.isArray(session.turns)) return;
-        setTutorState(session as TutorState);
-        setHistory(
-          session.turns
-            .slice(-100)
-            .flatMap(
-              (turn: {
-                student: string;
-                assistant: string;
-                references?: SourceReference[];
-                verification?: MathVerification;
-              }) => [
-                { role: "user" as const, text: turn.student },
-                {
-                  role: "assistant" as const,
-                  text: turn.assistant,
-                  references: turn.references,
-                  verification: turn.verification,
-                },
-              ],
-            ),
-        );
+        applyTutorSession(session as TutorSessionView);
       } catch {
       } finally {
         if (active) setRestoringSession(false);
@@ -356,6 +375,8 @@ export function AIPanel({
     setRagScope((old) => (old ? { ...old, snapshotId: undefined } : undefined));
     setRagWarning(false);
     setTutorState(null);
+    setTutorIntent("progress");
+    setContinuity(null);
     setHistory([]);
     setResult(null);
     setQuestion("");
@@ -521,6 +542,9 @@ export function AIPanel({
         // The server loads the canonical tutor history; no duplicate browser transcript is sent.
         history: [],
         tutorSessionId: task === "chat" ? tutorState?.sessionId : undefined,
+        ...(task === "chat" && tutorIntent !== "progress"
+          ? { tutorIntent }
+          : {}),
         tutorProblem:
           task === "chat" && !tutorState ? question.trim() : undefined,
         mode: task === "chat" ? mode : "quick",
@@ -550,6 +574,30 @@ export function AIPanel({
         if (!type.includes("application/json"))
           throw new Error("PROVIDER_ERROR");
         const body = await response.json();
+        signal.throwIfAborted();
+        if (
+          response.status === 409 &&
+          body.error === "AI_REQUEST_COMPLETED" &&
+          task === "chat" &&
+          typeof body.receipt?.tutorSessionId === "string"
+        ) {
+          const recovered = await fetch(
+            `/api/tutor/session?sessionId=${encodeURIComponent(body.receipt.tutorSessionId)}`,
+            { headers: accountHeaders(account), signal, cache: "no-store" },
+          );
+          if (recovered.ok) {
+            const view = (await recovered.json()) as TutorSessionView;
+            signal.throwIfAborted();
+            if (
+              requestSlot !== tutorSlot.current ||
+              requestStamp !== tutorSourceStamp.current
+            )
+              throw new Error("SOURCE_CHANGED");
+            applyTutorSession(view);
+            rememberTutor(view);
+            throw new Error("TUTOR_RECOVERED");
+          }
+        }
         if (body.tutor && task === "chat") {
           if (
             itemRef.current.id !== item.id ||
@@ -669,9 +717,12 @@ export function AIPanel({
                 text: r.text,
                 references: r.references,
                 verification: r.verification,
+                turn: r.tutor?.latestTurn,
               },
             ].slice(-200) as typeof h,
         );
+        setContinuity({ lastStudentAttempt: question, lastQuestion: null });
+        setTutorIntent("progress");
         setQuestion("");
       }
       if (r.cards || r.questions) {
@@ -691,6 +742,16 @@ export function AIPanel({
         setNotice(a.added);
       }
     } catch (e) {
+      if (e instanceof Error && e.message === "TUTOR_RECOVERED") {
+        setNotice(
+          locale === "vi"
+            ? "Đã khôi phục câu trả lời đã hoàn tất; không gọi AI hoặc trừ credit lần nữa."
+            : "Restored the completed reply without another AI call or charge.",
+        );
+        setQuestion("");
+        setTutorIntent("progress");
+        return;
+      }
       if (wholeVideo && wholeJob.current?.key === jobKey) {
         setIncomplete(true);
         setNotice(full.incomplete);
@@ -1027,6 +1088,30 @@ export function AIPanel({
               );
             }}
           />
+          <TutorHelpIntent
+            locale={locale}
+            value={tutorIntent}
+            disabled={blocked || restoringSession || guidance === "full"}
+            onChange={setTutorIntent}
+          />
+          {continuity && (
+            <details className="lm-learning-preferences">
+              <summary>{tutorSupportCopy(locale).continuity}</summary>
+              <p>{tutorSupportCopy(locale).caution}</p>
+              {continuity.lastQuestion && (
+                <p>
+                  <strong>{tutorSupportCopy(locale).question}: </strong>
+                  {continuity.lastQuestion}
+                </p>
+              )}
+              {continuity.lastStudentAttempt && (
+                <p>
+                  <strong>{tutorSupportCopy(locale).attempt}: </strong>
+                  {continuity.lastStudentAttempt}
+                </p>
+              )}
+            </details>
+          )}
           <div
             className="lm-tutor-modes"
             role="group"
@@ -1217,6 +1302,21 @@ export function AIPanel({
                     verification={turn.verification}
                     locale={locale}
                   />
+                  {turn.turn && tutorState && (
+                    <>
+                      <small>
+                        {!turn.turn.counted && turn.turn.intent !== "progress"
+                          ? tutorSupportCopy(locale).recorded
+                          : ""}
+                      </small>
+                      <TutorTurnFeedback
+                        key={`${tutorState.sessionId}:${turn.turn.id}`}
+                        locale={locale}
+                        sessionId={tutorState.sessionId}
+                        turn={turn.turn}
+                      />
+                    </>
+                  )}
                 </>
               )}
             </article>

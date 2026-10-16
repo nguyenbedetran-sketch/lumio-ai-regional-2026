@@ -1,8 +1,8 @@
 import type { DatabaseSync } from "node:sqlite";
 
-// Canonical metadata derived from migrations1–17 using SQLite itself.
+// Canonical metadata derived from migrations1–18 using SQLite itself.
 // Update together with a reviewed migration; tests compare against fresh schema.
-export const DATABASE_SCHEMA_VERSION = 17;
+export const DATABASE_SCHEMA_VERSION = 18;
 export const DATABASE_TABLES: readonly {
   name: string;
   since: number;
@@ -201,6 +201,10 @@ export const DATABASE_TABLES: readonly {
       {
         since: 7,
         sql: "CREATE TABLE tutor_turns (\n id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES tutor_sessions(id) ON DELETE CASCADE,\n request_id TEXT NOT NULL UNIQUE, ordinal INTEGER NOT NULL, student_text TEXT NOT NULL,\n assistant_text TEXT NOT NULL, hint TEXT, question TEXT, misconception TEXT, step TEXT,\n guidance TEXT NOT NULL CHECK(guidance IN ('hints','full')), created_at TEXT NOT NULL, references_json TEXT NOT NULL DEFAULT '[]', verification_json TEXT, needs_clarification INTEGER NOT NULL DEFAULT 0 CHECK(needs_clarification IN (0,1)),\n UNIQUE(session_id,ordinal)\n)",
+      },
+      {
+        since: 18,
+        sql: "CREATE TABLE tutor_turns (\n id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES tutor_sessions(id) ON DELETE CASCADE,\n request_id TEXT NOT NULL UNIQUE, ordinal INTEGER NOT NULL, student_text TEXT NOT NULL,\n assistant_text TEXT NOT NULL, hint TEXT, question TEXT, misconception TEXT, step TEXT,\n guidance TEXT NOT NULL CHECK(guidance IN ('hints','full')), created_at TEXT NOT NULL, references_json TEXT NOT NULL DEFAULT '[]', verification_json TEXT, needs_clarification INTEGER NOT NULL DEFAULT 0 CHECK(needs_clarification IN (0,1)), intent TEXT NOT NULL DEFAULT 'progress' CHECK(intent IN('progress','simpler','example','approach')),\n UNIQUE(session_id,ordinal)\n)",
       },
     ],
   },
@@ -511,6 +515,26 @@ export const DATABASE_TABLES: readonly {
       {
         since: 17,
         sql: "CREATE TABLE ai_provider_attempts (\n id TEXT NOT NULL PRIMARY KEY,logical_request_id TEXT NOT NULL CHECK(length(logical_request_id) BETWEEN 1 AND 100),\n dispatch_ordinal INTEGER NOT NULL CHECK(dispatch_ordinal>=1),user_id TEXT NOT NULL REFERENCES users(id),\n session_version INTEGER NOT NULL CHECK(session_version>=1),reservation_id TEXT NOT NULL REFERENCES billing_reservations(id),\n feature TEXT NOT NULL CHECK(feature IN('learner.chat','learner.tutor','learner.summary','learner.cards','learner.quiz','teacher.lesson','teacher.questions','teacher.feedback','teacher.assistant','job.summary-part')),\n provider TEXT NOT NULL CHECK(provider IN('openai','gemini')),endpoint_kind TEXT NOT NULL CHECK(endpoint_kind IN('responses','generate-content')),\n requested_model TEXT NOT NULL CHECK(length(requested_model) BETWEEN 1 AND 100),response_model TEXT CHECK(length(response_model) BETWEEN 1 AND 100),\n provider_request_id TEXT CHECK(length(provider_request_id) BETWEEN 1 AND 100),\n status TEXT NOT NULL DEFAULT 'prepared' CHECK(status IN('prepared','response_received','network_unknown','timeout_unknown','cancelled_unknown')),\n http_status INTEGER CHECK(http_status BETWEEN 100 AND 599),\n input_tokens INTEGER CHECK(input_tokens>=0),output_tokens INTEGER CHECK(output_tokens>=0),cached_tokens INTEGER CHECK(cached_tokens>=0),\n total_tokens INTEGER CHECK(total_tokens>=0),reasoning_tokens INTEGER CHECK(reasoning_tokens>=0),latency_ms INTEGER CHECK(latency_ms>=0),\n safe_error_code TEXT CHECK(length(safe_error_code) BETWEEN 1 AND 80),\n usage_source TEXT CHECK(usage_source IN('openai-response-usage','gemini-usage-metadata')),\n estimated_cost_usd REAL CHECK(estimated_cost_usd IS NULL),prepared_at TEXT NOT NULL,ended_at TEXT,\n UNIQUE(logical_request_id,dispatch_ordinal),\n CHECK((status='prepared' AND ended_at IS NULL) OR (status!='prepared' AND ended_at IS NOT NULL)),\n CHECK((provider='openai' AND endpoint_kind='responses') OR (provider='gemini' AND endpoint_kind='generate-content'))\n)",
+      },
+    ],
+  },
+  {
+    name: "tutor_feedback",
+    since: 18,
+    definitions: [
+      {
+        since: 18,
+        sql: "CREATE TABLE tutor_feedback (\n turn_id TEXT NOT NULL PRIMARY KEY REFERENCES tutor_turns(id) ON DELETE CASCADE,\n session_id TEXT NOT NULL REFERENCES tutor_sessions(id) ON DELETE CASCADE,\n revision INTEGER NOT NULL CHECK(revision>=1),\n usefulness TEXT CHECK(usefulness IN('helpful','not_helpful')),\n correctness TEXT CHECK(correctness IN('possible_error','not_sure')),\n updated_at TEXT NOT NULL,\n CHECK(usefulness IS NOT NULL OR correctness IS NOT NULL)\n)",
+      },
+    ],
+  },
+  {
+    name: "tutor_feedback_actions",
+    since: 18,
+    definitions: [
+      {
+        since: 18,
+        sql: "CREATE TABLE tutor_feedback_actions (\n user_id TEXT NOT NULL REFERENCES users(id),request_id TEXT NOT NULL,\n session_id TEXT NOT NULL REFERENCES tutor_sessions(id) ON DELETE CASCADE,\n turn_id TEXT NOT NULL REFERENCES tutor_turns(id) ON DELETE CASCADE,\n fingerprint TEXT NOT NULL CHECK(length(fingerprint)=64),\n result_revision INTEGER NOT NULL CHECK(result_revision>=1),\n deleted INTEGER NOT NULL CHECK(deleted IN(0,1)),created_at TEXT NOT NULL,\n PRIMARY KEY(user_id,request_id)\n)",
       },
     ],
   },

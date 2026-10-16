@@ -294,8 +294,12 @@ export function LearningView({
   onDelete,
   onAI,
   onActivity,
+  initialTab = "studio",
+  initialPrompt,
 }: {
   item: LearningItem;
+  initialTab?: "studio" | "chat" | "source";
+  initialPrompt?: string;
   t: Messages;
   locale: Locale;
   spaces: Space[];
@@ -308,7 +312,7 @@ export function LearningView({
     itemId: string,
   ) => void;
 }) {
-  const [tab, setTab] = useState("studio"),
+  const [tab, setTab] = useState<string>(initialTab),
     [blobUrl, setBlobUrl] = useState(""),
     [focus, setFocus] = useState(false);
   const [aiTask, setAiTask] = useState<AITask>("summary");
@@ -928,6 +932,7 @@ export function LearningView({
             )}
             <AIPanel
               contextual
+              initialPrompt={tab === "chat" ? initialPrompt : undefined}
               drafts={aiDrafts.current[tab === "chat" ? "chat" : aiTask]}
               onDraft={(value) => {
                 aiDrafts.current[tab === "chat" ? "chat" : aiTask] = value;

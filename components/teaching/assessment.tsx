@@ -45,6 +45,11 @@ import {
   useTeachingConfirmation,
 } from "./ui";
 import { GenerationPanel } from "./content";
+import {
+  AssessmentBlueprintEditor,
+  AssessmentPreflightView,
+} from "./assessment-blueprint";
+import type { AssessmentBlueprintCell } from "../../lib/teaching/assessment-plan";
 const assignmentStatus: Record<string, string> = {
   draft: "Nháp",
   reviewed: "Đã duyệt",
@@ -94,6 +99,15 @@ export function AssignmentsView({ client }: { client: TeachingClient }) {
             <p>{assignment.instructions}</p>
             <AssignmentAttempt assignment={assignment} />
             <AssessmentWindow assignment={assignment} />
+            <details>
+              <summary className="tw-text-button">
+                Xem phân bố & kiểm tra đề
+              </summary>
+              <AssessmentPreflightView
+                questions={assignment.questions}
+                expectedPoints={assignment.maxPoints}
+              />
+            </details>
             {assignment.practiceRetake && (
               <p className="tw-note">
                 Luyện tập cùng đề đã giao; không phải đề thi mới bảo mật. Bài và
@@ -222,12 +236,22 @@ function AssignmentEditor({
     [from, setFrom] = useState(localAssessmentDate(initial?.availableFrom)),
     [until, setUntil] = useState(localAssessmentDate(initial?.availableUntil)),
     [questions, setQuestions] = useState<string[]>(initial?.questionIds || []),
+    [selectionMode, setSelectionMode] = useState<"manual" | "blueprint">(
+      "manual",
+    ),
+    [blueprint, setBlueprint] = useState<AssessmentBlueprintCell[]>([
+      { topic: "", difficulty: "medium", kind: "mcq", count: 1 },
+    ]),
     [target, setTarget] = useState<AssignmentDraft["target"]>(
       initial?.target || { kind: "class", ids: [] },
     );
   const candidates = data.questions.filter(
     (q) => q.status === "reviewed" && (!q.classId || q.classId === classId),
   );
+  const selected = questions.flatMap((id) => {
+    const q = candidates.find((q) => q.id === id);
+    return q ? [q] : [];
+  });
   return (
     <Modal
       title={initial ? "Chỉnh sửa bài tập" : "Tạo bài tập"}
@@ -237,26 +261,37 @@ function AssignmentEditor({
       <form
         className="tw-form"
         onSubmit={submit(async () => {
-          const draft: AssignmentDraft = {
+          const draft = {
             classId,
             title,
             instructions,
-            questionIds: questions,
             target,
             dueAt: new Date(due).toISOString(),
             availableFrom: assessmentDate(from),
             availableUntil: assessmentDate(until),
           };
-          await client.mutate(
-            initial
-              ? {
-                  action: "assignment.update",
-                  id: initial.id,
-                  expectedRevision: initial.revision,
-                  draft,
-                }
-              : { action: "assignment.create", draft },
-          );
+          if (!initial && selectionMode === "blueprint") {
+            await client.mutate({
+              action: "assignment.compose",
+              draft,
+              blueprint,
+              expectedClassRevision:
+                data.classes.find((c) => c.id === classId)?.revision || 0,
+            });
+          } else
+            await client.mutate(
+              initial
+                ? {
+                    action: "assignment.update",
+                    id: initial.id,
+                    expectedRevision: initial.revision,
+                    draft: { ...draft, questionIds: questions },
+                  }
+                : {
+                    action: "assignment.create",
+                    draft: { ...draft, questionIds: questions },
+                  },
+            );
           onClose();
         })}
       >
@@ -278,6 +313,9 @@ function AssignmentEditor({
                 setClassId(e.target.value);
                 setTarget({ kind: "class", ids: [] });
                 setQuestions([]);
+                setBlueprint([
+                  { topic: "", difficulty: "medium", kind: "mcq", count: 1 },
+                ]);
               }}
             >
               <option value="">Chọn lớp</option>
@@ -377,37 +415,84 @@ function AssignmentEditor({
             ))}
           </div>
         )}
-        <div>
-          <span className="tw-muted">Câu hỏi đã được xem lại</span>
-          {candidates.map((q) => (
-            <label className="tw-check" style={{ marginTop: 9 }} key={q.id}>
-              <input
-                type="checkbox"
-                checked={questions.includes(q.id)}
-                disabled={!questions.includes(q.id) && questions.length >= 30}
-                onChange={(e) =>
-                  setQuestions(
-                    e.target.checked
-                      ? [...questions, q.id]
-                      : questions.filter((id) => id !== q.id),
-                  )
-                }
-              />
-              <span>
-                <MathText text={q.prompt} inline />
-                <small style={{ display: "block" }}>
-                  {q.maxPoints} điểm · {q.topic}
-                </small>
-              </span>
-            </label>
-          ))}
-          {!candidates.length && (
-            <p className="tw-note">
-              Tạo và duyệt câu hỏi cho lớp đã chọn, hoặc dùng câu hỏi chung của
-              tổ chức.
-            </p>
-          )}
-        </div>
+        {!initial && (
+          <Field label="Cách chọn câu">
+            <select
+              value={selectionMode}
+              disabled={client.busy}
+              onChange={(e) =>
+                setSelectionMode(e.target.value as "manual" | "blueprint")
+              }
+            >
+              <option value="manual">Chọn từng câu</option>
+              <option value="blueprint">Ghép theo ma trận đề</option>
+            </select>
+          </Field>
+        )}
+        {selectionMode === "blueprint" && !initial ? (
+          <AssessmentBlueprintEditor
+            bank={candidates}
+            cells={blueprint}
+            onChange={setBlueprint}
+            disabled={client.busy || !classId}
+          />
+        ) : (
+          <div>
+            <span className="tw-muted">Câu hỏi đã được xem lại</span>
+            {questions
+              .filter((id) => !candidates.some((q) => q.id === id))
+              .map((id) => (
+                <div className="tw-note" key={id}>
+                  <p>
+                    Có một câu đã chọn không còn trong ngân hàng đã duyệt của
+                    lớp. Duyệt lại câu trong ngân hàng, hoặc bỏ câu khỏi đề
+                    trước khi lưu.
+                  </p>
+                  <button
+                    type="button"
+                    className="tw-text-button"
+                    disabled={client.busy}
+                    onClick={() =>
+                      setQuestions(questions.filter((value) => value !== id))
+                    }
+                  >
+                    Bỏ câu không còn khả dụng khỏi đề
+                  </button>
+                </div>
+              ))}
+            {candidates.map((q) => (
+              <label className="tw-check" style={{ marginTop: 9 }} key={q.id}>
+                <input
+                  type="checkbox"
+                  checked={questions.includes(q.id)}
+                  disabled={!questions.includes(q.id) && questions.length >= 30}
+                  onChange={(e) =>
+                    setQuestions(
+                      e.target.checked
+                        ? [...questions, q.id]
+                        : questions.filter((id) => id !== q.id),
+                    )
+                  }
+                />
+                <span>
+                  <MathText text={q.prompt} inline />
+                  <small style={{ display: "block" }}>
+                    {q.maxPoints} điểm · {q.topic}
+                  </small>
+                </span>
+              </label>
+            ))}
+            {!candidates.length && (
+              <p className="tw-note">
+                Tạo và duyệt câu hỏi cho lớp đã chọn, hoặc dùng câu hỏi chung
+                của tổ chức.
+              </p>
+            )}
+          </div>
+        )}
+        {(selectionMode === "manual" || initial) && (
+          <AssessmentPreflightView questions={selected} />
+        )}
         <p className="tw-note">
           Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm
           giao; nội dung chốt sau khi giao không bị sửa theo ngân hàng câu hỏi.

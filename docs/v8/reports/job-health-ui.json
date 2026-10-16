@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "passed": 10,
+  "cases": [
+    "Panel has no fabricated initial health or automatic polling",
+    "Stored count renders after explicit authorized read",
+    "Expired lease warning is tied to returned aggregate",
+    "UI distinguishes metadata snapshot from worker or backup health",
+    "Health request is read-only and bound to the current account",
+    "Authorization loss clears previous report and requests reauthentication",
+    "Changing account clears prior aggregate even without a keyed remount",
+    "Late response from prior account does not restore the previous report",
+    "Queue-health table fits mobile width",
+    "No runtime errors or external requests in the isolated queue UI fixture"
+  ],
+  "errors": [],
+  "providerRequests": 0,
+  "scope": "Actual JobHealthPanel and application CSS; synthetic intercepted HTTP and account switches, no private queue or real admin data.",
+  "checkedAt": "2026-10-16T14:26:12.730Z",
+  "sourceSha256": "702295913d18443efcd5c19937c87100e6b666f7dc414b15be521b23130be557"
+}

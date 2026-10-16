@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "version": "3.4.0-rc.1",
+  "schema": 18,
+  "checkedAt": "2026-10-16T14:42:51.602076+00:00",
+  "gates": [
+    {
+      "command": "npx --yes pnpm@11.25.0 test:all",
+      "logSha256": "9bf5426b0d33af89408abf60b96863cea061d53effb660768bfc92b7c497c04d",
+      "scope": "Deterministic and isolated SQLite regression; no real provider or learner validation",
+      "finishedAt": "2026-10-16T14:38:57.9284867Z",
+      "exitCode": 0
+    },
+    {
+      "exitCode": 0,
+      "logSha256": "516d6880503ce49f21cf876f448f8f30332440e62d083ca54115b145922769a8",
+      "command": "node node_modules/next/dist/bin/next build",
+      "finishedAt": "2026-10-16T14:41:12.8688103Z"
+    },
+    {
+      "command": "node node_modules/typescript/bin/tsc --noEmit --pretty false",
+      "finishedAt": "2026-10-16T14:41:37.9560223Z",
+      "logSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "exitCode": 0
+    }
+  ],
+  "browserAssertions": {
+    "homeWorkspace": 197,
+    "learning": 44,
+    "tutorVoice": 36,
+    "teacherAssessment": 19,
+    "adminQueue": 10
+  },
+  "scope": "Local integration only. Browser uses actual components with synthetic auth/HTTP. No live provider, physical device, learner study or public deployment claim."
+}

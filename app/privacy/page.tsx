@@ -53,13 +53,13 @@ export default function PrivacyPage() {
         </p>
         <p>
           Việc duyệt hồ sơ là đánh giá thủ công trên thông tin tự khai, không
-          phải xác minh danh tính hay chứng nhận đang công tác tại trường.
-          Quyền giáo viên có thể bị thu hồi, không tự cấp quyền quản trị hoặc
-          truy cập dữ liệu học sinh. Hồ sơ, kết quả và thao tác xét duyệt lưu
-          riêng trong cơ sở dữ liệu; không áp dụng thời hạn bảy ngày của bản
-          đồng bộ học tập. Bản hiện tại chưa có nút tự xóa hồ sơ giáo viên;
-          xóa dữ liệu học trên trình duyệt không xóa hồ sơ này. Trên hosting
-          miễn phí, dữ liệu vẫn có thể mất khi dịch vụ được tạo lại.
+          phải xác minh danh tính hay chứng nhận đang công tác tại trường. Quyền
+          giáo viên có thể bị thu hồi, không tự cấp quyền quản trị hoặc truy cập
+          dữ liệu học sinh. Hồ sơ, kết quả và thao tác xét duyệt lưu riêng trong
+          cơ sở dữ liệu; không áp dụng thời hạn bảy ngày của bản đồng bộ học
+          tập. Bản hiện tại chưa có nút tự xóa hồ sơ giáo viên; xóa dữ liệu học
+          trên trình duyệt không xóa hồ sơ này. Trên hosting miễn phí, dữ liệu
+          vẫn có thể mất khi dịch vụ được tạo lại.
         </p>
       </section>
       <section>
@@ -67,47 +67,46 @@ export default function PrivacyPage() {
         <p>
           Khi tạo hoặc tham gia lớp, Lumio lưu tổ chức, lớp, tên hiển thị tài
           khoản, phân công giáo viên, nhóm, học liệu, giáo án, câu hỏi, bài
-          giao, bài làm, điểm và nhận xét trong cơ sở dữ liệu máy chủ. Đây là
-          dữ liệu riêng với thư viện IndexedDB và bản đồng bộ bảy ngày. Chỉ
-          dùng dữ liệu cần thiết; không nhập căn cước, thông tin sức khỏe hay
-          thông tin gia đình của học sinh. Mã mời lớp có hạn và chỉ cấp quyền
-          học sinh của lớp đó, không cấp quyền giáo viên hoặc quản trị.
+          giao, bài làm, điểm và nhận xét trong cơ sở dữ liệu máy chủ. Đây là dữ
+          liệu riêng với thư viện IndexedDB và bản đồng bộ bảy ngày. Chỉ dùng dữ
+          liệu cần thiết; không nhập căn cước, thông tin sức khỏe hay thông tin
+          gia đình của học sinh. Mã mời lớp có hạn và chỉ cấp quyền học sinh của
+          lớp đó, không cấp quyền giáo viên hoặc quản trị.
         </p>
         <p>
-          Giáo viên xem lớp được phân công; quản trị tổ chức xem phạm vi tổ
-          chức mình. Học sinh xem bài được giao, học liệu đã chia sẻ và bài
-          làm của chính mình. Điểm tự chấm là bản tạm dành cho giáo viên;
-          học sinh chỉ nhận điểm và đáp án sau bước xác nhận, công bố. Nhật
-          ký ghi thao tác thay đổi quyền lớp, chấm và công bố bằng mã đối
-          tượng, không cố ý chép nội dung bài làm vào nhật ký. Quyền quản trị
-          hệ thống không tự động cho phép đọc mọi lớp hoặc thư viện cá nhân.
+          Giáo viên xem lớp được phân công; quản trị tổ chức xem phạm vi tổ chức
+          mình. Học sinh xem bài được giao, học liệu đã chia sẻ và bài làm của
+          chính mình. Điểm tự chấm là bản tạm dành cho giáo viên; học sinh chỉ
+          nhận điểm và đáp án sau bước xác nhận, công bố. Nhật ký ghi thao tác
+          thay đổi quyền lớp, chấm và công bố bằng mã đối tượng, không cố ý chép
+          nội dung bài làm vào nhật ký. Quyền quản trị hệ thống không tự động
+          cho phép đọc mọi lớp hoặc thư viện cá nhân.
         </p>
         <p>
-          Công cụ AI giáo viên chỉ gửi sau khi bạn xác nhận xử lý bên ngoài:
-          chủ đề, khối lớp, mục tiêu, độ khó và các đoạn học liệu bạn chọn.
-          Gợi ý nhận xét chỉ dùng đoạn không nhận dạng do giáo viên tự nhập,
-          không tự đính kèm danh sách lớp, email, tên học sinh hoặc toàn bộ
-          bài làm. Bộ phát hiện thông tin riêng tư có giới hạn; giáo viên
-          vẫn phải loại bỏ dữ liệu cá nhân trước khi gửi. Nguồn trích dẫn
-          khớp không có nghĩa toàn bộ nội dung AI chính xác; giáo viên phải
-          kiểm tra bản nháp trước khi giao bài hoặc công bố nhận xét.
+          Công cụ AI giáo viên chỉ gửi sau khi bạn xác nhận xử lý bên ngoài: chủ
+          đề, khối lớp, mục tiêu, độ khó và các đoạn học liệu bạn chọn. Gợi ý
+          nhận xét chỉ dùng đoạn không nhận dạng do giáo viên tự nhập, không tự
+          đính kèm danh sách lớp, email, tên học sinh hoặc toàn bộ bài làm. Bộ
+          phát hiện thông tin riêng tư có giới hạn; giáo viên vẫn phải loại bỏ
+          dữ liệu cá nhân trước khi gửi. Nguồn trích dẫn khớp không có nghĩa
+          toàn bộ nội dung AI chính xác; giáo viên phải kiểm tra bản nháp trước
+          khi giao bài hoặc công bố nhận xét.
         </p>
         <p>
-          Dữ liệu lớp chưa có thời hạn xóa tự động. Lưu trữ/đóng lớp không
-          đồng nghĩa xóa toàn bộ bài làm và nhật ký; liên hệ người phụ trách
-          để xử lý yêu cầu dữ liệu. Bản xuất CSV hoặc bản in PDF là bản sao
-          riêng mà người tải phải bảo quản. Hosting miễn phí vẫn có thể làm
-          mất dữ liệu máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính
-          thức hoặc bản sao duy nhất.
+          Dữ liệu lớp chưa có thời hạn xóa tự động. Lưu trữ/đóng lớp không đồng
+          nghĩa xóa toàn bộ bài làm và nhật ký; liên hệ người phụ trách để xử lý
+          yêu cầu dữ liệu. Bản xuất CSV hoặc bản in PDF là bản sao riêng mà
+          người tải phải bảo quản. Hosting miễn phí vẫn có thể làm mất dữ liệu
+          máy chủ; chưa dùng bản thử nghiệm này làm sổ điểm chính thức hoặc bản
+          sao duy nhất.
         </p>
         <p>
           Mỗi lần chấm và công bố lưu một phiên bản lịch sử riêng; sửa điểm
           không ghi đè bản cũ. Lý do điều chỉnh điểm hoặc cho luyện lại, người
           thực hiện và khung giờ mở/đóng bài cũng lưu trên máy chủ. Học sinh chỉ
-          xem lịch sử kết quả đã công bố của chính mình, không xem lý do nội
-          bộ. Những bản ghi này không có hạn bảy ngày hoặc nút tự xóa; sao lưu
-          cơ sở dữ liệu của người vận hành có thể chứa chúng và cần được xử lý
-          riêng.
+          xem lịch sử kết quả đã công bố của chính mình, không xem lý do nội bộ.
+          Những bản ghi này không có hạn bảy ngày hoặc nút tự xóa; sao lưu cơ sở
+          dữ liệu của người vận hành có thể chứa chúng và cần được xử lý riêng.
         </p>
       </section>
       <section>
@@ -216,6 +215,24 @@ export default function PrivacyPage() {
           phiên không xóa tài khoản, sổ credit hoặc nhật ký vận hành.
         </p>
         <p>
+          Phản hồi cho từng lượt gia sư chỉ gồm lựa chọn hữu ích/chưa hữu ích và
+          có thể có lỗi/chưa chắc. Các lựa chọn này lưu riêng theo tài khoản
+          cùng phiên gia sư, không gửi vào câu lệnh AI, không tự huấn luyện hoặc
+          thay đổi điểm số. Khi xóa phản hồi, các lựa chọn được xóa ngay; mã băm
+          thao tác và phiên bản vẫn giữ để chống xử lý trùng cho đến khi xóa
+          phiên hoặc dọn hết hạn. Việc dọn dùng cùng thời hạn tối đa bảy ngày
+          của phiên, có thể mất sớm hơn trên hosting miễn phí.
+        </p>
+        <p>
+          Phòng giọng nói chỉ dùng học liệu khi bạn chủ động chọn và gửi. Trình
+          duyệt có thể giữ mã nguồn đã chọn và con trỏ phiên gắn tài khoản để
+          khôi phục; không lưu âm thanh hay toàn bộ hội thoại vào localStorage.
+          Bản chép lời/câu hỏi được gửi tới gia sư vẫn theo cơ chế lưu phiên
+          trên máy chủ ở trên. “Bài mới” bỏ con trỏ hiện tại, không xóa phiên
+          trước trên máy chủ. Bản ghi hoặc ghi chú bạn chủ động lưu vào thư viện
+          là dữ liệu riêng và không tự mất khi xóa phiên gia sư.
+        </p>
+        <p>
           Lumio không có chức năng huấn luyện mô hình gia sư từ tài liệu hay hội
           thoại học sinh. Bộ xếp hạng đề xuất nhỏ có thể học từ các lượt đánh
           giá rõ ràng ngay trên thiết bị; đây là xử lý cục bộ, có thể tắt. Việc
@@ -309,23 +326,23 @@ export default function PrivacyPage() {
           hoặc tiếp nhận thông tin thanh toán.
         </p>
         <p>
-          Luồng tạo nội dung cho người học, giáo viên và tóm tắt nền còn ghi riêng
-          từng lần chuẩn bị gọi AI, gồm mã tài khoản/yêu cầu, model được yêu cầu
-          và model trong phản hồi, số token được báo, trạng thái và thời gian.
-          Đây là metadata liên kết tài khoản, không phải dữ liệu ẩn danh hay
-          nội dung học. Nhật ký mới chưa bao phủ giọng nói và embeddings, không
-          dựng lại các lần gọi trước khi nâng cấp. Số token hoặc chi phí chưa
-          biết được giữ là chưa biết, không tự coi bằng không.
+          Luồng tạo nội dung cho người học, giáo viên và tóm tắt nền còn ghi
+          riêng từng lần chuẩn bị gọi AI, gồm mã tài khoản/yêu cầu, model được
+          yêu cầu và model trong phản hồi, số token được báo, trạng thái và thời
+          gian. Đây là metadata liên kết tài khoản, không phải dữ liệu ẩn danh
+          hay nội dung học. Nhật ký mới chưa bao phủ giọng nói và embeddings,
+          không dựng lại các lần gọi trước khi nâng cấp. Số token hoặc chi phí
+          chưa biết được giữ là chưa biết, không tự coi bằng không.
         </p>
         <p>
           Metadata từng lần gọi đã kết thúc quá 31 ngày được dọn theo đợt khi có
-          yêu cầu mới đủ quyền; không có lịch xóa nền nên có thể còn lưu lâu hơn.
-          Bản ghi chưa rõ kết quả được giữ để kiểm tra lỗi, không tự xóa hoặc tự
-          gọi lại AI. Xóa thư viện hay phiên gia sư không xóa nhật ký này; quản trị
-          viên được cấp quyền có thể xem báo cáo metadata. Các nhật ký quản trị,
-          sổ credit và bản sao lưu vẫn có phạm vi riêng, chưa có nút tự xóa toàn
-          bộ hoặc thời hạn chung. Người phụ trách phải xác định phạm vi xử lý
-          khi có yêu cầu dữ liệu tài khoản.
+          yêu cầu mới đủ quyền; không có lịch xóa nền nên có thể còn lưu lâu
+          hơn. Bản ghi chưa rõ kết quả được giữ để kiểm tra lỗi, không tự xóa
+          hoặc tự gọi lại AI. Xóa thư viện hay phiên gia sư không xóa nhật ký
+          này; quản trị viên được cấp quyền có thể xem báo cáo metadata. Các
+          nhật ký quản trị, sổ credit và bản sao lưu vẫn có phạm vi riêng, chưa
+          có nút tự xóa toàn bộ hoặc thời hạn chung. Người phụ trách phải xác
+          định phạm vi xử lý khi có yêu cầu dữ liệu tài khoản.
         </p>
       </section>
       <section>

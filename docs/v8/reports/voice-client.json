@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "passed": 7,
+  "checks": [
+    "Source/account/language/evidence selection are all bound in opaque session slot without storing source",
+    "Voice uses owned canonical history and preserves references/verification/turn metadata and explicit evidence",
+    "Source oversize fails locally rather than silently truncating signed evidence or spending",
+    "Abort after body decoding cannot apply metadata callbacks to a changed source/account",
+    "Completed paid intent recovers the canonical owned session via GET with no second AI request",
+    "A locked response still exposes only canonical state needed to retain its recoverable pointer",
+    "Privacy copy truthfully distinguishes local audio from seven-day server tutor text"
+  ],
+  "providerRequests": 0,
+  "scope": "Client helpers with synthetic fetch and storage; no real provider, browser microphone/speaker, OAuth or audio-quality validation."
+}

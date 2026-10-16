@@ -1,3 +1,5 @@
+> V8 incremental candidate **3.4.0-rc.1 / schema18**: [phased plan](docs/v8/PLAN.md), [actual acceptance](docs/v8/HOME-ACCEPTANCE.md), [complete scope and remaining gaps](docs/v8/COVERAGE.md), [release checklist](docs/v8/CHECKLIST.md). Local tests/build passed; public deployment and a new submission require their own recorded evidence. The earlier submission4 remains a separate historical checkpoint.
+
 # Lumio AI 3.3 RC — nâng cấp V6 + V7 · AI26A0048
 
 **Bản nộp cuối lần 4 đã được xác nhận lúc 12:57:27 ngày 16/10/2026 (UTC+7).** [Dùng thử website](https://lumio-ai-demo.onrender.com/), [báo cáo nghiệm thu PDF](https://drive.google.com/file/d/1YIX7x4sfS6QEhNYrLYLnA3eyjLyY5YRl/view), [thư mục minh chứng](https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG) và [biên nhận/bàn giao cuối](docs/v7/FINAL_RELEASE_2026-10-16.md). Runtime đã triển khai và qua CI là `2e64bbba32a02ca9fa1c7f3e1e1110b4633fc7f9`; các commit tài liệu sau đó không đổi runtime này. Hosting Free, chưa mở thanh toán; các giới hạn còn lại được ghi rõ trong báo cáo.

@@ -11,6 +11,7 @@ import { createTutorStore } from "./tutor-core";
 import { createRuntimeV3Store } from "./runtime-v3-core";
 import { createRagStore } from "./rag-core";
 import { createSummaryJobStore } from "./job-core";
+import { readJobHealth } from "./job-health";
 import { createTeacherStore } from "./teacher-core";
 import { createTeachingStore } from "./teaching-core";
 import { createAIHttpStore } from "./ai-http-core";
@@ -754,6 +755,18 @@ export function createStore(
       usageBreakdown(db, now(), dimension, days),
     getProviderAttemptBreakdown: (dimension: UsageDimension, days = 7) =>
       providerAttemptBreakdown(db, now(), dimension, days),
+    getJobHealth: (userId: string, sessionVersion: number) =>
+      transaction(() => {
+        const actor = actorFor(userId);
+        if (actor.user.sessionVersion !== sessionVersion)
+          throw new PlatformError("SESSION_REVOKED", 401);
+        requirePermission(actor, "system.read");
+        return readJobHealth(
+          db,
+          now(),
+          process.env.LUMIO_BACKGROUND_JOBS_DISABLED !== "true",
+        );
+      }),
     listAudit,
     getDashboard,
   };

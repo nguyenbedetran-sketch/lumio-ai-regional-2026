@@ -1,4 +1,5 @@
 import type { Attempt, LearningItem, Question } from "./types";
+import { hasPositionalOptionDependency } from "../ai/quiz-option-order";
 import {
   SKILL_TAXONOMY_VERSION,
   skillById,
@@ -46,6 +47,39 @@ export const skillDifficulties: SkillDifficulty[] = [
 
 /** Deduplication key only, not a cryptographic signature or proof of source authenticity. */
 export function questionFingerprint(
+  q: Pick<Question, "prompt" | "options" | "correct"> & {
+    explanation?: string;
+  },
+) {
+  const normalized = (text: string) =>
+    text.normalize("NFC").trim().replace(/\s+/g, " ");
+  const options = q.options.map(normalized);
+  // Explanations may mention the current answer letter without making the
+  // question itself order-dependent. They must not create new evidence IDs.
+  const positional = hasPositionalOptionDependency({
+    ...q,
+    explanation: "",
+  });
+  return fingerprint(
+    positional ? "q3" : "q2",
+    JSON.stringify([
+      normalized(q.prompt),
+      positional ? options : [...options].sort(),
+      options[q.correct],
+    ]),
+  );
+}
+function fingerprint(version: string, raw: string) {
+  let a = 2166136261,
+    b = 5381;
+  for (let i = 0; i < raw.length; i++) {
+    a = Math.imul(a ^ raw.charCodeAt(i), 16777619);
+    b = Math.imul(b, 33) ^ raw.charCodeAt(i);
+  }
+  return `${version}:${raw.length}:${(a >>> 0).toString(16)}:${(b >>> 0).toString(16)}`;
+}
+/** Read old identities without pretending their option order was canonical. */
+function legacyQuestionFingerprint(
   q: Pick<Question, "prompt" | "options" | "correct">,
 ) {
   const raw = JSON.stringify([
@@ -53,13 +87,37 @@ export function questionFingerprint(
     q.options.map((o) => o.normalize("NFC").trim()),
     q.correct,
   ]);
-  let a = 2166136261,
-    b = 5381;
-  for (let i = 0; i < raw.length; i++) {
-    a = Math.imul(a ^ raw.charCodeAt(i), 16777619);
-    b = Math.imul(b, 33) ^ raw.charCodeAt(i);
+  return fingerprint("q1", raw);
+}
+function legacyIdentities(q: Question) {
+  const result = new Set([legacyQuestionFingerprint(q)]);
+  if (
+    q.options.length > 4 ||
+    hasPositionalOptionDependency({ ...q, explanation: "" })
+  )
+    return result;
+  function permute(indices: number[], rest: number[]) {
+    if (!rest.length) {
+      result.add(
+        legacyQuestionFingerprint({
+          ...q,
+          options: indices.map((i) => q.options[i]),
+          correct: indices.indexOf(q.correct),
+        }),
+      );
+      return;
+    }
+    for (const i of rest)
+      permute(
+        [...indices, i],
+        rest.filter((v) => v !== i),
+      );
   }
-  return `q1:${raw.length}:${(a >>> 0).toString(16)}:${(b >>> 0).toString(16)}`;
+  permute(
+    [],
+    q.options.map((_, i) => i),
+  );
+  return result;
 }
 export function createSkillEvidence(
   questions: readonly Question[],
@@ -68,6 +126,14 @@ export function createSkillEvidence(
   attemptId: string,
   selection: { skillId?: SkillId; difficulty?: SkillDifficulty } = {},
 ): SkillAttemptEvidence {
+  const hasLegacyPrior = prior.some(
+    (p) =>
+      Array.isArray(p.skillEvidence?.answers) &&
+      p.skillEvidence.answers.some(
+        (a) =>
+          typeof a?.fingerprint === "string" && a.fingerprint.startsWith("q1:"),
+      ),
+  );
   return {
     version: 1,
     attemptId,
@@ -82,11 +148,16 @@ export function createSkillEvidence(
       )
         throw new Error("INCOMPLETE_SKILL_ATTEMPT");
       const fingerprint = questionFingerprint(q);
+      const previousIdentities = hasLegacyPrior
+        ? legacyIdentities(q)
+        : new Set<string>();
       const seen = prior.some(
         (p) =>
           (Array.isArray(p.skillEvidence?.answers) &&
             p.skillEvidence.answers.some(
-              (a) => a?.fingerprint === fingerprint,
+              (a) =>
+                a?.fingerprint === fingerprint ||
+                previousIdentities.has(a?.fingerprint),
             )) ||
           (Array.isArray(p.answers) &&
             p.answers.some((a) => a?.questionId === q.id)),
@@ -151,7 +222,7 @@ export function parseSkillEvidence(
       a.questionId.length > 100 ||
       used.has(a.questionId) ||
       typeof a.fingerprint !== "string" ||
-      !/^q1:\d{1,7}:[0-9a-f]{1,8}:[0-9a-f]{1,8}$/.test(a.fingerprint) ||
+      !/^q[123]:\d{1,7}:[0-9a-f]{1,8}:[0-9a-f]{1,8}$/.test(a.fingerprint) ||
       !["topic-alias", "learner-selected", "unknown"].includes(a.skillOrigin) ||
       !skillDifficulties.includes(a.difficulty) ||
       !["declared", "learner-selected", "unknown"].includes(
@@ -230,6 +301,7 @@ export function buildSkillProfile(
   items: readonly LearningItem[],
   enabled: boolean,
   now = Date.now(),
+  excludedAttemptIds: readonly string[] = [],
 ) {
   type Observation = SkillAttemptEvidence["answers"][number] & {
     at: string;
@@ -239,12 +311,21 @@ export function buildSkillProfile(
   const observations: Observation[] = [],
     ids = new Set<string>();
   let legacyAnswers = 0,
+    legacyIdentityAnswers = 0,
+    excludedAttempts = 0,
     unclassified = 0,
     invalidAttempts = 0;
   // The caller supplies only this account's library; never reads global/local storage.
   if (enabled)
     for (const item of items.slice(-1000))
       for (const a of item.attempts.slice(-1000)) {
+        if (
+          a.skillEvidence?.attemptId &&
+          excludedAttemptIds.includes(a.skillEvidence.attemptId)
+        ) {
+          excludedAttempts++;
+          continue;
+        }
         const time = Date.parse(a.date);
         if (
           !Number.isFinite(time) ||
@@ -266,6 +347,12 @@ export function buildSkillProfile(
           if (ids.has(e.attemptId)) continue;
           ids.add(e.attemptId);
           for (const answer of e.answers) {
+            // Version-1 identities cannot safely deduplicate shuffled copies. Keep
+            // their recorded history, but do not manufacture independent evidence.
+            if (answer.fingerprint.startsWith("q1:")) {
+              legacyIdentityAnswers++;
+              continue;
+            }
             if (!answer.skillId) {
               unclassified++;
               continue;
@@ -352,6 +439,8 @@ export function buildSkillProfile(
     enabled,
     skills,
     legacyAnswers,
+    legacyIdentityAnswers,
+    excludedAttempts,
     unclassified,
     invalidAttempts,
   };

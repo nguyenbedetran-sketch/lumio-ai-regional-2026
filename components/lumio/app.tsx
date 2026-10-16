@@ -87,6 +87,7 @@ import { learningCopy } from "../../lib/lumio/learning-copy";
 import { parseLearning, type StudyTask } from "../../lib/lumio/learning-engine";
 import { useLearning } from "./use-learning";
 import { Dashboard } from "./dashboard";
+import homeStyles from "./home-v8.module.css";
 import { Planner } from "./planner";
 import { Progress } from "./progress";
 import { Review } from "./review";
@@ -476,6 +477,10 @@ function Workspace({
     [view, setView] = useState<View>("home"),
     [spaceId, setSpaceId] = useState(""),
     [selected, setSelected] = useState(""),
+    [learningEntry, setLearningEntry] = useState<{
+      tab: "studio" | "chat" | "source";
+      prompt?: string;
+    }>({ tab: "studio" }),
     [query, setQuery] = useState(""),
     [filter, setFilter] = useState("all"),
     [sort, setSort] = useState("newest"),
@@ -770,9 +775,14 @@ function Workspace({
       if (mounted.current) setRecoveringLibrary(false);
     }
   }
+  function beginAdd(mode: AddMode) {
+    if (view === "home" && !selected) draftGuard.leave(() => setAdd(mode));
+    else setAdd(mode);
+  }
   function go(next: View, id = "") {
     draftGuard.leave(() => {
       setSelected("");
+      setLearningEntry({ tab: "studio" });
       setView(next);
       setSpaceId(id);
       setMobile(false);
@@ -780,10 +790,16 @@ function Workspace({
       window.scrollTo({ top: 0, behavior: "instant" });
     });
   }
-  function open(item: LearningItem) {
+  function open(
+    item: LearningItem,
+    entry: { tab: "studio" | "chat" | "source"; prompt?: string } = {
+      tab: "studio",
+    },
+  ) {
     if (!data) return;
     draftGuard.leave(() => {
       setSelected(item.id);
+      setLearningEntry(entry);
       setMobile(false);
       commit({
         ...data,
@@ -809,6 +825,7 @@ function Workspace({
     if (!data) return;
     commit({ ...data, items: [...items, ...data.items] });
     setAdd(null);
+    setLearningEntry({ tab: "studio" });
     if (items.length === 1) setSelected(items[0].id);
   }
   function sample() {
@@ -939,11 +956,6 @@ function Workspace({
   const item = data.items.find((i) => i.id === selected),
     space = data.spaces.find((s) => s.id === spaceId),
     name = profile.name || t.guestName;
-  const resumeItem = data.items
-    .filter((i) => i.lastOpenedAt)
-    .sort((a, b) =>
-      (b.lastOpenedAt || "").localeCompare(a.lastOpenedAt || ""),
-    )[0];
   const navigation = [
     ["home", LayoutDashboard, lc.dashboard],
     ["planner", CalendarDays, lc.planner],
@@ -1008,7 +1020,7 @@ function Workspace({
         <button className="lm-brand-button" onClick={() => go("home")}>
           <LumioLogo />
         </button>
-        <button className="lx-sidebar-add" onClick={() => setAdd("upload")}>
+        <button className="lx-sidebar-add" onClick={() => beginAdd("upload")}>
           <Plus size={18} />
           {t.add}
           <span>＋</span>
@@ -1350,6 +1362,8 @@ function Workspace({
             <LearningView
               key={item.id}
               item={item}
+              initialTab={learningEntry.tab}
+              initialPrompt={learningEntry.prompt}
               t={t}
               locale={locale}
               spaces={data.spaces}
@@ -1362,6 +1376,11 @@ function Workspace({
           ) : view === "voice" ? (
             <VoiceStudio
               key={profile.account}
+              materials={data.items}
+              onOpenMaterial={(id) => {
+                const material = data.items.find((entry) => entry.id === id);
+                if (material) open(material, { tab: "source" });
+              }}
               locale={locale}
               providers={providers || undefined}
               signedIn={profile.account !== "guest"}
@@ -1398,6 +1417,7 @@ function Workspace({
               items={data.items}
               learning={learning.state}
               preferences={personalization.state}
+              onReview={() => go("review")}
               update={personalization.update}
               open={open}
               storageError={personalization.error}
@@ -1430,6 +1450,7 @@ function Workspace({
             />
           ) : view === "review" ? (
             <Review
+              storageError={!!learning.error}
               locale={locale}
               items={data.items}
               state={learning.state}
@@ -1847,125 +1868,124 @@ function Workspace({
                     navigate={go}
                     toggleTask={toggleTask}
                     open={open}
+                    preferences={personalization.state}
+                    onPreferences={personalization.update}
+                    storageError={!!personalization.error}
+                    onControls={() => go("personal")}
+                    onSample={sample}
+                    onAdd={() => beginAdd("upload")}
+                    onAsk={(material, prompt) =>
+                      open(material, { tab: "chat", prompt })
+                    }
                   />
-                  <section className="lm-welcome lx-materials">
-                    <div className="lx-section-title">
-                      <div>
-                        <span className="lx-kicker">LUMIO / STUDIO</span>
-                        <h2>{lc.addMaterial}</h2>
-                        <p>{lc.addMaterialHint}</p>
+                  <details className={homeStyles.tools}>
+                    <summary>
+                      {lc.addMaterial} · {t.spaces}
+                    </summary>
+                    <section className="lm-welcome lx-materials">
+                      <div className="lx-section-title">
+                        <div>
+                          <span className="lx-kicker">LUMIO / STUDIO</span>
+                          <h2>{lc.addMaterial}</h2>
+                          <p>{lc.addMaterialHint}</p>
+                        </div>
+                        <Sparkles size={24} />
                       </div>
-                      <Sparkles size={24} />
-                    </div>
-                    <div className="lm-action-grid">
-                      {actions.map(([id, Icon, title, sub]) => (
-                        <button key={id} onClick={() => setAdd(id)}>
-                          <span className={`lm-action-icon ${id}`}>
-                            <Icon size={23} />
-                          </span>
-                          <strong>{title}</strong>
-                          <small>{sub}</small>
-                          <ArrowUpRight className="lm-action-arrow" size={16} />
-                        </button>
-                      ))}
-                    </div>
-                    <form
-                      className="lm-idea"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        if (idea.trim()) {
-                          addItems([
-                            createItem({
-                              title: idea.trim().slice(0, 160),
-                              kind: "text",
-                              text: idea.trim(),
-                              spaceId: "",
-                            }),
-                          ]);
-                          setIdea("");
-                        }
-                      }}
-                    >
-                      <Sparkles size={18} />
-                      <input
-                        aria-label={t.learn}
-                        placeholder={t.learn}
-                        value={idea}
-                        maxLength={500}
-                        onChange={(e) => setIdea(e.target.value)}
-                      />
-                      <button aria-label={t.create} disabled={!idea.trim()}>
-                        <ArrowUp size={19} />
-                      </button>
-                    </form>
-                  </section>
-                  <section className="lm-spaces-section">
-                    {resumeItem && (
-                      <button
-                        className="lm-resume"
-                        onClick={() => open(resumeItem)}
-                      >
-                        <span>
-                          <FileText size={21} />
-                        </span>
-                        <span className="lm-resume-copy">
-                          <small>{productCopy[locale].continue}</small>
-                          <strong>{resumeItem.title}</strong>
-                        </span>
-                        <span className="lm-resume-cta">
-                          {productCopy[locale].open}
-                          <ArrowRight size={17} />
-                        </span>
-                      </button>
-                    )}
-                    <div className="lm-section-head">
-                      <h2>{t.spaces}</h2>
-                      <span>
-                        {data.spaces.length}{" "}
-                        {t.spaces.toLocaleLowerCase(locale)}
-                      </span>
-                    </div>
-                    <div className="lm-spaces-grid">
-                      <button
-                        className="lm-new-space"
-                        onClick={() => {
-                          setSpaceDialog(true);
-                          setSpaceName("");
-                          setSpaceColor("blue");
+                      <div className="lm-action-grid">
+                        {actions.map(([id, Icon, title, sub]) => (
+                          <button key={id} onClick={() => beginAdd(id)}>
+                            <span className={`lm-action-icon ${id}`}>
+                              <Icon size={23} />
+                            </span>
+                            <strong>{title}</strong>
+                            <small>{sub}</small>
+                            <ArrowUpRight
+                              className="lm-action-arrow"
+                              size={16}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                      <form
+                        className="lm-idea"
+                        onSubmit={(e) => {
+                          e.preventDefault();
+                          if (idea.trim()) {
+                            addItems([
+                              createItem({
+                                title: idea.trim().slice(0, 160),
+                                kind: "text",
+                                text: idea.trim(),
+                                spaceId: "",
+                              }),
+                            ]);
+                            setIdea("");
+                          }
                         }}
                       >
-                        <span>
-                          <Plus size={23} />
-                        </span>
-                        {t.newSpace}
-                      </button>
-                      {data.spaces.slice(0, 5).map((s) => (
-                        <button
-                          className={`lm-space-card ${s.color}`}
-                          key={s.id}
-                          onClick={() => go("space", s.id)}
-                        >
-                          <span className="lm-space-visual">
-                            <Folder size={30} />
-                            <span className="lm-space-mini">
-                              <FileText size={16} />
-                            </span>
-                          </span>
-                          <div>
-                            <strong>{s.name}</strong>
-                            <small>
-                              {
-                                data.items.filter((i) => i.spaceId === s.id)
-                                  .length
-                              }{" "}
-                              {t.items}
-                            </small>
-                            <ArrowUpRight size={17} />
-                          </div>
+                        <Sparkles size={18} />
+                        <input
+                          aria-label={t.learn}
+                          placeholder={t.learn}
+                          value={idea}
+                          maxLength={500}
+                          onChange={(e) => setIdea(e.target.value)}
+                        />
+                        <button aria-label={t.create} disabled={!idea.trim()}>
+                          <ArrowUp size={19} />
                         </button>
-                      ))}
-                    </div>
-                  </section>
+                      </form>
+                    </section>
+                    <section className="lm-spaces-section">
+                      <div className="lm-section-head">
+                        <h2>{t.spaces}</h2>
+                        <span>
+                          {data.spaces.length}{" "}
+                          {t.spaces.toLocaleLowerCase(locale)}
+                        </span>
+                      </div>
+                      <div className="lm-spaces-grid">
+                        <button
+                          className="lm-new-space"
+                          onClick={() => {
+                            setSpaceDialog(true);
+                            setSpaceName("");
+                            setSpaceColor("blue");
+                          }}
+                        >
+                          <span>
+                            <Plus size={23} />
+                          </span>
+                          {t.newSpace}
+                        </button>
+                        {data.spaces.slice(0, 5).map((s) => (
+                          <button
+                            className={`lm-space-card ${s.color}`}
+                            key={s.id}
+                            onClick={() => go("space", s.id)}
+                          >
+                            <span className="lm-space-visual">
+                              <Folder size={30} />
+                              <span className="lm-space-mini">
+                                <FileText size={16} />
+                              </span>
+                            </span>
+                            <div>
+                              <strong>{s.name}</strong>
+                              <small>
+                                {
+                                  data.items.filter((i) => i.spaceId === s.id)
+                                    .length
+                                }{" "}
+                                {t.items}
+                              </small>
+                              <ArrowUpRight size={17} />
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </section>
+                  </details>
                 </>
               ) : (
                 <div className="lm-page-heading">
@@ -2018,7 +2038,7 @@ function Workspace({
                     ) : (
                       <button
                         className="lm-button primary"
-                        onClick={() => setAdd("upload")}
+                        onClick={() => beginAdd("upload")}
                       >
                         <Plus size={17} />
                         {t.add}
@@ -2049,52 +2069,37 @@ function Workspace({
                   )}
                 </div>
               )}
-              <section className="lm-library-section">
-                <div className="lm-section-head">
-                  <h2>
-                    {view === "home"
-                      ? t.recent
-                      : view === "history"
-                        ? t.history
-                        : t.content}
-                  </h2>
-                  <div className="lm-row">
-                    <select
-                      aria-label={t.sourceType}
-                      value={filter}
-                      onChange={(e) => setFilter(e.target.value)}
-                    >
-                      <option value="all">{t.all}</option>
-                      {Object.keys(kindIcons).map((k) => (
-                        <option value={k} key={k}>
-                          {k === "text" ? t.sourceText : k.toUpperCase()}
-                        </option>
-                      ))}
-                    </select>
-                    <select
-                      aria-label={t.newest}
-                      value={sort}
-                      onChange={(e) => setSort(e.target.value)}
-                    >
-                      <option value="newest">{t.newest}</option>
-                      <option value="oldest">{t.oldest}</option>
-                      <option value="name">{t.name}</option>
-                    </select>
-                    {view === "home" && (
-                      <button
-                        className="lm-text-button"
-                        onClick={() => go("library")}
+              {view !== "home" && (
+                <section className="lm-library-section">
+                  <div className="lm-section-head">
+                    <h2>{view === "history" ? t.history : t.content}</h2>
+                    <div className="lm-row">
+                      <select
+                        aria-label={t.sourceType}
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
                       >
-                        {t.viewAll}
-                        <ArrowRight size={14} />
-                      </button>
-                    )}
+                        <option value="all">{t.all}</option>
+                        {Object.keys(kindIcons).map((k) => (
+                          <option value={k} key={k}>
+                            {k === "text" ? t.sourceText : k.toUpperCase()}
+                          </option>
+                        ))}
+                      </select>
+                      <select
+                        aria-label={t.newest}
+                        value={sort}
+                        onChange={(e) => setSort(e.target.value)}
+                      >
+                        <option value="newest">{t.newest}</option>
+                        <option value="oldest">{t.oldest}</option>
+                        <option value="name">{t.name}</option>
+                      </select>
+                    </div>
                   </div>
-                </div>
-                {displayed.length ? (
-                  <div className="lm-content-grid">
-                    {(view === "home" ? displayed.slice(0, 6) : displayed).map(
-                      (i) => (
+                  {displayed.length ? (
+                    <div className="lm-content-grid">
+                      {displayed.map((i) => (
                         <ContentCard
                           key={i.id}
                           item={i}
@@ -2105,43 +2110,43 @@ function Workspace({
                             update({ ...i, favorite: !i.favorite })
                           }
                         />
-                      ),
-                    )}
-                  </div>
-                ) : (
-                  <div className="lm-empty">
-                    <div className="lm-empty-illustration">
-                      <FileText size={37} />
-                      <span>
-                        <Sparkles size={15} />
-                      </span>
+                      ))}
                     </div>
-                    <h3>{data.items.length ? t.noResults : t.emptyTitle}</h3>
-                    <p>
-                      {view === "space"
-                        ? t.spaceEmpty
-                        : data.items.length
-                          ? t.searchPlaceholder
-                          : t.emptyText}
-                    </p>
-                    <div className="lm-row lm-center">
-                      <button
-                        className="lm-button primary"
-                        onClick={() => setAdd("paste")}
-                      >
-                        <Plus size={16} />
-                        {t.add}
-                      </button>
-                      {!data.items.length && (
-                        <button className="lm-button" onClick={sample}>
-                          {t.sample}
-                          <ArrowUpRight size={15} />
+                  ) : (
+                    <div className="lm-empty">
+                      <div className="lm-empty-illustration">
+                        <FileText size={37} />
+                        <span>
+                          <Sparkles size={15} />
+                        </span>
+                      </div>
+                      <h3>{data.items.length ? t.noResults : t.emptyTitle}</h3>
+                      <p>
+                        {view === "space"
+                          ? t.spaceEmpty
+                          : data.items.length
+                            ? t.searchPlaceholder
+                            : t.emptyText}
+                      </p>
+                      <div className="lm-row lm-center">
+                        <button
+                          className="lm-button primary"
+                          onClick={() => beginAdd("paste")}
+                        >
+                          <Plus size={16} />
+                          {t.add}
                         </button>
-                      )}
+                        {!data.items.length && (
+                          <button className="lm-button" onClick={sample}>
+                            {t.sample}
+                            <ArrowUpRight size={15} />
+                          </button>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                )}
-              </section>
+                  )}
+                </section>
+              )}
               {view === "history" && (
                 <section className="lm-activity">
                   <h2>{t.progress}</h2>

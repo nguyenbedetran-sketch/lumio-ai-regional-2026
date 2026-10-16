@@ -1,0 +1,61 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T14:38:36.458Z",
+  "passed": 12,
+  "checks": [
+    {
+      "name": "Learner cards and quiz use source-sized1–5 counts, never mandatory five",
+      "status": "PASS"
+    },
+    {
+      "name": "Short summaries allow one chapter/keypoint and two connected nodes without padding",
+      "status": "PASS"
+    },
+    {
+      "name": "All five learner languages retain conflict/context uncertainty and no invented reconciliation",
+      "status": "PASS"
+    },
+    {
+      "name": "Unrelated-goal scope note stays outside summary chapters/keypoints/map and card/quiz facts",
+      "status": "PASS"
+    },
+    {
+      "name": "Teacher exact-count workflow and stateful tutor policy remain separate",
+      "status": "PASS"
+    },
+    {
+      "name": "One cited card is accepted by unchanged structured validator",
+      "status": "PASS"
+    },
+    {
+      "name": "One cited quiz is accepted with its correct key preserved regardless of option order",
+      "status": "PASS"
+    },
+    {
+      "name": "One-chapter/one-keypoint/two-node cited summary validates and exports Markdown",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing empty/oversized item and invalid graph rejection remain enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit conflicting observations with unknown context fit existing summary schema",
+      "status": "PASS"
+    },
+    {
+      "name": "Recorded unsupported chronology remains a known semantic-validator limitation, not claimed repaired by quote checks",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual Router carries source-sized instructions to both intercepted provider protocols and accepts short outputs",
+      "status": "PASS"
+    }
+  ],
+  "actualProviderRequests": 0,
+  "interceptedProviderDispatches": 3,
+  "semanticRepairVerified": false,
+  "liveFollowup": "NOT_TESTED",
+  "scope": "Actual prompt builder/structured validators and Router with synthetic intercepted provider responses. Includes unchanged recorded bad-summary acceptance to document that structure/exact quotes do not prove semantic entailment. No real provider, student or teacher pilot.",
+  "routerSHA256": "505c15a9f6015c645734e2b07b967b509d3b308af4f2bd6d51c7ebca36961fa6"
+}

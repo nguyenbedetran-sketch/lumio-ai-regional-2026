@@ -17,6 +17,39 @@ export type SyncSnapshot = {
   expiresAt: string;
   data: SyncEnvelope | null;
 };
+/** Missing additive controls mean an older writer cannot express that field.
+ * Explicit [] / null clears are retained. Call after validation, then validate
+ * the combined envelope again so preservation cannot exceed size limits. */
+export function preserveOptionalLearningFields(
+  previous: SyncEnvelope | null,
+  incoming: SyncEnvelope,
+): SyncEnvelope {
+  if (!previous) return incoming;
+  return {
+    ...incoming,
+    learning: {
+      ...incoming.learning,
+      ...(incoming.learning.reviewOverrides === undefined &&
+      previous.learning.reviewOverrides !== undefined
+        ? { reviewOverrides: previous.learning.reviewOverrides }
+        : {}),
+    },
+    preferences: {
+      ...incoming.preferences,
+      ...(incoming.preferences.excludedSkillAttemptIds === undefined &&
+      previous.preferences.excludedSkillAttemptIds !== undefined
+        ? {
+            excludedSkillAttemptIds:
+              previous.preferences.excludedSkillAttemptIds,
+          }
+        : {}),
+      ...(incoming.preferences.studyFocusSkillId === undefined &&
+      previous.preferences.studyFocusSkillId !== undefined
+        ? { studyFocusSkillId: previous.preferences.studyFocusSkillId }
+        : {}),
+    },
+  };
+}
 /** The shared contract contains no binary files, live timer, auth token or API key. */
 export function normalizeSyncEnvelope(value: unknown): SyncEnvelope {
   if (
@@ -84,6 +117,18 @@ export function normalizeSyncEnvelope(value: unknown): SyncEnvelope {
         reviewedAt: r.reviewedAt,
         dueAt: r.dueAt,
       })),
+      ...(learning.reviewOverrides === undefined
+        ? {}
+        : {
+            reviewOverrides: learning.reviewOverrides.map((r) => ({
+              key: r.key,
+              itemId: r.itemId,
+              cardId: r.cardId,
+              fingerprint: r.fingerprint,
+              dueAt: r.dueAt,
+              updatedAt: r.updatedAt,
+            })),
+          }),
       events: learning.events.map((e) => ({
         id: e.id,
         at: e.at,

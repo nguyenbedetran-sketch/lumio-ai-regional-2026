@@ -101,6 +101,7 @@ const fields: Record<string, string> = {
   "question.review": "id expectedRevision",
   "question.delete": "id expectedRevision",
   "assignment.create": "draft",
+  "assignment.compose": "draft blueprint expectedClassRevision",
   "assignment.retake":
     "originalAssignmentId expectedRevision studentId availableFrom availableUntil reason sameQuestionsAcknowledged",
   "assignment.update": "id expectedRevision draft",

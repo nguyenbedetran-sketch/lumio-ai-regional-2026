@@ -6,10 +6,13 @@ const fs = require("node:fs"),
 const root = path.resolve(__dirname, ".."),
   cache = new Map();
 const browserIntentStorage = new Map();
-Object.defineProperty(globalThis, "sessionStorage", { configurable: true, value: {
-  getItem: (key) => browserIntentStorage.get(key) ?? null,
-  setItem: (key, value) => browserIntentStorage.set(key, value),
-} });
+Object.defineProperty(globalThis, "sessionStorage", {
+  configurable: true,
+  value: {
+    getItem: (key) => browserIntentStorage.get(key) ?? null,
+    setItem: (key, value) => browserIntentStorage.set(key, value),
+  },
+});
 let session = null;
 function load(relative) {
   const filename = path.resolve(root, relative);
@@ -327,13 +330,13 @@ async function main() {
     assert.equal(calls, 0);
     assert.equal(snapshot(user).account.balance, 200);
   });
-  await test("Client sends only bounded conversation context to local AI route", async () => {
+  await test("Client sends only selected source and canonical session pointer without browser transcript", async () => {
     const signal = new AbortController().signal;
     transport = (url, options) => {
       assert.equal(url, "/api/ai");
       assert.equal(options.signal, signal);
       const body = JSON.parse(options.body);
-      assert.equal(body.history.length, 6);
+      assert.equal(body.history.length, 0);
       assert(body.history.every((item) => item.text.length === 4000));
       assert.equal(body.source.length, 200000);
       assert.equal(body.mode, "tutor");
@@ -350,7 +353,7 @@ async function main() {
         " Why? ",
         turns,
         "en",
-        "s".repeat(210000),
+        "s".repeat(200000),
         signal,
       ),
       "A response",

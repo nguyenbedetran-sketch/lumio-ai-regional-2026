@@ -9,6 +9,12 @@ import type {
 type WithoutRequest<T> = T extends unknown ? Omit<T, "requestId"> : never;
 export type TeachingCommand = WithoutRequest<TeachingMutation>;
 const messages: Record<string, string> = {
+  INVALID_ASSESSMENT_BLUEPRINT:
+    "Ma trận cần 1–12 dòng, tổng từ 1–30 câu. Kiểm tra chủ đề, dạng và độ khó.",
+  DUPLICATE_BLUEPRINT_CELL:
+    "Hai dòng ma trận đang có cùng chủ đề, độ khó và dạng câu. Gộp số lượng vào một dòng.",
+  TEACHING_BLUEPRINT_SHORTAGE:
+    "Ngân hàng câu hỏi được phép sử dụng chưa đủ ma trận. Chưa tạo hoặc giao đề; bổ sung câu đã duyệt hoặc giảm số lượng.",
   TEACHING_INVALID_WINDOW:
     "Giờ mở, hạn nộp và giờ đóng chưa hợp lệ. Kiểm tra thứ tự thời gian; các mốc được gửi theo giờ UTC.",
   TEACHING_NOT_OPEN:
@@ -294,7 +300,31 @@ export function useTeachingClient(accountKey: string) {
           setData(null);
           pending.current.clear();
         }
-        throw Error(teachingError(body.error));
+        const shortages =
+          body.error === "TEACHING_BLUEPRINT_SHORTAGE" &&
+          Array.isArray(body.shortages)
+            ? body.shortages
+                .slice(0, 12)
+                .filter(
+                  (s: any) =>
+                    s &&
+                    [s.row, s.requested, s.available, s.missing].every(
+                      (v: unknown) =>
+                        typeof v === "number" &&
+                        Number.isSafeInteger(v) &&
+                        v >= 0 &&
+                        v <= 30,
+                    ),
+                )
+                .map(
+                  (s: any) =>
+                    `Dòng ${s.row}: cần ${s.requested}, chọn được ${s.available}, thiếu ${s.missing}.`,
+                )
+                .join(" ")
+            : "";
+        throw Error(
+          [teachingError(body.error), shortages].filter(Boolean).join(" "),
+        );
       }
       if (body.state?.actor?.accountKey !== accountKey) {
         if (active.current && current === sequence.current) {

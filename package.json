@@ -1,6 +1,6 @@
 {
   "name": "lumio-ai",
-  "version": "3.3.0-rc.1",
+  "version": "3.4.0-rc.1",
   "private": true,
   "scripts": {
     "dev": "node preview.cjs",
@@ -8,7 +8,7 @@
     "typecheck": "tsc --noEmit",
     "test:v7": "node tests/v7-api-safety.cjs && node tests/v7-rag-lifecycle.cjs && node tests/v7-rag-billing.cjs && node tests/v7-request-client.cjs && node scripts/test-v7-rag-tokenizer.cjs && node scripts/test-v7-ai-evaluation.cjs && node tests/v7-grade-history.cjs && node tests/v7-retakes.cjs && node tests/v7-operations.cjs && node tests/v7-usage-report.cjs && node tests/v7-live-runner.cjs && node tests/v7-tutor-prompt.cjs && node tests/v7-content-prompt.cjs && node tests/v7-quiz-option-order.cjs && node tests/v7-provider-attempts.cjs && node tests/v7-provider-attempt-adversarial.cjs && node tests/v7-provider-attempt-report.cjs && node tests/v7-admin-hydration.cjs --ssr-only",
     "test:v7:ui": "node scripts/test-v7-teaching-ui.cjs && node scripts/test-v7-learner-ui.cjs && node scripts/test-v7-grade-history-ui.cjs && node scripts/test-v7-practice-ui.cjs",
-    "test:all": "pnpm test && pnpm test:v7",
+    "test:all": "pnpm test && pnpm test:v7 && pnpm test:v8",
     "start": "next start",
     "test": "node tests/core.cjs && node tests/ingestion.cjs && node tests/learning.cjs && node tests/library-concurrency.cjs && node tests/recommendations.cjs && node tests/admin.cjs && node tests/auth-security.cjs && node tests/metadata.cjs && node tests/billing.cjs && node tests/ai-billing.cjs && node tests/public-demo.cjs && node tests/mobile.cjs && node tests/voice.cjs && node tests/mobile-ai.cjs && node tests/command-menu.cjs && node tests/supabase-mcp.cjs && node tests/motion-policy.cjs && node tests/dashboard-insights.cjs && node tests/study-v3.cjs && node tests/meeting-capture.cjs && node tests/desktop.cjs && node tests/full-summary.cjs && node tests/readout.cjs && node tests/source-grounding.cjs && node tests/tutor.cjs && node tests/tutor-api.cjs && node tests/regional-preview.cjs && node tests/math-exact.cjs && node tests/runtime-sync.cjs && node tests/rag.cjs && node tests/rag-api.cjs && node tests/summary-jobs.cjs && node tests/skill-evidence.cjs && node tests/operations.cjs && node tests/billing-group.cjs && node tests/sync-http.cjs && node tests/sync-client-faults.cjs && node tests/teacher-api.cjs && node tests/location-data.cjs && node tests/teaching-api.cjs && node tests/teaching-content.cjs && node tests/teaching-content-api.cjs",
     "test:http": "node tests/http.cjs && node tests/admin-http.cjs && node tests/preview.cjs && node tests/billing-http.cjs && node tests/source-http.cjs",
@@ -23,7 +23,7 @@
     "mcp:supabase": "node scripts/setup-supabase-mcp.cjs",
     "test:ui": "node scripts/test-ui.cjs",
     "test:ux": "node scripts/test-ui.cjs --premium",
-    "test:dashboard": "node scripts/test-ui.cjs --dashboard",
+    "test:dashboard": "node scripts/test-v8-home-ui.cjs",
     "test:meeting": "node scripts/test-ui.cjs --meeting",
     "test:full-summary": "node scripts/test-ui.cjs --full-summary",
     "test:readout": "node scripts/test-ui.cjs --readout",
@@ -36,7 +36,9 @@
     "test:teacher-self": "node scripts/test-teacher-self.cjs",
     "test:teaching:production": "node scripts/test-teaching-production.cjs",
     "test:teaching": "node tests/teaching-api.cjs && node tests/teaching-content.cjs && node tests/teaching-content-api.cjs",
-    "test:v7:usage-ui": "node scripts/test-v7-usage-ui.cjs"
+    "test:v7:usage-ui": "node scripts/test-v7-usage-ui.cjs",
+    "test:v8": "node tests/v8-learning.cjs && node tests/v8-tutor.cjs && node tests/v8-voice-client.cjs && node tests/v8-assessment.cjs && node tests/v8-job-health.cjs",
+    "test:v8:ui": "node scripts/test-v8-learning-ui.cjs && node scripts/test-v8-tutor-ui.cjs && node scripts/test-v8-assessment-ui.cjs && node scripts/test-v8-job-health-ui.cjs && node scripts/test-v8-home-ui.cjs"
   },
   "engines": {
     "node": ">=24.0.0 <25"

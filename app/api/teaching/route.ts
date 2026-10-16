@@ -7,6 +7,7 @@ import {
   teachingError,
 } from "../../../lib/teaching/validation";
 import { teachingLimits } from "../../../lib/teaching/contracts";
+import { AssessmentShortageError } from "../../../lib/teaching/assessment-plan";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
@@ -41,6 +42,11 @@ export async function POST(req: Request) {
       body = await readJSON(req, teachingLimits.bodyBytes);
     return json(getStore().mutateTeaching(user.id, user.sessionVersion, body));
   } catch (error) {
+    if (error instanceof AssessmentShortageError)
+      return json(
+        { error: error.code, shortages: error.shortages },
+        error.status,
+      );
     return errorResponse(error);
   }
 }

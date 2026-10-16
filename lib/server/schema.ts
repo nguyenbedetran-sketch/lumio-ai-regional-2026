@@ -4,6 +4,7 @@ import { summaryJobMigration } from "./job-schema";
 import { teacherMigration } from "./teacher-schema";
 import { aiHttpMigration } from "./ai-http-core";
 import { providerAttemptMigration } from "./provider-attempt-schema";
+import { tutorV8Migration } from "./tutor-v8-schema";
 import {
   teachingMigration,
   teachingPreferencesMigration,
@@ -167,6 +168,7 @@ ALTER TABLE tutor_turns ADD COLUMN needs_clarification INTEGER NOT NULL DEFAULT 
   teachingGradeHistoryMigration,
   teachingAssessmentWindowsMigration,
   providerAttemptMigration,
+  tutorV8Migration,
 ];
 
 export const flagDefinitions = [

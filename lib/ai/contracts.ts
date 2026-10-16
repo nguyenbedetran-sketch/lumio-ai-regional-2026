@@ -29,6 +29,7 @@ export type AIInput = {
   mode?: TutorMode;
   difficulty?: "beginner" | "intermediate" | "advanced";
   guidance?: "hints" | "full";
+  tutorIntent?: import("../tutor/types").TutorIntent;
   presentation?: "auto" | "math";
   mathStyle?: MathStyle;
   goal?: string;
@@ -134,6 +135,13 @@ export function validateInput(raw: unknown): AIInput {
   const mode = v.mode ?? "tutor";
   const difficulty = v.difficulty ?? "intermediate";
   const guidance = v.guidance ?? "hints";
+  const tutorIntent = v.tutorIntent;
+  if (
+    tutorIntent !== undefined &&
+    (typeof tutorIntent !== "string" ||
+      !["progress", "simpler", "example", "approach"].includes(tutorIntent))
+  )
+    throw new AIError("INVALID_TUTOR_INTENT");
   const presentation = v.presentation ?? "auto";
   const mathStyle = v.mathStyle ?? "notebook";
   if (
@@ -228,6 +236,9 @@ export function validateInput(raw: unknown): AIInput {
     mode: mode as TutorMode,
     difficulty: difficulty as AIInput["difficulty"],
     guidance: guidance as AIInput["guidance"],
+    ...(tutorIntent === undefined
+      ? {}
+      : { tutorIntent: tutorIntent as AIInput["tutorIntent"] }),
     presentation: presentation as AIInput["presentation"],
     mathStyle: mathStyle as MathStyle,
     goal,

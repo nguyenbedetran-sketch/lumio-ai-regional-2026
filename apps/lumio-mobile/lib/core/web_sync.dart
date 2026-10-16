@@ -65,11 +65,18 @@ class WebSyncEnvelope {
           throw const WebSyncFailure('INVALID_SYNC_DATA');
         }
       }
+      if (learning.containsKey('reviewOverrides') &&
+          (learning['reviewOverrides'] is! List ||
+              (learning['reviewOverrides'] as List).length > 20000)) {
+        throw const WebSyncFailure('INVALID_SYNC_DATA');
+      }
       for (final pair in [
         [library['spaces'], 'id'],
         [learning['tasks'], 'id'],
         [learning['reviews'], 'key'],
         [learning['events'], 'id'],
+        if (learning.containsKey('reviewOverrides'))
+          [learning['reviewOverrides'], 'key'],
       ]) {
         final seen = <String>{};
         for (final raw in pair[0] as List) {
@@ -188,6 +195,22 @@ WebSyncMerge mergeWebSync(
       l = local.toJson(),
       r = remote.toJson(),
       conflicts = <String>[];
+  // Older web clients omit controls they do not understand. Keep the known
+  // base value; only an explicit [] or null expresses a deliberate clear.
+  for (final value in [l, r]) {
+    for (final fields in [
+      ['learning', 'reviewOverrides'],
+      ['preferences', 'excludedSkillAttemptIds'],
+      ['preferences', 'studyFocusSkillId'],
+    ]) {
+      final section = value[fields[0]] as Map,
+          before = b[fields[0]] as Map,
+          key = fields[1];
+      if (!section.containsKey(key) && before.containsKey(key)) {
+        section[key] = before[key];
+      }
+    }
+  }
   dynamic one(dynamic before, dynamic here, dynamic there, String label) {
     if (webSyncEqual(here, there)) return here;
     if (webSyncEqual(here, before)) return there;
@@ -207,10 +230,7 @@ WebSyncMerge mergeWebSync(
         lm = {for (final v in here) _map(v)[key]: v},
         rm = {for (final v in there) _map(v)[key]: v};
     final ids = {...bm.keys, ...lm.keys, ...rm.keys};
-    return [
-      for (final id in ids)
-        ?one(bm[id], lm[id], rm[id], '$label: $id'),
-    ];
+    return [for (final id in ids) ?one(bm[id], lm[id], rm[id], '$label: $id')];
   }
 
   // Evaluate each entry once; conflict lists remain stable and do not duplicate.
@@ -250,6 +270,14 @@ WebSyncMerge mergeWebSync(
         'key',
         'Lịch ôn',
       ),
+      if ([b, l, r].any((v) => v['learning'].containsKey('reviewOverrides')))
+        'reviewOverrides': list(
+          b['learning']['reviewOverrides'] ?? [],
+          l['learning']['reviewOverrides'] ?? [],
+          r['learning']['reviewOverrides'] ?? [],
+          'key',
+          'Lịch ôn tự chọn',
+        ),
       'events': list(
         b['learning']['events'],
         l['learning']['events'],

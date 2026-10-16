@@ -22,6 +22,15 @@ export type ReviewState = {
   reviewedAt: string;
   dueAt: string;
 };
+/** A learner's scheduling choice, never a completed review or assessment. */
+export type ReviewOverride = {
+  key: string;
+  itemId: string;
+  cardId: string;
+  fingerprint: string;
+  dueAt: string;
+  updatedAt: string;
+};
 export type LearningEvent = {
   id: string;
   at: string;
@@ -50,6 +59,7 @@ export type LearningState = {
   version: 1;
   tasks: StudyTask[];
   reviews: ReviewState[];
+  reviewOverrides?: ReviewOverride[];
   events: LearningEvent[];
   focus: FocusState | null;
   /** Optional so all version-1 backups remain readable. Custom audio stays in IndexedDB. */
@@ -147,6 +157,33 @@ export function parseLearning(value: unknown): LearningState {
     )
       throw new Error("INVALID_REVIEW");
     keys.add(review.key as string);
+  }
+  if (value.reviewOverrides !== undefined) {
+    if (
+      !Array.isArray(value.reviewOverrides) ||
+      value.reviewOverrides.length > 20000
+    )
+      throw new Error("INVALID_REVIEW_OVERRIDE");
+    const overrides = new Set<string>();
+    for (const entry of value.reviewOverrides) {
+      if (
+        !object(entry) ||
+        !string(entry.itemId, 100) ||
+        !String(entry.itemId).trim() ||
+        !string(entry.cardId, 100) ||
+        !String(entry.cardId).trim() ||
+        entry.key !== cardKey(entry.itemId as string, entry.cardId as string) ||
+        overrides.has(String(entry.key)) ||
+        typeof entry.fingerprint !== "string" ||
+        !/^[0-9a-f]{1,8}$/.test(entry.fingerprint) ||
+        !isDate(entry.updatedAt) ||
+        !isDate(entry.dueAt) ||
+        Date.parse(entry.dueAt) < Date.parse(entry.updatedAt) ||
+        Date.parse(entry.dueAt) - Date.parse(entry.updatedAt) > 365 * 86400000
+      )
+        throw new Error("INVALID_REVIEW_OVERRIDE");
+      overrides.add(String(entry.key));
+    }
   }
   for (const event of value.events) {
     if (
@@ -274,6 +311,45 @@ export function cardFingerprint(front: string, back: string) {
 }
 export const cardKey = (itemId: string, cardId: string) =>
   `${itemId}:${cardId}`;
+export function setReviewSchedule(
+  state: LearningState,
+  card: { itemId: string; cardId: string; fingerprint: string },
+  due: Date,
+  now = new Date(),
+): LearningState {
+  if (
+    !Number.isFinite(now.getTime()) ||
+    !Number.isFinite(due.getTime()) ||
+    due.getTime() < now.getTime() ||
+    due.getTime() - now.getTime() > 365 * 86400000
+  )
+    throw Error("INVALID_REVIEW_OVERRIDE");
+  const entry: ReviewOverride = {
+    ...card,
+    key: cardKey(card.itemId, card.cardId),
+    dueAt: due.toISOString(),
+    updatedAt: now.toISOString(),
+  };
+  const next = {
+    ...state,
+    reviewOverrides: [
+      ...(state.reviewOverrides || []).filter((r) => r.key !== entry.key),
+      entry,
+    ],
+  };
+  parseLearning(next);
+  return next;
+}
+export function clearReviewSchedule(
+  state: LearningState,
+  key: string,
+): LearningState {
+  if (!state.reviewOverrides?.some((r) => r.key === key)) return state;
+  return {
+    ...state,
+    reviewOverrides: state.reviewOverrides.filter((r) => r.key !== key),
+  };
+}
 /** A transparent interval scheduler inspired by SM-2. Does not claim mastery. */
 export function scheduleReview(
   previous: ReviewState | undefined,
@@ -323,6 +399,9 @@ export function dueCards(
   now = new Date(),
 ) {
   const reviews = new Map(state.reviews.map((r) => [r.key, r]));
+  const overrides = new Map(
+    (state.reviewOverrides || []).map((r) => [r.key, r]),
+  );
   return items
     .flatMap((item) =>
       item.cards
@@ -331,14 +410,24 @@ export function dueCards(
           const fingerprint = cardFingerprint(card.front, card.back),
             saved = reviews.get(cardKey(item.id, card.id));
           const review = saved?.fingerprint === fingerprint ? saved : undefined;
-          return { item, card, fingerprint, review };
+          const chosen = overrides.get(cardKey(item.id, card.id)),
+            override = chosen?.fingerprint === fingerprint ? chosen : undefined;
+          return {
+            item,
+            card,
+            fingerprint,
+            review,
+            dueAt: override?.dueAt || review?.dueAt,
+            manual: !!override,
+          };
         }),
     )
-    .filter((c) => !c.review || Date.parse(c.review.dueAt) <= now.getTime())
+    .filter((c) => !c.dueAt || Date.parse(c.dueAt) <= now.getTime())
     .sort(
       (a, b) =>
-        (a.review ? Date.parse(a.review.dueAt) : 0) -
-        (b.review ? Date.parse(b.review.dueAt) : 0),
+        Number(!a.dueAt) - Number(!b.dueAt) ||
+        (a.dueAt ? Date.parse(a.dueAt) : 0) -
+          (b.dueAt ? Date.parse(b.dueAt) : 0),
     );
 }
 export function learningMetrics(

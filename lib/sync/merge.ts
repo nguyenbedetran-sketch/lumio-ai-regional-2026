@@ -1,4 +1,8 @@
-import { normalizeSyncEnvelope, type SyncEnvelope } from "./contracts";
+import {
+  normalizeSyncEnvelope,
+  preserveOptionalLearningFields,
+  type SyncEnvelope,
+} from "./contracts";
 export type SyncChoice = "local" | "remote";
 const equal = (a: unknown, b: unknown) =>
   JSON.stringify(a) === JSON.stringify(b);
@@ -9,6 +13,10 @@ export function mergeSync(
   remote: SyncEnvelope,
   choice?: SyncChoice,
 ) {
+  // An older client omits fields it does not understand. Absence is not a
+  // deletion of an additive control, while explicit [] / null remains clear.
+  local = preserveOptionalLearningFields(base, local);
+  remote = preserveOptionalLearningFields(base, remote);
   const conflicts: string[] = [];
   function one<T>(
     before: T | undefined,
@@ -75,6 +83,19 @@ export function mergeSync(
         (v) => v.key,
         "Lịch ôn",
       ),
+      ...(base.learning.reviewOverrides ||
+      local.learning.reviewOverrides ||
+      remote.learning.reviewOverrides
+        ? {
+            reviewOverrides: list(
+              base.learning.reviewOverrides || [],
+              local.learning.reviewOverrides || [],
+              remote.learning.reviewOverrides || [],
+              (v) => v.key,
+              "Lịch ôn tự chọn",
+            ),
+          }
+        : {}),
       events: list(
         base.learning.events,
         local.learning.events,

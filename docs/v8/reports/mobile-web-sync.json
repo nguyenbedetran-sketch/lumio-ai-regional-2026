@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-16T14:37:36.213Z",
+  "scope": "Source-only Flutter Web snapshot compatibility; existing local Flutter SDK, mocked HTTP/auth and temporary files. No APK build, physical Android/iPhone, public server or provider calls.",
+  "testCommand": "flutter test --no-pub test/web_sync_test.dart --reporter expanded",
+  "passed": 25,
+  "additionalV8Cases": 6,
+  "analysis": {
+    "command": "flutter analyze --no-pub lib/core/web_sync.dart test/web_sync_test.dart",
+    "files": 2,
+    "issues": 0
+  },
+  "files": [
+    {
+      "path": "apps/lumio-mobile/lib/core/web_sync.dart",
+      "sha256": "0b4ce8781e0165413f050c9bd391a2a1a34d0ec937591a21ea6eaa19814d2f8b"
+    },
+    {
+      "path": "apps/lumio-mobile/test/web_sync_test.dart",
+      "sha256": "a77798bc008f5d947a122ee455397e4750b65834ff71c9909fea2f9c2f15c01b"
+    }
+  ],
+  "remaining": "Previously built APK/desktop/iOS artifacts have not been rebuilt or verified for V8."
+}

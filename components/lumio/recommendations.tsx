@@ -22,6 +22,7 @@ import {
 } from "../../lib/lumio/recommendations";
 import { recommendationCopy } from "../../lib/lumio/recommendation-copy";
 import { SkillEvidencePanel } from "./skill-evidence";
+import { DailyLearningPlan } from "./learning-plan";
 export const personalCopy = {
   vi: {
     nav: "Đề xuất cho bạn",
@@ -182,6 +183,7 @@ export function Recommendations({
   open,
   storageError,
   onClearSkillEvidence,
+  onReview,
 }: {
   items: LearningItem[];
   learning: LearningState;
@@ -191,6 +193,7 @@ export function Recommendations({
   open: (i: LearningItem) => void;
   storageError: boolean;
   onClearSkillEvidence?: () => void;
+  onReview?: () => void;
 }) {
   const c = personalCopy[locale];
   const rc = recommendationCopy[locale];
@@ -248,6 +251,16 @@ export function Recommendations({
       </div>
       <p className="lm-muted">{preferences.enabled ? c.privacy : c.disabled}</p>
       <p className="lm-help">{rc.distinction}</p>
+      <DailyLearningPlan
+        items={items}
+        learning={learning}
+        preferences={preferences}
+        locale={locale}
+        open={open}
+        onReview={onReview}
+        onPreferences={update}
+        storageError={storageError}
+      />
       {storageError && (
         <p className="lm-error" role="alert">
           {c.storage}

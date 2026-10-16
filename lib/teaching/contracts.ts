@@ -1,5 +1,6 @@
 import type { SourceEvidence } from "../ai/grounding";
 import type { SystemRole, OrganizationRole } from "../server/types";
+import type { AssessmentBlueprintCell } from "./assessment-plan";
 
 export type TeachingRole = "ORGANIZATION_ADMIN" | "TEACHER" | "STUDENT";
 export type DraftStatus = "draft" | "reviewed" | "published" | "archived";
@@ -446,6 +447,12 @@ export type TeachingMutation = Mutation &
         expectedRevision: number;
       }
     | { action: "assignment.create"; draft: AssignmentDraft }
+    | {
+        action: "assignment.compose";
+        draft: Omit<AssignmentDraft, "questionIds">;
+        blueprint: AssessmentBlueprintCell[];
+        expectedClassRevision: number;
+      }
     | {
         action: "assignment.retake";
         originalAssignmentId: string;

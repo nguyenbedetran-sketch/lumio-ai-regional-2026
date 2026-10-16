@@ -31,6 +31,7 @@ import type { AdminSnapshot } from "../../lib/server/admin-snapshot";
 import type { AuditEvent, AIUsageEvent, User } from "../../lib/server/types";
 import { TeacherReviewPanel } from "./teacher-review";
 import { UsageBreakdownPanel } from "./usage-breakdown";
+import { JobHealthPanel } from "./job-health";
 
 type Tab = "overview" | "users" | "teachers" | "usage" | "flags" | "audit";
 const formatNumber = (n: number | null) =>
@@ -480,6 +481,12 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
                 </section>
               </div>
               <div className="ad-bottom-grid">
+                {data.permissions.includes("system.read") && (
+                  <JobHealthPanel
+                    key={data.actor.accountKey}
+                    accountKey={data.actor.accountKey}
+                  />
+                )}
                 <section className="ad-panel">
                   <div className="ad-panel-heading">
                     <div>

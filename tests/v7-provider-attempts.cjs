@@ -200,9 +200,9 @@ async function main() {
       () => {
         assert.deepEqual(store.runtimeHealth(), {
           ready: true,
-          schemaVersion: 17,
+          schemaVersion: 18,
         });
-        assert.equal(integrity.DATABASE_TABLES.length, 49);
+        assert.equal(integrity.DATABASE_TABLES.length, 51);
         assert.equal(integrity.DATABASE_GUARDS.length, 6);
         assert.equal(
           db.prepare("SELECT count(*) n FROM ai_provider_attempts").get().n,
@@ -746,7 +746,12 @@ async function main() {
             });
           await summary.executeSummaryInput(
             { ...input("summary"), feature: "job.summary-part" },
-            { userId: u.id, sessionVersion: u.sessionVersion, jobId:"synthetic-owned-job",input:{text:"private lease source must not enter journal"} },
+            {
+              userId: u.id,
+              sessionVersion: u.sessionVersion,
+              jobId: "synthetic-owned-job",
+              input: { text: "private lease source must not enter journal" },
+            },
             { requestId: crypto.randomUUID(), ...(feature ? { feature } : {}) },
           );
           assert.equal(rows({ u })[0].feature, feature || "learner.summary");
@@ -1011,7 +1016,7 @@ async function main() {
       checkedAt: new Date().toISOString(),
       passed: checks.length,
       checks,
-      schemaVersion: 17,
+      schemaVersion: 18,
       actualProviderRequests: 0,
       scope:
         "Actual temporary SQLite, Router, learner HTTP and shared summary service; injected synthetic OAuth and intercepted provider transport. Metadata-only journal, actual retention/capacity fixtures, no invoices, prices, real users or deployment.",

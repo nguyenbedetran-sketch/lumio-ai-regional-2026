@@ -141,6 +141,14 @@ Map<String, dynamic> fixture({
     },
   },
 };
+Map<String, dynamic> reviewOverride(String due) => {
+  'key': 'web-math:card',
+  'itemId': 'web-math',
+  'cardId': 'card',
+  'fingerprint': 'abc123',
+  'dueAt': due,
+  'updatedAt': '2026-10-16T00:00:00Z',
+};
 WebSyncEnvelope envelope({
   String notes = 'Ghi chú gốc',
   String id = 'web-math',
@@ -239,6 +247,144 @@ Future<void> seed(WebSyncController c, {WebSyncEnvelope? data}) async {
 }
 
 void main() {
+  test(
+    'V8 optional learning controls remain lossless through a web snapshot',
+    () {
+      final value = fixture();
+      value['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-17T00:00:00Z'),
+      ];
+      value['preferences']['excludedSkillAttemptIds'] = ['synthetic-attempt'];
+      value['preferences']['studyFocusSkillId'] = 'linear';
+      value['library']['items'][0]['attempts'][0]['skillEvidence']['answers'][0]['fingerprint'] =
+          'q2:10:a:b';
+      expect(WebSyncEnvelope.fromJson(value).toJson(), value);
+    },
+  );
+  test(
+    'V8 notes merge retains remote manual schedules and inference controls',
+    () {
+      final base = fixture(),
+          local = fixture(notes: 'V8 local note'),
+          remote = fixture();
+      remote['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-17T00:00:00Z'),
+      ];
+      remote['preferences']['excludedSkillAttemptIds'] = ['synthetic-attempt'];
+      remote['preferences']['studyFocusSkillId'] = 'linear';
+      final merged = mergeWebSync(
+        WebSyncEnvelope.fromJson(base),
+        WebSyncEnvelope.fromJson(local),
+        WebSyncEnvelope.fromJson(remote),
+      );
+      expect(merged.conflicts, isEmpty);
+      final value = merged.data.toJson();
+      expect(
+        value['learning']['reviewOverrides'],
+        remote['learning']['reviewOverrides'],
+      );
+      expect(value['preferences'], remote['preferences']);
+      expect(value['library']['items'][0]['notes'], 'V8 local note');
+      expect(value['library']['items'][0]['attempts'][0]['score'], 1);
+      expect(value['learning']['events'], base['learning']['events']);
+    },
+  );
+  test(
+    'V8 concurrent scheduling conflicts use explicit choice rather than data loss',
+    () {
+      final base = fixture(), local = fixture(), remote = fixture();
+      local['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-17T00:00:00Z'),
+      ];
+      remote['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-18T00:00:00Z'),
+      ];
+      final b = WebSyncEnvelope.fromJson(base),
+          l = WebSyncEnvelope.fromJson(local),
+          r = WebSyncEnvelope.fromJson(remote);
+      expect(mergeWebSync(b, l, r).conflicts.length, 1);
+      expect(
+        mergeWebSync(
+          b,
+          l,
+          r,
+          choice: WebSyncChoice.remote,
+        ).data.toJson()['learning']['reviewOverrides'],
+        remote['learning']['reviewOverrides'],
+      );
+    },
+  );
+  test(
+    'Older web writer omission preserves V8 controls while retaining opt-out',
+    () {
+      final base = fixture(), old = fixture();
+      base['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-17T00:00:00Z'),
+      ];
+      base['preferences']['excludedSkillAttemptIds'] = ['excluded-prior'];
+      base['preferences']['studyFocusSkillId'] = 'linear';
+      old['preferences']['enabled'] = false;
+      old['preferences']['skillTracking'] = false;
+      final b = WebSyncEnvelope.fromJson(base),
+          result = mergeWebSync(b, b, WebSyncEnvelope.fromJson(old));
+      expect(result.conflicts, isEmpty);
+      final data = result.data.toJson();
+      expect(
+        data['learning']['reviewOverrides'],
+        base['learning']['reviewOverrides'],
+      );
+      expect(data['preferences']['excludedSkillAttemptIds'], [
+        'excluded-prior',
+      ]);
+      expect(data['preferences']['studyFocusSkillId'], 'linear');
+      expect(data['preferences']['enabled'], false);
+      expect(data['preferences']['skillTracking'], false);
+    },
+  );
+  test(
+    'Explicit empty arrays and null focus remain deliberate clears in Dart merge',
+    () {
+      final base = fixture();
+      base['learning']['reviewOverrides'] = [
+        reviewOverride('2026-10-17T00:00:00Z'),
+      ];
+      base['preferences']['excludedSkillAttemptIds'] = ['excluded-prior'];
+      base['preferences']['studyFocusSkillId'] = 'linear';
+      final cleared = WebSyncEnvelope.fromJson(base).toJson();
+      cleared['learning']['reviewOverrides'] = [];
+      cleared['preferences']['excludedSkillAttemptIds'] = [];
+      cleared['preferences']['studyFocusSkillId'] = null;
+      final b = WebSyncEnvelope.fromJson(base),
+          data = mergeWebSync(
+            b,
+            WebSyncEnvelope.fromJson(cleared),
+            b,
+          ).data.toJson();
+      expect(data['learning']['reviewOverrides'], isEmpty);
+      expect(data['preferences']['excludedSkillAttemptIds'], isEmpty);
+      expect(data['preferences']['studyFocusSkillId'], isNull);
+      expect(data['preferences'].containsKey('studyFocusSkillId'), true);
+    },
+  );
+  test(
+    'V8 malformed optional schedule collections fail before keyed merge',
+    () {
+      for (final bad in [
+        'invalid',
+        [
+          reviewOverride('2026-10-17T00:00:00Z'),
+          reviewOverride('2026-10-18T00:00:00Z'),
+        ],
+      ]) {
+        final value = fixture();
+        value['learning']['reviewOverrides'] = bad;
+        expect(
+          () => WebSyncEnvelope.fromJson(value),
+          throwsA(isA<WebSyncFailure>()),
+        );
+      }
+    },
+  );
   TestWidgetsFlutterBinding.ensureInitialized();
   test(
     'Web DTO round-trip keeps citations, source units, topic/difficulty, artifacts and skillEvidence',

@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 import type { Locale } from "../../lib/lumio/i18n";
 import { languages } from "../../lib/lumio/i18n";
-import type { ProviderStatus } from "../../lib/lumio/types";
+import type { LearningItem, ProviderStatus } from "../../lib/lumio/types";
 import { aiErrorMessage } from "../../lib/lumio/ai-copy";
 import { voiceCopy } from "../../lib/voice/copy";
 import {
@@ -37,6 +37,7 @@ import {
   transcribeRecording,
   voiceTranscript,
   type VoiceTurn,
+  type VoiceTutorResult,
 } from "../../lib/voice/client";
 import { downloadText } from "../../lib/lumio/enhancements";
 import { MathText } from "./math-text";
@@ -44,8 +45,31 @@ import { MeetingRecorder } from "./meeting-recorder";
 import type { MeetingRecording } from "../../lib/voice/meeting-capture";
 import { desktopCopy } from "../../lib/lumio/desktop-copy";
 import { OutboundDataNotice } from "./outbound-data-notice";
-import type { TutorState } from "../../lib/tutor/types";
-import { TutorProgress } from "./tutor-progress";
+import type {
+  TutorState,
+  TutorSessionView,
+  TutorIntent,
+} from "../../lib/tutor/types";
+import { accountHeaders } from "../../lib/ai/request-client";
+import { voiceSessionSlot, restoreVoiceTurns } from "../../lib/voice/session";
+import { SourceReferences } from "./source-references";
+import { TutorHelpIntent, TutorTurnFeedback } from "./tutor-support";
+import {
+  TutorProgress,
+  MathVerificationNotice,
+  tutorUICopy,
+} from "./tutor-progress";
+
+function usableVoiceSource(item: LearningItem) {
+  return (
+    !!item.text.trim() &&
+    !(
+      item.blob &&
+      /\.(pdf|docx|pptx)$/i.test(item.fileName || "") &&
+      !item.sourceEvidence
+    )
+  );
+}
 
 type Phase =
   | "idle"
@@ -61,6 +85,8 @@ export type VoiceStudioProps = {
   signedIn?: boolean;
   onLogin?: () => void;
   sourceText?: string;
+  materials?: readonly LearningItem[];
+  onOpenMaterial?: (itemId: string) => void;
   onSaveTranscript?: (text: string) => void | Promise<void>;
   onSaveRecording?: (recording: MeetingRecording) => void | Promise<void>;
 };
@@ -169,11 +195,37 @@ export function VoiceStudio({
   signedIn = false,
   onLogin,
   sourceText = "",
+  materials = [],
+  onOpenMaterial,
   onSaveTranscript,
   onSaveRecording,
 }: VoiceStudioProps) {
   const c = voiceCopy[locale];
   const account = useAccountScope();
+  const [sourceId, setSourceId] = useState("");
+  const [sourceSelectionReady, setSourceSelectionReady] = useState(false);
+  useEffect(() => {
+    let value = "";
+    try {
+      value = localStorage.getItem(`lumio-voice-source-v2:${account}`) || "";
+    } catch {}
+    setSourceId(materials.some((item) => item.id === value) ? value : "");
+    setSourceSelectionReady(true);
+  }, [account]);
+  function selectVoiceSource(id: string) {
+    try {
+      localStorage.setItem(`lumio-voice-source-v2:${account}`, id);
+    } catch {}
+    setSourceId(id);
+  }
+  const selectedMaterial = materials.find((item) => item.id === sourceId);
+  const selectedSource = sourceId ? selectedMaterial?.text || "" : sourceText;
+  const selectedEvidence = selectedMaterial?.sourceEvidence;
+  const [tutorIntent, setTutorIntent] = useState<TutorIntent>("progress");
+  const [restoring, setRestoring] = useState(true),
+    [restoreFailed, setRestoreFailed] = useState(false),
+    [restoreTick, setRestoreTick] = useState(0);
+  const pointerSlot = useRef<string | null>(null);
   const [config, setConfig] = useState(providers);
   const [phase, setPhase] = useState<Phase>("idle"),
     [seconds, setSeconds] = useState(0);
@@ -187,11 +239,6 @@ export function VoiceStudio({
     [turns, setTurns] = useState<VoiceTurn[]>([]);
   const [tutorState, setTutorState] = useState<TutorState | null>(null);
   const [tutorGuidance, setTutorGuidance] = useState<"hints" | "full">("hints");
-  useEffect(() => {
-    setTutorState(null);
-    setTurns([]);
-    setTutorGuidance("hints");
-  }, [sourceText, language]);
   const [spoken, setSpoken] = useState<{
     id: string;
     blob: Blob;
@@ -223,8 +270,17 @@ export function VoiceStudio({
   const busy = phase !== "idle",
     canTranscribe = signedIn && !!config?.capabilities?.transcription,
     canSpeak = signedIn && !!config?.capabilities?.speech,
-    canAsk = signedIn && !!config?.capabilities?.tutor;
-  const blocked = busy || meetingActive;
+    canAsk =
+      signedIn &&
+      !!config?.capabilities?.tutor &&
+      (!sourceId ||
+        (!!selectedMaterial && usableVoiceSource(selectedMaterial)));
+  const blocked =
+    busy ||
+    meetingActive ||
+    restoring ||
+    restoreFailed ||
+    !sourceSelectionReady;
   const capturing = meetingActive || recordingActive || phase === "permission";
 
   function pausePlayback() {
@@ -238,6 +294,17 @@ export function VoiceStudio({
     void context.current?.close().catch(() => {});
     context.current = null;
   }
+  function releaseCapture() {
+    try {
+      if (recorder.current && recorder.current.state !== "inactive")
+        recorder.current.stop();
+    } catch {
+      /* Track shutdown below is still required when recorder shutdown fails. */
+    } finally {
+      recorder.current = null;
+      stopTracks();
+    }
+  }
   useEffect(() => {
     mounted.current = true;
     setSupported(
@@ -249,10 +316,133 @@ export function VoiceStudio({
       mounted.current = false;
       generation.current++;
       abort.current?.abort();
-      if (recorder.current?.state !== "inactive") recorder.current?.stop();
-      stopTracks();
+      releaseCapture();
     };
   }, []);
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+    generation.current++;
+    abort.current?.abort();
+    releaseCapture();
+    abort.current = null;
+    locked.current = false;
+    pausePlayback();
+    setSpoken(null);
+    setTurns([]);
+    setTutorState(null);
+    setTutorGuidance("hints");
+    setTutorIntent("progress");
+    setPhase("idle");
+    setRestoring(true);
+    setRestoreFailed(false);
+    pointerSlot.current = null;
+    void (async () => {
+      try {
+        if (!signedIn || account === "guest" || !sourceSelectionReady) return;
+        const slot = await voiceSessionSlot(
+          account,
+          language,
+          selectedSource,
+          sourceId,
+          selectedEvidence?.proof,
+        );
+        if (!active) return;
+        pointerSlot.current = slot;
+        const id = localStorage.getItem(slot);
+        if (!id) return;
+        if (!/^[a-f0-9]{8}-(?:[a-f0-9]{4}-){3}[a-f0-9]{12}$/.test(id)) {
+          localStorage.removeItem(slot);
+          return;
+        }
+        const r = await fetch(
+          `/api/tutor/session?sessionId=${encodeURIComponent(id)}`,
+          {
+            headers: accountHeaders(account),
+            signal: controller.signal,
+            cache: "no-store",
+          },
+        );
+        if (!active) return;
+        if (r.status === 404) {
+          localStorage.removeItem(slot);
+          setNotice(tutorUICopy[locale].expired);
+          return;
+        }
+        if (!r.ok) throw new Error();
+        const view = (await r.json()) as TutorSessionView;
+        if (!active) return;
+        setTutorState(view);
+        setTurns(restoreVoiceTurns(view));
+        setNotice(c.restored);
+      } catch {
+        if (active) setRestoreFailed(true);
+      } finally {
+        if (active) setRestoring(false);
+      }
+    })();
+    return () => {
+      active = false;
+      controller.abort();
+      generation.current++;
+      abort.current?.abort();
+      releaseCapture();
+      pausePlayback();
+    };
+  }, [
+    account,
+    signedIn,
+    sourceId,
+    selectedSource,
+    selectedEvidence?.proof,
+    language,
+    restoreTick,
+    sourceSelectionReady,
+  ]);
+  function rememberVoice(state: TutorState) {
+    setTutorState(state);
+    if (pointerSlot.current)
+      try {
+        localStorage.setItem(pointerSlot.current, state.sessionId);
+      } catch {}
+  }
+  function freshConversation() {
+    pausePlayback();
+    if (pointerSlot.current)
+      try {
+        localStorage.removeItem(pointerSlot.current);
+      } catch {}
+    setTutorState(null);
+    setTutorGuidance("hints");
+    setTutorIntent("progress");
+    setTurns([]);
+    setSpoken(null);
+    setQuestion("");
+    setError("");
+    setNotice("");
+  }
+  async function deleteConversation() {
+    if (!tutorState || blocked) return;
+    const controller = task("thinking");
+    if (!controller) return;
+    try {
+      const r = await fetch("/api/tutor/session", {
+        method: "DELETE",
+        headers: {
+          ...accountHeaders(account),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ sessionId: tutorState.sessionId }),
+        signal: controller.signal,
+      });
+      if (!r.ok) throw new Error();
+      if (!controller.signal.aborted && mounted.current) freshConversation();
+    } catch {
+      if (!controller.signal.aborted) setError(c.deleteFailed);
+    } finally {
+      finish(controller);
+    }
+  }
   useEffect(() => {
     if (providers) {
       setConfig(providers);
@@ -424,7 +614,8 @@ export function VoiceStudio({
     setError("");
   }
   function task(next: Phase) {
-    if (locked.current || meetingLock.current) return null;
+    if (locked.current || meetingLock.current || restoring || restoreFailed)
+      return null;
     pausePlayback();
     locked.current = true;
     const controller = new AbortController();
@@ -484,35 +675,62 @@ export function VoiceStudio({
       });
   }
   async function send() {
-    if (!question.trim() || question.length > VOICE_LIMITS.questionCharacters)
+    if (
+      !canAsk ||
+      !question.trim() ||
+      question.length > VOICE_LIMITS.questionCharacters
+    )
       return;
     const controller = task("thinking");
     if (!controller) return;
     const input = question.trim();
+    let metadata: VoiceTutorResult | undefined;
+    let restored = false;
     try {
       const text = await askVoiceTutor(
         input,
         turns,
         language,
-        sourceText,
+        selectedSource,
         controller.signal,
         tutorState?.sessionId,
-        setTutorState,
+        (state) => {
+          if (!controller.signal.aborted && mounted.current)
+            rememberVoice(state);
+        },
         tutorGuidance,
         account,
+        {
+          sourceEvidence: selectedEvidence,
+          tutorIntent,
+          onResult: (value) => {
+            metadata = value;
+          },
+          onRestored: (view) => {
+            if (!controller.signal.aborted && mounted.current) {
+              restored = true;
+              setTurns(restoreVoiceTurns(view));
+            }
+          },
+        },
       );
       if (controller.signal.aborted || !mounted.current) return;
       const reply: VoiceTurn = {
-        id: crypto.randomUUID(),
+        id: metadata?.tutor?.latestTurn?.id || crypto.randomUUID(),
         role: "assistant",
         text,
+        turn: metadata?.tutor?.latestTurn,
+        references: metadata?.references,
+        verification: metadata?.verification,
       };
-      setTurns((previous) => [
-        ...previous,
-        { id: crypto.randomUUID(), role: "user", text: input },
-        reply,
-      ]);
+      if (!restored)
+        setTurns((previous) => [
+          ...previous,
+          { id: crypto.randomUUID(), role: "user", text: input },
+          reply,
+        ]);
       setQuestion("");
+      setTutorIntent("progress");
       if (autoRead && canSpeak) await makeSpeech(reply, controller);
     } catch (caught) {
       showError(caught, controller);
@@ -620,6 +838,66 @@ export function VoiceStudio({
               }
         }
       />
+      <div className="lm-panel" style={{ marginBlock: 16, minWidth: 0 }}>
+        <label style={{ display: "grid", gap: 8, minWidth: 0 }}>
+          {c.sourcePicker}
+          <select
+            style={{ width: "100%", maxWidth: "100%", minWidth: 0 }}
+            value={sourceId}
+            disabled={busy || meetingActive}
+            onChange={(e) => selectVoiceSource(e.target.value)}
+          >
+            <option value="">{c.noSource}</option>
+            {materials.map((item) => (
+              <option
+                key={item.id}
+                value={item.id}
+                disabled={!usableVoiceSource(item)}
+              >
+                {item.title}
+                {!usableVoiceSource(item) ? ` — ${c.extractFirst}` : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <p>{c.sourceHelp}</p>
+        {onOpenMaterial &&
+          materials.some((item) => !usableVoiceSource(item)) && (
+            <details>
+              <summary>{c.extractFirst}</summary>
+              {materials
+                .filter((item) => !usableVoiceSource(item))
+                .map((item) => (
+                  <button
+                    key={item.id}
+                    className="lm-button"
+                    onClick={() => onOpenMaterial(item.id)}
+                  >
+                    {item.title}
+                  </button>
+                ))}
+            </details>
+          )}
+        {selectedMaterial && onOpenMaterial && (
+          <button
+            className="lm-button"
+            onClick={() => onOpenMaterial(selectedMaterial.id)}
+          >
+            {selectedMaterial.title}
+          </button>
+        )}
+      </div>
+      {restoreFailed && (
+        <div role="alert">
+          <p>{c.restoreFailed}</p>
+          <button
+            className="lm-button"
+            onClick={() => setRestoreTick((v) => v + 1)}
+          >
+            {c.retryRestore}
+          </button>
+        </div>
+      )}
       <div className="lv-layout">
         <div className="lv-console">
           <div className="lv-steps">
@@ -814,15 +1092,8 @@ export function VoiceStudio({
             locale={locale}
             state={tutorState}
             disabled={blocked}
-            onNew={() => {
-              setTutorState(null);
-              setTutorGuidance("hints");
-              setTurns([]);
-              setSpoken(null);
-              setQuestion("");
-              setError("");
-              setNotice("");
-            }}
+            restoring={restoring}
+            onNew={freshConversation}
             onUnlock={() => {
               if (!tutorState?.canUnlock) return;
               setTutorGuidance("full");
@@ -833,10 +1104,25 @@ export function VoiceStudio({
               );
             }}
           />
+          <TutorHelpIntent
+            locale={locale}
+            value={tutorIntent}
+            onChange={setTutorIntent}
+            disabled={blocked || tutorGuidance === "full"}
+          />
+          {tutorState && (
+            <button
+              className="lm-button"
+              disabled={blocked}
+              onClick={() => void deleteConversation()}
+            >
+              {c.deleteSession}
+            </button>
+          )}
           <div className="lv-conversation-head">
             <span>
               <Sparkles size={15} />
-              {sourceText ? c.source : c.noSource}
+              {selectedSource ? c.source : c.noSource}
             </span>
             {turns.length > 0 && (
               <button
@@ -844,14 +1130,7 @@ export function VoiceStudio({
                 disabled={blocked}
                 aria-label={c.newConversation}
                 title={c.newConversation}
-                onClick={() => {
-                  setTurns([]);
-                  setTutorState(null);
-                  setTutorGuidance("hints");
-                  setSpoken(null);
-                  setNotice("");
-                  setError("");
-                }}
+                onClick={freshConversation}
               >
                 <RotateCcw size={17} />
               </button>
@@ -891,6 +1170,34 @@ export function VoiceStudio({
                   )}
                 </div>
                 <MathText text={turn.text} />
+                {turn.role === "assistant" && (
+                  <>
+                    <SourceReferences
+                      references={turn.references}
+                      source={selectedSource}
+                      evidence={selectedEvidence}
+                      item={selectedMaterial}
+                      locale={locale}
+                      onOpenSource={
+                        onOpenMaterial && selectedMaterial
+                          ? () => onOpenMaterial(selectedMaterial.id)
+                          : undefined
+                      }
+                    />
+                    <MathVerificationNotice
+                      verification={turn.verification}
+                      locale={locale}
+                    />
+                    {turn.turn && tutorState && (
+                      <TutorTurnFeedback
+                        key={`${tutorState.sessionId}:${turn.turn.id}`}
+                        locale={locale}
+                        sessionId={tutorState.sessionId}
+                        turn={turn.turn}
+                      />
+                    )}
+                  </>
+                )}
                 {spoken?.id === turn.id && (
                   <>
                     <VoicePlayback
@@ -921,7 +1228,7 @@ export function VoiceStudio({
             <OutboundDataNotice
               locale={locale}
               action="chat"
-              sourceCharacters={sourceText.length}
+              sourceCharacters={selectedSource.length}
               questionCharacters={question.trim().length}
               historyMessages={turns.length}
               tutorSession
