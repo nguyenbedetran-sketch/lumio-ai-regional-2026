@@ -1,0 +1,15 @@
+{
+  "scope": "Remote GitHub Actions exact runtime/schema17 checkpoint. Later evidence-only documentation may follow; no public/provider/device acceptance inferred.",
+  "headSha": "877cec5895904a1eea931274566650a30f46be28",
+  "branch": "codex/v6-v7-upgrade",
+  "status": "completed",
+  "conclusion": "success",
+  "url": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026/actions/runs/38855497719",
+  "updatedAt": "2026-10-16T05:25:53Z",
+  "verifiedStages": [
+    "fresh frozen-lockfile install",
+    "deterministic and isolated SQLite regression",
+    "production compilation",
+    "generated/source TypeScript"
+  ]
+}
