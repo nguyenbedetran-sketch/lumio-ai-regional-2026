@@ -1,4 +1,5 @@
 "use client";
+import { quizReviewCopy } from "../../lib/lumio/quiz-review-copy";
 import { useMemo, useState, type CSSProperties } from "react";
 import {
   ArrowUpRight,
@@ -97,6 +98,9 @@ export function SkillEvidencePanel({
         </div>
         <Network className="lski-emblem" size={38} />
       </div>
+      <p className="lm-help" data-skill-key-caveat>
+        {quizReviewCopy[locale].history}
+      </p>
       <div className="lski-controls">
         <label>
           <input

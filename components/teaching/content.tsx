@@ -1,5 +1,9 @@
 "use client";
+import { FileAttachments } from "./file-attachments";
+import { TeachingResourceLink } from "./resource-link";
 import { MathText } from "../lumio/math-text";
+import { LessonContent, TeachingReferences } from "./content-preview";
+export { TeachingReferences } from "./content-preview";
 import { useEffect, useRef, useState } from "react";
 import { useTeachingDraft } from "./draft-guard";
 import {
@@ -22,7 +26,6 @@ import type {
   TeachingLesson,
   TeachingMaterial,
   TeachingQuestion,
-  TeachingReference,
 } from "../../lib/teaching/contracts";
 import type {
   TeachingGenerationResult,
@@ -86,7 +89,7 @@ function SourceChoices({
               }
             />
             <span>
-              {material.title}
+              <MathText text={material.title} inline />
               <small style={{ display: "block" }}>
                 {material.content.length.toLocaleString("vi-VN")} ký tự đã xử lý
                 · bản {material.revision}
@@ -133,41 +136,6 @@ function ClassChoice({
           ))}
       </select>
     </Field>
-  );
-}
-export function TeachingReferences({
-  references,
-  client,
-}: {
-  references?: TeachingReference[];
-  client: TeachingClient;
-}) {
-  if (!references?.length) return null;
-  return (
-    <details className="tw-note" style={{ marginTop: 13 }}>
-      <summary>Đối chiếu {references.length} trích đoạn nguồn</summary>
-      {references.map((ref, i) => (
-        <blockquote key={i} style={{ margin: "12px 0" }}>
-          <strong>
-            {client.data!.materials.find((m) => m.id === ref.materialId)
-              ?.title || "Học liệu có quyền truy cập"}
-          </strong>
-          <small style={{ display: "block" }}>
-            Đoạn {ref.paragraph}
-            {ref.page ? ` · Trang ${ref.page}` : ""}
-            {ref.slide ? ` · Slide ${ref.slide}` : ""}
-            {ref.heading ? ` · ${ref.heading}` : ""}
-            {typeof ref.seconds === "number"
-              ? ` · ${Math.floor(ref.seconds / 60)}:${String(Math.floor(ref.seconds % 60)).padStart(2, "0")}`
-              : ""}
-            {ref.materialRevision ? ` · Nguồn bản ${ref.materialRevision}` : ""}
-          </small>
-          <p>
-            “<MathText text={ref.quote} inline />”
-          </p>
-        </blockquote>
-      ))}
-    </details>
   );
 }
 export function GenerationPanel({
@@ -499,7 +467,12 @@ export function LessonsView({ client }: { client: TeachingClient }) {
       null,
     ),
     [showAI, setShowAI] = useState(false),
-    [query, setQuery] = useState("");
+    [query, setQuery] = useState(""),
+    [previewing, setPreviewing] = useState<{
+      id: string;
+      revision: number;
+      action: "lesson.review" | "lesson.publish";
+    } | null>(null);
   const data = client.data!,
     items = data.lessons.filter((l) =>
       [l.title, l.topic, l.grade]
@@ -507,6 +480,11 @@ export function LessonsView({ client }: { client: TeachingClient }) {
         .toLocaleLowerCase()
         .includes(query.toLocaleLowerCase()),
     );
+  const previewLesson = previewing
+    ? data.lessons.find((lesson) => lesson.id === previewing.id)
+    : undefined;
+  const previewCurrent =
+    !!previewLesson && previewLesson.revision === previewing?.revision;
   const blank: LessonDraft = {
     classId: null,
     title: "",
@@ -558,24 +536,23 @@ export function LessonsView({ client }: { client: TeachingClient }) {
               <MathText text={lesson.title} inline />
             </h3>
             <p>
-              {lesson.topic} · Khối {lesson.grade} · {lesson.sections.length}{" "}
+              <MathText text={lesson.topic} inline /> · Khối{" "}
+              <MathText text={lesson.grade} inline /> · {lesson.sections.length}{" "}
               phần
             </p>
             <details className="tw-note" style={{ marginTop: 12 }}>
               <summary>Xem bài giảng</summary>
-              {lesson.sections.map((section, index) => (
-                <section key={index} style={{ marginTop: 16 }}>
-                  <h3>
-                    <MathText text={section.title} inline />
-                  </h3>
-                  <MathText text={section.body} />
-                  <TeachingReferences
-                    references={section.references}
-                    client={client}
-                  />
-                </section>
-              ))}
+              <LessonContent
+                lesson={lesson}
+                client={client}
+                showTitle={false}
+              />
             </details>
+            <FileAttachments
+              client={client}
+              target={{ kind: "lesson", id: lesson.id }}
+              allowUpload={lesson.status === "draft" && !!lesson.classId}
+            />
             <div className="tw-card-footer">
               <button
                 className="tw-text-button"
@@ -595,20 +572,18 @@ export function LessonsView({ client }: { client: TeachingClient }) {
                   }
                 >
                   <Download size={13} />
-                  Markdown
+                  Markdown (mã nguồn)
                 </button>
                 {lesson.status === "draft" && (
                   <button
                     className="tw-text-button"
                     disabled={client.busy}
                     onClick={() =>
-                      void client
-                        .mutate({
-                          action: "lesson.review",
-                          id: lesson.id,
-                          expectedRevision: lesson.revision,
-                        })
-                        .catch(() => {})
+                      setPreviewing({
+                        id: lesson.id,
+                        revision: lesson.revision,
+                        action: "lesson.review",
+                      })
                     }
                   >
                     <Check size={13} />
@@ -620,13 +595,11 @@ export function LessonsView({ client }: { client: TeachingClient }) {
                     className="tw-text-button"
                     disabled={client.busy || !lesson.classId}
                     onClick={() =>
-                      void client
-                        .mutate({
-                          action: "lesson.publish",
-                          id: lesson.id,
-                          expectedRevision: lesson.revision,
-                        })
-                        .catch(() => {})
+                      setPreviewing({
+                        id: lesson.id,
+                        revision: lesson.revision,
+                        action: "lesson.publish",
+                      })
                     }
                   >
                     Chia sẻ cho lớp
@@ -652,6 +625,57 @@ export function LessonsView({ client }: { client: TeachingClient }) {
             rõ ràng. Bản AI luôn cần bạn biên tập.
           </Empty>
         </Panel>
+      )}
+      {previewing && (
+        <Modal
+          title="Xem trước bài giảng"
+          onClose={() => setPreviewing(null)}
+          disabled={client.busy}
+        >
+          <p className="tw-note">
+            {previewing.action === "lesson.review"
+              ? "Kiểm tra nội dung, công thức và trích đoạn nguồn trước khi xác nhận đã xem lại. Đây chưa phải thao tác công bố."
+              : "Đây là cách bài giảng hiển thị trong lớp. Chỉ công bố sau khi bạn kiểm tra nội dung, đáp án và nguồn."}
+          </p>
+          <FormError client={client} />
+          {!previewCurrent && (
+            <p className="tw-alert" role="alert">
+              Bài giảng đã thay đổi. Đóng bản xem trước và mở lại bản mới nhất
+              trước khi xác nhận.
+            </p>
+          )}
+          {previewCurrent && (
+            <LessonContent lesson={previewLesson!} client={client} />
+          )}
+          <div className="tw-form-footer">
+            <Button
+              secondary
+              onClick={() => setPreviewing(null)}
+              disabled={client.busy}
+            >
+              Quay lại
+            </Button>
+            <Button
+              busy={client.busy}
+              disabled={!previewCurrent}
+              onClick={() => {
+                if (!previewCurrent) return;
+                void client
+                  .mutate({
+                    action: previewing.action,
+                    id: previewing.id,
+                    expectedRevision: previewing.revision,
+                  })
+                  .then(() => setPreviewing(null))
+                  .catch(() => {});
+              }}
+            >
+              {previewing.action === "lesson.review"
+                ? "Xác nhận đã xem bản trình bày"
+                : "Xác nhận chia sẻ cho lớp"}
+            </Button>
+          </div>
+        </Modal>
       )}
       {editing && (
         <LessonEditor
@@ -837,6 +861,25 @@ function LessonEditor({
           Lưu tạo bản nháp. Sau khi kiểm tra nội dung và nguồn, đánh dấu đã xem
           lại rồi mới chia sẻ cho lớp.
         </p>
+        <details className="tw-card" data-lesson-editor-preview>
+          <summary className="tw-text-button">
+            Xem trước cách học sinh đọc
+          </summary>
+          <p className="tw-note">
+            Bản xem trước cập nhật từ nội dung đang nhập, chưa lưu hoặc công bố.
+            Ô soạn thảo giữ nguyên Markdown / LaTeX để bạn sửa.
+          </p>
+          <LessonContent
+            lesson={{
+              ...draft,
+              objectives: objectives
+                .split("\n")
+                .map((s) => s.trim())
+                .filter(Boolean),
+            }}
+            client={client}
+          />
+        </details>
         <FormFooter busy={client.busy} onClose={onClose} label="Lưu bản nháp" />
       </form>
     </Modal>
@@ -1235,15 +1278,22 @@ export function LibraryView({ client }: { client: TeachingClient }) {
                 {statusLabel[material.status]}
               </Tag>
             </div>
-            <h3>{material.title}</h3>
+            <h3>
+              <MathText text={material.title} inline />
+            </h3>
             <p>
               {material.kind.toLocaleUpperCase()} ·{" "}
               {material.content.length.toLocaleString("vi-VN")} ký tự đã xử lý
             </p>
-            <p style={{ marginTop: 10 }}>
-              {material.content.slice(0, 160)}
-              {material.content.length > 160 ? "…" : ""}
-            </p>
+            <details className="tw-note" style={{ marginTop: 10 }}>
+              <summary>Xem nội dung đã xử lý</summary>
+              <MathText text={material.content} />
+            </details>
+            <TeachingResourceLink
+              url={material.url}
+              title={material.title}
+              kind={material.kind}
+            />
             <div className="tw-card-footer">
               <button
                 className="tw-text-button"
@@ -1259,7 +1309,7 @@ export function LibraryView({ client }: { client: TeachingClient }) {
                   }
                 >
                   <Download size={13} />
-                  Xuất văn bản
+                  TXT (văn bản nguồn)
                 </button>
                 {material.status === "draft" && (
                   <button
@@ -1505,6 +1555,14 @@ function MaterialEditor({
           Nội dung được lưu trong tổ chức. Chỉ chia sẻ cho lớp sau khi bạn xem
           lại và chọn công bố; bản gốc không được lưu trong thư viện này.
         </p>
+        <details className="tw-card" data-material-editor-preview>
+          <summary className="tw-text-button">Xem trước học liệu</summary>
+          <h3>
+            <MathText text={title} inline />
+          </h3>
+          <MathText text={content} />
+          <TeachingResourceLink url={url} title={title} kind={kind} />
+        </details>
         <FormFooter
           busy={client.busy || extracting}
           onClose={onClose}

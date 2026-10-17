@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T07:18:01.107Z",
+  "passed": 14,
+  "checks": [
+    {
+      "name": "Blueprint rejects extra keys, duplicate normalized cells, oversized counts and invalid dimensions",
+      "status": "PASS"
+    },
+    {
+      "name": "Deterministic matching satisfies overlapping prompt cells without a greedy false shortage",
+      "status": "PASS"
+    },
+    {
+      "name": "Preflight blocks duplicate IDs/prompts and total mismatch but labels coverage and answer concentration as review",
+      "status": "PASS"
+    },
+    {
+      "name": "Unauthorized requests fail before any bank/shortage disclosure or mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "Insufficient rows report only authorized distinct questions and leave no assignment/audit/receipt residue",
+      "status": "PASS"
+    },
+    {
+      "name": "Forged cross-class/org and injected IDs are rejected; class CAS is enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Composition creates one editable draft with exact count/points and no recipients or credit activity",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost-ACK replay returns the same draft; changed payload UUID is rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "Replay rechecks current class assignment and membership instead of returning cached private data",
+      "status": "PASS"
+    },
+    {
+      "name": "Failed operation persistence rolls back composed draft and audit together",
+      "status": "PASS"
+    },
+    {
+      "name": "Reviewed source changes prevent issuing an older draft; no recipient write leaks through",
+      "status": "PASS"
+    },
+    {
+      "name": "Whole-set checks run on review and issue, including legacy/corrupt totals, without partial state changes",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit issue freezes snapshots/recipients and students receive no keys/rubrics before publication",
+      "status": "PASS"
+    },
+    {
+      "name": "Revoked credential, session and disabled actor block composition and replay",
+      "status": "PASS"
+    }
+  ],
+  "providerRequests": 0,
+  "scope": "Actual teaching handlers + isolated SQLite with synthetic accounts and sources. No private data, provider calls, browser, public deployment, or exam-accuracy claim."
+}

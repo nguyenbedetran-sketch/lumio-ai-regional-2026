@@ -1,0 +1,49 @@
+{
+  "status": "FAIL",
+  "checkedAt": "2026-10-17T06:53:38.316Z",
+  "checks": [
+    {
+      "name": "Real CSRF cookie is HttpOnly/SameSite=Lax/root-scoped and double-submit token is stable",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/wrong/cookie-unbound sign-in CSRF cannot start OAuth or create an account",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual signed OIDC callback creates one canonical learner and protected session; repeated login preserves its id",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/tampered state and missing PKCE fail before token exchange and create no identity",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider token outage, invalid signature, issuer and audience cannot create a session or canonical user",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/wrong signout CSRF preserves the session; matching CSRF expires it and prevents open redirect",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider cancellation clears the account-link cookie without linking a provider or exposing callback text",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical revocation invalidates the actual JWT and pending link callback; fresh authentication recovers without changing identity",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual SQLite users-table interruption stays a JSON session failure, clears link flow and recovers after schema restoration",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual compiled NextAuth HTTP/cookie/CSRF/state/PKCE/JWT and canonical isolated SQLite. Only outbound Google discovery/token/JWKS transport is redirected in a child-only preload to authored loopback OIDC responses signed with an ephemeral test RSA key. Not genuine Google/OAuth-consent/browser/TLS/real-account/provider acceptance.",
+  "genuineGoogleAcceptance": "PENDING_SEPARATE_PUBLIC_GATE",
+  "realProviderCalls": 0,
+  "failure": {
+    "check": "Actual NextAuth failure logging does not retain callback error descriptions",
+    "code": "AUTH_HTTP_PRIVATE_CALLBACK_DESCRIPTION_LOGGED"
+  }
+}

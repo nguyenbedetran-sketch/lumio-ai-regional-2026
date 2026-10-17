@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getSession, signIn, signOut } from "next-auth/react";
 import {
@@ -492,6 +493,7 @@ function Workspace({
       prompt?: string;
     }>({ tab: "studio" }),
     [query, setQuery] = useState(""),
+    [plannerTask, setPlannerTask] = useState(""),
     [filter, setFilter] = useState("all"),
     [sort, setSort] = useState("newest"),
     [mobile, setMobile] = useState(false),
@@ -1280,7 +1282,9 @@ function Workspace({
                     onClick={() => open(i)}
                   >
                     <Icon size={15} />
-                    <span>{i.title}</span>
+                    <span>
+                      <MathText text={i.title} inline />
+                    </span>
                   </button>
                 );
               })}
@@ -1377,6 +1381,15 @@ function Workspace({
               locale={locale}
               items={data.items}
               spaces={data.spaces}
+              tasks={learning.state.tasks}
+              onOpenTask={(task) => {
+                draftGuard.leave(() => {
+                  setPlannerTask(task.id);
+                  setSelected("");
+                  setView("planner");
+                  setMobile(false);
+                });
+              }}
               navigation={[
                 ...navigation.map(([id, , label]) => ({ id, label })),
                 { id: "settings", label: t.settings },
@@ -1589,6 +1602,8 @@ function Workspace({
             />
           ) : view === "planner" ? (
             <Planner
+              key={plannerTask || "planner"}
+              initialTaskId={plannerTask}
               locale={locale}
               items={data.items}
               state={learning.state}
@@ -2483,8 +2498,12 @@ function ContentCard({
             <img src={image} alt="" />
           ) : item.kind === "text" ? (
             <div className="lm-paper-preview">
-              <span>{item.title}</span>
-              <p>{item.text.slice(0, 270)}</p>
+              <span>
+                <MathText text={item.title} inline />
+              </span>
+              <p>
+                <MathText text={item.text.slice(0, 270)} inline />
+              </p>
             </div>
           ) : (
             <>
@@ -2498,7 +2517,9 @@ function ContentCard({
           </span>
         </div>
         <div className="lm-card-details">
-          <h3>{item.title || t.title}</h3>
+          <h3>
+            <MathText text={item.title || t.title} inline />
+          </h3>
           <span>
             <Clock size={12} />
             {new Intl.DateTimeFormat(locale, {

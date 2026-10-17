@@ -43,6 +43,8 @@ import { studioCopy } from "../../lib/lumio/studio-copy";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
 import { DocumentExtraction } from "./document-extraction";
 import { Dialog } from "./dialog";
+import { MathText } from "./math-text";
+import { contentViewCopy } from "../../lib/lumio/content-view-copy";
 import {
   validateReferences,
   type SourceReference,
@@ -217,6 +219,12 @@ function LinkSource({
           </div>
         )}
         {info?.truncated && <p className="lm-help">{c.truncated}</p>}
+        {!!draft && (
+          <section aria-label={contentViewCopy[locale].preview}>
+            <MathText text={draft} />
+          </section>
+        )}
+        <p className="lm-help">{contentViewCopy[locale].edit}</p>
         <textarea
           className="lm-source-text"
           aria-label={c.source}
@@ -713,7 +721,7 @@ export function LearningView({
                 }
               >
                 <strong>
-                  {item.title} ·{" "}
+                  <MathText text={item.title} inline /> ·{" "}
                   {sourceLocation.page
                     ? `${t.source} · ${sourceLocation.page}`
                     : sourceLocation.slide
@@ -723,6 +731,7 @@ export function LearningView({
                     ? ` · ${formatTime(sourceLocation.seconds)}`
                     : ""}
                 </strong>
+                <p className="lm-help">{contentViewCopy[locale].source}</p>
                 <blockquote>{sourceLocation.quote}</blockquote>
                 <button
                   className="lm-button"
@@ -747,19 +756,30 @@ export function LearningView({
             </div>
             <DocumentExtraction item={item} locale={locale} update={update} />
             {item.kind === "text" ? (
-              <textarea
-                className="lm-source-text"
-                aria-label={t.sourceText}
-                maxLength={200000}
-                value={item.text}
-                onChange={(e) =>
-                  update({
-                    ...item,
-                    text: e.target.value,
-                    sourceEvidence: undefined,
-                  })
-                }
-              />
+              <>
+                <section
+                  data-material-reading
+                  aria-label={contentViewCopy[locale].preview}
+                >
+                  <MathText text={item.text} />
+                </section>
+                <details open={!item.text.trim()} data-source-editor>
+                  <summary>{contentViewCopy[locale].edit}</summary>
+                  <textarea
+                    className="lm-source-text"
+                    aria-label={t.sourceText}
+                    maxLength={200000}
+                    value={item.text}
+                    onChange={(e) =>
+                      update({
+                        ...item,
+                        text: e.target.value,
+                        sourceEvidence: undefined,
+                      })
+                    }
+                  />
+                </details>
+              </>
             ) : item.kind === "link" ? (
               <LinkSource
                 key={item.id}
@@ -806,19 +826,30 @@ export function LearningView({
                 )}
                 <p className="lm-help">{t.fileOnly}</p>
                 {item.kind === "pdf" && item.text && (
-                  <textarea
-                    className="lm-source-text"
-                    aria-label={t.sourceText}
-                    maxLength={200000}
-                    value={item.text}
-                    onChange={(e) =>
-                      update({
-                        ...item,
-                        text: e.target.value,
-                        sourceEvidence: undefined,
-                      })
-                    }
-                  />
+                  <>
+                    <section
+                      data-material-reading
+                      aria-label={contentViewCopy[locale].preview}
+                    >
+                      <MathText text={item.text} />
+                    </section>
+                    <details data-source-editor>
+                      <summary>{contentViewCopy[locale].edit}</summary>
+                      <textarea
+                        className="lm-source-text"
+                        aria-label={t.sourceText}
+                        maxLength={200000}
+                        value={item.text}
+                        onChange={(e) =>
+                          update({
+                            ...item,
+                            text: e.target.value,
+                            sourceEvidence: undefined,
+                          })
+                        }
+                      />
+                    </details>
+                  </>
                 )}
               </>
             ) : (
@@ -859,7 +890,7 @@ export function LearningView({
                 }
               >
                 <Download size={16} />
-                {e.exportNotes}
+                {e.exportNotes} · {contentViewCopy[locale].markdown}
               </button>
             </div>
             <p className="lm-help lm-template-hint">{e.templateHint}</p>
@@ -867,14 +898,25 @@ export function LearningView({
               <span>{t.notes}</span>
               <span>{t.local}</span>
             </div>
-            <textarea
-              className="lm-notes"
-              aria-label={t.notes}
-              placeholder={t.notesPlaceholder}
-              maxLength={200000}
-              value={item.notes}
-              onChange={(e) => update({ ...item, notes: e.target.value })}
-            />
+            {!!item.notes && (
+              <section
+                data-notes-reading
+                aria-label={contentViewCopy[locale].preview}
+              >
+                <MathText text={item.notes} />
+              </section>
+            )}
+            <details open={!item.notes.trim()} data-notes-editor>
+              <summary>{contentViewCopy[locale].edit}</summary>
+              <textarea
+                className="lm-notes"
+                aria-label={t.notes}
+                placeholder={t.notesPlaceholder}
+                maxLength={200000}
+                value={item.notes}
+                onChange={(e) => update({ ...item, notes: e.target.value })}
+              />
+            </details>
           </>
         )}
         {tab === "cards" && (
@@ -888,7 +930,7 @@ export function LearningView({
                 }
               >
                 <Download size={16} />
-                {e.exportCards}
+                {e.exportCards} · {contentViewCopy[locale].csv}
               </button>
             </div>
             <Flashcards

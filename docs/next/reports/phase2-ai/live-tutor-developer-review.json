@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "kind": "DERIVED_DEVELOPER_TUTOR_REVIEW",
+  "status": "DEVELOPER_REVIEW_WITH_PEDAGOGICAL_LIMITATION",
+  "reviewedAt": "2026-10-17T07:18:14.518Z",
+  "original": {
+    "path": "docs/v7/reports/v7-live-v10v15-tutor-20261017.json",
+    "sha256": "381076877770026a2246b7c07dcc949ab56a0bec3ee6e0c2f6dde25215464bef",
+    "originalStatus": "PARTIAL_REVIEW_REQUIRED",
+    "startedAt": "2026-10-17T07:15:49.374Z",
+    "finishedAt": "2026-10-17T07:16:45.763Z",
+    "actualProviderHTTPAttempts": 7,
+    "providerHTTPAttemptLimit": 8,
+    "runnerSHA256": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b",
+    "sourceBaseCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+    "sourceHashes": {
+      "app/api/ai/route.ts": "ac73fdab4ed4b7949eb1d8bfae6448809d8ea643f4d3548371c68daf4586d88f",
+      "lib/ai/router.ts": "2d7716ad78799c3ebaaa6f79ea16ef5d0b17361249480706d0b986cef164160f",
+      "lib/ai/contracts.ts": "fa361af951f3112b924c4d3124bbd33ba6a130faac127901b7bc73e94a4413f0",
+      "lib/ai/grounding.ts": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa",
+      "lib/ai/summary.ts": "ab01af55b45fda1889a06650f3ca8f34991cf6cbaa8ab6187ee0c9d5af6a02a5",
+      "lib/ai/quiz-option-order.ts": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+      "lib/ai/provider-attempt.ts": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e",
+      "lib/server/provider-attempt-core.ts": "82d27b29bda36261edd523f0cd670f20dbf7a861337656671cc1373652d1af20",
+      "lib/server/provider-attempt-schema.ts": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c",
+      "lib/server/provider-attempt-report.ts": "a9cb9b658f6142cfe18a1c8b79fea77144741582421a3d937143ece8ce29f8b0",
+      "lib/server/store.ts": "9b3235b5f4032ad328fe598989f1ca86c4f1ced6a1955bb12ce839db1b142046",
+      "lib/tutor/policy.ts": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8",
+      "lib/tutor/math.ts": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
+      "lib/tutor/math-exact.ts": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
+      "lib/server/schema.ts": "7aa93ad86b2f2cfcae3b6ff8db9bbb37c96a8442910a74815c1cc992b644edf1",
+      "lib/server/database-integrity.ts": "6fb5a5b86db7b76f4ddc9f13975dd9b5e9c36bda6181dba84ae4513a17667c8e",
+      "lib/tutor/reference-problems.ts": "f7ebc653b771fc24ac25dedc382ee6a14ff8e49b4dd16d002605976262109206",
+      "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
+      "scripts/evaluate-v7-live.cjs": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b"
+    },
+    "sourceScope": "Selected route, generation, validation, source-grounding and math files at run start; not a complete transitive dependency manifest or proof of deployed source."
+  },
+  "method": "All7 untruncated actual raw provider outputs and both full returned transcripts were reviewed against authored reference problems. No reruns or substituted responses.",
+  "cases": [
+    {
+      "id": "radical-extraneous",
+      "provenance": {
+        "caseSHA256": "ea699ff8ff7a1c07a35ae531045519bc700d9c8cdd41d9bc4e4dc63841fd36e1",
+        "fixtureSHA256": "2029c8c8c2c17e1a3e0de500d362a755b20364fe0c29bd73391d05b3e7181db4",
+        "authoredSourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "returnedBodySHA256": null,
+        "attempts": [
+          {
+            "number": 1,
+            "phase": "hint-1",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "d79a215461579e30c4392acccad1ab106511671b4cd233171feca09c6a43d789",
+            "rawOutputTruncated": false
+          },
+          {
+            "number": 2,
+            "phase": "hint-2",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "e6d3152ca43d0fbc6f94db88a76761ac4ed94ac2fffb96d45a72565e4638390d",
+            "rawOutputTruncated": false
+          },
+          {
+            "number": 3,
+            "phase": "hint-3",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "805ce57d7424dbb7007cfc070edd5ec3dc558a8a19ad639d8b0602e529c7cc20",
+            "rawOutputTruncated": false
+          },
+          {
+            "number": 4,
+            "phase": "full",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "a810137fe40cd041177d557bc3d62fbdb38c7ce3ada5dd17aabcde66f7259012",
+            "rawOutputTruncated": false
+          }
+        ]
+      },
+      "technicalStatusUnchanged": "TECHNICAL_PASS_REVIEW_PENDING",
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "serverHintCounts": [
+        1,
+        2,
+        3,
+        3
+      ],
+      "initialFullHTTP": 409,
+      "finalFullHTTP": 200,
+      "verificationScope": {
+        "candidates": "exact",
+        "domain": "checked",
+        "completeness": "proved",
+        "steps": "partial",
+        "arithmetic": "partial",
+        "reasoning": "not_checked"
+      },
+      "sourceReferences": "NO_SUPPLIED_SOURCE_REFERENCES_NOT_APPLICABLE",
+      "status": "MATHEMATICS_CORRECT_WITH_PEDAGOGICAL_LIMITATION",
+      "mathematics": "Lời giải xác định x≥1, bình phương cho x(x-3)=0, loại0 và thay3 được2=2. Kết luận x=3 đúng. Bộ kiểm tra độc lập xác nhận nghiệm/miền/tính đủ trong phạm vi hỗ trợ; steps và arithmetic chỉpartial, reasoning not_checked.",
+      "pedagogy": "Gợi ý2 sửa đúng x=0 và đối chiếu1≠-1. Câu hỏi bình phương gần như được lặp lại sau gợi ý1; sau đó gợi ý3 chuyển sang kiểm tra miền.",
+      "observedIssue": {
+        "severity": "PEDAGOGICAL_ATTRIBUTION",
+        "phase": "hint-3",
+        "exactQuote": "Bạn đã thử x = 0 và thấy không thỏa phương trình gốc; đó là minh hoạ đúng vì vế phải âm.",
+        "explanation": "Người học chỉ nêu x=0 rồi nói chưa hiểu vì sao loại nghiệm. Phép đối chiếu không thỏa do trợ lý thực hiện ở lượt trước; lời khen đã gán sự tự kiểm tra chưa được người học trình bày cho người học."
+      },
+      "limits": [
+        "Không gắn nhãn mọi bước/lời văn là đã được bộ kiểm tra chứng minh.",
+        "Không coi ba gợi ý được đếm là bằng chứng học sinh đã hiểu."
+      ]
+    },
+    {
+      "id": "missing-data",
+      "provenance": {
+        "caseSHA256": "7eee7507eff8613ab56dd64b10e14a01fd0251d9c993c562eb8655f2766533bf",
+        "fixtureSHA256": "95a32cc20cb54d50bb3230c18238a97bc9c17066632f92ff95b0924bbfefdc84",
+        "authoredSourceSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "returnedBodySHA256": null,
+        "attempts": [
+          {
+            "number": 5,
+            "phase": "hint-1",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "d216e409cade5d8825b6a3472c9e20926acdfb55b71703a4921da98c327e0b33",
+            "rawOutputTruncated": false
+          },
+          {
+            "number": 6,
+            "phase": "hint-2",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "d52230f7937f8b68c1a02444d734f5ba8ad19da2e16d752d849a3a57c2766274",
+            "rawOutputTruncated": false
+          },
+          {
+            "number": 7,
+            "phase": "hint-3",
+            "provider": "openai",
+            "requestedModel": "gpt-5-mini",
+            "responseModel": "gpt-5-mini-2025-08-07",
+            "httpStatus": 200,
+            "rawOutputSHA256": "e4894fe1e950c8fba058c3ff55d0ffce3d5bcbf2e131d97d1329f916f0a504a1",
+            "rawOutputTruncated": false
+          }
+        ]
+      },
+      "technicalStatusUnchanged": "TECHNICAL_PASS_REVIEW_PENDING",
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "clarificationState": true,
+        "noLeakedCreditHold": true
+      },
+      "serverHintCounts": [
+        0,
+        0,
+        0
+      ],
+      "initialFullHTTP": 409,
+      "finalFullHTTP": 409,
+      "verificationScope": null,
+      "sourceReferences": "NO_SUPPLIED_SOURCE_REFERENCES_NOT_APPLICABLE",
+      "status": "NO_INVENTED_NUMERIC_ANSWER_OBSERVED",
+      "mathematics": "Chỉ dài8cm không xác định một diện tích duy nhất. Cả3lượt yêu cầu chiều rộng hoặc quan hệ bổ sung, không bịa kích thước/diện tích số.",
+      "pedagogy": "Duy trì câu hỏi làm rõ và phân biệt dữ kiện còn thiếu; các ví dụ chu vi/tỉ lệ/hình vuông là giả thiết bổ sung được hỏi, không được khẳng định là đã có.",
+      "observedIssue": null,
+      "limits": [
+        "Đây là một bài Toán thiếu dữ kiện trong lời hỏi, không phải thử nghiệm nguồn RAG thiếu đáp án hay kiểm chứng cue sourceLimitations mới.",
+        "Chưa có học sinh thật trả lời; không chứng minh hiệu quả học tập hoặc khả năng từ chối mọi bài thiếu dữ kiện."
+      ]
+    }
+  ],
+  "summary": {
+    "reviewedCases": 2,
+    "actualProviderHTTPAttempts": 7,
+    "hardCap": 8,
+    "allProviderResponsesHTTP200": true,
+    "automaticRetries": false,
+    "cosmeticReruns": 0,
+    "earlyFullProviderCalls": 0,
+    "leakedCreditHolds": 0,
+    "radicalReferenceCandidate": [
+      3
+    ],
+    "radicalIndependentScope": {
+      "candidates": "exact",
+      "domain": "checked",
+      "completeness": "proved",
+      "steps": "partial",
+      "arithmetic": "partial",
+      "reasoning": "not_checked"
+    },
+    "missingDataHints": [
+      0,
+      0,
+      0
+    ],
+    "missingDataFullHTTP": 409,
+    "casesWithPedagogicalAttributionConcern": 1,
+    "independentTeacherReview": "NOT_TESTED",
+    "studentTrial": "NOT_TESTED"
+  },
+  "limitations": [
+    "Actual provider generations used existing configured keys only inside the authorized runner; synthetic authenticated principal and temporary SQLite, not real OAuth/publicHTTP or real student data.",
+    "No general reasoning, tutor effectiveness, repeated-mistake curriculum coverage, multilingual quality or learning-outcome claim from these two cases.",
+    "Provider receipt/cost is separate from application credit; no invoice cost estimated.",
+    "Raw report stays PARTIAL_REVIEW_REQUIRED with original failures/partial checks; this review does not rewrite the underlying evidence."
+  ]
+}

@@ -799,6 +799,18 @@
 .tw-form {
   display: grid;
   gap: 18px;
+  min-width: 0;
+  max-width: 100%;
+}
+.tw-form > *,
+.tw-field,
+.tw-result {
+  min-width: 0;
+  max-width: 100%;
+}
+.tw-dialog,
+.tw-dialog * {
+  box-sizing: border-box;
 }
 .tw-form-row {
   display: grid;

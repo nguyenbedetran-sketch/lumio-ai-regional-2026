@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-17T08:06:41.193Z",
+  "command": "pnpm test:all",
+  "status": "FAIL",
+  "exitCode": 1,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/regional/qa-rag-api-report.json",
+    "docs/regional/qa-rag-report.json",
+    "docs/regional/qa-source-grounding-report.json",
+    "docs/v3/skill-evidence-unit.json",
+    "docs/v8/reports/sync-compatibility.json"
+  ]
+}

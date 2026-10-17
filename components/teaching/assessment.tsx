@@ -1,4 +1,5 @@
 "use client";
+import { FileAttachments } from "./file-attachments";
 import { MathText } from "../lumio/math-text";
 import { observedErrors } from "./observed-errors";
 import { GradeHistoryButton } from "./grade-history";
@@ -88,7 +89,9 @@ export function AssignmentsView({ client }: { client: TeachingClient }) {
                 Hạn {dateTime(assignment.dueAt)}
               </span>
             </div>
-            <h3>{assignment.title}</h3>
+            <h3>
+              <MathText text={assignment.title} inline />
+            </h3>
             <p>
               {data.classes.find((c) => c.id === assignment.classId)?.name} ·{" "}
               {assignment.questionCount ??
@@ -96,7 +99,12 @@ export function AssignmentsView({ client }: { client: TeachingClient }) {
                   assignment.questionIds.length)}{" "}
               câu · {assignment.maxPoints} điểm
             </p>
-            <p>{assignment.instructions}</p>
+            <MathText text={assignment.instructions} />
+            <FileAttachments
+              client={client}
+              target={{ kind: "assignment", id: assignment.id }}
+              allowUpload={assignment.status === "draft"}
+            />
             <AssignmentAttempt assignment={assignment} />
             <AssessmentWindow assignment={assignment} />
             <details>
@@ -708,7 +716,14 @@ function GradeEditor({
           })}
         >
           <FormError client={client} />
-          <Tag>{assignment.title}</Tag>
+          <Tag>
+            <MathText text={assignment.title} inline />
+          </Tag>
+          <FileAttachments
+            client={client}
+            target={{ kind: "submission", id: assignment.id }}
+            submissionId={submission.id}
+          />
           {submission.autoScore !== undefined && (
             <p className="tw-note">
               Điểm trắc nghiệm gợi ý: {submission.autoScore}. Đây chưa phải điểm
@@ -739,9 +754,12 @@ function GradeEditor({
               {question.rubric?.length && (
                 <div className="tw-note">
                   Tiêu chí:{" "}
-                  {question.rubric
-                    .map((r) => `${r.label} (${r.points} điểm)`)
-                    .join("; ")}
+                  <MathText
+                    text={question.rubric
+                      .map((r) => `${r.label} (${r.points} điểm)`)
+                      .join("; ")}
+                    inline
+                  />
                 </div>
               )}
               <div className="tw-form-row">
@@ -1101,10 +1119,13 @@ export function ReportsView({ client }: { client: TeachingClient }) {
                   <tr key={s.id}>
                     <td>{s.studentName}</td>
                     <td>
-                      {
-                        data.assignments.find((a) => a.id === s.assignmentId)
-                          ?.title
-                      }
+                      <MathText
+                        text={
+                          data.assignments.find((a) => a.id === s.assignmentId)
+                            ?.title || ""
+                        }
+                        inline
+                      />
                       <small>
                         Lần{" "}
                         {data.assignments.find((a) => a.id === s.assignmentId)

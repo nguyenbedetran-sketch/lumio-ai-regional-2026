@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowDownToLine,
@@ -378,7 +379,9 @@ export function SummaryJobManager({
                 key={job.id}
                 data-summary-job={job.status}
               >
-                <strong>{job.title}</strong>
+                <strong>
+                  <MathText text={job.title} inline />
+                </strong>
                 <p>
                   {c[job.status]} · {job.completed}/{job.total} {c.part}
                 </p>
@@ -446,20 +449,22 @@ export function SummaryJobManager({
       {notice && <p role="status">{notice}</p>}
       {selected?.result && (
         <section aria-label={c.viewTitle}>
-          <h4>{selected.result.summary.title}</h4>
+          <h4>
+            <MathText text={selected.result.summary.title} inline />
+          </h4>
           <p>{c.review}</p>
           <button className="lm-button" onClick={download}>
             <ArrowDownToLine size={15} />
-            {c.download}
+            {c.download} (.md)
           </button>
-          <p style={{ whiteSpace: "pre-wrap" }}>
-            {selected.result.summary.overview}
-          </p>
+          <MathText text={selected.result.summary.overview} />
           <ol>
             {selected.result.summary.chapters.map((chapter, i) => (
               <li key={i}>
-                <strong>{chapter.title}</strong>
-                <p>{chapter.summary}</p>
+                <strong>
+                  <MathText text={chapter.title} inline />
+                </strong>
+                <MathText text={chapter.summary} />
               </li>
             ))}
           </ol>

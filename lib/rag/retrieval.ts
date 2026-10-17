@@ -156,18 +156,35 @@ export function diverseHits(rows: RagHit[], limit = 6) {
     }
   return selected;
 }
-/** A narrow warning for explicit contradictory numeric assignments, not semantic verification. */
+/** Narrow literal comparisons, not semantic verification or a source filter.
+ * Cardinal directions require the same explicit direction attribute and a bare
+ * value ending the sentence; different subjects/qualifiers are not merged. */
 export function potentialConflict(hits: RagHit[]) {
   const facts = new Map<string, Set<string>>();
+  const add = (key: string, value: string) => {
+    const set = facts.get(key) || new Set();
+    set.add(value);
+    facts.set(key, set);
+  };
   for (const h of hits)
     for (const m of h.text.matchAll(
       /([^.!?\n=]{3,70})\s*=\s*(-?\d+(?:[.,]\d+)?)/g,
     )) {
-      const key = terms(m[1]).join(" "),
-        v = m[2].replace(",", ".");
-      const set = facts.get(key) || new Set();
-      set.add(v);
-      facts.set(key, set);
+      add("numeric:" + terms(m[1]).join(" "), m[2].replace(",", "."));
+    }
+  const directions: Record<string, string> = {
+    east: "east", west: "west", north: "north", south: "south",
+    đông: "east", tây: "west", bắc: "north", nam: "south",
+  };
+  for (const h of hits)
+    for (const m of h.text.normalize("NFC").matchAll(
+      /(?:^|[.!?\n])\s*([^.!?\n=]{3,70}?)\s+(is|là)\s+(east|west|north|south|đông|tây|bắc|nam)(?=\s*(?:[.!?\n]|$))/giu,
+    )) {
+      const subject = m[1].trim().toLowerCase();
+      if (
+        (m[2].toLowerCase() === "is" && /\bdirection$/.test(subject)) ||
+        (m[2].toLowerCase() === "là" && /(?:^|\s)hướng(?:\s|$)/u.test(subject))
+      ) add("direction:" + subject.replace(/\s+/g, " "), directions[m[3].toLowerCase()]);
     }
   return [...facts.values()].some((s) => s.size > 1);
 }

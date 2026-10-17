@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "passed": 18,
+  "checkedAt": "2026-10-17T08:17:25.543Z",
+  "scope": "Pure safe-metadata helpers, actual config handler with mocked store/auth/features boundaries, and actual React notice/privacy static SSR. No remote database/network/provider calls; no durability, live deployment or device proof.",
+  "checks": [
+    "Public metadata accepts only known modes with ready true and emits exactly two safe fields",
+    "Configured mode parser does not treat invalid values as connected remote or inspect other environment fields",
+    "Actual config handler emits local-sqlite from opened store, never endpoint or connection credentials",
+    "Actual config handler emits remote-libsql from opened store, never endpoint or connection credentials",
+    "AI disabled still opens and checks database instead of short-circuiting readiness",
+    "Config open failure returns safe 503 without ready metadata or raw error",
+    "Config poisoned cached connection returns safe 503 without ready metadata or raw error",
+    "Config unknown actual mode returns safe 503 without ready metadata or raw error",
+    "Desktop and public demo bypasses retain previous disabled mode without opening a server database",
+    "Actual notice SSR retains local/default detail and shows separate remote storage disclosure in vi",
+    "Actual notice SSR retains local/default detail and shows separate remote storage disclosure in en",
+    "Actual notice SSR retains local/default detail and shows separate remote storage disclosure in zh-CN",
+    "Actual notice SSR retains local/default detail and shows separate remote storage disclosure in ja",
+    "Actual notice SSR retains local/default detail and shows separate remote storage disclosure in ko",
+    "Remote English notice explicitly preserves opt-in browser separation and disclaims backup/SLA guarantees",
+    "Privacy local default retains ephemeral-host warning without opening the database",
+    "Privacy remote configuration is explicitly not connection, SLA or backup proof, with unchanged retention and external AI choice",
+    "Privacy invalid mode does not claim a remote connection or silently identify it as local SQLite"
+  ]
+}

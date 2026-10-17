@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:17:59.373Z",
+  "passed": 3,
+  "checks": [
+    {
+      "name": "The prompt JSON example decodes exactly once into supported inline mathematics",
+      "status": "PASS"
+    },
+    {
+      "name": "All existing AI tasks and teacher schemas receive one common presentation contract",
+      "status": "PASS"
+    },
+    {
+      "name": "An authored JSON card retains canonical math and reference fields through validation and rendering",
+      "status": "PASS"
+    }
+  ],
+  "actualProviderRequests": 0,
+  "scope": "Authored prompt/JSON/structured-output/rendering contract, not generated-answer correctness."
+}

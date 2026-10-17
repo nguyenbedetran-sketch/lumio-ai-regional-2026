@@ -1,0 +1,39 @@
+{
+  "status": "PASS",
+  "checks": 14,
+  "cases": [
+    "Teacher library exposes the actual source link as a reference, not a slide editing claim",
+    "Selecting a file does not claim an upload or send bytes",
+    "Actual pending request exposes indeterminate progress without fake percentages",
+    "Upload is not marked saved before metadata acknowledgment",
+    "Teacher reference bytes target the saved lesson and chosen sharing purpose",
+    "Selected but unacknowledged bytes cannot be silently omitted from final submission",
+    "An unavailable file acknowledgment cannot silently submit the assignment",
+    "Actual UI retry reuses the exact selected bytes and idempotency UUID",
+    "Retry acknowledges one pending file, not a duplicate or a submitted assignment",
+    "Pending server metadata survives workspace reload and is still distinguished from submission",
+    "Only the explicit final submit sends acknowledged IDs and binds them to the submission snapshot",
+    "Teacher grading inbox downloads the exact submitted file with the current account header",
+    "Late upload acknowledgment after account switch cannot appear in the new account workspace",
+    "No runtime errors or external provider traffic"
+  ],
+  "errors": [],
+  "external": [],
+  "uploads": 4,
+  "explicitSubmissionCommands": 1,
+  "scope": "Actual teacher/student UI, file-selection/retry/loading/account switches and intercepted HTTP receipts; backend authorization, real database durability and provider playback verified separately",
+  "checkedAt": "2026-10-17T07:59:30.731Z",
+  "tool": "@playwright/cli@0.1.21",
+  "inheritedSSRChecks": 32,
+  "sourceSha256": {
+    "components/teaching/file-attachments.tsx": "857feb734a5f57bc1dd9440603e5b7d74375a2ce6e269f868e3df46dcab58422",
+    "components/teaching/student.tsx": "b9fe33feb6524a8c0ad3a0917821214dd12220003e922c2a3938e7cf1bff5077",
+    "components/teaching/content.tsx": "c9c83e41303081f65818451ac263de1a4ed2fcb2f673371ec973d6151a1fabd2",
+    "components/teaching/content-preview.tsx": "4f99e364d0c8029e20be8c3fb6b6277b13d5ed9587872893fd751ec4f3b0d66a",
+    "components/teaching/assessment.tsx": "17a3d01f4cfc7f74da197e36cb2889fa99e50b6406fa74046eb79080b608f8ad",
+    "components/teaching/resource-link.tsx": "3096aa9cb96e724b716c755ab9f2c8987b533176048306d1e19096bfb25611c4",
+    "lib/teaching/file-client.ts": "b4fc2faaecd2a98d622053450e1d2a2d77659e2cc05778a45becaf6196fa1289",
+    "lib/teaching/file-contracts.ts": "6ad6b017c3593917745da9bb6e22c3c9536db5e5054e66a5c63c209b1bf6948e",
+    "tests/v11-teaching-files.browser.js": "58d4dc178bec1af6e3711d036cd767f400401d4e7a9fc8ae45fd4322b7923ff5"
+  }
+}

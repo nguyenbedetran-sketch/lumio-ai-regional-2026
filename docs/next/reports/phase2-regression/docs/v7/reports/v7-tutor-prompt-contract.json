@@ -1,0 +1,51 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkedAt": "2026-10-17T07:17:38.759Z",
+  "scope": "Prompt-contract assertions and actual parser regressions. These checks do not prove that a provider follows the instructions or that hints are semantically correct.",
+  "policySHA256": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8",
+  "realProviderCalls": 0,
+  "semanticProviderValidation": "NOT_TESTED",
+  "checks": [
+    {
+      "name": "Tutor policy requires server-owned context and stays out of non-chat tasks",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual answer-demand message and previous assistant algebra are separately attributed",
+      "status": "PASS"
+    },
+    {
+      "name": "A locked hint selects one operation across all fields instead of a remaining-step roadmap",
+      "status": "PASS"
+    },
+    {
+      "name": "Latest learner progress is retained instead of returning to the already completed subtraction",
+      "status": "PASS"
+    },
+    {
+      "name": "Confirmed missing data retains clarification without repeating a hypothetical square",
+      "status": "PASS"
+    },
+    {
+      "name": "Fraction-value multiplication is distinguished from valid equivalent-fraction scaling",
+      "status": "PASS"
+    },
+    {
+      "name": "Correct equivalent-fraction scaling is not rejected by a new blanket content ban",
+      "status": "PASS"
+    },
+    {
+      "name": "Prompt refinement preserves the numerical-answer and full-field leakage guards",
+      "status": "PASS"
+    },
+    {
+      "name": "A clarification output is retained without claiming an independent mathematical check",
+      "status": "PASS"
+    },
+    {
+      "name": "Unlocked solutions still require all roots and retain truthful verifier proof scope",
+      "status": "PASS"
+    }
+  ]
+}

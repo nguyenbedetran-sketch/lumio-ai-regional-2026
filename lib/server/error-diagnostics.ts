@@ -2,6 +2,7 @@
 const serverCodes = new Set([
   "PLATFORM_UNAVAILABLE",
   "AUTHENTICATION_UNAVAILABLE",
+  "AUTH_CONFIGURATION_WARNING",
   "DATABASE_CONFIGURATION_INVALID",
   "DATABASE_UNAVAILABLE",
   "DATABASE_TIMEOUT",
@@ -35,7 +36,7 @@ export type ServerErrorContext = {
 type DiagnosticInput = {
   requestId: string;
   code: unknown;
-  status: number;
+  status?: number;
   context?: ServerErrorContext;
 };
 const methods = new Set([
@@ -69,13 +70,20 @@ export function createServerErrorReporter(
       const context = input.context,
         boundary = context?.boundary === "auth" ? "auth" : "api",
         code = safeServerErrorCode(input.code),
+        authFramework =
+          input.status === undefined &&
+          boundary === "auth" &&
+          ["AUTHENTICATION_UNAVAILABLE", "AUTH_CONFIGURATION_WARNING"].includes(
+            code,
+          ),
         authRedirect =
           input.status === 303 &&
           boundary === "auth" &&
           code === "AUTHENTICATION_UNAVAILABLE";
       if (
-        !Number.isInteger(input.status) ||
-        (!(input.status >= 500 && input.status <= 599) && !authRedirect)
+        !authFramework &&
+        (!Number.isInteger(input.status) ||
+          (!(input.status! >= 500 && input.status! <= 599) && !authRedirect))
       )
         return false;
       const time = now();
@@ -103,10 +111,13 @@ export function createServerErrorReporter(
       write(
         "[lumio] " +
           JSON.stringify({
-            event: "server_error",
+            event:
+              code === "AUTH_CONFIGURATION_WARNING"
+                ? "server_warning"
+                : "server_error",
             requestId: input.requestId,
             code,
-            httpStatus: input.status,
+            ...(input.status === undefined ? {} : { httpStatus: input.status }),
             boundary,
             ...(typeof context?.method === "string" &&
             methods.has(context.method)

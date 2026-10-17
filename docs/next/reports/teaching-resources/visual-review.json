@@ -1,0 +1,47 @@
+{
+  "checkedAt": "2026-10-17T07:42:29.071Z",
+  "status": "PASS",
+  "method": "All five fresh screenshots opened and visually inspected after settled-theme rerun.",
+  "screenshots": [
+    {
+      "path": "docs/next/reports/teaching-resources/light-1440.png",
+      "sha256": "6fcc5f5f9e60bbb67e3b223d2ab07ba658db73e8e0e732078e84ad6c09993232",
+      "observed": "Readable local-theme resource cards,44px actions, wrapped disclosure and no clipped viewport at1440/390."
+    },
+    {
+      "path": "docs/next/reports/teaching-resources/light-390.png",
+      "sha256": "944106e93bfb2e8ca0f3fcaeedb3be92c5d0373ea3b467a37c8be69a82e0de05",
+      "observed": "Readable local-theme resource cards,44px actions, wrapped disclosure and no clipped viewport at1440/390."
+    },
+    {
+      "path": "docs/next/reports/teaching-resources/dark-1440.png",
+      "sha256": "97cfae79770c99a96f89c0497dc157d391b955c980b582b78d491d932e0e607e",
+      "observed": "Readable local-theme resource cards,44px actions, wrapped disclosure and no clipped viewport at1440/390."
+    },
+    {
+      "path": "docs/next/reports/teaching-resources/dark-390.png",
+      "sha256": "db85a93a04addebb6ebfb7272ed26172d4cb83aeb66a4a99ab4f5e064c81f208",
+      "observed": "Readable local-theme resource cards,44px actions, wrapped disclosure and no clipped viewport at1440/390."
+    },
+    {
+      "path": "docs/next/reports/teaching-resources/simulated-player-390.png",
+      "sha256": "06022302e02141b5fdc6e6b86783a2b8dcab1a31a32657fe28956194b2c8f5ae",
+      "observed": "Responsive consent-open frame labelled synthetic; visible close/source/problem controls and no viewing-completion claim."
+    }
+  ],
+  "checks": {
+    "unitAndSSR": 17,
+    "browser": 46,
+    "focusedTypeScriptDiagnostics": 0,
+    "newLiveProviderCalls": 0,
+    "simulatedFrameRequests": 3
+  },
+  "limitations": [
+    "All requests intercepted. No real YouTube availability/playback/captions or private Canva/Slides/PowerPoint access checked.",
+    "No watch-progress/completion tracking; opening a player earns no completion credit.",
+    "Presentation actions are reference links only, not editor or conversion integration.",
+    "Cross-origin iframe onError is best-effort; a viewer-reported playback-problem control exposes close/retry/source recovery.",
+    "Server authorization and consumer placement are separate integration scopes.",
+    "No large media file upload or binary persistence introduced by this component."
+  ]
+}

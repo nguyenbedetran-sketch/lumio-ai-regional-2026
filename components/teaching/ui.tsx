@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { MathText } from "../lumio/math-text";
 import { useTeachingDraft } from "./draft-guard";
 import { containDialogFocus } from "./dialog-focus";
 import {
@@ -62,7 +63,11 @@ export function Panel({
         <header className="tw-panel-heading">
           <div>
             {eyebrow && <span className="tw-eyebrow">{eyebrow}</span>}
-            {title && <h2>{title}</h2>}
+            {title && (
+              <h2>
+                <MathText text={title} inline />
+              </h2>
+            )}
           </div>
           {action}
         </header>
@@ -164,7 +169,9 @@ export function Modal({
       <header>
         <div>
           <span className="tw-eyebrow">LUMIO · GIẢNG DẠY</span>
-          <h2 id={titleId}>{title}</h2>
+          <h2 id={titleId}>
+            <MathText text={title} inline />
+          </h2>
         </div>
         <button
           type="button"

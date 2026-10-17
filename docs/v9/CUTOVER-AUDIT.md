@@ -1,6 +1,6 @@
 # Kiểm tra bảo toàn dữ liệu trước khi chuyển database
 
-Ngày ghi nhận: **17/10/2026**. Trạng thái: **BLOCKED đối với tuyên bố di chuyển đầy đủ dữ liệu đang chạy**. Chưa có quyết định cho phép bỏ dữ liệu cũ.
+Ngày ghi nhận: **17/10/2026**. Trạng thái: **FRESH START AUTHORIZED; đầy đủ dữ liệu cũ chưa được di chuyển**. Ngày17/10/2026, người dùng trả lời trực tiếp: “Cho phép khởi tạo Turso mới và chấp nhận dữ liệu máy chủ cũ chưa chuyển đủ”. Quyết định này cho phép khởi tạo mới, không xác nhận migration hay khôi phục đầy đủ. Các phân tích lịch sử bên dưới vẫn giữ nguyên làm căn cứ.
 
 ## Phạm vi và bằng chứng
 
@@ -49,3 +49,7 @@ Vì vậy, lưu lại các số đếm, ảnh trang quản trị hoặc một s�
 Thêm endpoint bằng một lần triển khai mới không giúp lấy lại tệp của instance cũ nếu bước triển khai đã làm mất nó. Giữ dịch vụ cũ trong khi tìm đường lấy snapshot có thể tránh một thay đổi chủ động, nhưng bản thân hosting tạm không tạo bảo đảm lưu trữ lâu dài hoặc sao lưu.
 
 **Kết luận hiện tại:** chưa chứng minh được đường chuyển đổi đầy đủ qua các chức năng đã triển khai. Không chuyển database với tuyên bố bảo toàn dữ liệu cho tới khi có snapshot hợp lệ hoặc quyết định khởi tạo mới được chấp nhận rõ ràng cùng danh sách dữ liệu cũ chưa di chuyển.
+
+## Quyết định vận hành đã nhận
+
+Người dùng đã được thông báo bản sao trình duyệt không chứa đủ tài khoản, lớp, bài nộp, điểm và credit máy chủ. Người dùng chấp nhận khởi tạo production Turso mới. Giữ riêng bản sao trình duyệt và ảnh/trích xuất khả dụng; không đưa dữ liệu hay khóa vào Git hoặc minh chứng công khai. Còn phải kiểm tra cấu hình Render, đăng nhập, lưu dữ liệu và đọc lại sau restart trước khi xác nhận public thành công.

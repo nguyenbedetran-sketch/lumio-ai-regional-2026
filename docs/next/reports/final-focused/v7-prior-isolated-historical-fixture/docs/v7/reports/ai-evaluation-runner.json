@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:09:20.436Z",
+  "passed": 13,
+  "checks": [
+    {
+      "name": "Versioned corpus covers the five supported AI languages without empty categories",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual provider and language-quality claims remain explicitly untested",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual normalization accepts valid key rotations in every locale while preserving the exact correct answer and source",
+      "status": "PASS"
+    },
+    {
+      "name": "A wrongly mapped key or altered question content fails the same evaluator identity assertion",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing, duplicate or unsupported corpus languages are rejected before evaluation",
+      "status": "PASS"
+    },
+    {
+      "name": "Too few math cases, duplicate IDs and absent expected outcomes fail closed",
+      "status": "PASS"
+    },
+    {
+      "name": "An incorrect expected answer outcome produces a failed report instead of a green summary",
+      "status": "PASS"
+    },
+    {
+      "name": "A query absent from the authored source fails its declared answerable retrieval expectation",
+      "status": "PASS"
+    },
+    {
+      "name": "An alleged missing-source query that actually matches is detected",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid quotes and unknown adverse-question variants cannot silently pass",
+      "status": "PASS"
+    },
+    {
+      "name": "Unsupported math is an honest expected unknown, not a verified answer",
+      "status": "PASS"
+    },
+    {
+      "name": "Repeated evaluation is deterministic apart from timing metadata and preserves the input corpus",
+      "status": "PASS"
+    },
+    {
+      "name": "Evaluation restores the original fetch function even after an asserted case failure",
+      "status": "PASS"
+    }
+  ],
+  "corpusCases": 46,
+  "corpusAssertions": 219,
+  "actualProviderRequests": 0,
+  "scope": "Regression of evaluator coverage, preserved answer identities under rotation, wrong mapped keys, false expectations, honest unknowns and deterministic execution. These 13 checks are not additional AI answers."
+}

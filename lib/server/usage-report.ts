@@ -1,5 +1,6 @@
 import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { PlatformError } from "./types";
+import { latencyAggregateQuery } from "./latency-report-sql";
 
 export type UsageDimension = "model" | "task" | "user";
 export type UsageAggregate = {
@@ -12,6 +13,15 @@ export type UsageAggregate = {
   costRecords: number;
   unpricedRequests: number;
   averageLatencyMs: number | null;
+  p50LatencyMs: number | null;
+  p95LatencyMs: number | null;
+  latencyRecords: number;
+  /** Legacy outcomes defaulted absent latency to zero; observation is unknown. */
+  observedLatencyRecords: null;
+  recordedErrorRatio: number | null;
+  httpStatusRecords: null;
+  httpStatusCoverage: null;
+  httpErrorRatio: null;
 };
 export type UsageBreakdown = {
   dimension: UsageDimension;
@@ -42,7 +52,6 @@ export function usageBreakdown(
     sum(input_tokens) input_tokens, sum(output_tokens) output_tokens,
     count(input_tokens) token_records, sum(estimated_cost_usd) cost,
     count(estimated_cost_usd) cost_records, avg(latency_ms) latency`;
-  const where = "created_at>=? AND created_at<=?";
   const aggregate = (row: Record<string, unknown>): UsageAggregate => ({
     requests: Number(row.requests),
     errors: Number(row.errors || 0),
@@ -54,23 +63,22 @@ export function usageBreakdown(
     unpricedRequests: Number(row.requests) - Number(row.cost_records),
     averageLatencyMs:
       row.latency === null ? null : Math.round(Number(row.latency)),
+    p50LatencyMs: row.p50_latency === null ? null : Number(row.p50_latency),
+    p95LatencyMs: row.p95_latency === null ? null : Number(row.p95_latency),
+    latencyRecords: Number(row.latency_records),
+    observedLatencyRecords: null,
+    recordedErrorRatio: Number(row.requests) ? Number(row.errors || 0) / Number(row.requests) : null,
+    httpStatusRecords: null,
+    httpStatusCoverage: null,
+    httpErrorRatio: null,
   });
   const totals = aggregate(
     db
-      .prepare(`SELECT ${metrics} FROM ai_usage WHERE ${where}`)
+      .prepare(latencyAggregateQuery("ai_usage", null, metrics))
       .get(from, through)!,
   );
-  // Only the closed enum selects identifiers; no request text enters SQL.
-  const key =
-    dimension === "model" ? "model" : dimension === "task" ? "task" : "user_id";
-  const provider = dimension === "model" ? "provider" : "NULL";
   const rows = db
-    .prepare(
-      `SELECT ${key} group_key, ${provider} group_provider, ${metrics}
-     FROM ai_usage WHERE ${where}
-     GROUP BY ${key}${dimension === "model" ? ",provider" : ""}
-     ORDER BY requests DESC, group_key, group_provider LIMIT 26`,
-    )
+    .prepare(latencyAggregateQuery("ai_usage", dimension, metrics))
     .all(from, through);
   return {
     dimension,
@@ -90,6 +98,8 @@ export function usageBreakdown(
       "Fallback attempts, failed generations with consumed tokens and unrecorded telemetry may be missing.",
       "Unknown cost is null. Only explicitly recorded estimates are summed; no current price is assumed.",
       "Credits and refunds are determined by the separate transactional billing ledger.",
+      "Latency percentiles use nearest rank over recorded latency values, not interpolation. Legacy outcomes stored absent/invalid latency as zero, so the true observed count is unknown and recorded zeros are ambiguous.",
+      "Recorded error ratio is errors/recorded outcomes in this cohort; HTTP status was not stored here, so HTTP status coverage and HTTP error ratio are null.",
     ],
   };
 }

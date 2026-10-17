@@ -1,0 +1,131 @@
+{
+  "status": "FAIL",
+  "checkedAt": "2026-10-17T08:17:36.920Z",
+  "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
+  "providerCalls": 0,
+  "phases": {},
+  "checks": [
+    {
+      "phase": 1,
+      "name": "Real compiled HTTP sends framing/referrer/MIME protection on pages, APIs and error responses",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Compiled legacy admin APIs bind reads and mutations to the page account across a cookie switch",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Compiled endpoints deny anonymous, cross-origin and forged account binding",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Teacher credential approval and explicit organization/class creation use persisted handlers",
+      "status": "PASS"
+    },
+    {
+      "phase": 1,
+      "name": "Hashed invite joins the intended class; replay is idempotent and tenant reads are isolated",
+      "status": "PASS"
+    },
+    {
+      "phase": 2,
+      "name": "Manual question draft requires teacher review and cannot be assigned unreviewed",
+      "status": "PASS"
+    },
+    {
+      "phase": 2,
+      "name": "Student payload omits answer keys, explanation, internal rubric and roster",
+      "status": "PASS"
+    },
+    {
+      "phase": 3,
+      "name": "Submission is self-bound and auto grading remains hidden until teacher confirmation/publication",
+      "status": "PASS"
+    },
+    {
+      "phase": 3,
+      "name": "Compiled grade history preserves published versions while a reviewed regrade remains private",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Compiled retake requires acknowledgement, preserves root history and hides questions before opening",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Compiled outcome and attempt summaries are administrator-only, account-bound and honest about unknown cost",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Draft announcements stay private; published class notice/calendar are scoped and exports authorized",
+      "status": "PASS"
+    },
+    {
+      "phase": 4,
+      "name": "Teacher/student pages render compiled authenticated HTML; backup and restored teaching rows remain intact",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled file routes enforce cookie/captured-account/origin/body limits before accepting bytes",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled teacher file ACK persists one exact object, retries safely and advances preview revision",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled lesson publication releases reference metadata and bytes while teacher-only files stay private",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled assignment receives pending image, DOCX and PPTX without claiming submission",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled submit transaction rejects another student's file then binds own three files after server ACK",
+      "status": "PASS"
+    },
+    {
+      "phase": 5,
+      "name": "Compiled uploaded bytes survive real SQLite backup/restore with immutable submission metadata",
+      "status": "PASS"
+    }
+  ],
+  "teachingAuditEvents": 23,
+  "backupRestore": {
+    "status": "PASS",
+    "schemaVersion": 20,
+    "scope": "Separate restored SQLite file; not off-host hosting disaster recovery."
+  },
+  "fileSourceSha256": {
+    "lib/server/teaching-files.ts": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
+    "lib/server/teaching-file-validation.ts": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa",
+    "lib/server/teaching-core.ts": "51f1b92aceebd5b2426dd98bbd267bdf3a92cd8b32fc982993c531d2b4b3572b",
+    "components/teaching/file-attachments.tsx": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08",
+    "lib/teaching/file-client.ts": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175"
+  },
+  "compiledBuildIdSha256": "d3b5c4c90eaec2bb6c0b906835c03e2007011a66ea1573810518378301a3c105",
+  "fileAcceptance": {
+    "status": "PASS",
+    "uploadedFormats": [
+      "PNG",
+      "DOCX",
+      "PPTX"
+    ],
+    "submittedAttachments": 3,
+    "privateTeacherFilesHidden": true,
+    "snapshotRestore": true,
+    "mode": "Compiled HTTP + actual cookies and isolated SQLite; synthetic authored Office packages validate storage/type, not full Office rendering fidelity"
+  },
+  "error": "CONNECTED_BROWSER_ACCEPTANCE_FAILED\n\n'FAIL' !== 'PASS'\n"
+}

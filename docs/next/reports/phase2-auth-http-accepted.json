@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T07:18:16.976Z",
+  "checks": [
+    {
+      "name": "Real CSRF cookie is HttpOnly/SameSite=Lax/root-scoped and double-submit token is stable",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/wrong/cookie-unbound sign-in CSRF cannot start OAuth or create an account",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual signed OIDC callback creates one canonical learner and protected session; repeated login preserves its id",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/tampered state and missing PKCE fail before token exchange and create no identity",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider token outage, invalid signature, issuer and audience cannot create a session or canonical user",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/wrong signout CSRF preserves the session; matching CSRF expires it and prevents open redirect",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider cancellation clears the account-link cookie without linking a provider or exposing callback text",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical revocation invalidates the actual JWT and pending link callback; fresh authentication recovers without changing identity",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual SQLite users-table interruption stays a JSON session failure, clears link flow and recovers after schema restoration",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual NextAuth failure logging does not retain callback error descriptions",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual compiled NextAuth HTTP/cookie/CSRF/state/PKCE/JWT and canonical isolated SQLite. Only outbound Google discovery/token/JWKS transport is redirected in a child-only preload to authored loopback OIDC responses signed with an ephemeral test RSA key. Not genuine Google/OAuth-consent/browser/TLS/real-account/provider acceptance.",
+  "genuineGoogleAcceptance": "PENDING_SEPARATE_PUBLIC_GATE",
+  "realProviderCalls": 0,
+  "sourceCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+  "sourceScope": "Source hashes and compiled artifact hash recorded separately; base HEAD is not a clean/released-tree assertion. Rebuild after auth runtime changes.",
+  "proof": [
+    {
+      "path": "scripts/test-v10-auth-production.cjs",
+      "sha256": "21a64b78abea111beb63965966c74c894c00631aad9e1c7177c1a8330723fc7f"
+    },
+    {
+      "path": "scripts/fixtures/v10-auth-transport.cjs",
+      "sha256": "3d9dacc00f54b2a1530eed9aafcf9c2fad6a0f23af7040957b509ed8f002d711"
+    },
+    {
+      "path": "lib/lumio/auth.ts",
+      "sha256": "9e40d681cfd711a0d5d1de2bd81b80fdcb77570d68199ef1a93bffb8dc6488aa"
+    },
+    {
+      "path": "lib/server/auth-logger.ts",
+      "sha256": "40d0e29106d20c18c428ce857e13130473cfeea1f4d2ae6b3f52b44c4edebbbe"
+    },
+    {
+      "path": "lib/server/auth-errors.ts",
+      "sha256": "e75d69d150b1dc1d7ec6fb34be65d2bf0a79de9fce6ed788c1a80777d280d472"
+    },
+    {
+      "path": "lib/server/error-diagnostics.ts",
+      "sha256": "35498a2e12d555af58bbe6457bd85cd793fc1a6a3b678d74a394beaed4e54f36"
+    },
+    {
+      "path": "app/api/auth/[...nextauth]/route.ts",
+      "sha256": "008b29764c9ff967720f11f4ac26aee2dcfec191984c93eff792056cc8191c08"
+    },
+    {
+      "path": ".next/BUILD_ID",
+      "sha256": "a53bfd7bb8892a9e4d7c1a50c0ef3b9c040e8419fe723b1994598b02c2273aed"
+    },
+    {
+      "path": ".next/server/app/api/auth/[...nextauth]/route.js",
+      "sha256": "12854678150f60d22da9e60f8e0f9cd7247f9002f9836b50d02add61d81b9f13"
+    }
+  ],
+  "passed": 10,
+  "completedAt": "2026-10-17T07:18:22.896Z",
+  "transport": {
+    "discovery": 33,
+    "token": 13,
+    "jwks": 10,
+    "blocked": 0,
+    "authoredLoopback": {
+      "discovery": 33,
+      "token": 13,
+      "jwks": 10
+    },
+    "realProviderCalls": 0
+  },
+  "limits": [
+    "No genuine Google/Facebook network, consent screen, deployed HTTPS/Secure-cookie browser behavior, physical device or real account was tested.",
+    "Database interruption is an isolated synthetic users-table rename/restore, not Turso failover or production disaster recovery.",
+    "Canceled link cookie cleanup is verified; its unconsumed hashed intent keeps the existing expiry policy."
+  ]
+}

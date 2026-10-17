@@ -14,6 +14,7 @@ function load(relative) {
       module: ts.ModuleKind.CommonJS,
       target: ts.ScriptTarget.ES2022,
       jsx: ts.JsxEmit.ReactJSX,
+      esModuleInterop: true,
     },
   }).outputText;
   new Function("require", "module", "exports", code)(
@@ -24,7 +25,7 @@ function load(relative) {
               root,
               path.resolve(
                 path.dirname(file),
-                name + (name.includes("tutor-progress") ? ".tsx" : ".ts"),
+                [name + ".tsx", name + ".ts", name + ".js"].find(candidate => fs.existsSync(path.resolve(path.dirname(file), candidate))) || name,
               ),
             ),
           )

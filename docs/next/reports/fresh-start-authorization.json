@@ -1,0 +1,12 @@
+{
+  "status": "APPROVED",
+  "decision": "EXPLICIT_FRESH_START_ACCEPTED",
+  "approved": true,
+  "recordedAt": "2026-10-17T07:27:02.936952+00:00",
+  "source": "Direct user reply to the concrete cutover question in this chat",
+  "userReply": "Cho phép khởi tạo Turso mới và chấp nhận dữ liệu máy chủ cũ chưa chuyển đủ",
+  "scope": "Fresh production Turso database initialization; old Render server accounts, classes, submissions, grades and credits not fully migrated. Available browser backup remains private and partial.",
+  "deploymentVerified": false,
+  "migrationComplete": false,
+  "productionCredentialDestination": "Existing Render lumio-ai-demo server only; no token value in evidence"
+}

@@ -2065,3 +2065,22 @@
 .ad-chart svg text { fill: var(--ad-soft); }
 .ad-chart svg stop { stop-color: var(--lm-chart-1); }
 .ad-shell .ad-error { color: var(--lm-error); }
+/* Only the paid-tier administration panel; existing plan cards are unchanged. */
+.ad-paid-policy{min-width:0}
+.ad-paid-policy>button{margin:0 20px 14px}
+.ad-paid-policy .pp-muted,.ad-paid-policy .pp-status{margin:12px 20px;color:var(--ad-secondary);font-size:.86rem;line-height:1.65;overflow-wrap:anywhere}
+.ad-paid-policy .pp-status{padding:12px;border:1px solid var(--ad-control-line);border-radius:12px;background:var(--ad-raised);color:var(--ad-text)}
+.ad-paid-policy .pp-field{display:grid;gap:7px;margin:14px 20px;color:var(--ad-text);font-size:.86rem;line-height:1.5;min-width:0}
+.ad-paid-policy .pp-field input,.ad-paid-policy .pp-field select,.ad-paid-policy .pp-field textarea{box-sizing:border-box;width:100%;max-width:100%;min-width:0;border:1px solid var(--ad-control-line);border-radius:10px;padding:11px;background:var(--ad-bg);color:var(--ad-text);font:inherit}
+.ad-paid-policy .pp-field textarea{resize:vertical}
+.ad-paid-policy details textarea{font-family:ui-monospace,monospace;font-size:.8rem;line-height:1.6}
+.ad-paid-policy .pp-field :focus-visible,.ad-paid-policy summary:focus-visible{outline:2px solid var(--ad-mint);outline-offset:3px}
+.ad-paid-policy fieldset{min-width:0;border:0;padding:0 0 20px;margin:0}
+.ad-paid-policy legend{padding:10px 20px;font-weight:650}
+.ad-paid-policy .pp-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:0 20px}
+.ad-paid-policy .pp-grid .pp-field{margin:0}
+.ad-paid-policy details{margin:14px 20px}
+.ad-paid-policy details .pp-field{margin-left:0;margin-right:0}
+.ad-paid-policy summary{cursor:pointer;color:var(--ad-text);line-height:1.6;padding:8px 0}
+.ad-paid-policy fieldset>.ad-primary{margin:0 20px}
+@media(max-width:700px){.ad-paid-policy .pp-grid{grid-template-columns:1fr}.ad-paid-policy fieldset>.ad-primary{max-width:calc(100% - 40px);white-space:normal;text-align:center}}

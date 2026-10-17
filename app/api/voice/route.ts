@@ -176,6 +176,7 @@ export async function POST(req: Request) {
       task: "speech",
       kind: "text",
       mode: "quick",
+      sourceCharacters: input.text.length,
     });
     const response = await fetch("https://api.x.ai/v1/tts", {
       method: "POST",

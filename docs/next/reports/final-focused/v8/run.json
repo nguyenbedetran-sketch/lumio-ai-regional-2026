@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-17T08:13:36.928Z",
+  "command": "pnpm test:v8",
+  "status": "PASS",
+  "exitCode": 0,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/v8/reports/job-health.json",
+    "docs/v8/reports/learning-unit.json",
+    "docs/v8/reports/teacher-assessment.json",
+    "docs/v8/reports/tutor-api.json"
+  ]
+}

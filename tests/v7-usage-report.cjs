@@ -270,7 +270,9 @@ async function check(name, run) {
           await get("summary=1&dimension=task&days=7")
         ).json();
         assert.equal(report.scope, "recorded-request-outcomes");
-        assert.equal(report.limitations.length, 4);
+        assert.equal(report.limitations.length, 6);
+        assert.match(report.limitations.join(" "), /absent\/invalid latency as zero/);
+        assert.match(report.limitations.join(" "), /HTTP status was not stored/);
         assert.ok(!Object.hasOwn(report, "balance"));
         assert.ok(!Object.hasOwn(report, "source"));
         assert.ok(!Object.hasOwn(report, "email"));
@@ -286,6 +288,14 @@ async function check(name, run) {
             "costRecords",
             "unpricedRequests",
             "averageLatencyMs",
+            "p50LatencyMs",
+            "p95LatencyMs",
+            "latencyRecords",
+            "observedLatencyRecords",
+            "recordedErrorRatio",
+            "httpStatusRecords",
+            "httpStatusCoverage",
+            "httpErrorRatio",
             "key",
             "provider",
           ].sort(),

@@ -56,7 +56,7 @@ const user = store.ensureIdentity({
 check(
   "Readiness queries current schema and required tables without provider calls",
   () => {
-    assert.deepEqual(store.runtimeHealth(), { ready: true, schemaVersion: 18 });
+    assert.deepEqual(store.runtimeHealth(), { ready: true, schemaVersion: 20 });
   },
 );
 const backup = path.join(folder, "backup.sqlite"),
@@ -65,7 +65,7 @@ check(
   "Read-only source backup includes committed WAL data and verifies checksum/integrity",
   () => {
     const result = snapshot(file, backup);
-    assert.equal(result.schemaVersion, 18);
+    assert.equal(result.schemaVersion, 20);
     assert.equal(result.integrity, "ok");
     assert.match(result.sha256, /^[a-f0-9]{64}$/);
     const copy = platform.createStore(backup);
@@ -129,7 +129,7 @@ check(
     assert.equal(
       db.prepare("SELECT max(version) version FROM schema_migrations").get()
         .version,
-      18,
+      20,
     );
     db.close();
     assert.throws(

@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "../lumio/math-text";
 import { useState } from "react";
 import { useTeachingTabs } from "./tabs";
 import { useTeachingDraft } from "./draft-guard";
@@ -81,8 +82,12 @@ export function CommunicationsView({ client }: { client: TeachingClient }) {
                     · {dateTime(item.createdAt)}
                   </span>
                 </div>
-                <h3>{item.title}</h3>
-                <div className="tw-result">{item.body}</div>
+                <h3>
+                  <MathText text={item.title} inline />
+                </h3>
+                <div className="tw-result">
+                  <MathText text={item.body} />
+                </div>
                 <div className="tw-card-footer">
                   <button
                     className="tw-text-button"
@@ -138,11 +143,15 @@ export function CommunicationsView({ client }: { client: TeachingClient }) {
                       {data.classes.find((c) => c.id === item.classId)?.name}
                     </span>
                   </div>
-                  <h3>{item.title}</h3>
+                  <h3>
+                    <MathText text={item.title} inline />
+                  </h3>
                   <p>
                     {dateTime(item.startAt)} → {dateTime(item.endAt)}
                   </p>
-                  <p style={{ marginTop: 10 }}>{item.description}</p>
+                  <div style={{ marginTop: 10 }}>
+                    <MathText text={item.description} />
+                  </div>
                   <div className="tw-card-footer">
                     <button
                       className="tw-text-button"

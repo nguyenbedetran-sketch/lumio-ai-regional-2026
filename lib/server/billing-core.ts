@@ -14,8 +14,10 @@ import {
 import { paymentAdapter } from "./billing-provider";
 import { isCompetitionPreview } from "./competition-preview";
 import type { BillingEntitlements } from "./billing-types";
+import { PAID_PLANS, defaultPaidPolicy, parsePaidPolicyConfig, paidPolicyIncludes, quotePaidUsage, type PaidPlanId, type PaidPolicy, type PaidPolicyConfig, type PaidPricingSnapshot, type PaidUsageDimensions } from "../billing/paid-policy";
+import { configuredPaidAliases, configuredPaidModelPolicy } from "./paid-model-policy";
 
-function effectiveEntitlements(plan: PlanId): BillingEntitlements {
+function baseEntitlements(plan: PlanId): BillingEntitlements {
   return isCompetitionPreview() && plan === "free"
     ? {
         modes: ["quick", "tutor", "think", "deep"],
@@ -143,6 +145,60 @@ export function createBillingStore(ctx: Context) {
       );
     }
   }
+  function paidPolicy(planId: PaidPlanId): PaidPolicy {
+    const row = db.prepare("SELECT revision,policy_json FROM billing_paid_policies WHERE plan_id=?").get(planId);
+    const prices = db.prepare("SELECT monthly_price_minor,yearly_price_minor,credits FROM billing_catalog_settings WHERE item_id=?").get(planId);
+    try {
+      const config = row ? parsePaidPolicyConfig(JSON.parse(String(row.policy_json))) : defaultPaidPolicy(planId);
+      // The existing catalog remains the only price/allocation storage authority.
+      if (prices?.monthly_price_minor !== null && prices?.monthly_price_minor !== undefined) config.monthlyPriceMinor = Number(prices.monthly_price_minor);
+      if (prices?.yearly_price_minor !== null && prices?.yearly_price_minor !== undefined) config.yearlyPriceMinor = Number(prices.yearly_price_minor);
+      if (prices?.credits !== null && prices?.credits !== undefined) config.credits = Number(prices.credits);
+      return { planId, revision: row ? Number(row.revision) : 0, config: parsePaidPolicyConfig(config) };
+    }
+    catch { throw new PlatformError("PAID_POLICY_UNAVAILABLE", 503); }
+  }
+  function effectiveEntitlements(plan: PlanId): BillingEntitlements {
+    if (plan !== "premium" && plan !== "pro") return baseEntitlements(plan);
+    const { config } = paidPolicy(plan);
+    return { modes: config.allowedModes, kinds: config.allowedKinds, voice: config.voice, maxVideoSeconds: config.maxVideoSeconds, maxSourceCharacters: config.maxSourceCharacters };
+  }
+  /** Read-only: no trial grant, expiry mutation, wallet write or nested transaction. */
+  function getPaidBillingPolicy(userId: string, version: number): PaidPolicy | null {
+    actor(userId, version);
+    const account = rawAccount(userId);
+    if (!account || (account.period_end !== null && Number(account.period_end) <= now()) || (account.plan_id !== "premium" && account.plan_id !== "pro")) return null;
+    return paidPolicy(account.plan_id);
+  }
+  function getPaidPlanPolicies() {
+    return { plans: PAID_PLANS.map(paidPolicy), configuredAliases: configuredPaidAliases(), paymentProviderConfigured: paymentAdapter.configured, scope: "proposal/no-payments" as const };
+  }
+  function writeCatalog(itemId: string, monthly: number | null, yearly: number | null, credits: number | null, actorId: string) {
+    db.prepare("INSERT INTO billing_catalog_settings(item_id,monthly_price_minor,yearly_price_minor,credits,updated_by,updated_at) VALUES (?,?,?,?,?,?) ON CONFLICT(item_id) DO UPDATE SET monthly_price_minor=excluded.monthly_price_minor,yearly_price_minor=excluded.yearly_price_minor,credits=excluded.credits,updated_by=excluded.updated_by,updated_at=excluded.updated_at").run(itemId, monthly, yearly, credits, actorId, stamp());
+  }
+  function updatePaidPlanPolicy(input: { actorId: string; sessionVersion: number; planId: PaidPlanId; expectedRevision: number; reason: string; config: unknown }) {
+    if (!PAID_PLANS.includes(input.planId) || !Number.isSafeInteger(input.expectedRevision) || input.expectedRevision < 0 || typeof input.reason !== "string" || input.reason.trim().length < 8 || input.reason.length > 300) throw new PlatformError("INVALID_PAID_POLICY");
+    let config: PaidPolicyConfig;
+    try { config = parsePaidPolicyConfig(input.config); } catch { throw new PlatformError("INVALID_PAID_POLICY"); }
+    return transaction(() => {
+      actor(input.actorId, input.sessionVersion); requirePermission(actorFor(input.actorId), "features.update");
+      const current = paidPolicy(input.planId);
+      if (current.revision !== input.expectedRevision) throw new PlatformError("PAID_POLICY_CONFLICT", 409);
+      const premium = input.planId === "premium" ? config : paidPolicy("premium").config, pro = input.planId === "pro" ? config : paidPolicy("pro").config;
+      if (!paidPolicyIncludes(pro, premium)) throw new PlatformError("PAID_PRO_INHERITANCE_REQUIRED", 409);
+      if (current.revision === 0) db.prepare("INSERT INTO billing_paid_policies(plan_id,revision,policy_json,updated_by,updated_at) VALUES(?,?,?,?,?)").run(input.planId, 1, JSON.stringify(config), input.actorId, stamp());
+      else if (!db.prepare("UPDATE billing_paid_policies SET revision=revision+1,policy_json=?,updated_by=?,updated_at=? WHERE plan_id=? AND revision=?").run(JSON.stringify(config), input.actorId, stamp(), input.planId, current.revision).changes) throw new PlatformError("PAID_POLICY_CONFLICT", 409);
+      writeCatalog(input.planId, config.monthlyPriceMinor, config.yearlyPriceMinor, config.credits, input.actorId);
+      recordAudit({ actorId: input.actorId, action: "BILLING_PAID_POLICY_UPDATED", target: input.planId, before: { revision: current.revision, config: JSON.stringify(current.config) }, after: { revision: current.revision + 1, config: JSON.stringify(config), reason: input.reason.trim(), money: false } });
+      return getPaidPlanPolicies();
+    });
+  }
+  function getPaidUsageQuote(userId: string, version: number, dimensions: PaidUsageDimensions) {
+    const policy = getPaidBillingPolicy(userId, version);
+    if (!policy) throw new PlatformError("PAID_PLAN_REQUIRED", 403);
+    try { return quotePaidUsage(policy, dimensions); }
+    catch (e) { const code = e instanceof Error ? e.message : "INVALID_BILLING_USAGE"; throw new PlatformError(code, code === "PLAN_ACCESS_REQUIRED" ? 403 : code === "PAID_SOURCE_LIMIT" ? 413 : 400); }
+  }
   function getBillingCatalog() {
     const settings = db.prepare("SELECT * FROM billing_catalog_settings").all();
     const rowFor = (id: string) => settings.find((row) => row.item_id === id);
@@ -161,6 +217,7 @@ export function createBillingStore(ctx: Context) {
         credits: id === "free" ? TRIAL_CREDITS : numeric(row?.credits),
         creditsPeriod: id === "free" ? "one_time_trial" : "month",
         checkoutAvailable: false,
+        ...((id === "premium" || id === "pro") ? { paidPolicy: paidPolicy(id) } : {}),
       };
     });
     const packs = CREDIT_PACK_IDS.map((id, index) => ({
@@ -276,13 +333,19 @@ export function createBillingStore(ctx: Context) {
           input.duration! > entitlements.maxVideoSeconds)
       )
         throw new PlatformError("PLAN_ACCESS_REQUIRED", 403);
-      const units =
+      let pricing: PaidPricingSnapshot | undefined;
+      if (account.planId === "premium" || account.planId === "pro") {
+        try { pricing = quotePaidUsage(paidPolicy(account.planId), input); }
+        catch (e) { const code = e instanceof Error ? e.message : "INVALID_BILLING_USAGE"; throw new PlatformError(code, code === "PLAN_ACCESS_REQUIRED" ? 403 : code === "PAID_SOURCE_LIMIT" ? 413 : 400); }
+        if (["chat", "summary", "cards", "quiz"].includes(input.task)) pricing.modelPolicy = configuredPaidModelPolicy(mode, pricing.policyVersion);
+      }
+      const units = pricing?.units ?? (
         CREDIT_RATES.tasks[input.task] +
         CREDIT_RATES.modes[mode] +
         CREDIT_RATES.kinds[input.kind] +
         (input.kind === "video"
           ? Math.ceil(input.duration! / 60) * CREDIT_RATES.videoPerMinute
-          : 0);
+          : 0));
       if (account.balance < units)
         throw new PlatformError("CREDITS_INSUFFICIENT", 402);
       const reservationId = randomUUID();
@@ -299,6 +362,7 @@ export function createBillingStore(ctx: Context) {
         stamp(),
         now() + 10 * 60 * 1000,
       );
+      if (pricing) db.prepare("UPDATE billing_reservations SET pricing_snapshot_json=? WHERE id=? AND user_id=?").run(JSON.stringify(pricing), reservationId, input.userId);
       ledger(
         input.userId,
         `reserve:${reservationId}`,
@@ -313,6 +377,7 @@ export function createBillingStore(ctx: Context) {
         units,
         balance: account.balance - units,
         planId: account.planId,
+        ...(pricing ? { pricing: { ...pricing, modelPolicy: undefined }, modelPolicy: pricing.modelPolicy } : {}),
       };
     });
   }
@@ -598,16 +663,12 @@ export function createBillingStore(ctx: Context) {
     return transaction(() => {
       actor(input.actorId, input.sessionVersion);
       requirePermission(actorFor(input.actorId), "features.update");
-      db.prepare(
-        "INSERT INTO billing_catalog_settings(item_id,monthly_price_minor,yearly_price_minor,credits,updated_by,updated_at) VALUES (?,?,?,?,?,?) ON CONFLICT(item_id) DO UPDATE SET monthly_price_minor=excluded.monthly_price_minor,yearly_price_minor=excluded.yearly_price_minor,credits=excluded.credits,updated_by=excluded.updated_by,updated_at=excluded.updated_at",
-      ).run(
-        input.itemId,
-        input.monthlyPriceMinor,
-        input.yearlyPriceMinor,
-        input.credits,
-        input.actorId,
-        stamp(),
-      );
+      // Paid plans require the versioned policy endpoint and its complete
+      // bounds/inheritance/reason checks; this legacy path remains unchanged
+      // for Plus and credit packs.
+      if (input.itemId === "premium" || input.itemId === "pro")
+        throw new PlatformError("PAID_POLICY_REQUIRED", 409);
+      writeCatalog(input.itemId, input.monthlyPriceMinor, input.yearlyPriceMinor, input.credits, input.actorId);
       recordAudit({
         actorId: input.actorId,
         action: "BILLING_CATALOG_UPDATED",
@@ -651,6 +712,10 @@ export function createBillingStore(ctx: Context) {
     });
   }
   return {
+    getPaidPlanPolicies,
+    updatePaidPlanPolicy,
+    getPaidBillingPolicy,
+    getPaidUsageQuote,
     getBillingCatalog,
     getBillingSnapshot,
     reserveUsage,

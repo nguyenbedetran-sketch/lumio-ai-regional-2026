@@ -11,12 +11,17 @@ import {
 import type { User, IdentityProvider } from "../server/types";
 import { isPublicDemo } from "../server/public-demo";
 import { isDesktopPreview } from "../server/desktop-mode";
+import { authLogger } from "../server/auth-logger";
 export type LinkContext = { token: string; userId: string };
 export function providerStatus() {
   if (isPublicDemo() || isDesktopPreview())
     return { google: false, facebook: false, ai: false as const };
-  const localProxy = process.env.NODE_ENV === "development" && process.env.AUTH_TRUST_HOST === "true" && process.env.LUMIO_DEV_ORIGIN_SELECTION === "true";
-  const base = !!process.env.NEXTAUTH_SECRET && (!!process.env.NEXTAUTH_URL || localProxy);
+  const localProxy =
+    process.env.NODE_ENV === "development" &&
+    process.env.AUTH_TRUST_HOST === "true" &&
+    process.env.LUMIO_DEV_ORIGIN_SELECTION === "true";
+  const base =
+    !!process.env.NEXTAUTH_SECRET && (!!process.env.NEXTAUTH_URL || localProxy);
   return {
     google:
       base &&
@@ -171,5 +176,6 @@ export function authOptions(context?: {
       },
     },
     debug: false,
+    logger: authLogger,
   };
 }

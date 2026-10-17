@@ -15,6 +15,7 @@ export type Question = {
   options: string[];
   correct: number;
   explanation: string;
+  answerKeyProvenance?: "ai-unreviewed" | "learner-authored";
   difficulty?: "beginner" | "intermediate" | "advanced";
   topic?: string;
   references?: SourceReference[];

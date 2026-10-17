@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-10-17T08:14:20.933Z",
+  "command": "pnpm test:v9",
+  "status": "PASS",
+  "exitCode": 0,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/v9/qa-storage-status.json",
+    "docs/v9/qa-theme-unit.json",
+    "docs/v9/reports/database-local.json",
+    "docs/v9/reports/database-remote-runner-selftest.json",
+    "docs/v9/reports/database-review.json"
+  ]
+}

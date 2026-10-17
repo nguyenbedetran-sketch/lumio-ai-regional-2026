@@ -1,0 +1,11 @@
+{
+  "checkedAt": "2026-10-17T08:03:39.050Z",
+  "command": "pnpm test:all",
+  "status": "FAIL",
+  "exitCode": 1,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/regional/qa-source-grounding-report.json"
+  ]
+}

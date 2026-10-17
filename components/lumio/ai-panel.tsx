@@ -18,6 +18,7 @@ import {
 import { LearningItem, ProviderStatus, uid } from "../../lib/lumio/types";
 import { Locale, Messages, languages } from "../../lib/lumio/i18n";
 import { aiCopy, aiErrorMessage } from "../../lib/lumio/ai-copy";
+import { quizReviewCopy } from "../../lib/lumio/quiz-review-copy";
 import type {
   AIResult,
   AITask,
@@ -735,7 +736,11 @@ export function AIPanel({
           questions: r.questions
             ? [
                 ...latest.questions,
-                ...r.questions.map((q) => ({ ...q, id: uid() })),
+                ...r.questions.map((q) => ({
+                  ...q,
+                  id: uid(),
+                  answerKeyProvenance: "ai-unreviewed" as const,
+                })),
               ]
             : latest.questions,
         });
@@ -1491,6 +1496,11 @@ export function AIPanel({
           <small>
             <Sparkles size={14} /> {copy.answer}
           </small>
+          {!!result.questions?.length && (
+            <p className="lm-help" data-ai-key-review>
+              {quizReviewCopy[locale].ai}
+            </p>
+          )}
           {task !== "chat" && (
             <MathText
               text={
@@ -1502,7 +1512,7 @@ export function AIPanel({
                     ? result.questions
                         .map(
                           (q, i) =>
-                            `${i + 1}. ${q.prompt}\n${q.options.join(" / ")}\n${t.correct}: ${q.options[q.correct]}\n${q.explanation}`,
+                            `${i + 1}. ${q.prompt}\n${q.options.join(" / ")}\n${quizReviewCopy[locale].key}: ${q.options[q.correct]}\n${q.explanation}`,
                         )
                         .join("\n\n")
                     : result.text

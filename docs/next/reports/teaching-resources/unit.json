@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-17T08:18:02.554Z",
+  "status": "PASS",
+  "passed": 17,
+  "checks": [
+    "Watch link normalizes to one HTTPS video and fixed privacy-enhanced embed",
+    "Exact short/mobile/shorts/live/embed provider URLs reuse validated eleven-character ID",
+    "Lookalike/trailing-dot/nonstandard-port hosts never become an embed",
+    "Malformed IDs/channel paths/untrusted iframe query are not executable embeds",
+    "Unsafe protocols/credentials/controls/oversize/malformed inputs are rejected",
+    "Timestamp parsing is bounded numeric/hms/fragment only and never forwards arbitrary options",
+    "Canva/GoogleSlides exact provider paths are references only, no embedding",
+    "PowerPoint file/tool links remain reference links without conversion or arbitrary preview",
+    "General HTTP links are explicit insecure references, never fetched automatically",
+    "SSR never includes iframe or thumbnails before explicit viewer consent",
+    "External reference actions use new-tab/noopener/noreferrer and no-referrer",
+    "Unsafe URL note does not echo a credential-bearing input or clickable action",
+    "Resource title is escaped and inline math never adds nested link/button controls",
+    "Empty resources are absent, malformed nonempty resources have clear safe state",
+    "All supported UI locales include explicit connection consent and source action",
+    "Time labels are deterministic and reject noninteger/out-of-range input",
+    "Pure inspection/SSR preserves original input and makes no provider/network request"
+  ],
+  "newProviderCalls": 0,
+  "scope": "Actual URL inspection and React SSR of shared component; authored URLs only. No provider availability/private permission/video watching/backend authorization proof.",
+  "sourceProof": [
+    {
+      "path": "lib/teaching/resource-links.ts",
+      "sha256": "9f0bc5ccff02ab345dec25ad6be94a559e7e855f0e308ec06ba9c0ae53f3a742"
+    },
+    {
+      "path": "components/teaching/resource-link.tsx",
+      "sha256": "3096aa9cb96e724b716c755ab9f2c8987b533176048306d1e19096bfb25611c4"
+    },
+    {
+      "path": "components/teaching/resource-link.module.css",
+      "sha256": "6480e3e69ca8ae48178fee95510267ecb486c1c0c520771a414b94b4f808f10e"
+    },
+    {
+      "path": "tests/v11-teaching-resources.cjs",
+      "sha256": "b15ec68346db38d5f8a18b842ff7285a2d6992c1d024ed8e5cb95ec34b097677"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import type { UsageDimension } from "./usage-report";
 import { PlatformError } from "./types";
 import { PROVIDER_ATTEMPT_LIMITS } from "./provider-attempt-core";
+import { latencyAggregateQuery } from "./latency-report-sql";
 
 export type ProviderAttemptAggregate = {
   attempts: number;
@@ -18,6 +19,13 @@ export type ProviderAttemptAggregate = {
   responseModelRecords: number;
   changedModelRecords: number;
   averageLatencyMs: number | null;
+  p50LatencyMs: number | null;
+  p95LatencyMs: number | null;
+  latencyRecords: number;
+  observedLatencyRecords: number;
+  httpStatusRecords: number;
+  httpStatusCoverage: number | null;
+  httpErrorRatio: number | null;
   estimatedCostUsd: null;
   unpricedAttempts: number;
 };
@@ -60,12 +68,12 @@ export function providerAttemptBreakdown(
     throw new PlatformError("INVALID_USAGE_WINDOW");
   const through = new Date(now).toISOString(),
     from = new Date(now - days * 86400000).toISOString(),
-    where = "prepared_at>=? AND prepared_at<=?",
     metrics = `count(*) attempts,
       sum(status='response_received') responses,
       sum(status='prepared') unresolved,
       sum(status IN ('network_unknown','timeout_unknown','cancelled_unknown')) transport_unknown,
       sum(http_status>=400) http_errors,
+      count(http_status) http_status_records,
       sum(input_tokens) input_tokens, sum(output_tokens) output_tokens,
       count(input_tokens) input_records, count(output_tokens) output_records,
       sum(total_tokens) total_tokens, count(total_tokens) total_records,
@@ -89,29 +97,23 @@ export function providerAttemptBreakdown(
       changedModelRecords: Number(row.changed_models || 0),
       averageLatencyMs:
         row.latency === null ? null : Math.round(Number(row.latency)),
+      p50LatencyMs: nullable(row.p50_latency),
+      p95LatencyMs: nullable(row.p95_latency),
+      latencyRecords: Number(row.latency_records),
+      observedLatencyRecords: Number(row.latency_records),
+      httpStatusRecords: Number(row.http_status_records),
+      httpStatusCoverage: Number(row.attempts) ? Number(row.http_status_records) / Number(row.attempts) : null,
+      httpErrorRatio: Number(row.http_status_records) ? Number(row.http_errors || 0) / Number(row.http_status_records) : null,
       estimatedCostUsd: null,
       unpricedAttempts: Number(row.attempts),
     });
-  // Identifiers come only from a closed enum, never from request SQL/text.
-  const key =
-      dimension === "model"
-        ? "requested_model"
-        : dimension === "task"
-          ? "feature"
-          : "user_id",
-    provider = dimension === "model" ? "provider" : "NULL",
-    totals = aggregate(
+  const totals = aggregate(
       db
-        .prepare(`SELECT ${metrics} FROM ai_provider_attempts WHERE ${where}`)
+        .prepare(latencyAggregateQuery("ai_provider_attempts", null, metrics))
         .get(from, through)!,
     ),
     rows = db
-      .prepare(
-        `SELECT ${key} group_key, ${provider} group_provider, ${metrics}
-      FROM ai_provider_attempts WHERE ${where}
-      GROUP BY ${key}${dimension === "model" ? ",provider" : ""}
-      ORDER BY attempts DESC, group_key, group_provider LIMIT 26`,
-      )
+      .prepare(latencyAggregateQuery("ai_provider_attempts", dimension, metrics))
       .all(from, through),
     first = db
       .prepare(
@@ -158,6 +160,8 @@ export function providerAttemptBreakdown(
       "An HTTP response is not a valid or accepted answer. Recorded requested models are grouped; response model metadata may differ or be absent.",
       "Token fields sum only observed non-null values; coverage is separate. No approved price is assumed: all attempt costs remain null, not zero or an invoice.",
       "This cohort uses preparation time. First retained row is not an instrumentation activation date. Terminal retention and storage failures can reduce coverage; credits/refunds remain in the independent billing ledger.",
+      "Latency percentiles use nearest rank over observed non-null values only; a measured zero is retained. HTTP error ratio divides statuses >=400 by recorded HTTP statuses, while status coverage divides known statuses by prepared attempts. Transport-unknown and unresolved attempts are not assumed HTTP errors or successes.",
+      "Observed attempt latency is dispatch lifecycle elapsed time, including network/timeout/cancellation outcomes, not isolated provider model processing time. Coverage is only the retained recorded cohort.",
     ],
   };
 }

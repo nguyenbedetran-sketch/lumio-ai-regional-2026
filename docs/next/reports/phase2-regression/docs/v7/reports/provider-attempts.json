@@ -1,0 +1,110 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T07:17:43.585Z",
+  "passed": 25,
+  "checks": [
+    {
+      "name": "Migration17 creates one canonical journal, preserves six existing guards and starts with no fabricated history",
+      "status": "PASS"
+    },
+    {
+      "name": "Prepare binds canonical reserved request and writes before a provider fetch without changing credit",
+      "status": "PASS"
+    },
+    {
+      "name": "Fallback preserves both actual dispatch outcomes, model provenance and usage even on first HTTP500",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid structured output retains received token metadata before validator rejection",
+      "status": "PASS"
+    },
+    {
+      "name": "Incomplete response keeps usage and response model before throwing existing error",
+      "status": "PASS"
+    },
+    {
+      "name": "Non-JSON HTTP429 retains status and unknown usage without attempting fallback",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing/string/negative/fractional token metadata stays null while observed0 remains0",
+      "status": "PASS"
+    },
+    {
+      "name": "Configured credential echoes are removed even when they have no recognizable secret prefix",
+      "status": "PASS"
+    },
+    {
+      "name": "Multimodal Gemini dispatch uses the same server journal and actual observed usage fields",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing response model is not filled from requested configuration",
+      "status": "PASS"
+    },
+    {
+      "name": "Generic or SQLite prepare failure is non-fallback and dispatches no provider",
+      "status": "PASS"
+    },
+    {
+      "name": "Terminal logger and warning failures leave unresolved evidence and never cause a paid fallback",
+      "status": "PASS"
+    },
+    {
+      "name": "Network uncertainty and cancellation retain conservative observations without creating new retry policy",
+      "status": "PASS"
+    },
+    {
+      "name": "Factory rejects forged request/owner/feature/task and each prepare rechecks current session/reservation",
+      "status": "PASS"
+    },
+    {
+      "name": "Prepared closure finishes once after revoke/refund and ignores forged observation identity fields",
+      "status": "PASS"
+    },
+    {
+      "name": "Durable ordinal increments after observer recreation and SQLite reopen",
+      "status": "PASS"
+    },
+    {
+      "name": "Client JSON cannot create an observer or override journal attribution",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual learner paid HTTP uses canonical journal attribution and replay makes no new dispatch or charge",
+      "status": "PASS"
+    },
+    {
+      "name": "Summary shared executor defaults to learner source and only trusted job option selects job feature",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual teacher generation uses namespaced billing identity and approved teacher feature without publishing",
+      "status": "PASS"
+    },
+    {
+      "name": "Prepared records retain no source/question/output/header/credential and no prices are inferred",
+      "status": "PASS"
+    },
+    {
+      "name": "31-day indexed terminal purge is bounded200 and never removes an old unresolved record",
+      "status": "PASS"
+    },
+    {
+      "name": "Unresolved per-account64 refuses the next prepare before transport",
+      "status": "PASS"
+    },
+    {
+      "name": "Expired terminal metadata purges on a capacity-refused prepare while every unresolved row is retained",
+      "status": "PASS"
+    },
+    {
+      "name": "Unresolved global2048 and total100000 caps fail closed without purging unresolved or priced assumptions",
+      "status": "PASS"
+    }
+  ],
+  "schemaVersion": 18,
+  "actualProviderRequests": 0,
+  "scope": "Actual temporary SQLite, Router, learner HTTP and shared summary service; injected synthetic OAuth and intercepted provider transport. Metadata-only journal, actual retention/capacity fixtures, no invoices, prices, real users or deployment."
+}

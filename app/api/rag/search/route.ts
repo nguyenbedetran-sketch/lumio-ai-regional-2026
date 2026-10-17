@@ -91,6 +91,7 @@ export async function POST(req: Request) {
         task: "index",
         mode: "quick",
         kind: "text",
+        sourceCharacters: query.length,
       });
       const result = await embedTexts(
         [query],

@@ -24,10 +24,9 @@ import { MathText } from "./math-text";
 import { SourceReferences } from "./source-references";
 import type { SourceReference } from "../../lib/ai/grounding";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
-import {
-  createSkillEvidence,
-  type SkillDifficulty,
-} from "../../lib/lumio/skill-evidence";
+import type { SkillDifficulty } from "../../lib/lumio/skill-evidence";
+import { localQuizSkillEvidence } from "../../lib/lumio/quiz-provenance";
+import { quizReviewCopy } from "../../lib/lumio/quiz-review-copy";
 import {
   skillById,
   skillTaxonomy,
@@ -509,7 +508,7 @@ export function Quiz({
             date: new Date().toISOString(),
             score: total,
             total: session.length,
-            skillEvidence: createSkillEvidence(
+            skillEvidence: localQuizSkillEvidence(
               session,
               answers,
               item.attempts,
@@ -575,6 +574,9 @@ export function Quiz({
           </button>
         )}
       </div>
+      <p className="lm-help" data-quiz-key-review>
+        {quizReviewCopy[locale].notice}
+      </p>
       {adding && (
         <form
           className="lm-editor"
@@ -591,6 +593,7 @@ export function Quiz({
                     options: options.map((o) => o.trim()),
                     correct,
                     explanation: explanation.trim(),
+                    answerKeyProvenance: "learner-authored",
                   },
                 ],
               });
@@ -711,19 +714,15 @@ export function Quiz({
                   )}
                   <strong>
                     {selected === q.correct
-                      ? c.correctAnswer
-                      : c.incorrectAnswer}
+                      ? quizReviewCopy[locale].matched
+                      : quizReviewCopy[locale].different}
                   </strong>
                 </div>
                 <strong>
-                  {c.correctOption}:{" "}
+                  {quizReviewCopy[locale].key}:{" "}
                   <MathText text={q.options[q.correct]} inline />
                 </strong>
-                {q.explanation && (
-                  <p>
-                    <MathText text={q.explanation} inline />
-                  </p>
-                )}
+                {q.explanation && <MathText text={q.explanation} />}
                 <SourceReferences
                   references={q.references}
                   onOpenSource={onOpenSource}
@@ -764,12 +763,16 @@ export function Quiz({
               {t.quizDone}
             </h2>
             <p>
-              {c.accuracy}:{" "}
+              {quizReviewCopy[locale].rate}:{" "}
               {session.length ? Math.round((score / session.length) * 100) : 0}%
               · {c.answered} {session.length}
             </p>
-            <p className="lsv-result-caption">{c.resultHint}</p>
-            {score === session.length && <p>{c.allCorrect}</p>}
+            <p className="lsv-result-caption">
+              {quizReviewCopy[locale].notice}
+            </p>
+            {score === session.length && (
+              <p>{quizReviewCopy[locale].complete}</p>
+            )}
             <button className="lm-button primary" onClick={start}>
               {c.retryAll}
               <RotateCcw size={16} />
@@ -811,19 +814,16 @@ export function Quiz({
                   </p>
                   {answers[i] !== question.correct && (
                     <p>
-                      <span>{c.correctOption}: </span>
+                      <span>{quizReviewCopy[locale].key}: </span>
                       <MathText
                         text={question.options[question.correct]}
                         inline
                       />
                     </p>
                   )}
-                  <p className="lsv-review-explanation">
-                    <MathText
-                      text={question.explanation || c.noExplanation}
-                      inline
-                    />
-                  </p>
+                  <div className="lsv-review-explanation">
+                    <MathText text={question.explanation || c.noExplanation} />
+                  </div>
                 </article>
               ))}
             </div>
@@ -832,7 +832,7 @@ export function Quiz({
       ) : item.questions.length ? (
         <>
           <p className="lm-help">
-            {item.questions.length} {t.questionCount} · {t.manual}
+            {item.questions.length} {t.questionCount}
           </p>
           <fieldset className="lski-quiz-scope">
             <legend>{sc.quizScope}</legend>

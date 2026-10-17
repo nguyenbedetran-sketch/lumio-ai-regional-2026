@@ -1,3 +1,5 @@
+import { paidPolicyMigration } from "./paid-policy-schema";
+import { teachingFileMigration } from "./teaching-file-schema";
 import { runtimeV3Migration } from "./runtime-v3-schema";
 import { ragMigration } from "./rag-schema";
 import { summaryJobMigration } from "./job-schema";
@@ -169,6 +171,8 @@ ALTER TABLE tutor_turns ADD COLUMN needs_clarification INTEGER NOT NULL DEFAULT 
   teachingAssessmentWindowsMigration,
   providerAttemptMigration,
   tutorV8Migration,
+  teachingFileMigration,
+  paidPolicyMigration,
 ];
 
 export const flagDefinitions = [

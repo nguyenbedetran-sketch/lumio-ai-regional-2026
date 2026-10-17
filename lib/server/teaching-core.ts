@@ -1,3 +1,9 @@
+import {
+  createTeachingFiles,
+  teachingFileView,
+  type FileRow,
+} from "./teaching-files";
+import type { TeachingFileTarget } from "../teaching/file-contracts";
 import type { DatabaseConnection as DatabaseSync } from "./database-connection";
 import { createHash, createHmac, randomUUID } from "node:crypto";
 import type { User, AuditInput, OrganizationRole } from "./types";
@@ -50,6 +56,8 @@ type Scope = {
   role: OrganizationRole;
   admin: boolean;
   staff: boolean;
+  // Created afresh by scope() inside each transaction/readback; never shared.
+  classAccess: Map<string, Row>;
 };
 const hash = (value: unknown) =>
   createHash("sha256")
@@ -82,6 +90,53 @@ export function createTeachingStore({
     db.prepare(sql).all(...args) as Row[];
   const run = (sql: string, ...args: (string | number | null)[]) =>
     db.prepare(sql).run(...args);
+  const fileObjects = createTeachingFiles({ db, now, stamp, recordAudit });
+  function filePermission(s: Scope, row: FileRow) {
+    classFor(s, row.class_id);
+    if (row.organization_id !== s.org.id) fail("TEACHING_FILE_FORBIDDEN", 403);
+    if (row.purpose === "teacher-only" && !s.staff)
+      fail("TEACHING_FILE_FORBIDDEN", 403);
+    if (row.lesson_id) {
+      const lesson = one(
+        "SELECT * FROM teaching_content WHERE id=? AND organization_id=? AND kind='lesson' AND class_id=?",
+        row.lesson_id,
+        s.org.id,
+        row.class_id,
+      );
+      if (
+        !lesson ||
+        lesson.status === "archived" ||
+        (!s.staff && lesson.status !== "published")
+      )
+        fail("TEACHING_FILE_FORBIDDEN", 403);
+      return lesson;
+    }
+    const assignment = assignmentFor(s, row.assignment_id);
+    if (row.purpose === "submission") {
+      if (!row.submission_id) {
+        if (row.uploader_id !== s.user.id || Number(row.expires_at) <= now())
+          fail("TEACHING_FILE_FORBIDDEN", 403);
+      } else {
+        const submission = one(
+          "SELECT * FROM teaching_submissions WHERE id=? AND assignment_id=?",
+          row.submission_id,
+          row.assignment_id,
+        );
+        if (
+          !submission ||
+          (!s.staff &&
+            (submission.student_id !== s.user.id ||
+              row.uploader_id !== s.user.id))
+        )
+          fail("TEACHING_FILE_FORBIDDEN", 403);
+      }
+    } else if (!s.staff) {
+      const window = assessmentWindow(assignment);
+      if (window.available_from && now() < Date.parse(window.available_from))
+        fail("TEACHING_FILE_FORBIDDEN", 403);
+    }
+    return assignment;
+  }
   function actor(id: string, version: number) {
     const u = getUser(id);
     if (!u || u.disabled || u.sessionVersion !== version)
@@ -118,12 +173,18 @@ export function createTeachingStore({
       role: m.role,
       admin: m.role === "OWNER" || m.role === "SCHOOL_ADMIN",
       staff,
+      classAccess: new Map(),
     };
   }
   function requireStaff(s: Scope, admin = false) {
     if (!s.staff || (admin && !s.admin)) fail("TEACHING_FORBIDDEN", 403);
   }
   function classFor(s: Scope, id: string, write = false) {
+    const cached = s.classAccess.get(id);
+    if (cached) {
+      if (write && cached.archived) fail("TEACHING_CLASS_ARCHIVED", 409);
+      return cached;
+    }
     const c = one(
       "SELECT * FROM teaching_classes WHERE id=? AND organization_id=?",
       id,
@@ -145,6 +206,7 @@ export function createTeachingStore({
       if (!allowed) fail("TEACHING_FORBIDDEN", 403);
     }
     if (write && c.archived) fail("TEACHING_CLASS_ARCHIVED", 409);
+    s.classAccess.set(id, c);
     return c;
   }
   function contentFor(s: Scope, id: string, kind?: string) {
@@ -245,29 +307,25 @@ export function createTeachingStore({
         };
   }
   function assertBudgets(orgId: string) {
-    const bytes = (sql: string) => Number(one(sql, orgId)!.n);
-    const content = bytes(
-      "SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) n FROM teaching_content WHERE organization_id=? AND status!='archived'",
-    );
-    const communication =
-      bytes(
-        "SELECT coalesce(sum(length(CAST(title||body AS BLOB))),0) n FROM teaching_announcements WHERE organization_id=?",
-      ) +
-      bytes(
-        "SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) n FROM teaching_events WHERE organization_id=?",
-      );
-    const assignments = bytes(
-      "SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) n FROM teaching_assignments WHERE organization_id=?",
-    );
-    const submissions = bytes(
-      "SELECT coalesce(sum(length(CAST(s.answers_json AS BLOB))+length(CAST(coalesce(s.grades_json,'') AS BLOB))+length(CAST(coalesce(s.feedback,'') AS BLOB))),0) n FROM teaching_submissions s JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?",
-    );
-    const history = bytes(
-      "SELECT coalesce(sum(length(CAST(coalesce(e.grades_json,'')||coalesce(e.feedback,'')||coalesce(e.reason,'') AS BLOB))),0) n FROM teaching_grade_events e JOIN teaching_submissions s ON s.id=e.submission_id JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?",
-    );
-    const windows = bytes(
-      "SELECT coalesce(sum(length(CAST(coalesce(w.reason,'') AS BLOB))),0) n FROM teaching_assessment_windows w JOIN teaching_assignments a ON a.id=w.assignment_id WHERE a.organization_id=?",
-    );
+    // One statement retains the exact byte accounting within this transaction
+    // without seven serial database round trips on the remote adapter.
+    const totals = one(
+      `SELECT
+        (SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) FROM teaching_content WHERE organization_id=? AND status!='archived') content,
+        (SELECT coalesce(sum(length(CAST(title||body AS BLOB))),0) FROM teaching_announcements WHERE organization_id=?) announcements,
+        (SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) FROM teaching_events WHERE organization_id=?) events,
+        (SELECT coalesce(sum(length(CAST(data_json AS BLOB))),0) FROM teaching_assignments WHERE organization_id=?) assignments,
+        (SELECT coalesce(sum(length(CAST(s.answers_json AS BLOB))+length(CAST(coalesce(s.grades_json,'') AS BLOB))+length(CAST(coalesce(s.feedback,'') AS BLOB))),0) FROM teaching_submissions s JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?) submissions,
+        (SELECT coalesce(sum(length(CAST(coalesce(e.grades_json,'')||coalesce(e.feedback,'')||coalesce(e.reason,'') AS BLOB))),0) FROM teaching_grade_events e JOIN teaching_submissions s ON s.id=e.submission_id JOIN teaching_assignments a ON a.id=s.assignment_id WHERE a.organization_id=?) history,
+        (SELECT coalesce(sum(length(CAST(coalesce(w.reason,'') AS BLOB))),0) FROM teaching_assessment_windows w JOIN teaching_assignments a ON a.id=w.assignment_id WHERE a.organization_id=?) windows`,
+      orgId, orgId, orgId, orgId, orgId, orgId, orgId,
+    )!;
+    const content = Number(totals.content),
+      communication = Number(totals.announcements) + Number(totals.events),
+      assignments = Number(totals.assignments),
+      submissions = Number(totals.submissions),
+      history = Number(totals.history),
+      windows = Number(totals.windows);
     if (
       content > limits.activeContentBytesPerOrg ||
       communication > limits.communicationBytesPerOrg ||
@@ -562,9 +620,8 @@ export function createTeachingStore({
       return "due_passed" as const;
     return "available" as const;
   }
-  const assignmentData = (a: Row) => {
-    const w = assessmentWindow(a),
-      d = JSON.parse(a.data_json);
+  const assignmentData = (a: Row, w: Row = assessmentWindow(a)) => {
+    const d = JSON.parse(a.data_json);
     return {
       ...d,
       id: a.id,
@@ -688,12 +745,24 @@ export function createTeachingStore({
     orgId?: string,
     query: { classId?: string; q?: string } = {},
   ): TeachingState {
+    // This read does not mutate approval; never retain it across transactions.
+    const approvedTeacher = approved(u.id),
+      canCreateOrganization = u.role === "SUPER_ADMIN" || approvedTeacher;
+    const windows = new Map<string, Row>();
+    const readWindow = (assignment: Row) => {
+      let value = windows.get(assignment.id);
+      if (!value) {
+        value = assessmentWindow(assignment);
+        windows.set(assignment.id, value);
+      }
+      return value;
+    };
     const q = query.q === undefined ? "" : str(query.q, 100, 0),
       organizations = all(
         "SELECT o.*,t.revision,m.role FROM organizations o JOIN teaching_organizations t ON t.organization_id=o.id JOIN memberships m ON m.organization_id=o.id WHERE m.user_id=? ORDER BY o.created_at,o.id",
         u.id,
       )
-        .filter((r) => r.role === "STUDENT" || canCreate(u))
+        .filter((r) => r.role === "STUDENT" || canCreateOrganization)
         .filter((r) =>
           ["OWNER", "SCHOOL_ADMIN", "TEACHER", "STUDENT"].includes(r.role),
         )
@@ -712,8 +781,8 @@ export function createTeachingStore({
         name: u.name,
         accountKey: u.storageKey,
         systemRole: u.role,
-        approvedTeacher: approved(u.id),
-        canCreateOrganization: canCreate(u),
+        approvedTeacher,
+        canCreateOrganization,
       },
       organizations,
       organization: null,
@@ -725,6 +794,7 @@ export function createTeachingStore({
       groups: [],
       invites: [],
       materials: [],
+      files: [],
       lessons: [],
       questions: [],
       assignments: [],
@@ -914,7 +984,7 @@ export function createTeachingStore({
     );
     state.submissions = submissions.map((r) => submissionView(r, s.staff));
     state.assignments = assignments.map((a) => {
-      const data = assignmentData(a);
+      const data = assignmentData(a, readWindow(a));
       if (s.staff) {
         data.recipientIds = all(
           "SELECT user_id FROM teaching_assignment_targets WHERE assignment_id=? ORDER BY user_id",
@@ -925,7 +995,7 @@ export function createTeachingStore({
         const own = submissions.find(
             (r) => r.assignment_id === a.id && r.student_id === u.id,
           ),
-          w = assessmentWindow(a);
+          w = readWindow(a);
         data.availability = submissionAvailability(s, a, w, own);
         data.canSubmit = data.availability === "available";
         const published = submissions.some(
@@ -990,13 +1060,13 @@ export function createTeachingStore({
     const publishedByRoot = new Map<string, Row>();
     for (const r of submissions.filter((r) => r.status === "published")) {
       const a = assignments.find((a) => a.id === r.assignment_id)!,
-        w = assessmentWindow(a),
+        w = readWindow(a),
         key = w.root_assignment_id + ":" + r.student_id,
         old = publishedByRoot.get(key);
       if (
         !old ||
         Number(
-          assessmentWindow(assignments.find((a) => a.id === old.assignment_id)!)
+          readWindow(assignments.find((a) => a.id === old.assignment_id)!)
             .attempt_no,
         ) < Number(w.attempt_no)
       )
@@ -1034,7 +1104,7 @@ export function createTeachingStore({
             points: 0,
             max: 0,
           };
-          t.assignments.add(assessmentWindow(a).root_assignment_id);
+          t.assignments.add(readWindow(a).root_assignment_id);
           t.points += grade.points;
           t.max += question.maxPoints;
           topics.set(question.topic, t);
@@ -1091,6 +1161,30 @@ export function createTeachingStore({
           ) / 100
         : null,
     };
+    const visibleLessons = new Set(state.lessons.map((lesson) => lesson.id));
+    const visibleAssignments = new Map(
+      state.assignments.map((assignment) => [assignment.id, assignment]),
+    );
+    state.files = fileObjects
+      .rows(orgId)
+      .filter((file) => {
+        if (!classIds.has(file.class_id)) return false;
+        if (file.lesson_id && !visibleLessons.has(file.lesson_id)) return false;
+        const assignment = file.assignment_id
+          ? visibleAssignments.get(file.assignment_id)
+          : null;
+        if (file.assignment_id && !assignment) return false;
+        if (file.purpose === "submission") {
+          if (file.submission_id) return s.staff || file.uploader_id === u.id;
+          return file.uploader_id === u.id && Number(file.expires_at) > now();
+        }
+        return (
+          s.staff ||
+          (file.purpose === "reference" &&
+            (!assignment || assignment.availability !== "not_open"))
+        );
+      })
+      .map(teachingFileView);
     return state;
   }
   function inviteCode(row: Row) {
@@ -1867,6 +1961,10 @@ export function createTeachingStore({
           } else if (action === "delete") {
             if (!["draft", "reviewed"].includes(existing!.status))
               fail("TEACHING_ASSIGNMENT_IMMUTABLE", 409);
+            run(
+              "DELETE FROM teaching_files WHERE assignment_id=? AND purpose!='submission'",
+              existing!.id,
+            );
             run("DELETE FROM teaching_assignments WHERE id=?", existing!.id);
             result = { id: existing!.id };
           } else if (action === "close") {
@@ -2023,6 +2121,13 @@ export function createTeachingStore({
               Number(late),
               Math.round(autoScore * 100) / 100,
             );
+          fileObjects.finalize(b.attachmentIds, {
+            userId,
+            orgId,
+            assignmentId: a.id,
+            submissionId: id,
+            revision: existing ? Number(existing.revision) + 1 : 1,
+          });
           result = { id };
         } else if (
           b.action === "submission.grade" ||
@@ -2361,6 +2466,8 @@ export function createTeachingStore({
         JSON.stringify(storedResult),
         stamp(),
       );
+      // read() constructs a new Scope after every mutation, including member,
+      // enrollment, teacher assignment and class archive changes.
       return { state: read(u, orgId), result, replayed: false };
     });
   }
@@ -2487,6 +2594,153 @@ export function createTeachingStore({
   }
   return {
     mutateTeaching: mutate,
+    uploadTeachingFile(userId: string, version: number, raw: unknown) {
+      return transaction(() => {
+        const body = obj(raw);
+        only(body, [
+          "requestId",
+          "orgId",
+          "target",
+          "visibility",
+          "filename",
+          "dataBase64",
+        ]);
+        const user = actor(userId, version),
+          orgId = identifier(body.orgId),
+          s = scope(user, orgId),
+          target = obj(body.target);
+        only(target, ["kind", "id"]);
+        const kind = str(target.kind, 20) as TeachingFileTarget["kind"],
+          id = identifier(target.id),
+          requestId = str(body.requestId, 36);
+        if (
+          !/^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(
+            requestId,
+          )
+        )
+          fail("INVALID_TEACHING_REQUEST_ID");
+        let targetRow: Row,
+          purpose: "reference" | "teacher-only" | "submission";
+        if (kind === "submission") {
+          if (s.role !== "STUDENT" || body.visibility !== undefined)
+            fail("TEACHING_FILE_FORBIDDEN", 403);
+          targetRow = assignmentFor(s, id);
+          const existing = one(
+            "SELECT * FROM teaching_submissions WHERE assignment_id=? AND student_id=?",
+            id,
+            userId,
+          );
+          if (
+            submissionAvailability(
+              s,
+              targetRow,
+              assessmentWindow(targetRow),
+              existing,
+            ) !== "available"
+          )
+            fail("TEACHING_FILE_UPLOAD_CLOSED", 409);
+          purpose = "submission";
+        } else {
+          requireStaff(s);
+          if (kind === "lesson") targetRow = contentFor(s, id, "lesson");
+          else if (kind === "assignment")
+            targetRow = assignmentFor(s, id, true);
+          else fail("INVALID_TEACHING_DATA");
+          if (targetRow.status !== "draft")
+            fail("TEACHING_FILE_TARGET_LOCKED", 409);
+          purpose =
+            body.visibility === undefined
+              ? "reference"
+              : (str(body.visibility, 20) as typeof purpose);
+          if (!["reference", "teacher-only"].includes(purpose))
+            fail("INVALID_TEACHING_DATA");
+        }
+        if (!targetRow.class_id) fail("TEACHING_FILE_CLASS_REQUIRED", 409);
+        classFor(s, targetRow.class_id, true);
+        fileObjects.purge(orgId);
+        const replayed = !!one(
+          "SELECT id FROM teaching_files WHERE request_id=?",
+          requestId,
+        );
+        const file = fileObjects.upload(
+          { requestId, filename: body.filename, dataBase64: body.dataBase64 },
+          {
+            orgId,
+            classId: targetRow.class_id,
+            uploaderId: userId,
+            ...(kind === "lesson" ? { lessonId: id } : { assignmentId: id }),
+            purpose,
+          },
+        );
+        if (kind !== "submission" && !replayed) {
+          if (kind === "lesson")
+            run(
+              "UPDATE teaching_content SET revision=revision+1,updated_at=? WHERE id=?",
+              stamp(),
+              id,
+            );
+          else
+            run(
+              "UPDATE teaching_assignments SET revision=revision+1 WHERE id=?",
+              id,
+            );
+        }
+        return {
+          file,
+          ...(kind !== "submission"
+            ? {
+                targetRevision: Number(targetRow.revision) + (replayed ? 0 : 1),
+              }
+            : {}),
+        };
+      });
+    },
+    readTeachingFile(userId: string, version: number, id: string) {
+      return transaction(() => {
+        const user = actor(userId, version),
+          row = fileObjects.get(identifier(id));
+        if (!row) fail("TEACHING_NOT_FOUND", 404);
+        const s = scope(user, row.organization_id);
+        filePermission(s, row);
+        const bytes = fileObjects.bytes(row);
+        recordAudit({
+          actorId: userId,
+          action: "TEACHING_FILE_DOWNLOADED",
+          target: row.id,
+          after: { bytes: bytes.length },
+        });
+        return { file: teachingFileView(row), bytes };
+      });
+    },
+    deleteTeachingFile(userId: string, version: number, id: string) {
+      return transaction(() => {
+        const user = actor(userId, version),
+          row = fileObjects.get(identifier(id));
+        if (!row) return { deleted: true };
+        const s = scope(user, row.organization_id),
+          target = filePermission(s, row);
+        if (row.purpose === "submission") {
+          if (row.uploader_id !== userId || row.submission_id)
+            fail("TEACHING_FILE_FORBIDDEN", 403);
+        } else if (!s.staff || target.status !== "draft")
+          fail("TEACHING_FILE_TARGET_LOCKED", 409);
+        fileObjects.remove(row, userId);
+        if (row.purpose !== "submission") {
+          if (row.lesson_id)
+            run(
+              "UPDATE teaching_content SET revision=revision+1,updated_at=? WHERE id=?",
+              stamp(),
+              row.lesson_id,
+            );
+          else
+            run(
+              "UPDATE teaching_assignments SET revision=revision+1 WHERE id=?",
+              row.assignment_id,
+            );
+        }
+        return { deleted: true };
+      });
+    },
     readTeachingGradeHistory(
       userId: string,
       version: number,

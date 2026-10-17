@@ -809,9 +809,17 @@ async (page) => {
     .fill("Biến đổi cùng cách ở hai vế; kiểm tra điều kiện phép chia.");
   await save("Lưu bản nháp");
   await page.getByRole("button", { name: "Đã xem lại", exact: true }).click();
+  await dialog()
+    .getByRole("button", { name: "Xác nhận đã xem bản trình bày", exact: true })
+    .click();
+  await dialog().waitFor({ state: "hidden" });
   await page
     .getByRole("button", { name: "Chia sẻ cho lớp", exact: true })
     .click();
+  await dialog()
+    .getByRole("button", { name: "Xác nhận chia sẻ cho lớp", exact: true })
+    .click();
+  await dialog().waitFor({ state: "hidden" });
   check(
     state.lessons[0].status === "published",
     "Lesson studio supports editable objectives and sections, review then publish",

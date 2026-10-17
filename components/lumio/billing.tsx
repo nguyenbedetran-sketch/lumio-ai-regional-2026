@@ -17,6 +17,8 @@ import type {
 } from "../../lib/server/billing-types";
 import { billingCopy } from "../../lib/lumio/billing-copy";
 import { Dialog } from "./dialog";
+import { PaidPlanDetails, paidPlanSummary } from "./paid-plan-details";
+import { defaultPaidPolicy, type PaidPolicy } from "../../lib/billing/paid-policy";
 import {
   PRICING_PREVIEW,
   PACK_PRICING_PREVIEW,
@@ -32,6 +34,7 @@ type Plan = {
   creditsPeriod: string;
   entitlements: BillingEntitlements;
   checkoutAvailable: boolean;
+  paidPolicy?: PaidPolicy;
 };
 type Pack = {
   id: string;
@@ -187,7 +190,7 @@ export function BillingPanel({
           currency: "VND",
           maximumFractionDigits: 0,
         }).format(value);
-  const features = (p: Plan) => [
+  const features = (p: Plan) => p.paidPolicy ? [paidPlanSummary(p.paidPolicy, locale).title, paidPlanSummary(p.paidPolicy, locale).modes, paidPlanSummary(p.paidPolicy, locale).source, `${p.entitlements.maxVideoSeconds / 60} ${c.video}`, p.entitlements.voice ? c.voice : c.noVoice] : [
     c.quick,
     c.documents,
     `${p.entitlements.maxVideoSeconds / 60} ${c.video}`,
@@ -219,13 +222,16 @@ export function BillingPanel({
     sandbox_grant: c.grant,
   } as Record<string, string>;
   // Display-only proposals. These objects never enter billing mutations or the real wallet.
-  const previewPlans = (catalog?.plans || []).map((plan) => ({
+  const previewPlans = (catalog?.plans || []).map((plan) => {
+    const paid = plan.id === "premium" || plan.id === "pro" ? plan.paidPolicy || { planId: plan.id, revision: 0, config: defaultPaidPolicy(plan.id) } : undefined;
+    return ({
     ...plan,
-    monthlyPriceMinor: PRICING_PREVIEW[plan.id].monthlyVnd,
-    yearlyPriceMinor: PRICING_PREVIEW[plan.id].yearlyVnd,
-    credits: PRICING_PREVIEW[plan.id].credits,
+    monthlyPriceMinor: paid?.config.monthlyPriceMinor ?? PRICING_PREVIEW[plan.id].monthlyVnd,
+    yearlyPriceMinor: paid?.config.yearlyPriceMinor ?? PRICING_PREVIEW[plan.id].yearlyVnd,
+    credits: paid?.config.credits ?? PRICING_PREVIEW[plan.id].credits,
     checkoutAvailable: PRICING_PREVIEW_CHECKOUT,
-  }));
+    ...(paid ? { paidPolicy: paid } : {}),
+  }); });
   const previewPacks = (catalog?.packs || []).map((pack) => {
     const draft =
       PACK_PRICING_PREVIEW[pack.id as keyof typeof PACK_PRICING_PREVIEW];
@@ -236,6 +242,7 @@ export function BillingPanel({
       checkoutAvailable: PRICING_PREVIEW_CHECKOUT,
     };
   });
+  const currentPaidPolicy = previewPlans.find(plan => plan.id === snapshot?.account.planId)?.paidPolicy;
   return (
     <section className="lm-billing">
       <div className="lm-billing-hero">
@@ -421,7 +428,7 @@ export function BillingPanel({
         </div>
         <p className="lm-help">{pc.tax}</p>
       </div>
-      {rates && (
+      {currentPaidPolicy ? <PaidPlanDetails policy={currentPaidPolicy} locale={locale} /> : rates && (
         <details className="lm-personal-details">
           <summary>{c.rates}</summary>
           <div className="lm-credit-calculator">
@@ -640,6 +647,7 @@ export function BillingPanel({
               </ul>
             )}
             <p>{pc.notice}</p>
+            {"entitlements" in selected && selected.paidPolicy && <PaidPlanDetails policy={selected.paidPolicy} locale={locale} />}
             <button
               className="lm-button primary"
               disabled={!PRICING_PREVIEW_CHECKOUT}

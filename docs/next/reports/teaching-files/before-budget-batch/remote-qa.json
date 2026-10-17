@@ -1,0 +1,538 @@
+{
+  "status": "PASS",
+  "schemaVersion": 20,
+  "fileSchemaVersion": 19,
+  "sourceSha256": {
+    "lib/server/teaching-files.ts": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
+    "lib/server/teaching-file-validation.ts": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa",
+    "lib/server/teaching-core.ts": "cc36f9878370d9e2a5c89faffd92b23e8c42420ec388a443a501bd51b7afa5d2",
+    "lib/server/teaching-file-schema.ts": "a41967bbe00a36cc343581a8cba74e36c5f63e21398fc89b58a8cacaf15f2ad5",
+    "lib/server/database-integrity.ts": "484a36a2ed2ecf6e360edbddd72f21dccea91699690d6077833d44820bee939f"
+  },
+  "checkedAt": "2026-10-17T08:11:18.927Z",
+  "passed": 15,
+  "checks": [
+    {
+      "name": "Filename, extension, binary magic, UTF8 and OOXML zip limits fail closed",
+      "status": "PASS",
+      "ms": 139,
+      "queries": 0,
+      "sqlTimeMs": 0,
+      "mutations": [],
+      "slowestQueries": []
+    },
+    {
+      "name": "Actual upload handler requires origin, canonical login and captured account",
+      "status": "PASS",
+      "ms": 497,
+      "queries": 2,
+      "sqlTimeMs": 474,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "all",
+          "query": "e55844d72d0ebf94",
+          "ms": 238
+        },
+        {
+          "kind": "get",
+          "query": "98719c8422e2f091",
+          "ms": 236
+        }
+      ]
+    },
+    {
+      "name": "Bounded HTTP stream rejects oversized bytes without trusting Content-Length",
+      "status": "PASS",
+      "ms": 476,
+      "queries": 2,
+      "sqlTimeMs": 473,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "98719c8422e2f091",
+          "ms": 238
+        },
+        {
+          "kind": "all",
+          "query": "e55844d72d0ebf94",
+          "ms": 235
+        }
+      ]
+    },
+    {
+      "name": "Actual reference upload persists bytes and same-UUID lostACK retry has one object",
+      "status": "PASS",
+      "ms": 14066,
+      "queries": 51,
+      "sqlTimeMs": 12804,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "2019e928779648c9",
+          "ms": 469
+        },
+        {
+          "kind": "get",
+          "query": "829e333e8e0fdc70",
+          "ms": 435
+        },
+        {
+          "kind": "get",
+          "query": "97d453fced0a4f5c",
+          "ms": 425
+        },
+        {
+          "kind": "run",
+          "query": "1bbd1eb8bfc8652b",
+          "ms": 257
+        },
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 251
+        }
+      ]
+    },
+    {
+      "name": "Target file-count cap and safe draft deletion use real handlers",
+      "status": "PASS",
+      "ms": 23638,
+      "queries": 94,
+      "sqlTimeMs": 21747,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 442
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 410
+        },
+        {
+          "kind": "run",
+          "query": "e6ae9933967ffbb7",
+          "ms": 293
+        },
+        {
+          "kind": "run",
+          "query": "0c8e333162dd5287",
+          "ms": 270
+        },
+        {
+          "kind": "get",
+          "query": "b60c21b24924b658",
+          "ms": 263
+        }
+      ]
+    },
+    {
+      "name": "Teacher-only/draft files never enter student payload or unauthorized downloads",
+      "status": "PASS",
+      "ms": 16785,
+      "queries": 64,
+      "sqlTimeMs": 15642,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "0391ac15c523e9aa",
+          "ms": 567
+        },
+        {
+          "kind": "get",
+          "query": "97d453fced0a4f5c",
+          "ms": 458
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 447
+        },
+        {
+          "kind": "get",
+          "query": "dd142d5da9d80f93",
+          "ms": 444
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 440
+        }
+      ]
+    },
+    {
+      "name": "Issued reference accessible only to current recipients; teacher-only metadata stays hidden",
+      "status": "PASS",
+      "ms": 12724,
+      "queries": 51,
+      "sqlTimeMs": 11810,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "all",
+          "query": "f1250b274d11ea83",
+          "ms": 500
+        },
+        {
+          "kind": "get",
+          "query": "0391ac15c523e9aa",
+          "ms": 272
+        },
+        {
+          "kind": "all",
+          "query": "cf5d8d9a37e507f6",
+          "ms": 271
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 236
+        },
+        {
+          "kind": "all",
+          "query": "34e993584c663d4e",
+          "ms": 236
+        }
+      ]
+    },
+    {
+      "name": "Student upload remains pending/owner-only and does not create a submission",
+      "status": "PASS",
+      "ms": 41806,
+      "queries": 169,
+      "sqlTimeMs": 39703,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 519
+        },
+        {
+          "kind": "get",
+          "query": "0391ac15c523e9aa",
+          "ms": 494
+        },
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 485
+        },
+        {
+          "kind": "get",
+          "query": "97d453fced0a4f5c",
+          "ms": 478
+        },
+        {
+          "kind": "get",
+          "query": "5218cc709142633f",
+          "ms": 472
+        }
+      ]
+    },
+    {
+      "name": "Foreign attachment ID causes atomic rollback of actual submission mutation",
+      "status": "PASS",
+      "ms": 3978,
+      "queries": 15,
+      "sqlTimeMs": 3747,
+      "mutations": [
+        {
+          "action": "submission.submit",
+          "status": "error",
+          "code": "TEACHING_FILE_FORBIDDEN",
+          "queries": 13,
+          "ms": 3499
+        }
+      ],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "5218cc709142633f",
+          "ms": 578
+        },
+        {
+          "kind": "get",
+          "query": "0171afb58efa4435",
+          "ms": 240
+        },
+        {
+          "kind": "all",
+          "query": "ed97d7ecf06b948f",
+          "ms": 240
+        },
+        {
+          "kind": "get",
+          "query": "acd43b22f370396e",
+          "ms": 240
+        },
+        {
+          "kind": "get",
+          "query": "ba8c0566a0e7912b",
+          "ms": 239
+        }
+      ]
+    },
+    {
+      "name": "ServerACK atomically binds exact own pending files; submission idempotency preserves bytes",
+      "status": "PASS",
+      "ms": 25416,
+      "queries": 104,
+      "sqlTimeMs": 24245,
+      "mutations": [
+        {
+          "action": "submission.submit",
+          "status": "success",
+          "queries": 45,
+          "ms": 11316
+        },
+        {
+          "action": "submission.submit",
+          "status": "success",
+          "queries": 31,
+          "ms": 7448
+        }
+      ],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 472
+        },
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 451
+        },
+        {
+          "kind": "get",
+          "query": "b5f44a70e62068d3",
+          "ms": 431
+        },
+        {
+          "kind": "all",
+          "query": "c4cf7662579b6f25",
+          "ms": 256
+        },
+        {
+          "kind": "get",
+          "query": "c779af6898daad3c",
+          "ms": 254
+        }
+      ]
+    },
+    {
+      "name": "Submitted file bytes and identity reject mutation/deletion, including direct SQL history tampering",
+      "status": "PASS",
+      "ms": 3804,
+      "queries": 15,
+      "sqlTimeMs": 3577,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "97d453fced0a4f5c",
+          "ms": 472
+        },
+        {
+          "kind": "get",
+          "query": "5ae65f2b2a712412",
+          "ms": 237
+        },
+        {
+          "kind": "run",
+          "query": "f7088322e0e47a0d",
+          "ms": 237
+        },
+        {
+          "kind": "get",
+          "query": "5218cc709142633f",
+          "ms": 236
+        },
+        {
+          "kind": "run",
+          "query": "7c3a373c907dc621",
+          "ms": 236
+        }
+      ]
+    },
+    {
+      "name": "Canonical membership/session revocation removes file access and idempotent replay rights",
+      "status": "PASS",
+      "ms": 4912,
+      "queries": 18,
+      "sqlTimeMs": 4444,
+      "mutations": [
+        {
+          "action": "submission.submit",
+          "status": "error",
+          "code": "TEACHING_FORBIDDEN",
+          "queries": 6,
+          "ms": 1832
+        }
+      ],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 447
+        },
+        {
+          "kind": "run",
+          "query": "528a106b64ca0985",
+          "ms": 262
+        },
+        {
+          "kind": "run",
+          "query": "6480cc39ee714a31",
+          "ms": 238
+        },
+        {
+          "kind": "get",
+          "query": "98719c8422e2f091",
+          "ms": 236
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 236
+        }
+      ]
+    },
+    {
+      "name": "Deadline is rechecked at finalization and rejected submission leaves pending bytes intact",
+      "status": "PASS",
+      "ms": 2669,
+      "queries": 11,
+      "sqlTimeMs": 2444,
+      "mutations": [
+        {
+          "action": "submission.submit",
+          "status": "error",
+          "code": "TEACHING_DUE_PASSED",
+          "queries": 10,
+          "ms": 2449
+        }
+      ],
+      "slowestQueries": [
+        {
+          "kind": "get",
+          "query": "6a05216f0ac3444b",
+          "ms": 231
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 223
+        },
+        {
+          "kind": "get",
+          "query": "789ce6b7f87f05d0",
+          "ms": 223
+        },
+        {
+          "kind": "get",
+          "query": "0391ac15c523e9aa",
+          "ms": 222
+        },
+        {
+          "kind": "get",
+          "query": "97d453fced0a4f5c",
+          "ms": 222
+        }
+      ]
+    },
+    {
+      "name": "OneMiB uses four bounded BLOB chunks, exact bytes survive connection close/reopen",
+      "status": "PASS",
+      "ms": 14405,
+      "queries": 51,
+      "sqlTimeMs": 13227,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "all",
+          "query": "2b64278e982ca6a6",
+          "ms": 979
+        },
+        {
+          "kind": "all",
+          "query": "e51f40fe228503c0",
+          "ms": 764
+        },
+        {
+          "kind": "run",
+          "query": "6f741ffc649afff0",
+          "ms": 449
+        },
+        {
+          "kind": "get",
+          "query": "eee9ea041066a381",
+          "ms": 442
+        },
+        {
+          "kind": "run",
+          "query": "6f741ffc649afff0",
+          "ms": 341
+        }
+      ]
+    },
+    {
+      "name": "Pending expiration cleanup never purges attached or submitted objects",
+      "status": "PASS",
+      "ms": 5427,
+      "queries": 23,
+      "sqlTimeMs": 5194,
+      "mutations": [],
+      "slowestQueries": [
+        {
+          "kind": "all",
+          "query": "e55844d72d0ebf94",
+          "ms": 436
+        },
+        {
+          "kind": "all",
+          "query": "e51f40fe228503c0",
+          "ms": 420
+        },
+        {
+          "kind": "get",
+          "query": "98719c8422e2f091",
+          "ms": 286
+        },
+        {
+          "kind": "get",
+          "query": "98719c8422e2f091",
+          "ms": 247
+        },
+        {
+          "kind": "get",
+          "query": "4ddc0560dd7ce204",
+          "ms": 213
+        }
+      ]
+    }
+  ],
+  "scope": "Approved isolated Turso QA database; authored fixtures + actual API/store/remote BLOB persist/reopen; synthetic OAuth only, no production users/provider/payments",
+  "limits": {
+    "bytesPerFile": 1048576,
+    "filesPerTarget": 3,
+    "organizationBytes": 20971520,
+    "organizationFiles": 200,
+    "uploadsPerActorPerDay": 60,
+    "pendingHours": 24
+  },
+  "unverified": [
+    "No malware scanning",
+    "No inline PDF/Office preview/conversion",
+    "No large media upload",
+    "No genuine Google/browser login acceptance",
+    "Historical submitted bytes count toward organization quota"
+  ]
+}

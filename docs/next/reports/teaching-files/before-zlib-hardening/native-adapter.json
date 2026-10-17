@@ -1,0 +1,108 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T07:52:49.166Z",
+  "passed": 17,
+  "checks": [
+    {
+      "name": "Filename, extension, binary magic, UTF8 and OOXML zip limits fail closed",
+      "status": "PASS",
+      "ms": 76
+    },
+    {
+      "name": "Actual upload handler requires origin, canonical login and captured account",
+      "status": "PASS",
+      "ms": 42
+    },
+    {
+      "name": "Bounded HTTP stream rejects oversized bytes without trusting Content-Length",
+      "status": "PASS",
+      "ms": 9
+    },
+    {
+      "name": "Actual reference upload persists bytes and same-UUID lostACK retry has one object",
+      "status": "PASS",
+      "ms": 85
+    },
+    {
+      "name": "Target file-count cap and safe draft deletion use real handlers",
+      "status": "PASS",
+      "ms": 108
+    },
+    {
+      "name": "Mid-chunk write failure rolls back metadata, bytes, audit and target revision",
+      "status": "PASS",
+      "ms": 57
+    },
+    {
+      "name": "Teacher-only/draft files never enter student payload or unauthorized downloads",
+      "status": "PASS",
+      "ms": 66
+    },
+    {
+      "name": "Issued reference accessible only to current recipients; teacher-only metadata stays hidden",
+      "status": "PASS",
+      "ms": 58
+    },
+    {
+      "name": "Student upload remains pending/owner-only and does not create a submission",
+      "status": "PASS",
+      "ms": 83
+    },
+    {
+      "name": "Foreign attachment ID causes atomic rollback of actual submission mutation",
+      "status": "PASS",
+      "ms": 20
+    },
+    {
+      "name": "ServerACK atomically binds exact own pending files; submission idempotency preserves bytes",
+      "status": "PASS",
+      "ms": 56
+    },
+    {
+      "name": "Submitted file bytes and identity reject mutation/deletion, including direct SQL history tampering",
+      "status": "PASS",
+      "ms": 9
+    },
+    {
+      "name": "Canonical membership/session revocation removes file access and idempotent replay rights",
+      "status": "PASS",
+      "ms": 26
+    },
+    {
+      "name": "Deadline is rechecked at finalization and rejected submission leaves pending bytes intact",
+      "status": "PASS",
+      "ms": 7
+    },
+    {
+      "name": "OneMiB uses four bounded BLOB chunks, exact bytes survive connection close/reopen",
+      "status": "PASS",
+      "ms": 273
+    },
+    {
+      "name": "Pending expiration cleanup never purges attached or submitted objects",
+      "status": "PASS",
+      "ms": 30
+    },
+    {
+      "name": "Real stored BLOB bytes reach the organization cap; persisted synthetic audit events enforce daily rate",
+      "status": "PASS",
+      "ms": 1338
+    }
+  ],
+  "scope": "Actual native libSQL child/IPC with local SQLite; NOT remote durability evidence; actual handlers and authored fixtures",
+  "limits": {
+    "bytesPerFile": 1048576,
+    "filesPerTarget": 3,
+    "organizationBytes": 20971520,
+    "organizationFiles": 200,
+    "uploadsPerActorPerDay": 60,
+    "pendingHours": 24
+  },
+  "unverified": [
+    "No malware scanning",
+    "No inline PDF/Office preview/conversion",
+    "No large media upload",
+    "No genuine Google/browser login acceptance",
+    "Historical submitted bytes count toward organization quota"
+  ]
+}

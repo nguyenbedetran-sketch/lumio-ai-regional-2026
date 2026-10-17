@@ -1,0 +1,287 @@
+{
+  "status": "PASS",
+  "passed": 86,
+  "cases": [
+    "Usage details are closed on initial mount",
+    "Initial mount does not fetch private telemetry",
+    "Native summary opens with keyboard Enter",
+    "Opening the disclosure does not fetch private telemetry",
+    "Filter has accessible label: Loại báo cáo",
+    "Filter has accessible label: Nhóm theo",
+    "Filter has accessible label: Khoảng thời gian",
+    "Recorded request outcomes are the initial separate scope",
+    "Keyboard Tab reaches the date-window filter",
+    "Keyboard Tab reaches the explicit load button",
+    "Keyboard form submission performs one explicit GET",
+    "Explicit request uses canonical X-Lumio-Account header",
+    "Outcome request binds summary, scope, dimension and days",
+    "Unknown outcome cost is shown as unmeasured",
+    "Outcome quantiles show recorded fixture values",
+    "Outcome observed count remains unknown with legacy-zero provenance",
+    "Outcome error ratio is separate from missing HTTP metadata",
+    "Private result is absent: qa-private-outcome-a",
+    "Changing report scope clears old private data without automatically fetching",
+    "Provider-attempt request uses a separate scope",
+    "Attempt nearest-rank values are visible",
+    "Attempt HTTP error ratio and status coverage display distinct denominators",
+    "Observed zero quantiles render as zero rather than unknown",
+    "Unresolved attempts are not labelled HTTP success/error",
+    "Older unresolved journal intents remain visible outside the selected time window",
+    "All-age journal diagnostics label per-account and global unresolved limits separately",
+    "Retained all-age journal count has its own storage-capacity denominator",
+    "Selected-window attempt and unresolved totals remain seven and one, not all-age nine and three",
+    "The capacity paragraph explicitly distinguishes the selected-window table cohort",
+    "Journal capacity is disclosed as a dispatch limit rather than credit usage",
+    "Attempt report labels dispatch counts separately from request outcomes",
+    "Attempt report explains that an HTTP response is not a valid answer",
+    "Attempt report distinguishes independent credit accounting",
+    "First retained metadata is not presented as instrumentation activation date",
+    "Unknown input, output and total token values retain dashes",
+    "Explicitly observed zero input, output and total tokens remain zero",
+    "All unpriced attempt costs are explicitly unknown, not zero",
+    "Unknown attempt costs are not formatted as zero dollars",
+    "Attempt table contains only its own groups, without merging outcome rows",
+    "Attempt table exposes six column headers and its two group row headers",
+    "Main 5 / 2 counts and one HTTP error remain distinct text units",
+    "HTTP error detail occupies a separate visual line instead of reading as 5 / 21",
+    "Token coverage, unknown status and model details render as separate lines",
+    "No horizontal page overflow at 1440px",
+    "All filter controls stay inside 1440px viewport",
+    "Wide metadata table remains in its own scroll region at 1440px",
+    "A normal model identifier fits its row header without a narrow column of fragments at 1440px",
+    "The complete long identifier wraps inside a bounded row header at 1440px",
+    "No horizontal page overflow at 768px",
+    "All filter controls stay inside 768px viewport",
+    "Wide metadata table remains in its own scroll region at 768px",
+    "A normal model identifier fits its row header without a narrow column of fragments at 768px",
+    "The complete long identifier wraps inside a bounded row header at 768px",
+    "No horizontal page overflow at 390px",
+    "All filter controls stay inside 390px viewport",
+    "Wide metadata table remains in its own scroll region at 390px",
+    "A normal model identifier fits its row header without a narrow column of fragments at 390px",
+    "The complete long identifier wraps inside a bounded row header at 390px",
+    "Viewport changes do not trigger telemetry requests",
+    "A pending load disables repeat form submission",
+    "Loading state exposes a polite busy region",
+    "Private result is absent: qa-private-attempt-a",
+    "Changing grouping aborts the previous request signal",
+    "Filter change does not dispatch an automatic replacement",
+    "New explicit load uses the changed grouping",
+    "Private result is absent: qa-stale-result",
+    "Private result is absent: qa-fresh-task-result",
+    "Window change clears current report without auto fetch",
+    "Explicit request uses the selected 31-day window",
+    "Private result is absent: qa-private-before-denial",
+    "401 displays an explicit permission error",
+    "401 leaves no old private table result",
+    "Account remount clears prior error state",
+    "Account remount clears old private result",
+    "Account remount aborts the old account request",
+    "Remounted panel sends only the new canonical account key",
+    "Private result is absent: qa-other-account-stale",
+    "An unplanned/error HTTP response does not retain prior account metadata",
+    "Explicit retry clears prior request error and renders empty data state",
+    "A report with the wrong scope is rejected rather than mixed with outcomes",
+    "Private result is absent: qa-wrong-scope-private",
+    "403 displays the same explicit permission recovery state",
+    "Every intercepted report request carries an intended canonical synthetic account",
+    "Panel performs no telemetry or billing mutations",
+    "Every report load explicitly bypasses the browser request cache",
+    "No React runtime error across scope, transport race, denial, account remount and empty state"
+  ],
+  "errors": [],
+  "layouts": [
+    {
+      "width": 1440,
+      "pageScroll": 1440,
+      "pageClient": 1440,
+      "main": 1204,
+      "controls": [
+        {
+          "left": 288,
+          "right": 427,
+          "width": 139,
+          "label": "Loại báo cáo\nKết quả yêu cầu\nTừng lần gọi AI"
+        },
+        {
+          "left": 439,
+          "right": 560,
+          "width": 121,
+          "label": "Nhóm theo\nModel\nTính năng\nMã tài khoản"
+        },
+        {
+          "left": 572,
+          "right": 670.71875,
+          "width": 98.71875,
+          "label": "Khoảng thời gian\n7 ngày\n14 ngày\n31 ngày"
+        },
+        {
+          "left": 682.71875,
+          "right": 791.359375,
+          "width": 108.640625,
+          "label": "Xem báo cáo"
+        }
+      ],
+      "tables": [
+        {
+          "width": 1100,
+          "scroll": 1100,
+          "overflowX": "auto"
+        }
+      ],
+      "rowHeaders": [
+        {
+          "text": "qa-private-attempt-a",
+          "cellWidth": 319.453125,
+          "innerWidth": 275.453125,
+          "unwrappedTextWidth": 131.953125,
+          "lineCount": 1,
+          "linesInsideCell": true
+        },
+        {
+          "text": "qa-observed-zero-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-",
+          "cellWidth": 319.453125,
+          "innerWidth": 275.453125,
+          "unwrappedTextWidth": 1299.73828125,
+          "lineCount": 5,
+          "linesInsideCell": true
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "pageScroll": 768,
+      "pageClient": 768,
+      "main": 768,
+      "controls": [
+        {
+          "left": 37,
+          "right": 176,
+          "width": 139,
+          "label": "Loại báo cáo\nKết quả yêu cầu\nTừng lần gọi AI"
+        },
+        {
+          "left": 188,
+          "right": 309,
+          "width": 121,
+          "label": "Nhóm theo\nModel\nTính năng\nMã tài khoản"
+        },
+        {
+          "left": 321,
+          "right": 419.71875,
+          "width": 98.71875,
+          "label": "Khoảng thời gian\n7 ngày\n14 ngày\n31 ngày"
+        },
+        {
+          "left": 431.71875,
+          "right": 540.359375,
+          "width": 108.640625,
+          "label": "Xem báo cáo"
+        }
+      ],
+      "tables": [
+        {
+          "width": 694,
+          "scroll": 912,
+          "overflowX": "auto"
+        }
+      ],
+      "rowHeaders": [
+        {
+          "text": "qa-private-attempt-a",
+          "cellWidth": 192,
+          "innerWidth": 156,
+          "unwrappedTextWidth": 131.953125,
+          "lineCount": 1,
+          "linesInsideCell": true
+        },
+        {
+          "text": "qa-observed-zero-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-",
+          "cellWidth": 192,
+          "innerWidth": 156,
+          "unwrappedTextWidth": 1299.73828125,
+          "lineCount": 10,
+          "linesInsideCell": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "pageScroll": 390,
+      "pageClient": 390,
+      "main": 390,
+      "controls": [
+        {
+          "left": 37,
+          "right": 176,
+          "width": 139,
+          "label": "Loại báo cáo\nKết quả yêu cầu\nTừng lần gọi AI"
+        },
+        {
+          "left": 188,
+          "right": 309,
+          "width": 121,
+          "label": "Nhóm theo\nModel\nTính năng\nMã tài khoản"
+        },
+        {
+          "left": 37,
+          "right": 135.71875,
+          "width": 98.71875,
+          "label": "Khoảng thời gian\n7 ngày\n14 ngày\n31 ngày"
+        },
+        {
+          "left": 147.71875,
+          "right": 256.359375,
+          "width": 108.640625,
+          "label": "Xem báo cáo"
+        }
+      ],
+      "tables": [
+        {
+          "width": 316,
+          "scroll": 912,
+          "overflowX": "auto"
+        }
+      ],
+      "rowHeaders": [
+        {
+          "text": "qa-private-attempt-a",
+          "cellWidth": 192,
+          "innerWidth": 156,
+          "unwrappedTextWidth": 131.953125,
+          "lineCount": 1,
+          "linesInsideCell": true
+        },
+        {
+          "text": "qa-observed-zero-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-long-model-key-",
+          "cellWidth": 192,
+          "innerWidth": 156,
+          "unwrappedTextWidth": 1299.73828125,
+          "lineCount": 10,
+          "linesInsideCell": true
+        }
+      ]
+    }
+  ],
+  "numberSeparation": {
+    "baseText": "5 / 2",
+    "noteText": "1 phản hồi lỗi HTTP",
+    "noteDisplay": "block",
+    "baseBottom": 649.953125,
+    "noteTop": 655.546875
+  },
+  "interceptedReportRequests": 12,
+  "paidProviderRequests": 0,
+  "actualAccounts": 0,
+  "actualProviderCosts": 0,
+  "screenshots": [
+    "docs/next/reports/v14-telemetry/qa-usage-attempts-desktop.png",
+    "docs/next/reports/v14-telemetry/qa-usage-attempts-tablet.png",
+    "docs/next/reports/v14-telemetry/qa-usage-attempts-mobile.png"
+  ],
+  "scope": "Actual UsageBreakdownPanel/CSS, synthetic authored metrics and intercepted HTTP only. Keyboard/races/390-768-1440 layout and metric rendering; not actual admin telemetry, provider costs, device or backend authorization proof.",
+  "checkedAt": "2026-10-17T07:13:46.386Z",
+  "sourceSha256": "0c8aac95ef40be6b5c8efaf1196a2e44cbb1e608d4d64d699a7c846a7c013706",
+  "cssSha256": "80f6a2e0793f7df7ec5a462dcc51b8ba45a16177b9db86d118a39bce04b51b66",
+  "browserSha256": "87104eb77db5911ea40ad45832d7a63693a5aabf3ceff29b0e60177816454468"
+}

@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import { useEffect, useId, useRef, useState } from "react";
 import { Layers, ArrowRight, Check, BookOpen, Keyboard } from "lucide-react";
 import type { Locale } from "../../lib/lumio/i18n";
@@ -272,7 +273,7 @@ export function Review({
               onClick={() => open(current.item)}
             >
               <BookOpen size={15} />
-              {current.item.title}
+              <MathText text={current.item.title} inline />
             </button>
             <span>{c.reviewSource}</span>
           </div>
@@ -391,7 +392,9 @@ export function Review({
                 >
                   <span style={{ minWidth: 0 }}>
                     <strong>{card.front}</strong>
-                    <small>{item.title}</small>
+                    <small>
+                      <MathText text={item.title} inline />
+                    </small>
                   </span>
                   <span>
                     {new Intl.DateTimeFormat(locale, {

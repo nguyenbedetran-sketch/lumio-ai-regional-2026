@@ -45,6 +45,8 @@ export type AIInput = {
   ragContext?: RagSnapshot;
   /** Server-only teacher credential flow. validateInput never copies this from client JSON. */
   teachingContext?: { kind: "lesson" | "questions" | "feedback" | "assistant" };
+  /** Server-owned immutable reservation snapshot. validateInput ignores client JSON. */
+  billingModelContext?: import("../billing/paid-policy").PaidModelContext;
 };
 export type AIResult = {
   provider: AIProviderName;

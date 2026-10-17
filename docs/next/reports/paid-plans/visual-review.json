@@ -1,0 +1,23 @@
+{
+  "reviewedAt": "2026-10-17T08:01:28.563Z",
+  "status": "PASS",
+  "scope": "All four isolated synthetic browser screenshots opened and visually reviewed. Desktop/mobile light/dark paid dialog and background pricing cards are legible; dialog intentionally scrolls vertically. No claim real payment, real account, or public deployment.",
+  "screenshots": [
+    {
+      "file": "light-1440.png",
+      "sha256": "3bf775d0ebf27c7aa70883266b89c497dfbc108a5196dac4ae717c15931452ed"
+    },
+    {
+      "file": "light-390.png",
+      "sha256": "6ae8cc1aa556f77f859b651ea8fb466e9a11636e5a50fed65e7600092ba24ca4"
+    },
+    {
+      "file": "dark-1440.png",
+      "sha256": "7363c4ff08349528a474d3adcf58be3accd58dec09a9aaf91980f85207af738e"
+    },
+    {
+      "file": "dark-390.png",
+      "sha256": "ea41981c7d64649ffc49e1b22af66ed6e8183d22c272dd2affc27fc61679c2f1"
+    }
+  ]
+}

@@ -1,0 +1,426 @@
+{
+  "status": "PASS",
+  "passed": 56,
+  "checks": [
+    "Semantic lesson heading renders once",
+    "Ordered solution steps are real list items",
+    "Table has accessible column headers",
+    "Currency and escaped dollar text produce no formula",
+    "Currency decimals remain readable",
+    "Code examples do not become math",
+    "Intentional code retains raw backslash syntax",
+    "Unsupported and URL-command math have safe readable fallbacks",
+    "Blocked math command is not default visible fallback",
+    "Untrusted fixture content creates no image iframe or script",
+    "Inline heading consumer keeps phrasing-only markup",
+    "Every rendered formula retains one MathML representation",
+    "Visual KaTeX spans are hidden from duplicate speech",
+    "Visible educational prose has no raw formula/Markdown delimiters",
+    "Vietnamese lesson accents remain present",
+    "Renderer wrappers remain inside nested narrow grid content without shell box-sizing rules {\"host\":220,\"slot\":220,\"content\":220,\"regions\":[{\"left\":0,\"right\":0},{\"left\":0,\"right\":0},{\"left\":0,\"right\":0}]}",
+    "light no page overflow at1440",
+    "light display equations own their overflow at1440",
+    "light tables own their overflow at1440",
+    "light long equation remains scrollable at1440",
+    "light no page overflow at768",
+    "light display equations own their overflow at768",
+    "light tables own their overflow at768",
+    "light long equation remains scrollable at768",
+    "light no page overflow at390",
+    "light display equations own their overflow at390",
+    "light tables own their overflow at390",
+    "light long equation remains scrollable at390",
+    "light no page overflow at320",
+    "light display equations own their overflow at320",
+    "light tables own their overflow at320",
+    "light long equation remains scrollable at320",
+    "dark no page overflow at1440",
+    "dark display equations own their overflow at1440",
+    "dark tables own their overflow at1440",
+    "dark long equation remains scrollable at1440",
+    "dark no page overflow at768",
+    "dark display equations own their overflow at768",
+    "dark tables own their overflow at768",
+    "dark long equation remains scrollable at768",
+    "dark no page overflow at390",
+    "dark display equations own their overflow at390",
+    "dark tables own their overflow at390",
+    "dark long equation remains scrollable at390",
+    "dark no page overflow at320",
+    "dark display equations own their overflow at320",
+    "dark tables own their overflow at320",
+    "dark long equation remains scrollable at320",
+    "Long formula has keyboard focus and visible focus ring",
+    "Actual light theme educational text meets4.5contrast in sampled heading/body/table/caption/math/fallback",
+    "Actual dark theme educational text meets4.5contrast in sampled heading/body/table/caption/math/fallback",
+    "Dark-screen content prints with explicit dark ink on white math surfaces",
+    "Print math region does not retain screen overflow clipping",
+    "Reloaded SSR lesson retains rendered math",
+    "No browser runtime errors",
+    "No external or provider request was attempted"
+  ],
+  "errors": [],
+  "outbound": [],
+  "layouts": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "math": [
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 908,
+          "scroll": 908,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "math": [
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 676,
+          "scroll": 676,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "math": [
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 298,
+          "scroll": 298,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "math": [
+        {
+          "client": 230,
+          "scroll": 230,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 247,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 228,
+          "scroll": 228,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "math": [
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 908,
+          "scroll": 908,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "math": [
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 676,
+          "scroll": 676,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "math": [
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 298,
+          "scroll": 298,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "math": [
+        {
+          "client": 230,
+          "scroll": 230,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 247,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 228,
+          "scroll": 228,
+          "overflow": "auto"
+        }
+      ]
+    }
+  ],
+  "contrasts": [
+    {
+      "theme": "light",
+      "samples": [
+        {
+          "selector": "[data-case=lesson] h2",
+          "ratio": 14.123948506764108
+        },
+        {
+          "selector": "[data-case=lesson] p",
+          "ratio": 14.123948506764108
+        },
+        {
+          "selector": "[data-case=lesson] th",
+          "ratio": 12.037672540618658
+        },
+        {
+          "selector": "[data-case=lesson] caption",
+          "ratio": 5.737085507479228
+        },
+        {
+          "selector": "[data-case=lesson] .katex-display",
+          "ratio": 12.037672540618658
+        },
+        {
+          "selector": "[data-case=unsupported] .lm-math-fallback",
+          "ratio": 4.889649423706823
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "samples": [
+        {
+          "selector": "[data-case=lesson] h2",
+          "ratio": 13.941278451364472
+        },
+        {
+          "selector": "[data-case=lesson] p",
+          "ratio": 13.941278451364472
+        },
+        {
+          "selector": "[data-case=lesson] th",
+          "ratio": 11.99723289574781
+        },
+        {
+          "selector": "[data-case=lesson] caption",
+          "ratio": 7.178851092886291
+        },
+        {
+          "selector": "[data-case=lesson] .katex-display",
+          "ratio": 11.99723289574781
+        },
+        {
+          "selector": "[data-case=unsupported] .lm-math-fallback",
+          "ratio": 6.177794151785348
+        }
+      ]
+    }
+  ],
+  "print": {
+    "body": "rgb(17, 17, 17)",
+    "math": "rgb(17, 17, 17)",
+    "background": "rgb(255, 255, 255)",
+    "overflow": "visible"
+  },
+  "screenshots": [
+    "docs/next/reports/content-renderer/light-1440.png",
+    "docs/next/reports/content-renderer/light-390.png",
+    "docs/next/reports/content-renderer/dark-1440.png",
+    "docs/next/reports/content-renderer/dark-390.png"
+  ],
+  "scope": "Actual shared renderer SSR in real browser with application CSS/localKaTeXfonts and authored fixtures; no server routes, OAuth, user records, model requests, screenreader hardware or all-consumer acceptance. Print checks cover computed styles, not exported PDF pagination.",
+  "checkedAt": "2026-10-17T07:42:59.444Z",
+  "sourceProof": [
+    {
+      "path": "components/lumio/math-text.tsx",
+      "sha256": "74cfb4911fad67c1063ba59685ed4594014ac52d3aff7c3e0a1da78a43f4132f"
+    },
+    {
+      "path": "lib/lumio/rich-content.ts",
+      "sha256": "c31f248d3f903a43f4801d206bd47965305499b1fb12cd81cb0ecb77792b1b15"
+    },
+    {
+      "path": "lib/lumio/math-display.ts",
+      "sha256": "68ebdeaa3046ad61c78286ecb01c3cc1dd8447c3fede76bd611ab14cfc9ab043"
+    },
+    {
+      "path": "app/ai.css",
+      "sha256": "33baa10b3d1a351eda963a11254552ba96843a6bbd13aa0ae0dfe8f27387f98f"
+    },
+    {
+      "path": "tests/content-renderer.browser.js",
+      "sha256": "2ab9432ec668556fb7c5f96e9a071e64c69e1c7a61fcbd3478de82348e93ad88"
+    }
+  ]
+}

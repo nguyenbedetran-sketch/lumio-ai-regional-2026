@@ -5,7 +5,14 @@ const fs = require("node:fs"),
   assert = require("node:assert/strict");
 const root = path.resolve(__dirname, ".."),
   folder = path.join(root, "work/v7-teaching-ui");
-function build() {
+function cssModule(filename, source) {
+  const prefix = "teaching-qa-" + require("node:crypto").createHash("sha256").update(filename).digest("hex").slice(0, 8) + "-";
+  const names = {};
+  const css = source.replace(/\.([a-zA-Z_][\w-]*)/g, (_all, name) => { names[name] = prefix + name; return "." + names[name]; });
+  return { names, css };
+}
+function build(options = {}) {
+  const folder = options.folder || path.join(root, "work/v7-teaching-ui");
   fs.mkdirSync(folder, { recursive: true });
   const cache = new Map();
   function load(filename) {
@@ -13,6 +20,7 @@ function build() {
     if (cache.has(filename)) return cache.get(filename).exports;
     const m = { exports: {} };
     cache.set(filename, m);
+    if (filename.endsWith(".css")) { m.exports = cssModule(filename, fs.readFileSync(filename, "utf8")).names; return m.exports; }
     const source = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
       compilerOptions: {
         module: ts.ModuleKind.CommonJS,
@@ -28,7 +36,7 @@ function build() {
         if (!name.startsWith(".")) return require(name);
         const base = path.resolve(path.dirname(filename), name);
         return load(
-          [base + ".tsx", base + ".ts", base + ".js"].find(fs.existsSync),
+          [base, base + ".tsx", base + ".ts", base + ".js"].find((p) => fs.existsSync(p) && fs.statSync(p).isFile()),
         );
       },
       m,
@@ -156,7 +164,7 @@ function build() {
     observedErrors(observation).find((o) => o.revision === 1).observed,
     1,
   );
-  const modules = [],
+  const modules = [], moduleCSS = [],
     ids = new Map();
   function bundle(filename) {
     if (ids.has(filename)) return ids.get(filename);
@@ -164,6 +172,7 @@ function build() {
     ids.set(filename, id);
     modules.push("");
     let source = fs.readFileSync(filename, "utf8");
+    if (filename.endsWith(".css")) { const mapped = cssModule(filename, source); moduleCSS.push(mapped.css); modules[id] = `function(module){module.exports=${JSON.stringify(mapped.names)}}`; return id; }
     if (/\.tsx?$/.test(filename))
       source = ts.transpileModule(source, {
         compilerOptions: {
@@ -214,7 +223,7 @@ function build() {
         )
         .join("\n") +
       "\n" +
-      fs.readFileSync(path.join(root, "app/teacher/workspace.css"), "utf8");
+      fs.readFileSync(path.join(root, "app/teacher/workspace.css"), "utf8") + "\n" + moduleCSS.join("\n");
   fs.writeFileSync(path.join(folder, "fixture.css"), css);
   fs.writeFileSync(
     path.join(folder, "fixture.html"),

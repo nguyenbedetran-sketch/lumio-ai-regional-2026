@@ -1,0 +1,18 @@
+{
+  "checkedAt": "2026-10-17T08:08:55.127Z",
+  "command": "pnpm test:v7",
+  "status": "FAIL",
+  "exitCode": 1,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/v7/reports/ai-evaluation-runner.json",
+    "docs/v7/reports/ai-evaluation.json",
+    "docs/v7/reports/api-safety.json",
+    "docs/v7/reports/grade-history.json",
+    "docs/v7/reports/rag-billing.json",
+    "docs/v7/reports/rag-lifecycle.json",
+    "docs/v7/reports/rag-tokenizer.json",
+    "docs/v7/reports/retakes.json"
+  ]
+}

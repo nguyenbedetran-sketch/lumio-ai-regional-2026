@@ -1347,7 +1347,7 @@ let rootAssessment, child2, child3, grantOperation, originalSnapshot;
           );
         const reopened = platform.createStore(file, options);
         try {
-          assert.equal(reopened.runtimeHealth().schemaVersion, 18);
+          assert.equal(reopened.runtimeHealth().schemaVersion, 20);
           assert.equal(
             reopened
               .readTeaching(teacher.id, teacher.sessionVersion, { orgId })
@@ -1364,7 +1364,7 @@ let rootAssessment, child2, child3, grantOperation, originalSnapshot;
       checkedAt: new Date().toISOString(),
       passed: checks.length,
       checks,
-      schemaVersion: 18,
+      schemaVersion: 20,
       providerRequests: 0,
       scope:
         "Actual teaching handlers and isolated SQLite; synthetic OAuth accounts, server clock, source questions and confirmed grades only. No provider/credit usage, real learner records, UI/deployment or secure-exam claim.",

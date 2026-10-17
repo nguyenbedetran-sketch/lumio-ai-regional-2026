@@ -143,7 +143,9 @@ export async function POST(req: Request) {
           scope,
           input.tutorProblem || input.question,
         );
-        reservation = reserveUsage({
+        // Preserve the legacy Free/Plus ordering. Paid text pricing waits for the
+        // actual selected source snapshot; a failed later step refunds any index hold.
+        if (!store.getPaidBillingPolicy(release.userId, release.sessionVersion)) reservation = reserveUsage({
           userId: release.userId,
           sessionVersion: release.sessionVersion,
           requestId,
@@ -166,6 +168,7 @@ export async function POST(req: Request) {
             task: "index",
             mode: "quick",
             kind: "text",
+            sourceCharacters: (input.tutorProblem || input.question).length,
           });
           const encoded = await embedTexts(
             [input.tutorProblem || input.question],
@@ -246,7 +249,9 @@ export async function POST(req: Request) {
       duration: input.videoRange
         ? input.videoRange.endSeconds - input.videoRange.startSeconds
         : undefined,
+      sourceCharacters: input.source.length,
     });
+    input.billingModelContext = reservation.modelPolicy;
     const result = await routeAI(input, fetch, signal, getStore().providerAttemptObserver({
       userId: release.userId, sessionVersion: release.sessionVersion,
       requestId, reservationId: reservation.reservationId,

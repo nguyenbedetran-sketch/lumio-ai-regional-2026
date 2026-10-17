@@ -27,6 +27,8 @@ import { downloadText } from "../../lib/lumio/enhancements";
 import { youtubeURL } from "../../lib/ingestion/youtube";
 import { ExperienceSkeleton } from "./experience-v2";
 import { studyV3Copy } from "../../lib/lumio/study-v3-copy";
+import { MathText } from "./math-text";
+import { contentViewCopy } from "../../lib/lumio/content-view-copy";
 type Task = "summary" | "cards" | "quiz" | "chat";
 export type StudioDrafts = {
   script: string;
@@ -235,7 +237,9 @@ export function StudyStudio({
       <div className="ls-source">
         <FileText size={13} />
         <span>{c.source}</span>
-        <strong>{item.title}</strong>
+        <strong>
+          <MathText text={item.title} inline />
+        </strong>
       </div>
       <section className="lsv-toolkit" aria-label={sc.savedWork}>
         <div className="lsv-toolkit-heading">
@@ -347,16 +351,27 @@ export function StudyStudio({
           </div>
           {panel === "audio" ? (
             <>
-              <label className="lm-field">
-                {c.script}
-                <textarea
-                  value={script}
-                  maxLength={3000}
-                  placeholder={c.noText}
-                  onChange={(e) => setScript(e.target.value)}
-                  rows={7}
-                />
-              </label>
+              {!!script && (
+                <section
+                  data-script-reading
+                  aria-label={contentViewCopy[locale].preview}
+                >
+                  <MathText text={script} />
+                </section>
+              )}
+              <details open={!script.trim()}>
+                <summary>{contentViewCopy[locale].edit}</summary>
+                <label className="lm-field">
+                  {c.script}
+                  <textarea
+                    value={script}
+                    maxLength={3000}
+                    placeholder={c.noText}
+                    onChange={(e) => setScript(e.target.value)}
+                    rows={7}
+                  />
+                </label>
+              </details>
               <div className="ls-audio-controls">
                 <label className="lm-field">
                   {c.language}
@@ -418,22 +433,33 @@ export function StudyStudio({
                 }
               >
                 <Download size={14} />
-                {c.export}
+                {c.export} · {contentViewCopy[locale].markdown}
               </button>
             </>
           ) : (
             <>
-              <textarea
-                className="ls-plan-editor"
-                aria-label={c.lesson}
-                rows={13}
-                value={plan}
-                maxLength={50000}
-                onChange={(e) => {
-                  setPlan(e.target.value);
-                  setSaved(false);
-                }}
-              />
+              {!!plan && (
+                <section
+                  data-plan-reading
+                  aria-label={contentViewCopy[locale].preview}
+                >
+                  <MathText text={plan} />
+                </section>
+              )}
+              <details open={!plan.trim()}>
+                <summary>{contentViewCopy[locale].edit}</summary>
+                <textarea
+                  className="ls-plan-editor"
+                  aria-label={c.lesson}
+                  rows={13}
+                  value={plan}
+                  maxLength={50000}
+                  onChange={(e) => {
+                    setPlan(e.target.value);
+                    setSaved(false);
+                  }}
+                />
+              </details>
               <div className="lm-row">
                 <button
                   className="lm-button primary"
@@ -461,7 +487,7 @@ export function StudyStudio({
                   }
                 >
                   <Download size={16} />
-                  {c.export}
+                  {c.export} · {contentViewCopy[locale].markdown}
                 </button>
               </div>
             </>

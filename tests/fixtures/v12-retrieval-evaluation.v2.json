@@ -1,0 +1,239 @@
+{
+  "schema": 1,
+  "id": "lumio-v12-production-retrieval-offline",
+  "version": "2.0.0",
+  "authorship": "Developer-authored synthetic passages and relevance labels. Not independent teacher review, generated answers, a student pilot or a representative semantic benchmark.",
+  "languageFixture": "tests/fixtures/v7-ai-evaluation.v1.json",
+  "cases": [
+    {
+      "id": "multi-chunk-diversification",
+      "language": "en",
+      "query": "orbital calibration reference reading",
+      "documents": [
+        {
+          "id": "crowded",
+          "title": "Notebook copies",
+          "paragraphs": [
+            {
+              "id": "copy-1",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy one."
+            },
+            {
+              "id": "copy-2",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy two."
+            },
+            {
+              "id": "copy-3",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy three."
+            },
+            {
+              "id": "copy-4",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy four."
+            },
+            {
+              "id": "copy-5",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy five."
+            },
+            {
+              "id": "copy-6",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy six."
+            },
+            {
+              "id": "copy-7",
+              "text": "Orbital calibration reference reading. Orbital calibration reference reading. Orbital calibration reference reading. Copy seven."
+            }
+          ]
+        },
+        {
+          "id": "verification",
+          "title": "Verification procedure",
+          "paragraphs": [
+            {
+              "id": "required",
+              "text": "Orbital calibration is accepted only after a second independent instrument confirms the reference reading. The technician records the instrument identifier, performs a zero check, and keeps the original measurement in the notebook for comparison before signing the result."
+            }
+          ]
+        },
+        {
+          "id": "distractor",
+          "title": "Calendar note",
+          "paragraphs": [
+            {
+              "id": "calendar",
+              "text": "The orbital calendar labels the months in the fictional archive; it describes no instrument procedure."
+            }
+          ]
+        }
+      ],
+      "relevant": [
+        "verification:required"
+      ],
+      "expect": {
+        "hits": true,
+        "conflict": false,
+        "diversificationRescuesRelevant": true
+      }
+    },
+    {
+      "id": "numeric-conflict-preserves-both",
+      "language": "en",
+      "query": "recorded reservoir volume",
+      "documents": [
+        {
+          "id": "table-a",
+          "title": "Table A",
+          "paragraphs": [
+            {
+              "id": "value",
+              "text": "Recorded reservoir volume = 20 litres. The source supplies no date or measurement conditions."
+            }
+          ]
+        },
+        {
+          "id": "table-b",
+          "title": "Table B",
+          "paragraphs": [
+            {
+              "id": "value",
+              "text": "Recorded reservoir volume = 30 litres. The source supplies no date or measurement conditions."
+            }
+          ]
+        },
+        {
+          "id": "distractor",
+          "title": "Notebook format",
+          "paragraphs": [
+            {
+              "id": "format",
+              "text": "A recorded drawing uses blue ink. The notebook contains no reservoir measurements."
+            }
+          ]
+        }
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "expect": {
+        "hits": true,
+        "conflict": true
+      }
+    },
+    {
+      "id": "literal-direction-conflict",
+      "language": "en",
+      "query": "emergency route direction",
+      "documents": [
+        {
+          "id": "east",
+          "title": "Route sheet A",
+          "paragraphs": [
+            {
+              "id": "route",
+              "text": "The emergency route direction is east. No revision date is supplied."
+            }
+          ]
+        },
+        {
+          "id": "west",
+          "title": "Route sheet B",
+          "paragraphs": [
+            {
+              "id": "route",
+              "text": "The emergency route direction is west. No revision date is supplied."
+            }
+          ]
+        }
+      ],
+      "relevant": [
+        "east:route",
+        "west:route"
+      ],
+      "expect": {
+        "hits": true,
+        "conflict": true,
+        "literalDirectionWarning": true
+      }
+    },
+    {
+      "id": "overlapping-terms-without-answer",
+      "language": "en",
+      "query": "mercury orbital mass measurement",
+      "documents": [
+        {
+          "id": "incomplete",
+          "title": "Mercury worksheet",
+          "paragraphs": [
+            {
+              "id": "scope",
+              "text": "This Mercury orbital worksheet lists observation dates. A mass measurement is not supplied in the worksheet."
+            }
+          ]
+        },
+        {
+          "id": "unrelated",
+          "title": "Geometry",
+          "paragraphs": [
+            {
+              "id": "triangle",
+              "text": "A triangle has three sides."
+            }
+          ]
+        }
+      ],
+      "relevant": [],
+      "expect": {
+        "hits": true,
+        "conflict": false,
+        "overlapDoesNotProveAnswer": true
+      }
+    },
+    {
+      "id": "selected-sources-exclude-unselected-answer",
+      "language": "en",
+      "query": "volcanic magma eruption",
+      "selectedDocuments": [
+        "geometry",
+        "biology"
+      ],
+      "documents": [
+        {
+          "id": "geometry",
+          "title": "Geometry",
+          "paragraphs": [
+            {
+              "id": "triangle",
+              "text": "A triangle has three sides."
+            }
+          ]
+        },
+        {
+          "id": "biology",
+          "title": "Biology",
+          "paragraphs": [
+            {
+              "id": "plant",
+              "text": "Leaves use sunlight to make sugar."
+            }
+          ]
+        },
+        {
+          "id": "outside",
+          "title": "Unselected geology",
+          "paragraphs": [
+            {
+              "id": "answer",
+              "text": "A volcanic magma eruption expels molten rock."
+            }
+          ]
+        }
+      ],
+      "relevant": [],
+      "expect": {
+        "hits": false,
+        "conflict": false
+      }
+    }
+  ],
+  "predecessor": "tests/fixtures/v12-retrieval-evaluation.v1.json"
+}

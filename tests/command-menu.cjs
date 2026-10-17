@@ -277,6 +277,7 @@ test("Every supported locale supplies every label and all source kind names", ()
       "file",
       "notes",
       "space",
+      "study",
       "text",
       "title",
     ]);

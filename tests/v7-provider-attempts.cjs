@@ -200,10 +200,10 @@ async function main() {
       () => {
         assert.deepEqual(store.runtimeHealth(), {
           ready: true,
-          schemaVersion: 18,
+          schemaVersion: 20,
         });
-        assert.equal(integrity.DATABASE_TABLES.length, 51);
-        assert.equal(integrity.DATABASE_GUARDS.length, 6);
+        assert.equal(integrity.DATABASE_TABLES.length, 54);
+        assert.equal(integrity.DATABASE_GUARDS.length, 11);
         assert.equal(
           db.prepare("SELECT count(*) n FROM ai_provider_attempts").get().n,
           0,
@@ -1016,7 +1016,7 @@ async function main() {
       checkedAt: new Date().toISOString(),
       passed: checks.length,
       checks,
-      schemaVersion: 18,
+      schemaVersion: 20,
       actualProviderRequests: 0,
       scope:
         "Actual temporary SQLite, Router, learner HTTP and shared summary service; injected synthetic OAuth and intercepted provider transport. Metadata-only journal, actual retention/capacity fixtures, no invoices, prices, real users or deployment.",

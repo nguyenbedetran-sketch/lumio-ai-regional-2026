@@ -1,0 +1,58 @@
+{
+  "checkedAt": "2026-10-17T08:17:58.677Z",
+  "status": "PASS",
+  "passed": 27,
+  "checks": [
+    "Vietnamese prose supports canonical inline math with accessible MathML",
+    "Legacy single-dollar formulas and double-dollar display math render once",
+    "Nested fractions, powers, subscripts and indexed roots use real mathematical markup",
+    "Aligned multi-step equations and systems render as separate display blocks",
+    "Sums, products, Greek, geometry and Vietnamese text remain supported",
+    "Display formulas embedded in a paragraph never create div-inside-p nesting",
+    "Markdown produces real headings, emphasis, ordered and unordered lists",
+    "Markdown tables keep pipe characters inside math/code and proper header semantics",
+    "Currency and escaped dollar pairs remain literal without accidental math",
+    "Explicitly paired numeric/decimal math renders while unpaired prices stay literal",
+    "Inline and fenced code protect dollars/backslashes/Markdown from rendering",
+    "Explicit math/latex code fences are formulas while ordinary code stays code",
+    "Bare common legacy commands and unmatched dollar-symbol command do not leak raw syntax",
+    "Legacy double-escaped paired math renders without globally decoding paths or code",
+    "Malformed bare math preserves the following explanation instead of swallowing it",
+    "Malformed/unsupported expressions show readable fallback instead of red/raw commands",
+    "Untrusted HTML is escaped text, never interpreted as HTML or script",
+    "Imported literal entities are not blindly decoded or interpreted as HTML",
+    "Markdown links are bounded to HTTP(S), blocked URLs never become clickable",
+    "Malicious KaTeX URLs/HTML/styles and macro state are rejected before rendering",
+    "Inline rendering remains phrasing-only inside an actual heading/button",
+    "Inline button content cannot introduce links or a nested formula tab stop",
+    "Very long math is bounded and oversized source gets an explicit display note",
+    "Many tiny formulas share one per-render budget across paragraphs and tables",
+    "Render and JSON reload are deterministic and preserve original source/citation offsets",
+    "Full lesson mixing Markdown/math/table/code is stable without a second rendering pass",
+    "Renderer imports and SSR never dispatch a network/provider call"
+  ],
+  "newProviderCalls": 0,
+  "sourceProof": [
+    {
+      "path": "components/lumio/math-text.tsx",
+      "sha256": "74cfb4911fad67c1063ba59685ed4594014ac52d3aff7c3e0a1da78a43f4132f"
+    },
+    {
+      "path": "lib/lumio/rich-content.ts",
+      "sha256": "c31f248d3f903a43f4801d206bd47965305499b1fb12cd81cb0ecb77792b1b15"
+    },
+    {
+      "path": "lib/lumio/math-display.ts",
+      "sha256": "68ebdeaa3046ad61c78286ecb01c3cc1dd8447c3fede76bd611ab14cfc9ab043"
+    },
+    {
+      "path": "app/ai.css",
+      "sha256": "33baa10b3d1a351eda963a11254552ba96843a6bbd13aa0ae0dfe8f27387f98f"
+    },
+    {
+      "path": "tests/v10-content-renderer.cjs",
+      "sha256": "a1e3dedc428cdcfd29f2a664f682244054ce937f4fc460ce3b08054b995e4af9"
+    }
+  ],
+  "scope": "Actual React SSR, real KaTeX, bounded Markdown parser and authored hostile/legacy fixtures. Not complete CommonMark/HTML, live AI quality, browser/reader/device acceptance or all application surfaces. Stored content and citation offsets unchanged."
+}

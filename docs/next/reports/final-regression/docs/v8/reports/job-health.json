@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "passed": 9,
+  "checks": [
+    {
+      "name": "Unauthenticated and ordinary users cannot inspect global queue metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "Recent admin session and exact bound account are required",
+      "status": "PASS"
+    },
+    {
+      "name": "Cross-site, bearer and arbitrary query scope are rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "An empty database returns zero stored counts and unknown wait time, not fabricated health",
+      "status": "PASS"
+    },
+    {
+      "name": "Snapshot distinguishes retained statuses, eligibility, delayed retries and expired/missing leases",
+      "status": "PASS"
+    },
+    {
+      "name": "Response contains no raw title, source, user identity, lease, model output or error text",
+      "status": "PASS"
+    },
+    {
+      "name": "Repeated reads perform no cleanup, recovery, credit change or audit mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "system.read developer role can view aggregates but learner cannot call store directly",
+      "status": "PASS"
+    },
+    {
+      "name": "Role/session revocation between route authorization and read is caught again in the transaction",
+      "status": "PASS"
+    }
+  ],
+  "checkedAt": "2026-10-17T08:17:22.389Z",
+  "providerRequests": 0,
+  "scope": "Actual admin handler and isolated SQLite with synthetic jobs; read-only aggregates, no worker/backup/public-host claim."
+}

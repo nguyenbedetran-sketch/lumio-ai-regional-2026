@@ -359,7 +359,7 @@ async function check(name, fn) {
         assert.equal(own.events[0].score, 1);
         assert.doesNotMatch(
           JSON.stringify(own),
-          /0.29|Updated public|Public internal/,
+          /"(?:score|points)":0\.29(?:[,}])|Updated public|Public internal/,
         );
         const t = await read();
         assert.equal(t.events[0].gradeVersion, 2);

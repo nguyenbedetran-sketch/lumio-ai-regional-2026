@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:13:29.240Z",
+  "checks": [
+    "Legacy missing intent stays absent from normalized receipt payload; strict enum rejects arrays/objects/numbers",
+    "Fifty re-explanations cannot advance the canonical three-progress gate or forge learner understanding",
+    "Full solution is still denied before provider or credit reservation after fifty help turns",
+    "Distinct canonical progress turns still unlock at exactly three, with stable IDs on reload",
+    "Help repeat is accepted but identical progress is rejected by parser without changing the gate",
+    "Adaptive help retains deterministic final-answer leakage guard",
+    "Help cannot clear a prior missing-data clarification lock even after recorded progress",
+    "Feedback stores closed categories privately without provider calls or credit cost, even while AI is disabled",
+    "Feedback edits use CAS and a lost-ACK replay returns current state rather than overwriting later edits",
+    "Stale revision and reused UUID with changed category cannot mutate feedback",
+    "Feedback rejects free text, unknown fields, coercible category arrays and action arrays",
+    "Owner/category-only GET projection persists, another account and stale tab account cannot read or write it",
+    "Feedback deletion erases categories while keeping only revision/hash replay metadata; repeated empty deletion is bounded",
+    "Invalid tutor intent fails before provider and credit movement at actual AI handler",
+    "Accepted adaptive API turn keeps structural count, stable identity and exact source provenance",
+    "Disabled user and revoked canonical session cannot replay feedback",
+    "Session deletion atomically cascades feedback and replay records, so old IDs cannot resurrect choices",
+    "Feedback transaction fault rolls back categories and idempotency metadata together",
+    "TTL sweep deletes both feedback choices and hashed replay metadata with expired owned content",
+    "Real schema17 clone upgrades to18 preserving existing user/turn bytes with default progress intent",
+    "Adaptive AI failure refunds held credits and duplicate completed intent cannot call the provider twice",
+    "Per-turn edit cap remains bounded but still allows erasing choices",
+    "Schema18 native snapshot restores feedback bytes, stable IDs and session intent metadata"
+  ],
+  "passed": 23,
+  "providerRequests": 0,
+  "scope": "Actual isolated SQLite/migration/handlers with synthetic identities and intercepted fake provider; no real provider, OAuth, device microphone or student validation."
+}

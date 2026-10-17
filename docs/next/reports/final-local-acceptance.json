@@ -1,0 +1,1330 @@
+{
+  "status": "PASS_LOCAL_SCOPE",
+  "checkedAt": "2026-10-17T08:24:12.298Z",
+  "schemaVersion": 20,
+  "tables": 54,
+  "immutableGuards": 11,
+  "commands": [
+    {
+      "command": "pnpm test:all",
+      "exitCode": 0,
+      "proof": "docs/next/reports/final-regression/run.json"
+    },
+    {
+      "command": "pnpm build",
+      "exitCode": 0,
+      "scope": "Final build after file-download CSP fix"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/test-v10-auth-production.cjs",
+      "exitCode": 0,
+      "proof": "docs/next/reports/compiled-auth-http-report.json"
+    },
+    {
+      "command": "node scripts/test-teaching-files-production.cjs",
+      "exitCode": 0,
+      "proof": "docs/next/reports/teaching-files/compiled-http.json"
+    },
+    {
+      "command": "node scripts/test-v9-database-standalone.cjs",
+      "exitCode": 0,
+      "scope": "Windows generated native driver; Linux remains exact-CI gate"
+    }
+  ],
+  "connectedBrowser": {
+    "status": "PASS",
+    "passed": 23,
+    "proof": "docs/next/reports/teaching-files-browser/connected-report.json"
+  },
+  "scope": "Current Windows working tree, deterministic tests, authored OIDC transport and isolated actual compiled teaching HTTP/browser with synthetic identities. No production/real-Google/learning-efficacy or full-roadmap completion claim. LF-normalized hashes allow later exact Git source binding without treating CRLF conversion as a runtime change.",
+  "sourceFiles": {
+    "app/admin/admin.css": {
+      "worktreeSha256": "be2f7893b7adae68a311da241a9e01dee2a24885682bb58b1931162c3be16c9e",
+      "lfNormalizedSha256": "fb40c009cddb88497af8f21535d4812d69f3e7f41a6a85d9502d1022d8151fa4"
+    },
+    "app/admin/page.tsx": {
+      "worktreeSha256": "c6a5c0ecac23f39bd95d56d5795bfae6f2d0e060faf36ee1b000f4f3dc587c4a",
+      "lfNormalizedSha256": "c6a5c0ecac23f39bd95d56d5795bfae6f2d0e060faf36ee1b000f4f3dc587c4a"
+    },
+    "app/ai.css": {
+      "worktreeSha256": "33baa10b3d1a351eda963a11254552ba96843a6bbd13aa0ae0dfe8f27387f98f",
+      "lfNormalizedSha256": "33baa10b3d1a351eda963a11254552ba96843a6bbd13aa0ae0dfe8f27387f98f"
+    },
+    "app/api/account/link/route.ts": {
+      "worktreeSha256": "ab536a531d2fe8f236c6b7cf5a42b3f078167c3b5ac8407f764227121232ae20",
+      "lfNormalizedSha256": "ab536a531d2fe8f236c6b7cf5a42b3f078167c3b5ac8407f764227121232ae20"
+    },
+    "app/api/account/route.ts": {
+      "worktreeSha256": "e29d181a7a83ff6d02fcaa34cc96ea26262288ed70ac377f04ebd0598674aa2f",
+      "lfNormalizedSha256": "e29d181a7a83ff6d02fcaa34cc96ea26262288ed70ac377f04ebd0598674aa2f"
+    },
+    "app/api/admin/audit/route.ts": {
+      "worktreeSha256": "6a1120fb3af4300624d40f0caa8143d1755208ca55b0152c1d111bec21410082",
+      "lfNormalizedSha256": "6a1120fb3af4300624d40f0caa8143d1755208ca55b0152c1d111bec21410082"
+    },
+    "app/api/admin/flags/route.ts": {
+      "worktreeSha256": "c81fcf50e28890ec03ad94ce5ef02d1363abc534f794828e661ab1df61dca57f",
+      "lfNormalizedSha256": "c81fcf50e28890ec03ad94ce5ef02d1363abc534f794828e661ab1df61dca57f"
+    },
+    "app/api/admin/jobs/route.ts": {
+      "worktreeSha256": "e56cc06c36dfc74779f1516191dea0a4cb3b162c01411b8b1bccc569f4019e07",
+      "lfNormalizedSha256": "e56cc06c36dfc74779f1516191dea0a4cb3b162c01411b8b1bccc569f4019e07"
+    },
+    "app/api/admin/route.ts": {
+      "worktreeSha256": "a01d0ed5dec20cf06698072cb5be46ec03e19a5f4465f2426da2a50a3f507664",
+      "lfNormalizedSha256": "a01d0ed5dec20cf06698072cb5be46ec03e19a5f4465f2426da2a50a3f507664"
+    },
+    "app/api/admin/teachers/route.ts": {
+      "worktreeSha256": "339e3756f1ccff1add69fbc12a46dddb8be931956bcef463f22ed58bd1d25683",
+      "lfNormalizedSha256": "339e3756f1ccff1add69fbc12a46dddb8be931956bcef463f22ed58bd1d25683"
+    },
+    "app/api/admin/usage/route.ts": {
+      "worktreeSha256": "0c17691a234b3f47df77a38c7f658e2051681471f0297c3450b60cea9653acac",
+      "lfNormalizedSha256": "0c17691a234b3f47df77a38c7f658e2051681471f0297c3450b60cea9653acac"
+    },
+    "app/api/admin/users/route.ts": {
+      "worktreeSha256": "d85ce1bef88e2e38d6eae76daf26bed1e00f62897fe4a74d4060d5b3ff66d13a",
+      "lfNormalizedSha256": "d85ce1bef88e2e38d6eae76daf26bed1e00f62897fe4a74d4060d5b3ff66d13a"
+    },
+    "app/api/ai/request/route.ts": {
+      "worktreeSha256": "32c8daf8543d837063ee2935135d745eb9f73437dc0a4b539c43110a276f569f",
+      "lfNormalizedSha256": "32c8daf8543d837063ee2935135d745eb9f73437dc0a4b539c43110a276f569f"
+    },
+    "app/api/ai/route.ts": {
+      "worktreeSha256": "4c09da376cd5b21ea8a7e8b9f0412f17b2e9385843ba032b2954ab67376fe95e",
+      "lfNormalizedSha256": "4c09da376cd5b21ea8a7e8b9f0412f17b2e9385843ba032b2954ab67376fe95e"
+    },
+    "app/api/auth/[...nextauth]/route.ts": {
+      "worktreeSha256": "008b29764c9ff967720f11f4ac26aee2dcfec191984c93eff792056cc8191c08",
+      "lfNormalizedSha256": "008b29764c9ff967720f11f4ac26aee2dcfec191984c93eff792056cc8191c08"
+    },
+    "app/api/billing/admin/route.ts": {
+      "worktreeSha256": "68d2c1d357fae6243f39cbf8caf6adf6e321cdaa601becfb415bd23a4817c65b",
+      "lfNormalizedSha256": "68d2c1d357fae6243f39cbf8caf6adf6e321cdaa601becfb415bd23a4817c65b"
+    },
+    "app/api/billing/catalog/route.ts": {
+      "worktreeSha256": "1335607a151787525f6894d5ded1e658bc5f72ed04f920bfba00dfeee16f02b0",
+      "lfNormalizedSha256": "1335607a151787525f6894d5ded1e658bc5f72ed04f920bfba00dfeee16f02b0"
+    },
+    "app/api/billing/checkout/route.ts": {
+      "worktreeSha256": "a4bec54c73670319ed1a88a0315f2e450b856adeb4a3c90c37fca1562a64bca6",
+      "lfNormalizedSha256": "a4bec54c73670319ed1a88a0315f2e450b856adeb4a3c90c37fca1562a64bca6"
+    },
+    "app/api/billing/paid-policy/route.ts": {
+      "worktreeSha256": "95c751753494eb2cefdc553965f50e1ded77dd0bd12a995be6325c4fdee17b73",
+      "lfNormalizedSha256": "95c751753494eb2cefdc553965f50e1ded77dd0bd12a995be6325c4fdee17b73"
+    },
+    "app/api/billing/quote/route.ts": {
+      "worktreeSha256": "0975728a92a527f3bcbdc98a5056832f0ca74c7e664e973a27df1af23b4def6b",
+      "lfNormalizedSha256": "0975728a92a527f3bcbdc98a5056832f0ca74c7e664e973a27df1af23b4def6b"
+    },
+    "app/api/billing/route.ts": {
+      "worktreeSha256": "5be75d0ca12ed09ac6b84fafc597f087c8e004fbb4ca0e0a8ad4b427eeafa87d",
+      "lfNormalizedSha256": "5be75d0ca12ed09ac6b84fafc597f087c8e004fbb4ca0e0a8ad4b427eeafa87d"
+    },
+    "app/api/billing/subscription/route.ts": {
+      "worktreeSha256": "d37c6c674bf1f18345939d42d84a132382f51275c364b3c18a79b0ce1c87b42a",
+      "lfNormalizedSha256": "d37c6c674bf1f18345939d42d84a132382f51275c364b3c18a79b0ce1c87b42a"
+    },
+    "app/api/config/route.ts": {
+      "worktreeSha256": "291ffb274f91e7f2f6c7d3bcd98ff3deeeb6145db7f90df6ccdb220b1d4ea72f",
+      "lfNormalizedSha256": "291ffb274f91e7f2f6c7d3bcd98ff3deeeb6145db7f90df6ccdb220b1d4ea72f"
+    },
+    "app/api/desktop/health/route.ts": {
+      "worktreeSha256": "c881499fbc7c7403e06d1e74e0dea38f3212536016159899a5c47da855ee7e6e",
+      "lfNormalizedSha256": "c881499fbc7c7403e06d1e74e0dea38f3212536016159899a5c47da855ee7e6e"
+    },
+    "app/api/health/route.ts": {
+      "worktreeSha256": "e52d12f01b42fc2750d942e0a4442b2606687b34cbe58145ad15c1f1f60b374d",
+      "lfNormalizedSha256": "e52d12f01b42fc2750d942e0a4442b2606687b34cbe58145ad15c1f1f60b374d"
+    },
+    "app/api/ingest-document/route.ts": {
+      "worktreeSha256": "8612bd99857d8f6e01237e71892cd4f048fb701d4155890b3b33ddfac8115a0e",
+      "lfNormalizedSha256": "8612bd99857d8f6e01237e71892cd4f048fb701d4155890b3b33ddfac8115a0e"
+    },
+    "app/api/ingest/route.ts": {
+      "worktreeSha256": "320bd34afae7567efe318317fd90c6baaf4f598738ca195f5f73512706eb0992",
+      "lfNormalizedSha256": "320bd34afae7567efe318317fd90c6baaf4f598738ca195f5f73512706eb0992"
+    },
+    "app/api/mobile/account/route.ts": {
+      "worktreeSha256": "29cf9732c32c2ade63e3dac2d8e7d311923c7a8d9f5a89b9457728e3a87798a3",
+      "lfNormalizedSha256": "29cf9732c32c2ade63e3dac2d8e7d311923c7a8d9f5a89b9457728e3a87798a3"
+    },
+    "app/api/mobile/devices/route.ts": {
+      "worktreeSha256": "566ab592e30781eb6b8f700d89029d604ab7032f2673f3c5a00c247fe104c871",
+      "lfNormalizedSha256": "566ab592e30781eb6b8f700d89029d604ab7032f2673f3c5a00c247fe104c871"
+    },
+    "app/api/mobile/pair/exchange/route.ts": {
+      "worktreeSha256": "8a9db69064fe7d066cba0baf073049c22274a81ee98ecefa7f952e212c2cf815",
+      "lfNormalizedSha256": "8a9db69064fe7d066cba0baf073049c22274a81ee98ecefa7f952e212c2cf815"
+    },
+    "app/api/rag/documents/route.ts": {
+      "worktreeSha256": "d68d96d78bf4eeadb02547709764174dea7d6fae0ace9aabb92a97ffce1a0c7e",
+      "lfNormalizedSha256": "d68d96d78bf4eeadb02547709764174dea7d6fae0ace9aabb92a97ffce1a0c7e"
+    },
+    "app/api/rag/search/route.ts": {
+      "worktreeSha256": "5f0a4f208e1c3015b710b5e7db624d615104b983cc90a67f96a5872a51b63e7d",
+      "lfNormalizedSha256": "5f0a4f208e1c3015b710b5e7db624d615104b983cc90a67f96a5872a51b63e7d"
+    },
+    "app/api/summary-jobs/route.ts": {
+      "worktreeSha256": "a7db6d819b422474ee031a554b432188eb7d194a024b4cf56e8f354daa57cc25",
+      "lfNormalizedSha256": "a7db6d819b422474ee031a554b432188eb7d194a024b4cf56e8f354daa57cc25"
+    },
+    "app/api/sync/route.ts": {
+      "worktreeSha256": "f4fd09c3ba20f032e790b7ea62fb2a3aa1e5050f0659f206799d96ee394197b4",
+      "lfNormalizedSha256": "f4fd09c3ba20f032e790b7ea62fb2a3aa1e5050f0659f206799d96ee394197b4"
+    },
+    "app/api/teacher-application/route.ts": {
+      "worktreeSha256": "7f2d00bde3d45f5d6cb572d5c6bd339819d21c33f68087a0fdf47d16846dcc8f",
+      "lfNormalizedSha256": "7f2d00bde3d45f5d6cb572d5c6bd339819d21c33f68087a0fdf47d16846dcc8f"
+    },
+    "app/api/teaching/export/route.ts": {
+      "worktreeSha256": "4173b1d19befccae3c673b17c49fdd95f149406b468c2217f2f6e1eff9ac5ce9",
+      "lfNormalizedSha256": "4173b1d19befccae3c673b17c49fdd95f149406b468c2217f2f6e1eff9ac5ce9"
+    },
+    "app/api/teaching/files/[id]/route.ts": {
+      "worktreeSha256": "8d72e57bef05ae54de34b29d713df639f2ee4f5d0d5c69960cbbc25fbc242b97",
+      "lfNormalizedSha256": "8d72e57bef05ae54de34b29d713df639f2ee4f5d0d5c69960cbbc25fbc242b97"
+    },
+    "app/api/teaching/files/route.ts": {
+      "worktreeSha256": "764652b893a74ef1d903c2fb0a5a92e9c50245fb4d0ed546e1dd146c41afc1f3",
+      "lfNormalizedSha256": "764652b893a74ef1d903c2fb0a5a92e9c50245fb4d0ed546e1dd146c41afc1f3"
+    },
+    "app/api/teaching/generate/route.ts": {
+      "worktreeSha256": "c2ab88dcb0f9ba70a3f7d4df2f27f4d292a6d2166218601e193a8c6694d4966d",
+      "lfNormalizedSha256": "c2ab88dcb0f9ba70a3f7d4df2f27f4d292a6d2166218601e193a8c6694d4966d"
+    },
+    "app/api/teaching/grade-history/route.ts": {
+      "worktreeSha256": "32113b55989672b43f761a73634490ce5e52fd2d89f9b0105805f6685e3a3c0b",
+      "lfNormalizedSha256": "32113b55989672b43f761a73634490ce5e52fd2d89f9b0105805f6685e3a3c0b"
+    },
+    "app/api/teaching/route.ts": {
+      "worktreeSha256": "d175a7b4661850c3d4a0560262ebfae886aa6ce7edc88b61d91ef6c74bcb74ac",
+      "lfNormalizedSha256": "d175a7b4661850c3d4a0560262ebfae886aa6ce7edc88b61d91ef6c74bcb74ac"
+    },
+    "app/api/tutor/feedback/route.ts": {
+      "worktreeSha256": "0a1a7d745994709dc8ef0156007f2ed27ddea669370aa55c8e859427fa64bcfc",
+      "lfNormalizedSha256": "0a1a7d745994709dc8ef0156007f2ed27ddea669370aa55c8e859427fa64bcfc"
+    },
+    "app/api/tutor/session/route.ts": {
+      "worktreeSha256": "db53901ed8d27c5c00e2c8bf825a20824564e2a48029310941d3a1a059d083a1",
+      "lfNormalizedSha256": "db53901ed8d27c5c00e2c8bf825a20824564e2a48029310941d3a1a059d083a1"
+    },
+    "app/api/voice/route.ts": {
+      "worktreeSha256": "099541b5dcd8c89e9ea6035a38c251d2aece75f473a793aae911672b748e7680",
+      "lfNormalizedSha256": "099541b5dcd8c89e9ea6035a38c251d2aece75f473a793aae911672b748e7680"
+    },
+    "app/billing.css": {
+      "worktreeSha256": "e0817f4b62fae9edd31ecba23023246987fbdbc8d10c6ed79d3cb54c3d95aabb",
+      "lfNormalizedSha256": "e0817f4b62fae9edd31ecba23023246987fbdbc8d10c6ed79d3cb54c3d95aabb"
+    },
+    "app/classroom/page.tsx": {
+      "worktreeSha256": "70f98a88cc9318f6ee1b37c785d7082a3e255ae8ee715151fa5b83d64ec716d5",
+      "lfNormalizedSha256": "70f98a88cc9318f6ee1b37c785d7082a3e255ae8ee715151fa5b83d64ec716d5"
+    },
+    "app/command-menu.css": {
+      "worktreeSha256": "89191627a6204818875408eb337437e20b668689eede620268bbd061d3ce7761",
+      "lfNormalizedSha256": "89191627a6204818875408eb337437e20b668689eede620268bbd061d3ce7761"
+    },
+    "app/connections.css": {
+      "worktreeSha256": "f396164b7f023293a88b7be3862c5691931b2939c688160299e8f3295c0b4224",
+      "lfNormalizedSha256": "f396164b7f023293a88b7be3862c5691931b2939c688160299e8f3295c0b4224"
+    },
+    "app/dashboard-v3.css": {
+      "worktreeSha256": "69dba8afa37e62f0dcb0b853be738fe66d7228fc0c92ab078e72fbb3d1fea311",
+      "lfNormalizedSha256": "69dba8afa37e62f0dcb0b853be738fe66d7228fc0c92ab078e72fbb3d1fea311"
+    },
+    "app/data-deletion/page.tsx": {
+      "worktreeSha256": "4b956f6d5eadb76a02661451c17faa0541272bd52e7c8640882df533f5518a81",
+      "lfNormalizedSha256": "4b956f6d5eadb76a02661451c17faa0541272bd52e7c8640882df533f5518a81"
+    },
+    "app/experience.css": {
+      "worktreeSha256": "055010a5eeb176aa88c680758ea64f40179372d1d12b4acd8c874804c9939af5",
+      "lfNormalizedSha256": "055010a5eeb176aa88c680758ea64f40179372d1d12b4acd8c874804c9939af5"
+    },
+    "app/full-summary.css": {
+      "worktreeSha256": "9c67e0966bfac6aee4707614d4329a9eb8ab9de7589bab3a24cd77359cddc05d",
+      "lfNormalizedSha256": "9c67e0966bfac6aee4707614d4329a9eb8ab9de7589bab3a24cd77359cddc05d"
+    },
+    "app/layout.tsx": {
+      "worktreeSha256": "e8b3291939b8cddc127da45f1fcc391f7d9443b78bb722037c58d8e584b3b06d",
+      "lfNormalizedSha256": "e8b3291939b8cddc127da45f1fcc391f7d9443b78bb722037c58d8e584b3b06d"
+    },
+    "app/learner-v7.css": {
+      "worktreeSha256": "dde46d42d5af19b1c6c96ca76046f330897853b718e199eb4fc4de454859d37a",
+      "lfNormalizedSha256": "dde46d42d5af19b1c6c96ca76046f330897853b718e199eb4fc4de454859d37a"
+    },
+    "app/learning-extra.css": {
+      "worktreeSha256": "0c82cb5c57f45c67441319513c163cc275122d9f2de59f6df63e0e4081f717ce",
+      "lfNormalizedSha256": "0c82cb5c57f45c67441319513c163cc275122d9f2de59f6df63e0e4081f717ce"
+    },
+    "app/lumio.css": {
+      "worktreeSha256": "3e1f84f7d0fd727a8d1f89acd133e8b4785743e6fd6ee3565fc180fc45b54c86",
+      "lfNormalizedSha256": "3e1f84f7d0fd727a8d1f89acd133e8b4785743e6fd6ee3565fc180fc45b54c86"
+    },
+    "app/manifest.ts": {
+      "worktreeSha256": "9c7f4691c3da15d3f952cc657e7d84fe7822e2980fb0e14a353205eb3ab1a350",
+      "lfNormalizedSha256": "9c7f4691c3da15d3f952cc657e7d84fe7822e2980fb0e14a353205eb3ab1a350"
+    },
+    "app/meeting.css": {
+      "worktreeSha256": "20ff7cc92012b3c391f8d452ff8aa79de9b57ccfe4cb2069c5a39aa3d42c0258",
+      "lfNormalizedSha256": "20ff7cc92012b3c391f8d452ff8aa79de9b57ccfe4cb2069c5a39aa3d42c0258"
+    },
+    "app/mobile.css": {
+      "worktreeSha256": "90d502e8b4703987dba56c3deeebfe579690126be4ff9e9942b114b16cd02153",
+      "lfNormalizedSha256": "90d502e8b4703987dba56c3deeebfe579690126be4ff9e9942b114b16cd02153"
+    },
+    "app/mobile/page.tsx": {
+      "worktreeSha256": "c3282a889e2d2541f461e03d42878cf1abc90b325a8cb7adcc4ee018a8f9b60f",
+      "lfNormalizedSha256": "c3282a889e2d2541f461e03d42878cf1abc90b325a8cb7adcc4ee018a8f9b60f"
+    },
+    "app/motion-v2.css": {
+      "worktreeSha256": "01624cfa1543339a0b336200976b2a54d250a268b9d2ac3b3cd65df2a7cf2909",
+      "lfNormalizedSha256": "01624cfa1543339a0b336200976b2a54d250a268b9d2ac3b3cd65df2a7cf2909"
+    },
+    "app/motion.css": {
+      "worktreeSha256": "db26c65145b82a9eb6d101766056ae2328b2f946920b155f959c1cf21e80d74e",
+      "lfNormalizedSha256": "db26c65145b82a9eb6d101766056ae2328b2f946920b155f959c1cf21e80d74e"
+    },
+    "app/not-found.module.css": {
+      "worktreeSha256": "d1b459c4285a79bddba34ff6ee690949acc4784be410e3365e816731b363666d",
+      "lfNormalizedSha256": "d1b459c4285a79bddba34ff6ee690949acc4784be410e3365e816731b363666d"
+    },
+    "app/not-found.tsx": {
+      "worktreeSha256": "c3630216dd62a184373eb9cf0ef0abac84de0b143b907eb82ef0e80cf9c90485",
+      "lfNormalizedSha256": "c3630216dd62a184373eb9cf0ef0abac84de0b143b907eb82ef0e80cf9c90485"
+    },
+    "app/page.tsx": {
+      "worktreeSha256": "f7ddfda50475fd263ef58e173214dc9632bb71029d4528a2f6ef7bed98091829",
+      "lfNormalizedSha256": "f7ddfda50475fd263ef58e173214dc9632bb71029d4528a2f6ef7bed98091829"
+    },
+    "app/personalization.css": {
+      "worktreeSha256": "09d64c25e3193f9ec59f2cbcb5df698651e71d0b6a91668e12730c68bfe9fd68",
+      "lfNormalizedSha256": "09d64c25e3193f9ec59f2cbcb5df698651e71d0b6a91668e12730c68bfe9fd68"
+    },
+    "app/policy.css": {
+      "worktreeSha256": "67d157f803b81925de0e1cb4a852c7db8439aeb356dc1e126147a91251c8f416",
+      "lfNormalizedSha256": "67d157f803b81925de0e1cb4a852c7db8439aeb356dc1e126147a91251c8f416"
+    },
+    "app/polish.css": {
+      "worktreeSha256": "e219644dae467866aa8073240507fa1a22566ea5fb18a0cbbea1b594fd614c4d",
+      "lfNormalizedSha256": "e219644dae467866aa8073240507fa1a22566ea5fb18a0cbbea1b594fd614c4d"
+    },
+    "app/premium-v3.css": {
+      "worktreeSha256": "71847b455a8ec178151736ddef02a3c533ef06c7bfe209bed26fc7f99d2526b2",
+      "lfNormalizedSha256": "71847b455a8ec178151736ddef02a3c533ef06c7bfe209bed26fc7f99d2526b2"
+    },
+    "app/privacy/page.tsx": {
+      "worktreeSha256": "e25e61b7b05ec39466800a053b21ecbdf2f25ed75984c3939fbc0cd18f71a51d",
+      "lfNormalizedSha256": "e25e61b7b05ec39466800a053b21ecbdf2f25ed75984c3939fbc0cd18f71a51d"
+    },
+    "app/public-demo.css": {
+      "worktreeSha256": "658ec6c2c93aeca8a5ced3b619b3262f82fc2b8936ab682ca42b15ad010f6954",
+      "lfNormalizedSha256": "658ec6c2c93aeca8a5ced3b619b3262f82fc2b8936ab682ca42b15ad010f6954"
+    },
+    "app/regional.css": {
+      "worktreeSha256": "878600e7d903ec7b5389bbdc821b24d8aa1e31c25fbab20337d48dbfc2f107e7",
+      "lfNormalizedSha256": "878600e7d903ec7b5389bbdc821b24d8aa1e31c25fbab20337d48dbfc2f107e7"
+    },
+    "app/robots.ts": {
+      "worktreeSha256": "c75c215d01b9628384a362cde4445d9e2636d6343c2bef8673c128dfd5364cf8",
+      "lfNormalizedSha256": "c75c215d01b9628384a362cde4445d9e2636d6343c2bef8673c128dfd5364cf8"
+    },
+    "app/sitemap.ts": {
+      "worktreeSha256": "1fde6f516d3f391635ecfb3c91c10742734c4cbac2b5f2a5b3c6006787702266",
+      "lfNormalizedSha256": "1fde6f516d3f391635ecfb3c91c10742734c4cbac2b5f2a5b3c6006787702266"
+    },
+    "app/studio.css": {
+      "worktreeSha256": "2b5612a414f81fdbb7f0008c967d1ac60006a596883049179f14b5cb05d5aa28",
+      "lfNormalizedSha256": "2b5612a414f81fdbb7f0008c967d1ac60006a596883049179f14b5cb05d5aa28"
+    },
+    "app/study-v3.css": {
+      "worktreeSha256": "3b483051ebe4e57ba5172510534291a4e6f6beb9b40782f38f99d0c7987d05eb",
+      "lfNormalizedSha256": "3b483051ebe4e57ba5172510534291a4e6f6beb9b40782f38f99d0c7987d05eb"
+    },
+    "app/teacher/page.tsx": {
+      "worktreeSha256": "1162cbe9c100651b832977e7d8eb9b648e7518ecb3a91f44adf46184cdc5b024",
+      "lfNormalizedSha256": "1162cbe9c100651b832977e7d8eb9b648e7518ecb3a91f44adf46184cdc5b024"
+    },
+    "app/teacher/teacher.css": {
+      "worktreeSha256": "511f89764832da6c17e9a737b79875407f6424eee1091ddc8fa3e7feafdd7e2d",
+      "lfNormalizedSha256": "511f89764832da6c17e9a737b79875407f6424eee1091ddc8fa3e7feafdd7e2d"
+    },
+    "app/teacher/workspace.css": {
+      "worktreeSha256": "041ba404a76bd38ba83751b5987f1260127701bd0d5b213ac878d0c7c5e4c2d7",
+      "lfNormalizedSha256": "041ba404a76bd38ba83751b5987f1260127701bd0d5b213ac878d0c7c5e4c2d7"
+    },
+    "app/terms/page.tsx": {
+      "worktreeSha256": "d8cf6aab9061ff7f9e9a341019b53ac593b37ef200e7d0044b54cb234a56dc75",
+      "lfNormalizedSha256": "d8cf6aab9061ff7f9e9a341019b53ac593b37ef200e7d0044b54cb234a56dc75"
+    },
+    "app/voice.css": {
+      "worktreeSha256": "eb42ac2466e26ef4ea2c205d469b3da511771707d43accceb31f3e1097c16589",
+      "lfNormalizedSha256": "eb42ac2466e26ef4ea2c205d469b3da511771707d43accceb31f3e1097c16589"
+    },
+    "components/admin/console.tsx": {
+      "worktreeSha256": "ef489904de05f1e471ba72b166fd88311250db85fdb057dc61ab803979c35304",
+      "lfNormalizedSha256": "ef489904de05f1e471ba72b166fd88311250db85fdb057dc61ab803979c35304"
+    },
+    "components/admin/job-health.tsx": {
+      "worktreeSha256": "702295913d18443efcd5c19937c87100e6b666f7dc414b15be521b23130be557",
+      "lfNormalizedSha256": "702295913d18443efcd5c19937c87100e6b666f7dc414b15be521b23130be557"
+    },
+    "components/admin/paid-plan-policy.tsx": {
+      "worktreeSha256": "6560eac9be1c1333a0a9146f31fba011e287c781b4939c7b8c79bdf3b3dea7fc",
+      "lfNormalizedSha256": "5c6d8ce8b314a8c499366cbe1992f51f7efb1c05a2738e18b0818a0503473f08"
+    },
+    "components/admin/teacher-review.tsx": {
+      "worktreeSha256": "be02bd5e5d1cf6d38485c269489676c68f7a339888e80ea4bbd65ec6bf1f9aa4",
+      "lfNormalizedSha256": "be02bd5e5d1cf6d38485c269489676c68f7a339888e80ea4bbd65ec6bf1f9aa4"
+    },
+    "components/admin/usage-breakdown.tsx": {
+      "worktreeSha256": "0c8aac95ef40be6b5c8efaf1196a2e44cbb1e608d4d64d699a7c846a7c013706",
+      "lfNormalizedSha256": "0c8aac95ef40be6b5c8efaf1196a2e44cbb1e608d4d64d699a7c846a7c013706"
+    },
+    "components/lumio/LoadingSkeleton.module.css": {
+      "worktreeSha256": "16aef3c0e76c7befaaa2dc3ee1099486a70dec1944aaa251d00735ff765c5c62",
+      "lfNormalizedSha256": "16aef3c0e76c7befaaa2dc3ee1099486a70dec1944aaa251d00735ff765c5c62"
+    },
+    "components/lumio/LoadingSkeleton.tsx": {
+      "worktreeSha256": "fec730b44d2d8a8f65e1f9dd1a177164947e978ee28329146e0e5b02add25f4f",
+      "lfNormalizedSha256": "fec730b44d2d8a8f65e1f9dd1a177164947e978ee28329146e0e5b02add25f4f"
+    },
+    "components/lumio/account-connections.tsx": {
+      "worktreeSha256": "1a8d89163107de9a4fbbd08b40e3c530c803bd7d3e920647843a550d9029e553",
+      "lfNormalizedSha256": "1a8d89163107de9a4fbbd08b40e3c530c803bd7d3e920647843a550d9029e553"
+    },
+    "components/lumio/account-scope.tsx": {
+      "worktreeSha256": "6aaa04df498b04fba2ccc6ed990757d8822b4eaf9621bc4ea138f7e2a771cdd6",
+      "lfNormalizedSha256": "6aaa04df498b04fba2ccc6ed990757d8822b4eaf9621bc4ea138f7e2a771cdd6"
+    },
+    "components/lumio/add-content.tsx": {
+      "worktreeSha256": "8a177a3eafd269a1a3e2b388e45632dc91b8574f0a2bd7cd4f25dde1a96c784d",
+      "lfNormalizedSha256": "8a177a3eafd269a1a3e2b388e45632dc91b8574f0a2bd7cd4f25dde1a96c784d"
+    },
+    "components/lumio/ai-panel.tsx": {
+      "worktreeSha256": "82e051c2309df85340bde87ad12aa56d9e08d8ebc4be5a5b9cec5d1ebd83219a",
+      "lfNormalizedSha256": "82e051c2309df85340bde87ad12aa56d9e08d8ebc4be5a5b9cec5d1ebd83219a"
+    },
+    "components/lumio/app.tsx": {
+      "worktreeSha256": "d6c09674bf049850b4774a518a1a53d203a9aac678d7b9bd27c9b9bd7e701ce8",
+      "lfNormalizedSha256": "d6c09674bf049850b4774a518a1a53d203a9aac678d7b9bd27c9b9bd7e701ce8"
+    },
+    "components/lumio/audio-readout.tsx": {
+      "worktreeSha256": "59927d2fe9ecbb045c2e6428097a8864a4d8d041e677a9995efde37ff2bab17a",
+      "lfNormalizedSha256": "59927d2fe9ecbb045c2e6428097a8864a4d8d041e677a9995efde37ff2bab17a"
+    },
+    "components/lumio/billing.tsx": {
+      "worktreeSha256": "706cbb30e56a503bfc1642df3464f8a548cb71eaf73e6e542a48996d2df2f6e8",
+      "lfNormalizedSha256": "706cbb30e56a503bfc1642df3464f8a548cb71eaf73e6e542a48996d2df2f6e8"
+    },
+    "components/lumio/brand.tsx": {
+      "worktreeSha256": "347418518202a395fef35329f7fcfc4d1543c1736abfd7d9a46b0b5fa1496100",
+      "lfNormalizedSha256": "347418518202a395fef35329f7fcfc4d1543c1736abfd7d9a46b0b5fa1496100"
+    },
+    "components/lumio/command-menu.tsx": {
+      "worktreeSha256": "82320c4eab53b68ff5acd35231a071bbd28aa65c2b3103afb8b5a9362a3df143",
+      "lfNormalizedSha256": "82320c4eab53b68ff5acd35231a071bbd28aa65c2b3103afb8b5a9362a3df143"
+    },
+    "components/lumio/dashboard-motion.tsx": {
+      "worktreeSha256": "e6699ee0128fca56f7b85a722e102b0f6f6d651d586bb4bb0a779cdc9e90996b",
+      "lfNormalizedSha256": "e6699ee0128fca56f7b85a722e102b0f6f6d651d586bb4bb0a779cdc9e90996b"
+    },
+    "components/lumio/dashboard.tsx": {
+      "worktreeSha256": "c75b57d3d13f1ac568b5f4661b95e0773279b68b21f118a4761dc93026a31779",
+      "lfNormalizedSha256": "c75b57d3d13f1ac568b5f4661b95e0773279b68b21f118a4761dc93026a31779"
+    },
+    "components/lumio/dialog.tsx": {
+      "worktreeSha256": "44a22501a6bcd2e86a58bf2a259f404f345b08f141efbfc07c8729fa9cefeebf",
+      "lfNormalizedSha256": "44a22501a6bcd2e86a58bf2a259f404f345b08f141efbfc07c8729fa9cefeebf"
+    },
+    "components/lumio/document-extraction.tsx": {
+      "worktreeSha256": "59956ee108a7a4d29b4943bec0dea40c8ffb7def6642cdbe8726020e304ab26d",
+      "lfNormalizedSha256": "59956ee108a7a4d29b4943bec0dea40c8ffb7def6642cdbe8726020e304ab26d"
+    },
+    "components/lumio/experience-v2.tsx": {
+      "worktreeSha256": "3e2b76069c21ee94c8cfe9936c12387057e1e570b9adfc23aa5b6eb856b571a8",
+      "lfNormalizedSha256": "3e2b76069c21ee94c8cfe9936c12387057e1e570b9adfc23aa5b6eb856b571a8"
+    },
+    "components/lumio/focus-timer.tsx": {
+      "worktreeSha256": "ce8d791a1ba86726e10e49a260bf9fb9ac12bb6618464a37b95bb413a243dd13",
+      "lfNormalizedSha256": "ce8d791a1ba86726e10e49a260bf9fb9ac12bb6618464a37b95bb413a243dd13"
+    },
+    "components/lumio/home-v8.module.css": {
+      "worktreeSha256": "300dd96180fcb9da9cef286d84dadb51bce550a952db4116b5ded938fd85ebca",
+      "lfNormalizedSha256": "300dd96180fcb9da9cef286d84dadb51bce550a952db4116b5ded938fd85ebca"
+    },
+    "components/lumio/learning-plan.module.css": {
+      "worktreeSha256": "ea635087b15a1db79837b4794a4095397263268dfc67c1aa81be5b5cb38998d2",
+      "lfNormalizedSha256": "ea635087b15a1db79837b4794a4095397263268dfc67c1aa81be5b5cb38998d2"
+    },
+    "components/lumio/learning-plan.tsx": {
+      "worktreeSha256": "6935db031e7c79841604678b3b0106273075ddc6f964ac1a6f3c3af6940bdde5",
+      "lfNormalizedSha256": "6935db031e7c79841604678b3b0106273075ddc6f964ac1a6f3c3af6940bdde5"
+    },
+    "components/lumio/learning-view.tsx": {
+      "worktreeSha256": "6ef5eb72bd32fd728487edacc07cfa6bff48f4b144a362892451b5b9eae5c774",
+      "lfNormalizedSha256": "6ef5eb72bd32fd728487edacc07cfa6bff48f4b144a362892451b5b9eae5c774"
+    },
+    "components/lumio/math-text.tsx": {
+      "worktreeSha256": "74cfb4911fad67c1063ba59685ed4594014ac52d3aff7c3e0a1da78a43f4132f",
+      "lfNormalizedSha256": "74cfb4911fad67c1063ba59685ed4594014ac52d3aff7c3e0a1da78a43f4132f"
+    },
+    "components/lumio/meeting-recorder.tsx": {
+      "worktreeSha256": "408af3b2da3dbe45374cdca184a3cf26ec9006383a0a136bd5b07c74905cd3e8",
+      "lfNormalizedSha256": "408af3b2da3dbe45374cdca184a3cf26ec9006383a0a136bd5b07c74905cd3e8"
+    },
+    "components/lumio/mobile-connect.tsx": {
+      "worktreeSha256": "88099396f377a84a6d59ab8289de3d67a679425671300a6852fb198616045879",
+      "lfNormalizedSha256": "88099396f377a84a6d59ab8289de3d67a679425671300a6852fb198616045879"
+    },
+    "components/lumio/motion-preference.tsx": {
+      "worktreeSha256": "9568cac264186ca314d9680a91abbfc36ad53ebf355fdcf2db0399100bf9010c",
+      "lfNormalizedSha256": "9568cac264186ca314d9680a91abbfc36ad53ebf355fdcf2db0399100bf9010c"
+    },
+    "components/lumio/outbound-data-notice.tsx": {
+      "worktreeSha256": "3a87e99d1e199ed48f3873c40062095014da3bd243ad0af2e3162a05ca52dabb",
+      "lfNormalizedSha256": "3a87e99d1e199ed48f3873c40062095014da3bd243ad0af2e3162a05ca52dabb"
+    },
+    "components/lumio/paid-plan-details.module.css": {
+      "worktreeSha256": "45b61cf937bc72bb6beaf20d2b15e5d7031a6b00f3a800c1eb71f04127c47139",
+      "lfNormalizedSha256": "45b61cf937bc72bb6beaf20d2b15e5d7031a6b00f3a800c1eb71f04127c47139"
+    },
+    "components/lumio/paid-plan-details.tsx": {
+      "worktreeSha256": "4d829e813ec17faf6182537bbc87e61b2b2045b2649e265bb1336a21d42160e8",
+      "lfNormalizedSha256": "4d829e813ec17faf6182537bbc87e61b2b2045b2649e265bb1336a21d42160e8"
+    },
+    "components/lumio/planner.tsx": {
+      "worktreeSha256": "e22705f97526265147d5012b416a21251c781171f0d3b1eb0344a5955cd3075f",
+      "lfNormalizedSha256": "e22705f97526265147d5012b416a21251c781171f0d3b1eb0344a5955cd3075f"
+    },
+    "components/lumio/policy-shell.tsx": {
+      "worktreeSha256": "f5887e02e423dc44d96ab859ccee09383e8ec760c57618d27bb6f45a6b2630b6",
+      "lfNormalizedSha256": "f5887e02e423dc44d96ab859ccee09383e8ec760c57618d27bb6f45a6b2630b6"
+    },
+    "components/lumio/preview-notice.module.css": {
+      "worktreeSha256": "0cab9030bd52131eae061ecd3a7a52a0add6855e7c3f84be325d8beed2a6d647",
+      "lfNormalizedSha256": "0cab9030bd52131eae061ecd3a7a52a0add6855e7c3f84be325d8beed2a6d647"
+    },
+    "components/lumio/preview-notice.tsx": {
+      "worktreeSha256": "8c7b42bb89589fb8f6cd4fda879fabf768ef1c97b3ae07568d24a8d706b72020",
+      "lfNormalizedSha256": "8c7b42bb89589fb8f6cd4fda879fabf768ef1c97b3ae07568d24a8d706b72020"
+    },
+    "components/lumio/progress.tsx": {
+      "worktreeSha256": "08d1544eace39875fdde274d519fbc8cd3aacbaac064facd728729b0f9702710",
+      "lfNormalizedSha256": "08d1544eace39875fdde274d519fbc8cd3aacbaac064facd728729b0f9702710"
+    },
+    "components/lumio/rag-manager.module.css": {
+      "worktreeSha256": "a2cf0e44c3114959919583c1d77943052f52aa0e5b9f3b00599f46488c42276a",
+      "lfNormalizedSha256": "a2cf0e44c3114959919583c1d77943052f52aa0e5b9f3b00599f46488c42276a"
+    },
+    "components/lumio/rag-manager.tsx": {
+      "worktreeSha256": "a82c6873d08ac02f057e57faabfe98f031ada9c3ab54965cc2e11d7b66c0fdc3",
+      "lfNormalizedSha256": "a82c6873d08ac02f057e57faabfe98f031ada9c3ab54965cc2e11d7b66c0fdc3"
+    },
+    "components/lumio/recommendations.tsx": {
+      "worktreeSha256": "d0f75c5445e80764855d4681caa2caa1aafa96f6d0d548d19f77451ad97dfec5",
+      "lfNormalizedSha256": "d0f75c5445e80764855d4681caa2caa1aafa96f6d0d548d19f77451ad97dfec5"
+    },
+    "components/lumio/recorder.tsx": {
+      "worktreeSha256": "8a88ae18f77758cfbecb415e3c552a57821596c9b17c419da5e9c1338000e5bc",
+      "lfNormalizedSha256": "8a88ae18f77758cfbecb415e3c552a57821596c9b17c419da5e9c1338000e5bc"
+    },
+    "components/lumio/review.tsx": {
+      "worktreeSha256": "a3ab07c4f6ec86ba50a11485327c40b864d61604a94eafee1d9f87997e26c0a7",
+      "lfNormalizedSha256": "a3ab07c4f6ec86ba50a11485327c40b864d61604a94eafee1d9f87997e26c0a7"
+    },
+    "components/lumio/rich-summary.tsx": {
+      "worktreeSha256": "58e680090a450840cd5660e64b811ccca7ac6574abae0f27c2d56e57c62161bd",
+      "lfNormalizedSha256": "58e680090a450840cd5660e64b811ccca7ac6574abae0f27c2d56e57c62161bd"
+    },
+    "components/lumio/skill-evidence.tsx": {
+      "worktreeSha256": "e4b05b51340e555b2fb81eb51d4542f173ab1e9452419b37a673077ba61e368a",
+      "lfNormalizedSha256": "e4b05b51340e555b2fb81eb51d4542f173ab1e9452419b37a673077ba61e368a"
+    },
+    "components/lumio/source-references.module.css": {
+      "worktreeSha256": "2c5cb119ee4684408154793f9fa5bc1c755efa5490942b1b918097a37d6f6831",
+      "lfNormalizedSha256": "2c5cb119ee4684408154793f9fa5bc1c755efa5490942b1b918097a37d6f6831"
+    },
+    "components/lumio/source-references.tsx": {
+      "worktreeSha256": "b5d2a7f97cecc988b989ad5599fdd7069b4444af01227780ffdff91ee1007d0e",
+      "lfNormalizedSha256": "b5d2a7f97cecc988b989ad5599fdd7069b4444af01227780ffdff91ee1007d0e"
+    },
+    "components/lumio/study-preferences.tsx": {
+      "worktreeSha256": "0adef16aee98c6d8910831a34187a69c36148e4225adf05fef93b266ede62ffb",
+      "lfNormalizedSha256": "0adef16aee98c6d8910831a34187a69c36148e4225adf05fef93b266ede62ffb"
+    },
+    "components/lumio/study-studio.tsx": {
+      "worktreeSha256": "272a6aef799e2528111a47693c9bc7b0520121144a97c830c69e4df8e1f2e8ec",
+      "lfNormalizedSha256": "272a6aef799e2528111a47693c9bc7b0520121144a97c830c69e4df8e1f2e8ec"
+    },
+    "components/lumio/study-tools.tsx": {
+      "worktreeSha256": "bf523249b9067b8a973981008d99397b874e2324115ac07e5bbce397e1fc46b7",
+      "lfNormalizedSha256": "bf523249b9067b8a973981008d99397b874e2324115ac07e5bbce397e1fc46b7"
+    },
+    "components/lumio/summary-job-manager.tsx": {
+      "worktreeSha256": "0c9c33ecdafa208a7da57f9acfff14def8982b403d60e5cc22c50ca1059ac092",
+      "lfNormalizedSha256": "0c9c33ecdafa208a7da57f9acfff14def8982b403d60e5cc22c50ca1059ac092"
+    },
+    "components/lumio/sync-panel.tsx": {
+      "worktreeSha256": "f8b0fcca7fbfdc8b0f4927cfc772c1eed3ff82b6003ccc7be54d22f07b054899",
+      "lfNormalizedSha256": "f8b0fcca7fbfdc8b0f4927cfc772c1eed3ff82b6003ccc7be54d22f07b054899"
+    },
+    "components/lumio/tutor-progress.tsx": {
+      "worktreeSha256": "aa320e4fe9674ec9b046774a7a5ca8b3666a31487ca9a51de2a476fa1a792e69",
+      "lfNormalizedSha256": "aa320e4fe9674ec9b046774a7a5ca8b3666a31487ca9a51de2a476fa1a792e69"
+    },
+    "components/lumio/tutor-support.module.css": {
+      "worktreeSha256": "189f185248a467152652c84bfd8279b30e57b08605dd98aa0e8d524b69ce4eec",
+      "lfNormalizedSha256": "189f185248a467152652c84bfd8279b30e57b08605dd98aa0e8d524b69ce4eec"
+    },
+    "components/lumio/tutor-support.tsx": {
+      "worktreeSha256": "2a97c7d20b2faf65e960d392f9f3a659752cbd2d91fc58c93b457c66accec6d5",
+      "lfNormalizedSha256": "2a97c7d20b2faf65e960d392f9f3a659752cbd2d91fc58c93b457c66accec6d5"
+    },
+    "components/lumio/use-focus-alarm.ts": {
+      "worktreeSha256": "38196d9b45cd101bd8eebb22dde941f5e3562ecfaf56194861094c422ce2d22b",
+      "lfNormalizedSha256": "38196d9b45cd101bd8eebb22dde941f5e3562ecfaf56194861094c422ce2d22b"
+    },
+    "components/lumio/use-learning.ts": {
+      "worktreeSha256": "835e5d118cd74571b8657ff27501c445555cca5b758371fd4d8c4de0f6713771",
+      "lfNormalizedSha256": "835e5d118cd74571b8657ff27501c445555cca5b758371fd4d8c4de0f6713771"
+    },
+    "components/lumio/use-motion-settings.ts": {
+      "worktreeSha256": "781ac487def69937d9285aede78da39dd2ff1f7160f7027d851742198ce8f40e",
+      "lfNormalizedSha256": "781ac487def69937d9285aede78da39dd2ff1f7160f7027d851742198ce8f40e"
+    },
+    "components/lumio/use-personalization.ts": {
+      "worktreeSha256": "6ac80d321a691625a4b2bedc64c8f85edb19303667fcc44736bed655fcc81081",
+      "lfNormalizedSha256": "6ac80d321a691625a4b2bedc64c8f85edb19303667fcc44736bed655fcc81081"
+    },
+    "components/lumio/use-surface-entrance.ts": {
+      "worktreeSha256": "28539e55e304a5c2ec054e3295974728551fb1143d9e2423c9dfae227b177da9",
+      "lfNormalizedSha256": "28539e55e304a5c2ec054e3295974728551fb1143d9e2423c9dfae227b177da9"
+    },
+    "components/lumio/video-duration-probe.tsx": {
+      "worktreeSha256": "c72ab26522ccbed94745ddb571752ce5def1db09723561b58856976830611ee2",
+      "lfNormalizedSha256": "c72ab26522ccbed94745ddb571752ce5def1db09723561b58856976830611ee2"
+    },
+    "components/lumio/voice-studio.tsx": {
+      "worktreeSha256": "419b7b921ea950e9e93f4401a47b4515712d2cdfe1448b5d856a060f01c92af8",
+      "lfNormalizedSha256": "419b7b921ea950e9e93f4401a47b4515712d2cdfe1448b5d856a060f01c92af8"
+    },
+    "components/shared/dialog-focus.ts": {
+      "worktreeSha256": "d3fe76435df89c411da2ff1e0914e09778e0a91a461ef259aaa9b684a05cd1ea",
+      "lfNormalizedSha256": "d3fe76435df89c411da2ff1e0914e09778e0a91a461ef259aaa9b684a05cd1ea"
+    },
+    "components/shared/draft-guard.tsx": {
+      "worktreeSha256": "750cf67927dfc33edfe21ed43e0a226ca637408f4c92cbf0e176072e1df2d3a8",
+      "lfNormalizedSha256": "750cf67927dfc33edfe21ed43e0a226ca637408f4c92cbf0e176072e1df2d3a8"
+    },
+    "components/teachers/portal.tsx": {
+      "worktreeSha256": "fca26d0b2a91f36094a242df8d899a1666fe0621204d1d17e82da56c24a398ee",
+      "lfNormalizedSha256": "fca26d0b2a91f36094a242df8d899a1666fe0621204d1d17e82da56c24a398ee"
+    },
+    "components/teaching/assessment-blueprint.tsx": {
+      "worktreeSha256": "148fb61baf59ab3adcb4e092e97690ba69c5016d20a85e95f8b54983b6c088a9",
+      "lfNormalizedSha256": "148fb61baf59ab3adcb4e092e97690ba69c5016d20a85e95f8b54983b6c088a9"
+    },
+    "components/teaching/assessment-window.tsx": {
+      "worktreeSha256": "02ff13a1949b2ea0094f1bd9cdf88388995f26f44a3fa2564995c9589c2b5cbc",
+      "lfNormalizedSha256": "02ff13a1949b2ea0094f1bd9cdf88388995f26f44a3fa2564995c9589c2b5cbc"
+    },
+    "components/teaching/assessment.tsx": {
+      "worktreeSha256": "17a3d01f4cfc7f74da197e36cb2889fa99e50b6406fa74046eb79080b608f8ad",
+      "lfNormalizedSha256": "17a3d01f4cfc7f74da197e36cb2889fa99e50b6406fa74046eb79080b608f8ad"
+    },
+    "components/teaching/classes.tsx": {
+      "worktreeSha256": "1518e6de4a633e144516767af07715337812afbe7e46c1cf507cbb29729ed348",
+      "lfNormalizedSha256": "1518e6de4a633e144516767af07715337812afbe7e46c1cf507cbb29729ed348"
+    },
+    "components/teaching/client.tsx": {
+      "worktreeSha256": "7917bbbfbd440742495a75c053b4c387f6de9d93527dcfe1ad03a5ff8aa69f35",
+      "lfNormalizedSha256": "7917bbbfbd440742495a75c053b4c387f6de9d93527dcfe1ad03a5ff8aa69f35"
+    },
+    "components/teaching/communication.tsx": {
+      "worktreeSha256": "0fab960b25fc42fc83e545e9fbc64f51584a0a089eb1744c5b34eef996bcec93",
+      "lfNormalizedSha256": "0fab960b25fc42fc83e545e9fbc64f51584a0a089eb1744c5b34eef996bcec93"
+    },
+    "components/teaching/content-preview.tsx": {
+      "worktreeSha256": "4f99e364d0c8029e20be8c3fb6b6277b13d5ed9587872893fd751ec4f3b0d66a",
+      "lfNormalizedSha256": "4f99e364d0c8029e20be8c3fb6b6277b13d5ed9587872893fd751ec4f3b0d66a"
+    },
+    "components/teaching/content.tsx": {
+      "worktreeSha256": "c9c83e41303081f65818451ac263de1a4ed2fcb2f673371ec973d6151a1fabd2",
+      "lfNormalizedSha256": "c9c83e41303081f65818451ac263de1a4ed2fcb2f673371ec973d6151a1fabd2"
+    },
+    "components/teaching/dialog-focus.ts": {
+      "worktreeSha256": "7891ea49535b3ebf37ecdb1ac24a1ceea9d1448391d5133ff22950e7c0336676",
+      "lfNormalizedSha256": "7891ea49535b3ebf37ecdb1ac24a1ceea9d1448391d5133ff22950e7c0336676"
+    },
+    "components/teaching/draft-guard.tsx": {
+      "worktreeSha256": "fe642a1bce22e71441641053ef035dbca7bbd3abbe4eb7fcef30f5baba29d01e",
+      "lfNormalizedSha256": "fe642a1bce22e71441641053ef035dbca7bbd3abbe4eb7fcef30f5baba29d01e"
+    },
+    "components/teaching/file-attachments.tsx": {
+      "worktreeSha256": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08",
+      "lfNormalizedSha256": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08"
+    },
+    "components/teaching/grade-history.tsx": {
+      "worktreeSha256": "9ada9d7c744c78dcd652d38235276b100a70d29d4dca3844fedbde12c291e449",
+      "lfNormalizedSha256": "9ada9d7c744c78dcd652d38235276b100a70d29d4dca3844fedbde12c291e449"
+    },
+    "components/teaching/observed-errors.ts": {
+      "worktreeSha256": "d022861fa442a865bdbbafcd9ab59e4ee19e6cb05e725d73b1ee9c8ff2a26d18",
+      "lfNormalizedSha256": "d022861fa442a865bdbbafcd9ab59e4ee19e6cb05e725d73b1ee9c8ff2a26d18"
+    },
+    "components/teaching/practice-retake.tsx": {
+      "worktreeSha256": "73cc7f2dab01dd6b52b2531a2963b83f5fa8909190f2dd3e6653d34bfc1cac2b",
+      "lfNormalizedSha256": "73cc7f2dab01dd6b52b2531a2963b83f5fa8909190f2dd3e6653d34bfc1cac2b"
+    },
+    "components/teaching/resource-link.module.css": {
+      "worktreeSha256": "6480e3e69ca8ae48178fee95510267ecb486c1c0c520771a414b94b4f808f10e",
+      "lfNormalizedSha256": "6480e3e69ca8ae48178fee95510267ecb486c1c0c520771a414b94b4f808f10e"
+    },
+    "components/teaching/resource-link.tsx": {
+      "worktreeSha256": "3096aa9cb96e724b716c755ab9f2c8987b533176048306d1e19096bfb25611c4",
+      "lfNormalizedSha256": "3096aa9cb96e724b716c755ab9f2c8987b533176048306d1e19096bfb25611c4"
+    },
+    "components/teaching/student.tsx": {
+      "worktreeSha256": "b9fe33feb6524a8c0ad3a0917821214dd12220003e922c2a3938e7cf1bff5077",
+      "lfNormalizedSha256": "b9fe33feb6524a8c0ad3a0917821214dd12220003e922c2a3938e7cf1bff5077"
+    },
+    "components/teaching/tabs.tsx": {
+      "worktreeSha256": "80bf6c97659907327488ad5fd867f9ed9e3f6590abef77519086211315796a07",
+      "lfNormalizedSha256": "80bf6c97659907327488ad5fd867f9ed9e3f6590abef77519086211315796a07"
+    },
+    "components/teaching/ui.tsx": {
+      "worktreeSha256": "c6cc69cc0d91313c96beecde6c544f86517661e0b301d4c40f4565d8a2d1e057",
+      "lfNormalizedSha256": "c6cc69cc0d91313c96beecde6c544f86517661e0b301d4c40f4565d8a2d1e057"
+    },
+    "components/teaching/workspace.tsx": {
+      "worktreeSha256": "8c862bec9c370cb008ff2c44d0f5a1d3dc1ccfdf68d509940f3fa61bedfcf639",
+      "lfNormalizedSha256": "8c862bec9c370cb008ff2c44d0f5a1d3dc1ccfdf68d509940f3fa61bedfcf639"
+    },
+    "lib/ai/content-format.ts": {
+      "worktreeSha256": "0d5ad2313ebb1990e460e6e01633c601ce78d420eec3780412fb7aa29dc71032",
+      "lfNormalizedSha256": "0d5ad2313ebb1990e460e6e01633c601ce78d420eec3780412fb7aa29dc71032"
+    },
+    "lib/ai/contracts.ts": {
+      "worktreeSha256": "21cc3ffdbf9065581e2f712340ec93a3ac1c1e65060368c7ed22bc16b748091a",
+      "lfNormalizedSha256": "21cc3ffdbf9065581e2f712340ec93a3ac1c1e65060368c7ed22bc16b748091a"
+    },
+    "lib/ai/full-summary-copy.ts": {
+      "worktreeSha256": "c888e1281422fb9986cfb2c7053b1127f4a8c1bccad4a9e5ebecf1e9a645f988",
+      "lfNormalizedSha256": "c888e1281422fb9986cfb2c7053b1127f4a8c1bccad4a9e5ebecf1e9a645f988"
+    },
+    "lib/ai/full-summary.ts": {
+      "worktreeSha256": "4ad954bcd13e126bec0919c237a1f264b08088b5e874d9225e81bf6cb99ba152",
+      "lfNormalizedSha256": "4ad954bcd13e126bec0919c237a1f264b08088b5e874d9225e81bf6cb99ba152"
+    },
+    "lib/ai/grounding.ts": {
+      "worktreeSha256": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa",
+      "lfNormalizedSha256": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa"
+    },
+    "lib/ai/guard.ts": {
+      "worktreeSha256": "40b005081ba49eace81a37501582f329c6ee0b5c38e398a77bcb48b6aff2fb4e",
+      "lfNormalizedSha256": "40b005081ba49eace81a37501582f329c6ee0b5c38e398a77bcb48b6aff2fb4e"
+    },
+    "lib/ai/math-copy.ts": {
+      "worktreeSha256": "4cf9672b47beee01be54614f2b7864b8c4ce25eddac5237f3289605812bb82a8",
+      "lfNormalizedSha256": "4cf9672b47beee01be54614f2b7864b8c4ce25eddac5237f3289605812bb82a8"
+    },
+    "lib/ai/math-style.ts": {
+      "worktreeSha256": "430345c7963bba104d29b4b046fb2437a5815a6e1a131ec94c6c6c37b6249aa8",
+      "lfNormalizedSha256": "430345c7963bba104d29b4b046fb2437a5815a6e1a131ec94c6c6c37b6249aa8"
+    },
+    "lib/ai/provider-attempt.ts": {
+      "worktreeSha256": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e",
+      "lfNormalizedSha256": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e"
+    },
+    "lib/ai/quiz-option-order.ts": {
+      "worktreeSha256": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+      "lfNormalizedSha256": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e"
+    },
+    "lib/ai/request-client.ts": {
+      "worktreeSha256": "734c79baaa660590ff6b777cbec43490e2d133cb1baa02a45323d2aaa3c4d1cf",
+      "lfNormalizedSha256": "734c79baaa660590ff6b777cbec43490e2d133cb1baa02a45323d2aaa3c4d1cf"
+    },
+    "lib/ai/router.ts": {
+      "worktreeSha256": "3ab5ea3b9ad144d85a3c0f1450a15fe10049884b225c5bd65ff7618b0c71c46b",
+      "lfNormalizedSha256": "3ab5ea3b9ad144d85a3c0f1450a15fe10049884b225c5bd65ff7618b0c71c46b"
+    },
+    "lib/ai/summary.ts": {
+      "worktreeSha256": "ab01af55b45fda1889a06650f3ca8f34991cf6cbaa8ab6187ee0c9d5af6a02a5",
+      "lfNormalizedSha256": "ab01af55b45fda1889a06650f3ca8f34991cf6cbaa8ab6187ee0c9d5af6a02a5"
+    },
+    "lib/ai/telemetry.ts": {
+      "worktreeSha256": "f9b44a7c4dd92fd994bc56b935c0a1c6fac98591a6c2fef8523117160772a98f",
+      "lfNormalizedSha256": "f9b44a7c4dd92fd994bc56b935c0a1c6fac98591a6c2fef8523117160772a98f"
+    },
+    "lib/billing/paid-policy.ts": {
+      "worktreeSha256": "8c33b42701f138878fe788e6283dd8c08a922934583315ba59ca8308d5829e01",
+      "lfNormalizedSha256": "8c33b42701f138878fe788e6283dd8c08a922934583315ba59ca8308d5829e01"
+    },
+    "lib/ingestion/captions.ts": {
+      "worktreeSha256": "0e58c9c9133340ee4f2c9d612b3c703ab0201b0922b80206d8497aeeb7980142",
+      "lfNormalizedSha256": "0e58c9c9133340ee4f2c9d612b3c703ab0201b0922b80206d8497aeeb7980142"
+    },
+    "lib/ingestion/copy.ts": {
+      "worktreeSha256": "da9459905aa2dc4553e50e314d845d07cf971768118a15cef44e2347d10e19fe",
+      "lfNormalizedSha256": "da9459905aa2dc4553e50e314d845d07cf971768118a15cef44e2347d10e19fe"
+    },
+    "lib/ingestion/documents.ts": {
+      "worktreeSha256": "f81518136f80f285a49b970c099ca5d60f3a80f9d930edd8ec5ef7687a43e4b9",
+      "lfNormalizedSha256": "f81518136f80f285a49b970c099ca5d60f3a80f9d930edd8ec5ef7687a43e4b9"
+    },
+    "lib/ingestion/video-range.ts": {
+      "worktreeSha256": "b414c928f5b1bf4ab43f3dc25e55d2b1243b1b55d6c98c8eda0974fd52e27d63",
+      "lfNormalizedSha256": "b414c928f5b1bf4ab43f3dc25e55d2b1243b1b55d6c98c8eda0974fd52e27d63"
+    },
+    "lib/ingestion/website.ts": {
+      "worktreeSha256": "07c9a990d5fb18cde6ef7ef435dc801c815d5769e0e6da3a03b82cbc24cd45f5",
+      "lfNormalizedSha256": "07c9a990d5fb18cde6ef7ef435dc801c815d5769e0e6da3a03b82cbc24cd45f5"
+    },
+    "lib/ingestion/youtube.ts": {
+      "worktreeSha256": "08e04abdf389d28572e0687823b9e8b1a48f18fe36b1cb602bbbd0843f729d32",
+      "lfNormalizedSha256": "08e04abdf389d28572e0687823b9e8b1a48f18fe36b1cb602bbbd0843f729d32"
+    },
+    "lib/jobs/contracts.ts": {
+      "worktreeSha256": "7336b6ed3daeb87eecb95316cc020338bddf26155b2cc16f1ff7cbfa17d2fc9b",
+      "lfNormalizedSha256": "7336b6ed3daeb87eecb95316cc020338bddf26155b2cc16f1ff7cbfa17d2fc9b"
+    },
+    "lib/lumio/ai-copy.ts": {
+      "worktreeSha256": "1c16df40a06bcbe4ebd5bf003bf375cf10f3991a8e3dce97571cd3094078dc03",
+      "lfNormalizedSha256": "1c16df40a06bcbe4ebd5bf003bf375cf10f3991a8e3dce97571cd3094078dc03"
+    },
+    "lib/lumio/auth.ts": {
+      "worktreeSha256": "9e40d681cfd711a0d5d1de2bd81b80fdcb77570d68199ef1a93bffb8dc6488aa",
+      "lfNormalizedSha256": "9e40d681cfd711a0d5d1de2bd81b80fdcb77570d68199ef1a93bffb8dc6488aa"
+    },
+    "lib/lumio/backup-import-copy.ts": {
+      "worktreeSha256": "0b2bb3ed324a65508b55cf8efbb2f95e01dac3eca5a227974e1bf3239d7d0e89",
+      "lfNormalizedSha256": "0b2bb3ed324a65508b55cf8efbb2f95e01dac3eca5a227974e1bf3239d7d0e89"
+    },
+    "lib/lumio/billing-copy.ts": {
+      "worktreeSha256": "6b277757edc4eaef45dab6b0248cef0453227a2703d4c701c73a73e8cf58a656",
+      "lfNormalizedSha256": "674faa5c0226ec148b302654aad23c866c5e95af521abad1b53325a1404b6754"
+    },
+    "lib/lumio/command-copy.ts": {
+      "worktreeSha256": "229ccfdc112d3f21589ae52c7be4dedfbe92f28a38aec218eb8235365f8fb119",
+      "lfNormalizedSha256": "229ccfdc112d3f21589ae52c7be4dedfbe92f28a38aec218eb8235365f8fb119"
+    },
+    "lib/lumio/command-search.ts": {
+      "worktreeSha256": "19611a3632cfebf79eed1c937205a52db3c86a3aff3a6589552495f6ece842ea",
+      "lfNormalizedSha256": "19611a3632cfebf79eed1c937205a52db3c86a3aff3a6589552495f6ece842ea"
+    },
+    "lib/lumio/competition-copy.ts": {
+      "worktreeSha256": "48c6e275b8e4f1b2d03ce286dfb8a4be44d195fbb46846299cae7626ff75514a",
+      "lfNormalizedSha256": "48c6e275b8e4f1b2d03ce286dfb8a4be44d195fbb46846299cae7626ff75514a"
+    },
+    "lib/lumio/content-view-copy.ts": {
+      "worktreeSha256": "f78b59f75a4f609b88290506bc2bd2c06810a8d7c175aa34ea051398665becfd",
+      "lfNormalizedSha256": "f78b59f75a4f609b88290506bc2bd2c06810a8d7c175aa34ea051398665becfd"
+    },
+    "lib/lumio/dashboard-insights.ts": {
+      "worktreeSha256": "0b02771532f26c48659c897c61464ae912cbed89bd99bfc9a32fd970b2bffa11",
+      "lfNormalizedSha256": "0b02771532f26c48659c897c61464ae912cbed89bd99bfc9a32fd970b2bffa11"
+    },
+    "lib/lumio/dashboard-v3-copy.ts": {
+      "worktreeSha256": "e245731f0eb86864a57c8fadaa227b129526be5a5f7d682f84e3424ac2c2b254",
+      "lfNormalizedSha256": "e245731f0eb86864a57c8fadaa227b129526be5a5f7d682f84e3424ac2c2b254"
+    },
+    "lib/lumio/desktop-copy.ts": {
+      "worktreeSha256": "24b0a912fa6d21ef9817f6a7de0acbb210eb830a6038302a71fca185363bc944",
+      "lfNormalizedSha256": "24b0a912fa6d21ef9817f6a7de0acbb210eb830a6038302a71fca185363bc944"
+    },
+    "lib/lumio/enhancements.ts": {
+      "worktreeSha256": "503effb4dcbaa758d43ecde3d5583de160e951e0f0729ac956f4a462e54024e0",
+      "lfNormalizedSha256": "503effb4dcbaa758d43ecde3d5583de160e951e0f0729ac956f4a462e54024e0"
+    },
+    "lib/lumio/experience-copy.ts": {
+      "worktreeSha256": "d82c4e72201f087922f98f327af19f4c2f935b420dd0378dc7987a4c244991af",
+      "lfNormalizedSha256": "d82c4e72201f087922f98f327af19f4c2f935b420dd0378dc7987a4c244991af"
+    },
+    "lib/lumio/focus-copy.ts": {
+      "worktreeSha256": "774a4a1a2a8d44e09b6d1f964ebb38e06474cd377bb64e97b811eab420206327",
+      "lfNormalizedSha256": "774a4a1a2a8d44e09b6d1f964ebb38e06474cd377bb64e97b811eab420206327"
+    },
+    "lib/lumio/home-v8-copy.ts": {
+      "worktreeSha256": "2fd6d87d8f31adac8f46756b77fa1509c547df63eeeca06a2b851079954b83d0",
+      "lfNormalizedSha256": "2fd6d87d8f31adac8f46756b77fa1509c547df63eeeca06a2b851079954b83d0"
+    },
+    "lib/lumio/i18n-extra.ts": {
+      "worktreeSha256": "6a86ca318369b3e2f5a5fd74d018394eaa07cb2140a68a90876a5c111e6464f3",
+      "lfNormalizedSha256": "6a86ca318369b3e2f5a5fd74d018394eaa07cb2140a68a90876a5c111e6464f3"
+    },
+    "lib/lumio/i18n.ts": {
+      "worktreeSha256": "7b764112b2ac2d322287a62b06533016eb3e9a6ced57355f2084d4e089c556a2",
+      "lfNormalizedSha256": "7b764112b2ac2d322287a62b06533016eb3e9a6ced57355f2084d4e089c556a2"
+    },
+    "lib/lumio/learning-copy.ts": {
+      "worktreeSha256": "d22c7b423da356e0e16a8f12e9f7024973ef468b527e8e28dad5fc231df42bdc",
+      "lfNormalizedSha256": "d22c7b423da356e0e16a8f12e9f7024973ef468b527e8e28dad5fc231df42bdc"
+    },
+    "lib/lumio/learning-engine.ts": {
+      "worktreeSha256": "39b2e0dd7cebf19deccfdd211a54227086ccec2ff773bd3d10c437e69ed30c28",
+      "lfNormalizedSha256": "39b2e0dd7cebf19deccfdd211a54227086ccec2ff773bd3d10c437e69ed30c28"
+    },
+    "lib/lumio/learning-plan-copy.ts": {
+      "worktreeSha256": "fffd66027f10752b43fabe4dea428f7800e7eabf1dbca187c46d5e109fe2ea6b",
+      "lfNormalizedSha256": "fffd66027f10752b43fabe4dea428f7800e7eabf1dbca187c46d5e109fe2ea6b"
+    },
+    "lib/lumio/learning-plan.ts": {
+      "worktreeSha256": "c72396f81552ca9a890c22c5570d563d3aff771d11eb7f32120d1d41da3f0fcb",
+      "lfNormalizedSha256": "c72396f81552ca9a890c22c5570d563d3aff771d11eb7f32120d1d41da3f0fcb"
+    },
+    "lib/lumio/math-display.ts": {
+      "worktreeSha256": "68ebdeaa3046ad61c78286ecb01c3cc1dd8447c3fede76bd611ab14cfc9ab043",
+      "lfNormalizedSha256": "68ebdeaa3046ad61c78286ecb01c3cc1dd8447c3fede76bd611ab14cfc9ab043"
+    },
+    "lib/lumio/motion-policy.ts": {
+      "worktreeSha256": "17712bd7df4c2755f473c6ee02377a3b85291a102931b56193a2dcd97053b5f7",
+      "lfNormalizedSha256": "17712bd7df4c2755f473c6ee02377a3b85291a102931b56193a2dcd97053b5f7"
+    },
+    "lib/lumio/navigation-v7.ts": {
+      "worktreeSha256": "ae43ae933297a7c58b912c3df03c5bb7784fa610694b1ae67bfdb40a4e1094b4",
+      "lfNormalizedSha256": "ae43ae933297a7c58b912c3df03c5bb7784fa610694b1ae67bfdb40a4e1094b4"
+    },
+    "lib/lumio/outbound-disclosure.ts": {
+      "worktreeSha256": "a4d7b2ac2c216d45716b357e5b9d28f1d2feb508152275376bde228d5489706a",
+      "lfNormalizedSha256": "a4d7b2ac2c216d45716b357e5b9d28f1d2feb508152275376bde228d5489706a"
+    },
+    "lib/lumio/pricing-preview.ts": {
+      "worktreeSha256": "483a773a3d80bb11bca156a14a2c9b790d488a49378e2bdd1432bfe6ff9a71bc",
+      "lfNormalizedSha256": "483a773a3d80bb11bca156a14a2c9b790d488a49378e2bdd1432bfe6ff9a71bc"
+    },
+    "lib/lumio/product-copy.ts": {
+      "worktreeSha256": "472c180f5fd5572cb6325eae3beda170847230d6e460248b440467b2f904017a",
+      "lfNormalizedSha256": "472c180f5fd5572cb6325eae3beda170847230d6e460248b440467b2f904017a"
+    },
+    "lib/lumio/public-demo-copy.ts": {
+      "worktreeSha256": "c96d7d1c7ae6d7e491181f9f6e95c9a661684eb2dfcffa2bc83b2dd0179466d9",
+      "lfNormalizedSha256": "c96d7d1c7ae6d7e491181f9f6e95c9a661684eb2dfcffa2bc83b2dd0179466d9"
+    },
+    "lib/lumio/quiz-provenance.ts": {
+      "worktreeSha256": "fdd3426e26f86fe800cedd2f45278b8d7ef91025cd2da7341b266778edd892d8",
+      "lfNormalizedSha256": "fdd3426e26f86fe800cedd2f45278b8d7ef91025cd2da7341b266778edd892d8"
+    },
+    "lib/lumio/quiz-review-copy.ts": {
+      "worktreeSha256": "71a9e76fe830bbe19032b222d807e1872952d27a866d9307376b59ff7ea8c095",
+      "lfNormalizedSha256": "71a9e76fe830bbe19032b222d807e1872952d27a866d9307376b59ff7ea8c095"
+    },
+    "lib/lumio/recommendation-copy.ts": {
+      "worktreeSha256": "0b2d41bdc4caf50287a88d1fa1a4779c74f66cc9ae1c6fed3d58e2be7e799783",
+      "lfNormalizedSha256": "0b2d41bdc4caf50287a88d1fa1a4779c74f66cc9ae1c6fed3d58e2be7e799783"
+    },
+    "lib/lumio/recommendations.ts": {
+      "worktreeSha256": "cb544a3a7197884fb752a403f8c45ec8d9a64eb9995a5281524fc4bafe3f52f7",
+      "lfNormalizedSha256": "cb544a3a7197884fb752a403f8c45ec8d9a64eb9995a5281524fc4bafe3f52f7"
+    },
+    "lib/lumio/rich-content.ts": {
+      "worktreeSha256": "c31f248d3f903a43f4801d206bd47965305499b1fb12cd81cb0ecb77792b1b15",
+      "lfNormalizedSha256": "c31f248d3f903a43f4801d206bd47965305499b1fb12cd81cb0ecb77792b1b15"
+    },
+    "lib/lumio/settings-copy-v7.ts": {
+      "worktreeSha256": "adc95bdf1bd52832ed32602883fe5c8949463a35cbb69ac022513e75f25dea1d",
+      "lfNormalizedSha256": "adc95bdf1bd52832ed32602883fe5c8949463a35cbb69ac022513e75f25dea1d"
+    },
+    "lib/lumio/skill-copy.ts": {
+      "worktreeSha256": "bb358d3eb0f5baa14b1b65dba90ae90f081496078881e69c4ff666b95dcc55aa",
+      "lfNormalizedSha256": "bb358d3eb0f5baa14b1b65dba90ae90f081496078881e69c4ff666b95dcc55aa"
+    },
+    "lib/lumio/skill-evidence.ts": {
+      "worktreeSha256": "abb52e47247bb9cf3d4b0c786d9b3c57de5728893f4b54d96f550307940ecf8f",
+      "lfNormalizedSha256": "abb52e47247bb9cf3d4b0c786d9b3c57de5728893f4b54d96f550307940ecf8f"
+    },
+    "lib/lumio/skill-taxonomy.ts": {
+      "worktreeSha256": "6887a76b2fa466e4e058bafdbf7d1dbfa791b559788943e3f152dee7d7104d23",
+      "lfNormalizedSha256": "6887a76b2fa466e4e058bafdbf7d1dbfa791b559788943e3f152dee7d7104d23"
+    },
+    "lib/lumio/storage-status.ts": {
+      "worktreeSha256": "4a5b859e4790b272cc396ed882045026e5551d0ff446df7dae72196cc20d92e5",
+      "lfNormalizedSha256": "4a5b859e4790b272cc396ed882045026e5551d0ff446df7dae72196cc20d92e5"
+    },
+    "lib/lumio/storage.ts": {
+      "worktreeSha256": "9161ef9262b839b1ababef1a2c50a2a75a6504e419b2c1d27d8d1a411e87ecf8",
+      "lfNormalizedSha256": "9161ef9262b839b1ababef1a2c50a2a75a6504e419b2c1d27d8d1a411e87ecf8"
+    },
+    "lib/lumio/studio-copy.ts": {
+      "worktreeSha256": "8769780fd7341d63b7a37fe97f4945285f4e5ccb1088b4581cc9537bc8fe1588",
+      "lfNormalizedSha256": "8769780fd7341d63b7a37fe97f4945285f4e5ccb1088b4581cc9537bc8fe1588"
+    },
+    "lib/lumio/study-setup-copy.ts": {
+      "worktreeSha256": "398a1511f05ef4a1dfd8b5640fdce598af53a06f07721dc12f8fcf2e5da8107d",
+      "lfNormalizedSha256": "398a1511f05ef4a1dfd8b5640fdce598af53a06f07721dc12f8fcf2e5da8107d"
+    },
+    "lib/lumio/study-setup.ts": {
+      "worktreeSha256": "ece048afe002e275bc8cbec3ffa4d585f5bc19d1ffbbaae0cbd052ebfb6337f7",
+      "lfNormalizedSha256": "ece048afe002e275bc8cbec3ffa4d585f5bc19d1ffbbaae0cbd052ebfb6337f7"
+    },
+    "lib/lumio/study-v3-copy.ts": {
+      "worktreeSha256": "e334e585b4ddd88a748b0791d3d2c0f5a297eb0768061e6aab9fef6a7a5b2ffd",
+      "lfNormalizedSha256": "e334e585b4ddd88a748b0791d3d2c0f5a297eb0768061e6aab9fef6a7a5b2ffd"
+    },
+    "lib/lumio/study-v3.ts": {
+      "worktreeSha256": "785dc92d75e90d499e14813315187ad9024e14e966e4d48add757c2db8dacfaf",
+      "lfNormalizedSha256": "785dc92d75e90d499e14813315187ad9024e14e966e4d48add757c2db8dacfaf"
+    },
+    "lib/lumio/theme.ts": {
+      "worktreeSha256": "54924efbade86255fd4bd53807521da6e9764312279fc6ce9a5f07fafe6e3e2c",
+      "lfNormalizedSha256": "54924efbade86255fd4bd53807521da6e9764312279fc6ce9a5f07fafe6e3e2c"
+    },
+    "lib/lumio/types.ts": {
+      "worktreeSha256": "bb43b9c1c58fcdcf33c174805a8324e1674cfa228edd953972cf3d2bcfa52a2c",
+      "lfNormalizedSha256": "bb43b9c1c58fcdcf33c174805a8324e1674cfa228edd953972cf3d2bcfa52a2c"
+    },
+    "lib/metadata.ts": {
+      "worktreeSha256": "f94d7bb2134f4777d849f930108a198b0dc71e4bf30c9360234ca3f42e3cee34",
+      "lfNormalizedSha256": "f94d7bb2134f4777d849f930108a198b0dc71e4bf30c9360234ca3f42e3cee34"
+    },
+    "lib/rag/embeddings.ts": {
+      "worktreeSha256": "505895437ac81fc642f4196c3e16e5543c33ca2a6a63cdbd0b3f8bd7778ddeee",
+      "lfNormalizedSha256": "505895437ac81fc642f4196c3e16e5543c33ca2a6a63cdbd0b3f8bd7778ddeee"
+    },
+    "lib/rag/retrieval.ts": {
+      "worktreeSha256": "d31d6dcb3de016caef511fe28a68c519efcebf62ff52fdbcde1d6f3c1c70334d",
+      "lfNormalizedSha256": "d31d6dcb3de016caef511fe28a68c519efcebf62ff52fdbcde1d6f3c1c70334d"
+    },
+    "lib/rag/types.ts": {
+      "worktreeSha256": "c7e6b6ec6285a183e5efa8255c4f104b3c3256d10adef47def62bb34a50f39a6",
+      "lfNormalizedSha256": "c7e6b6ec6285a183e5efa8255c4f104b3c3256d10adef47def62bb34a50f39a6"
+    },
+    "lib/server/access.ts": {
+      "worktreeSha256": "59772c2adc175de1a2c5237494277984cf36dffc0e5e197802c5045a0390bf9e",
+      "lfNormalizedSha256": "59772c2adc175de1a2c5237494277984cf36dffc0e5e197802c5045a0390bf9e"
+    },
+    "lib/server/admin-access.ts": {
+      "worktreeSha256": "486e2be841d08bf652ad810a96f51997cd4f1016e31ce5efcb215ee56c8fc1ff",
+      "lfNormalizedSha256": "486e2be841d08bf652ad810a96f51997cd4f1016e31ce5efcb215ee56c8fc1ff"
+    },
+    "lib/server/admin-snapshot.ts": {
+      "worktreeSha256": "9e77ffcb91f60d9a2d5f31a2ad7ee6b69e70c91089d7dee54daa72851c62cd75",
+      "lfNormalizedSha256": "9e77ffcb91f60d9a2d5f31a2ad7ee6b69e70c91089d7dee54daa72851c62cd75"
+    },
+    "lib/server/ai-http-core.ts": {
+      "worktreeSha256": "233351dba4f60814cd10e886f78c5b388465a22294321b1c5cf29e4871afbaf0",
+      "lfNormalizedSha256": "13f8325444a79a7d19171137ac40434fe93ec6f635bbb1c08f3579c554cf5932"
+    },
+    "lib/server/auth-errors.ts": {
+      "worktreeSha256": "e75d69d150b1dc1d7ec6fb34be65d2bf0a79de9fce6ed788c1a80777d280d472",
+      "lfNormalizedSha256": "e75d69d150b1dc1d7ec6fb34be65d2bf0a79de9fce6ed788c1a80777d280d472"
+    },
+    "lib/server/auth-logger.ts": {
+      "worktreeSha256": "40d0e29106d20c18c428ce857e13130473cfeea1f4d2ae6b3f52b44c4edebbbe",
+      "lfNormalizedSha256": "40d0e29106d20c18c428ce857e13130473cfeea1f4d2ae6b3f52b44c4edebbbe"
+    },
+    "lib/server/billing-core.ts": {
+      "worktreeSha256": "cc1dd2ce5b276c858e8f6a18aa6521322542a2ffbb33271c9182818a46541066",
+      "lfNormalizedSha256": "0e35c988397fdf3c8baf81d3c7ca4c7c20f93f89c441f4c20038a7f716f6bf62"
+    },
+    "lib/server/billing-provider.ts": {
+      "worktreeSha256": "535d9d12683126092195dd4878c2e991097e9340f0d20d40720414aa1397000a",
+      "lfNormalizedSha256": "535d9d12683126092195dd4878c2e991097e9340f0d20d40720414aa1397000a"
+    },
+    "lib/server/billing-types.ts": {
+      "worktreeSha256": "4663dab5ab6bf996340381db5f299cd01ec78c0a46a7ae30b6e717421bd98169",
+      "lfNormalizedSha256": "4663dab5ab6bf996340381db5f299cd01ec78c0a46a7ae30b6e717421bd98169"
+    },
+    "lib/server/billing.ts": {
+      "worktreeSha256": "7415d723b7dd4b9cee0981428617aa45ff62e6a7bc9d52a12645addf7070e1d1",
+      "lfNormalizedSha256": "7415d723b7dd4b9cee0981428617aa45ff62e6a7bc9d52a12645addf7070e1d1"
+    },
+    "lib/server/competition-preview.ts": {
+      "worktreeSha256": "9fb2267a6893ff51444b71fd36e88f05f64b4768ec1bec8ad62348156bed006f",
+      "lfNormalizedSha256": "9fb2267a6893ff51444b71fd36e88f05f64b4768ec1bec8ad62348156bed006f"
+    },
+    "lib/server/database-connection.ts": {
+      "worktreeSha256": "f682cb8cdfedcc6176ec03fb601ae55bc8c4fb73024c01ec12298cf696215f3b",
+      "lfNormalizedSha256": "f682cb8cdfedcc6176ec03fb601ae55bc8c4fb73024c01ec12298cf696215f3b"
+    },
+    "lib/server/database-factory.ts": {
+      "worktreeSha256": "1063d353b44f75a1a6b61ca0a88a74915f6a402e59f7196fe46e97a007491859",
+      "lfNormalizedSha256": "1063d353b44f75a1a6b61ca0a88a74915f6a402e59f7196fe46e97a007491859"
+    },
+    "lib/server/database-integrity.ts": {
+      "worktreeSha256": "484a36a2ed2ecf6e360edbddd72f21dccea91699690d6077833d44820bee939f",
+      "lfNormalizedSha256": "484a36a2ed2ecf6e360edbddd72f21dccea91699690d6077833d44820bee939f"
+    },
+    "lib/server/database-remote.ts": {
+      "worktreeSha256": "465eb654e10402233d33cd642ad062cbe78e51648fe703dc871cbf9466408508",
+      "lfNormalizedSha256": "465eb654e10402233d33cd642ad062cbe78e51648fe703dc871cbf9466408508"
+    },
+    "lib/server/desktop-health.ts": {
+      "worktreeSha256": "31c6147a81250735df51ffe354de7277622af547b360a2d278b6fdd05147077f",
+      "lfNormalizedSha256": "31c6147a81250735df51ffe354de7277622af547b360a2d278b6fdd05147077f"
+    },
+    "lib/server/desktop-mode.ts": {
+      "worktreeSha256": "93f39d22c4e9105736a36c8889d39448176272b64ed5402636e1a674e9691519",
+      "lfNormalizedSha256": "93f39d22c4e9105736a36c8889d39448176272b64ed5402636e1a674e9691519"
+    },
+    "lib/server/error-diagnostics.ts": {
+      "worktreeSha256": "35498a2e12d555af58bbe6457bd85cd793fc1a6a3b678d74a394beaed4e54f36",
+      "lfNormalizedSha256": "35498a2e12d555af58bbe6457bd85cd793fc1a6a3b678d74a394beaed4e54f36"
+    },
+    "lib/server/job-core.ts": {
+      "worktreeSha256": "61b67343be0c52ba576d1e410d95c7e80d5b298dd5e2bac70f8e69b297466fd9",
+      "lfNormalizedSha256": "254998e4775e91e31cc58dcfa81bce713012589d2058bcbf839c4004355028bc"
+    },
+    "lib/server/job-health.ts": {
+      "worktreeSha256": "0c09c30ebbae2b498c0c7118c5b1343d5b9a64d760a954d31324442442a76cf7",
+      "lfNormalizedSha256": "d71394a243289ce7d7633facd0d127c872a8e7e050dc78c38a2a4dbdfd17c6ba"
+    },
+    "lib/server/job-schema.ts": {
+      "worktreeSha256": "c05134615bd19e97150e1a9bf1e3cc1446635f22d649a6c9729294cdb4f08b91",
+      "lfNormalizedSha256": "c05134615bd19e97150e1a9bf1e3cc1446635f22d649a6c9729294cdb4f08b91"
+    },
+    "lib/server/job-worker.ts": {
+      "worktreeSha256": "4e9a2ed52a4592d119e165a945e2f12fb59202f4b8629699a19ea0d9ca4dbd1e",
+      "lfNormalizedSha256": "4e9a2ed52a4592d119e165a945e2f12fb59202f4b8629699a19ea0d9ca4dbd1e"
+    },
+    "lib/server/latency-report-sql.ts": {
+      "worktreeSha256": "0064a7cecb6e1e28582a2f668618b8bb8a92bc79c0dc4e63f0d8b5e9d8afd2ae",
+      "lfNormalizedSha256": "0064a7cecb6e1e28582a2f668618b8bb8a92bc79c0dc4e63f0d8b5e9d8afd2ae"
+    },
+    "lib/server/mobile-access.ts": {
+      "worktreeSha256": "6b3ef7628e70d51d6c6bbb914841290c10a80a0db665aa014773a020af655525",
+      "lfNormalizedSha256": "6b3ef7628e70d51d6c6bbb914841290c10a80a0db665aa014773a020af655525"
+    },
+    "lib/server/mobile-core.ts": {
+      "worktreeSha256": "ebc6e575d424c7ad24561b9d5d1a079e1ff0906ffaf647d9b46433661ec8f63c",
+      "lfNormalizedSha256": "e66f3335788c502a69002ea80b087eda8ad5ffcc08b5a9e5c6e7a02b3e34dd3f"
+    },
+    "lib/server/origin.ts": {
+      "worktreeSha256": "64a936731992f0cec3f6753699eb7ee1c9ea4890ccff55e3bebac2fd1952b3d7",
+      "lfNormalizedSha256": "64a936731992f0cec3f6753699eb7ee1c9ea4890ccff55e3bebac2fd1952b3d7"
+    },
+    "lib/server/paid-model-policy.ts": {
+      "worktreeSha256": "6a1a1be02933f9bfe6320289bd70bbdc06965cbe924a289371b98c82ba792fcd",
+      "lfNormalizedSha256": "6a1a1be02933f9bfe6320289bd70bbdc06965cbe924a289371b98c82ba792fcd"
+    },
+    "lib/server/paid-policy-schema.ts": {
+      "worktreeSha256": "f069f2f80dd8c31cf973fae85f66a5ce62514ccc34c87c5d61d1bc59d5b6ccef",
+      "lfNormalizedSha256": "f069f2f80dd8c31cf973fae85f66a5ce62514ccc34c87c5d61d1bc59d5b6ccef"
+    },
+    "lib/server/policy.ts": {
+      "worktreeSha256": "bf83416ec9ec9fdc56ad4b5293af0690dd65f6c22f6d04c3d31d01521d092257",
+      "lfNormalizedSha256": "bf83416ec9ec9fdc56ad4b5293af0690dd65f6c22f6d04c3d31d01521d092257"
+    },
+    "lib/server/provider-attempt-core.ts": {
+      "worktreeSha256": "82d27b29bda36261edd523f0cd670f20dbf7a861337656671cc1373652d1af20",
+      "lfNormalizedSha256": "33de6ab59652517dd4c68a439c443c0d028f14bf922d9f900d6bbadf16e047b4"
+    },
+    "lib/server/provider-attempt-report.ts": {
+      "worktreeSha256": "a9cb9b658f6142cfe18a1c8b79fea77144741582421a3d937143ece8ce29f8b0",
+      "lfNormalizedSha256": "71881b20ba613ea124b67ca95ede56188aeef264b7796cba6373150c1f2f8e04"
+    },
+    "lib/server/provider-attempt-schema.ts": {
+      "worktreeSha256": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c",
+      "lfNormalizedSha256": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c"
+    },
+    "lib/server/public-demo.ts": {
+      "worktreeSha256": "0589e4ac550df80de70d3caa151cd3450bff9260f821d7d5f2a6e841828de72a",
+      "lfNormalizedSha256": "0589e4ac550df80de70d3caa151cd3450bff9260f821d7d5f2a6e841828de72a"
+    },
+    "lib/server/rag-access.ts": {
+      "worktreeSha256": "63e6905158dc5462eb8eac92b47e2fd409701bb8ec70efea066dd2a23071f707",
+      "lfNormalizedSha256": "63e6905158dc5462eb8eac92b47e2fd409701bb8ec70efea066dd2a23071f707"
+    },
+    "lib/server/rag-core.ts": {
+      "worktreeSha256": "0d0727a633134b84f55034cf3efbc8a732b831272dcbb87dc697a9ee6b7e5fcf",
+      "lfNormalizedSha256": "0d0727a633134b84f55034cf3efbc8a732b831272dcbb87dc697a9ee6b7e5fcf"
+    },
+    "lib/server/rag-schema.ts": {
+      "worktreeSha256": "292de9b3aa8b5d6259a27ff316f2d1b8e391b2898be30b7012e735b61d8005ac",
+      "lfNormalizedSha256": "292de9b3aa8b5d6259a27ff316f2d1b8e391b2898be30b7012e735b61d8005ac"
+    },
+    "lib/server/runtime-v3-core.ts": {
+      "worktreeSha256": "b4b30e0cdee7fe0f611ac2257548faa9f42b86a69d6e1c3a4857749bd96f4b86",
+      "lfNormalizedSha256": "fa803f71bb23b2d712cae3e62456a966c4d90dbdb4032ab5c5a71217f7c1d7a2"
+    },
+    "lib/server/runtime-v3-schema.ts": {
+      "worktreeSha256": "e5d5181bc644c9b94f590c55618d2306fcadae3f2f3aa0a4b80dee0418664470",
+      "lfNormalizedSha256": "e5d5181bc644c9b94f590c55618d2306fcadae3f2f3aa0a4b80dee0418664470"
+    },
+    "lib/server/schema.ts": {
+      "worktreeSha256": "ae5ef5896abbff573d2b132973c555517b8d8ba0d6ba5f69b41684c09529d454",
+      "lfNormalizedSha256": "ae5ef5896abbff573d2b132973c555517b8d8ba0d6ba5f69b41684c09529d454"
+    },
+    "lib/server/source-evidence.ts": {
+      "worktreeSha256": "6f5ad80a2c07193dff67ddbc653799841a41aeec47bfa5c1b29ad487a832eda5",
+      "lfNormalizedSha256": "6f5ad80a2c07193dff67ddbc653799841a41aeec47bfa5c1b29ad487a832eda5"
+    },
+    "lib/server/store.ts": {
+      "worktreeSha256": "9b3235b5f4032ad328fe598989f1ca86c4f1ced6a1955bb12ce839db1b142046",
+      "lfNormalizedSha256": "9b3235b5f4032ad328fe598989f1ca86c4f1ced6a1955bb12ce839db1b142046"
+    },
+    "lib/server/summary-execution.ts": {
+      "worktreeSha256": "ba041acf5a950caee44a3e0df743f5860204956ec1e839a79b3a7df2916f1ec0",
+      "lfNormalizedSha256": "ba041acf5a950caee44a3e0df743f5860204956ec1e839a79b3a7df2916f1ec0"
+    },
+    "lib/server/teacher-access.ts": {
+      "worktreeSha256": "91341f898791b736e7e26858705820d3b11efb809c1692a9818e8764ba74bfbd",
+      "lfNormalizedSha256": "91341f898791b736e7e26858705820d3b11efb809c1692a9818e8764ba74bfbd"
+    },
+    "lib/server/teacher-core.ts": {
+      "worktreeSha256": "d49f893a11716cbe33e959d7402970834a7e406e8a4784bd1264d26a835e510b",
+      "lfNormalizedSha256": "a0ca331b9500de365f5fe046a64dd99786f1283452842b68585243fedf76af2c"
+    },
+    "lib/server/teacher-schema.ts": {
+      "worktreeSha256": "b56b8b0dbfac0b31fa94d2540ac95d49102ece0b5a5486c4ee17c4bb35f1b967",
+      "lfNormalizedSha256": "b56b8b0dbfac0b31fa94d2540ac95d49102ece0b5a5486c4ee17c4bb35f1b967"
+    },
+    "lib/server/teaching-ai.ts": {
+      "worktreeSha256": "97e6514200d91017d26d64661cfe24e0be9a823e6c9c75bdfa1fbb1b27270a6b",
+      "lfNormalizedSha256": "97e6514200d91017d26d64661cfe24e0be9a823e6c9c75bdfa1fbb1b27270a6b"
+    },
+    "lib/server/teaching-core.ts": {
+      "worktreeSha256": "51f1b92aceebd5b2426dd98bbd267bdf3a92cd8b32fc982993c531d2b4b3572b",
+      "lfNormalizedSha256": "51f1b92aceebd5b2426dd98bbd267bdf3a92cd8b32fc982993c531d2b4b3572b"
+    },
+    "lib/server/teaching-file-schema.ts": {
+      "worktreeSha256": "a41967bbe00a36cc343581a8cba74e36c5f63e21398fc89b58a8cacaf15f2ad5",
+      "lfNormalizedSha256": "a41967bbe00a36cc343581a8cba74e36c5f63e21398fc89b58a8cacaf15f2ad5"
+    },
+    "lib/server/teaching-file-validation.ts": {
+      "worktreeSha256": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa",
+      "lfNormalizedSha256": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa"
+    },
+    "lib/server/teaching-files.ts": {
+      "worktreeSha256": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
+      "lfNormalizedSha256": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc"
+    },
+    "lib/server/teaching-schema.ts": {
+      "worktreeSha256": "9b3d081217089d5eafce92a226375c4977aed301dd7ee622053a886ad5f517e4",
+      "lfNormalizedSha256": "9b3d081217089d5eafce92a226375c4977aed301dd7ee622053a886ad5f517e4"
+    },
+    "lib/server/tutor-core.ts": {
+      "worktreeSha256": "8ce1b5f66a86a2e4c33963872dfaf8bad4a93f9a0b43b83176055188f64d102e",
+      "lfNormalizedSha256": "3f2e44d322b259c5a0d2f66fedbdabbd76016a76b515348f408c0584aec94f56"
+    },
+    "lib/server/tutor-v8-schema.ts": {
+      "worktreeSha256": "fdca01eb83e94ccc36e8e3a57f0fcb185169651e26d95915a88be97799201d8c",
+      "lfNormalizedSha256": "fdca01eb83e94ccc36e8e3a57f0fcb185169651e26d95915a88be97799201d8c"
+    },
+    "lib/server/types.ts": {
+      "worktreeSha256": "98fc06eb6ef25d5f15913c44e8691f368e41f9ebd9cf8babc319e9b0dde45898",
+      "lfNormalizedSha256": "98fc06eb6ef25d5f15913c44e8691f368e41f9ebd9cf8babc319e9b0dde45898"
+    },
+    "lib/server/usage-report.ts": {
+      "worktreeSha256": "54eb0ac652c082daf1d24a8ae596e6bfcd8b6a96992ae219f0b726873704fe10",
+      "lfNormalizedSha256": "aa538daf6410828103507bdac0dd49bdeda4a374ce44ae6ef9f1f292e739e25d"
+    },
+    "lib/sync/contracts.ts": {
+      "worktreeSha256": "a9af1af347bd8acb918e741d35d97c1f72cf2040fde9fb336618b21595b21ecf",
+      "lfNormalizedSha256": "a9af1af347bd8acb918e741d35d97c1f72cf2040fde9fb336618b21595b21ecf"
+    },
+    "lib/sync/copy.ts": {
+      "worktreeSha256": "1ba2ed19e0b1749855a077b3942d006a4e93b9b9dd72e309ba55b4eebae7324e",
+      "lfNormalizedSha256": "1ba2ed19e0b1749855a077b3942d006a4e93b9b9dd72e309ba55b4eebae7324e"
+    },
+    "lib/sync/merge.ts": {
+      "worktreeSha256": "d22965b0520a8d28bf595c20d2b48995b11430ce2a8aaf761d50f19143415783",
+      "lfNormalizedSha256": "d22965b0520a8d28bf595c20d2b48995b11430ce2a8aaf761d50f19143415783"
+    },
+    "lib/teachers/contracts.ts": {
+      "worktreeSha256": "d5b2b39bcbfa37e9937fb4de5f51096c3f23b5f4bd3682bf01e9392c3b9c5243",
+      "lfNormalizedSha256": "d5b2b39bcbfa37e9937fb4de5f51096c3f23b5f4bd3682bf01e9392c3b9c5243"
+    },
+    "lib/teachers/country-options.ts": {
+      "worktreeSha256": "0e0d8408339cfbf4f390dc80319a3a67064e66d3a0affa81864c0ecc8dcecf27",
+      "lfNormalizedSha256": "2f560cce4e37b17ab93eadfc73a30d034b754b210d906e6ac9bb6eb76bfe635e"
+    },
+    "lib/teaching/assessment-plan.ts": {
+      "worktreeSha256": "5cfdc540f3a0935941366ae5ed7d4db5f03409ee0499ae5695d1743f09268164",
+      "lfNormalizedSha256": "5cfdc540f3a0935941366ae5ed7d4db5f03409ee0499ae5695d1743f09268164"
+    },
+    "lib/teaching/content-qa.ts": {
+      "worktreeSha256": "4c04ce3fb3cd0110b57b96ebf5aa197eb324c45f5a2821237386ce944606e7e2",
+      "lfNormalizedSha256": "4c04ce3fb3cd0110b57b96ebf5aa197eb324c45f5a2821237386ce944606e7e2"
+    },
+    "lib/teaching/contracts.ts": {
+      "worktreeSha256": "b06f2818f1969893004fb0ca25e64ae87d665692b4a2aee357c0312cf240de73",
+      "lfNormalizedSha256": "b06f2818f1969893004fb0ca25e64ae87d665692b4a2aee357c0312cf240de73"
+    },
+    "lib/teaching/file-client.ts": {
+      "worktreeSha256": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175",
+      "lfNormalizedSha256": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175"
+    },
+    "lib/teaching/file-contracts.ts": {
+      "worktreeSha256": "6ad6b017c3593917745da9bb6e22c3c9536db5e5054e66a5c63c209b1bf6948e",
+      "lfNormalizedSha256": "6ad6b017c3593917745da9bb6e22c3c9536db5e5054e66a5c63c209b1bf6948e"
+    },
+    "lib/teaching/resource-links.ts": {
+      "worktreeSha256": "9f0bc5ccff02ab345dec25ad6be94a559e7e855f0e308ec06ba9c0ae53f3a742",
+      "lfNormalizedSha256": "9f0bc5ccff02ab345dec25ad6be94a559e7e855f0e308ec06ba9c0ae53f3a742"
+    },
+    "lib/teaching/validation.ts": {
+      "worktreeSha256": "f19ca3fa97ce5f79484d988c151b0fbbe0d1deebbeabe5549d810695612df1f3",
+      "lfNormalizedSha256": "f19ca3fa97ce5f79484d988c151b0fbbe0d1deebbeabe5549d810695612df1f3"
+    },
+    "lib/tutor/math-exact.ts": {
+      "worktreeSha256": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
+      "lfNormalizedSha256": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24"
+    },
+    "lib/tutor/math.ts": {
+      "worktreeSha256": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
+      "lfNormalizedSha256": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762"
+    },
+    "lib/tutor/policy.ts": {
+      "worktreeSha256": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8",
+      "lfNormalizedSha256": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8"
+    },
+    "lib/tutor/reference-problems.ts": {
+      "worktreeSha256": "f7ebc653b771fc24ac25dedc382ee6a14ff8e49b4dd16d002605976262109206",
+      "lfNormalizedSha256": "f7ebc653b771fc24ac25dedc382ee6a14ff8e49b4dd16d002605976262109206"
+    },
+    "lib/tutor/types.ts": {
+      "worktreeSha256": "33ef5969b44fbe7d5746b4320600d81c08fec1a088c9abb17eda18f675642ec1",
+      "lfNormalizedSha256": "33ef5969b44fbe7d5746b4320600d81c08fec1a088c9abb17eda18f675642ec1"
+    },
+    "lib/voice/client.ts": {
+      "worktreeSha256": "04d92f38aafb827cd6efe3704a01e1bfd9cde957dec92579ab7176eeecc88dc3",
+      "lfNormalizedSha256": "04d92f38aafb827cd6efe3704a01e1bfd9cde957dec92579ab7176eeecc88dc3"
+    },
+    "lib/voice/copy.ts": {
+      "worktreeSha256": "70e5c92128c06e8134df3e2f629c2cb1e96da127a961390b81443a8389b137a9",
+      "lfNormalizedSha256": "f8e56022f2201c850bfb60149c2abd8de5fd7a665a8a0c76a21b32149c4dedca"
+    },
+    "lib/voice/meeting-capture.ts": {
+      "worktreeSha256": "09b593abed730a70c11ae7571cff47f8cc5608a0bf055ab8ec447fd116a49f21",
+      "lfNormalizedSha256": "09b593abed730a70c11ae7571cff47f8cc5608a0bf055ab8ec447fd116a49f21"
+    },
+    "lib/voice/meeting-copy.ts": {
+      "worktreeSha256": "09d116b667ab9a95ff7a3404ff2a88b227f302bdd7d1118b603fb848d656485f",
+      "lfNormalizedSha256": "09d116b667ab9a95ff7a3404ff2a88b227f302bdd7d1118b603fb848d656485f"
+    },
+    "lib/voice/options.ts": {
+      "worktreeSha256": "9062e9fef186384bcf5509204855bccab58ee0a0bce6f0b4a48a9e7e4ddc9b13",
+      "lfNormalizedSha256": "9062e9fef186384bcf5509204855bccab58ee0a0bce6f0b4a48a9e7e4ddc9b13"
+    },
+    "lib/voice/readout.ts": {
+      "worktreeSha256": "99a01b6b62d871d6b7bc338a2e9fb98146baba51616de916f2f87c16af102a22",
+      "lfNormalizedSha256": "99a01b6b62d871d6b7bc338a2e9fb98146baba51616de916f2f87c16af102a22"
+    },
+    "lib/voice/server.ts": {
+      "worktreeSha256": "4ed751f3caf7dfd41f2b3d4f3badd105af535d55ad95f707b11cfd10bdaae876",
+      "lfNormalizedSha256": "4ed751f3caf7dfd41f2b3d4f3badd105af535d55ad95f707b11cfd10bdaae876"
+    },
+    "lib/voice/session.ts": {
+      "worktreeSha256": "7547b6d2475760bc6a09d0064426d344691c0f66d4e8c682d33ae8bbbe0eaa5f",
+      "lfNormalizedSha256": "7547b6d2475760bc6a09d0064426d344691c0f66d4e8c682d33ae8bbbe0eaa5f"
+    },
+    "next.config.ts": {
+      "worktreeSha256": "799ca2715267eab8565d1d1c99ef257e04196ac195eb16c067da584e544a8a6d",
+      "lfNormalizedSha256": "799ca2715267eab8565d1d1c99ef257e04196ac195eb16c067da584e544a8a6d"
+    },
+    "package.json": {
+      "worktreeSha256": "ff1cd8604fa2301aab4fc3ea33028ee315705582b56b80e9291966438bc72ca7",
+      "lfNormalizedSha256": "00d64a01d019b4fe207f3f48b8d45c9d9a742b1ebb998aae7ba726954a6364a0"
+    },
+    "pnpm-lock.yaml": {
+      "worktreeSha256": "5d9f65f0a883cfd1bcd5e57823bc779f43adbef0dbad89342c9cd6f16d4e6691",
+      "lfNormalizedSha256": "5d9f65f0a883cfd1bcd5e57823bc779f43adbef0dbad89342c9cd6f16d4e6691"
+    }
+  }
+}

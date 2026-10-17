@@ -7,12 +7,20 @@ import {
   skillPracticeSuggestions,
 } from "./skill-evidence";
 import type { SkillId } from "./skill-taxonomy";
+import { commandFold } from "./command-search";
 
 export type LearningPlanAction = {
   id: string;
   kind: "review" | "practice" | "read";
   reason:
-    "due" | "focus" | "review" | "foundation" | "sample" | "next" | "continue";
+    | "due"
+    | "focus"
+    | "review"
+    | "foundation"
+    | "sample"
+    | "next"
+    | "continue"
+    | "goal";
   item: LearningItem;
   skillId?: SkillId;
   basisId?: SkillId;
@@ -59,6 +67,40 @@ export function buildLearningPlan(
       "focus",
       { skillId: preferences.studyFocusSkillId },
     );
+  const controls = preferences.enabled ? preferences.controls : undefined;
+  if (controls && controls.goal !== "balanced") {
+    const goalItems = available.filter((item) => {
+      if (controls.goal === "review" && !item.cards.length) return false;
+      if (
+        controls.goal === "practice" &&
+        !item.questions.some(
+          (q) =>
+            controls.difficulty === "any" ||
+            q.difficulty === controls.difficulty,
+        )
+      )
+        return false;
+      const text = commandFold(
+        [
+          item.title,
+          item.text.slice(0, 12000),
+          ...item.questions.map((q) => q.topic || ""),
+        ].join(" "),
+      );
+      return (
+        !controls.topics.length ||
+        controls.topics.some((topic) => text.includes(commandFold(topic)))
+      );
+    });
+    add(goalItems[0], "goal", {
+      kind:
+        controls.goal === "review"
+          ? "review"
+          : controls.goal === "practice"
+            ? "practice"
+            : "read",
+    });
+  }
   const due = dueCards([...available], learning, new Date(now)).filter(
     (c) => c.dueAt,
   );

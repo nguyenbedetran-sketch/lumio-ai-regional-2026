@@ -1,0 +1,56 @@
+{
+  "status": "PASS",
+  "checks": 23,
+  "passed": [
+    "Unconfigured local workspace offers optional inline goal setup",
+    "Keyboard can dismiss setup without a forced wizard",
+    "Goal/topic/declared level actually persist via the existing preference store",
+    "Goal setup creates no fake activity, quiz score or completed study goal",
+    "Stated goal chooses an actual matching practice material as next step",
+    "Next-step reason identifies learner choice rather than inferred mastery",
+    "Saved setup stays collapsed on a fresh workspace mount",
+    "Saved preferences reappear on reopening setup",
+    "Existing Ctrl K palette receives keyboard focus",
+    "Global local search finds saved quiz text outside title/source/notes",
+    "Search result labels the matching saved study content",
+    "Selecting a study-text result opens the real owned material",
+    "Accent-insensitive study-goal search shows the real planned date",
+    "Extended command palette fits a 390px phone viewport",
+    "Selecting a goal opens and focuses its actual Planner entry",
+    "Search excludes a different account's stored IndexedDB library",
+    "Search scope explicitly excludes server classroom data and binary files",
+    "Escape dismisses the extended palette normally",
+    "Storage failure never shows a false saved acknowledgement",
+    "Failed goal setup leaves persisted preferences unchanged",
+    "Inline setup and storage failure remain responsive at 390px",
+    "No browser page errors occurred",
+    "All work stayed local with no provider/paid mutation/outbound network"
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "unexpectedMutations": [],
+  "screenshots": [
+    "setup-desktop.png",
+    "search-phone.png",
+    "setup-failure-phone.png"
+  ],
+  "scope": "Actual learner React/DOM, browser IndexedDB/localStorage, and synthetic guest/config only. No real OAuth, classroom server search, provider, production, learning-effectiveness or installed-device verification.",
+  "limitations": [
+    "Search covers only currently loaded personal workspace text, bounded saved study text, spaces, destinations and study tasks; server classes and other accounts are not indexed.",
+    "Goal choices are declared preferences, not measured ability. Closing setup without saving is not persisted as completion.",
+    "Manifest metadata is tested separately; this fixture does not prove browser/OS installation or offline capability."
+  ],
+  "checkedAt": "2026-10-17T07:11:28.530Z",
+  "tool": "@playwright/cli@0.1.21",
+  "syntaxChecks": 6,
+  "sourceSha256": {
+    "components/lumio/app.tsx": "b0212d2edf67436ae2726a6e04afe18d9fb05e9f511f6b9a11b10350ef13cf22",
+    "components/lumio/study-preferences.tsx": "0adef16aee98c6d8910831a34187a69c36148e4225adf05fef93b266ede62ffb",
+    "lib/lumio/learning-plan.ts": "c72396f81552ca9a890c22c5570d563d3aff771d11eb7f32120d1d41da3f0fcb",
+    "lib/lumio/command-search.ts": "19611a3632cfebf79eed1c937205a52db3c86a3aff3a6589552495f6ece842ea",
+    "app/manifest.ts": "9c7f4691c3da15d3f952cc657e7d84fe7822e2980fb0e14a353205eb3ab1a350",
+    "lib/metadata.ts": "f94d7bb2134f4777d849f930108a198b0dc71e4bf30c9360234ca3f42e3cee34",
+    "lib/lumio/storage.ts": "00ccd77a83ffd40bf65b4ae1b7a154013cfd5bbf115b3189e1d19032a9c6383f",
+    "tests/v15-learner-phase2.browser.js": "0ef812972a98143c89b0528dcdf529732cdf2beaa98c1aeaffd99c4d0d6efc38"
+  }
+}

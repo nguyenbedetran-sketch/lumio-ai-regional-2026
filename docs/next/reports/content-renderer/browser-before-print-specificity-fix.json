@@ -1,0 +1,350 @@
+{
+  "status": "FAIL",
+  "passed": 51,
+  "checks": [
+    "Semantic lesson heading renders once",
+    "Ordered solution steps are real list items",
+    "Table has accessible column headers",
+    "Currency and escaped dollar text produce no formula",
+    "Currency decimals remain readable",
+    "Code examples do not become math",
+    "Intentional code retains raw backslash syntax",
+    "Unsupported and URL-command math have safe readable fallbacks",
+    "Blocked math command is not default visible fallback",
+    "Untrusted fixture content creates no image iframe or script",
+    "Inline heading consumer keeps phrasing-only markup",
+    "Every rendered formula retains one MathML representation",
+    "Visual KaTeX spans are hidden from duplicate speech",
+    "Visible educational prose has no raw formula/Markdown delimiters",
+    "Vietnamese lesson accents remain present",
+    "light no page overflow at1440",
+    "light display equations own their overflow at1440",
+    "light tables own their overflow at1440",
+    "light long equation remains scrollable at1440",
+    "light no page overflow at768",
+    "light display equations own their overflow at768",
+    "light tables own their overflow at768",
+    "light long equation remains scrollable at768",
+    "light no page overflow at390",
+    "light display equations own their overflow at390",
+    "light tables own their overflow at390",
+    "light long equation remains scrollable at390",
+    "light no page overflow at320",
+    "light display equations own their overflow at320",
+    "light tables own their overflow at320",
+    "light long equation remains scrollable at320",
+    "dark no page overflow at1440",
+    "dark display equations own their overflow at1440",
+    "dark tables own their overflow at1440",
+    "dark long equation remains scrollable at1440",
+    "dark no page overflow at768",
+    "dark display equations own their overflow at768",
+    "dark tables own their overflow at768",
+    "dark long equation remains scrollable at768",
+    "dark no page overflow at390",
+    "dark display equations own their overflow at390",
+    "dark tables own their overflow at390",
+    "dark long equation remains scrollable at390",
+    "dark no page overflow at320",
+    "dark display equations own their overflow at320",
+    "dark tables own their overflow at320",
+    "dark long equation remains scrollable at320",
+    "Long formula has keyboard focus and visible focus ring",
+    "Actual light theme educational text meets4.5contrast in sampled heading/body/table/caption/math/fallback",
+    "Actual dark theme educational text meets4.5contrast in sampled heading/body/table/caption/math/fallback",
+    "Dark-screen content prints with explicit dark ink on white math surfaces"
+  ],
+  "error": "Print math region does not retain screen overflow clipping",
+  "errors": [],
+  "outbound": [],
+  "layouts": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "math": [
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 908,
+          "scroll": 908,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "math": [
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 676,
+          "scroll": 676,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "math": [
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 298,
+          "scroll": 298,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "math": [
+        {
+          "client": 230,
+          "scroll": 230,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 247,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 228,
+          "scroll": 228,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "math": [
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 910,
+          "scroll": 910,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 908,
+          "scroll": 908,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "math": [
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 678,
+          "scroll": 678,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 676,
+          "scroll": 676,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "math": [
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 300,
+          "scroll": 300,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 298,
+          "scroll": 298,
+          "overflow": "auto"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "math": [
+        {
+          "client": 230,
+          "scroll": 230,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 4638,
+          "overflow": "auto",
+          "tab": 0
+        },
+        {
+          "client": 230,
+          "scroll": 247,
+          "overflow": "auto",
+          "tab": 0
+        }
+      ],
+      "table": [
+        {
+          "client": 228,
+          "scroll": 228,
+          "overflow": "auto"
+        }
+      ]
+    }
+  ],
+  "snapshot": "KIỂM THỬ · Dữ liệu học tập tự soạn · Không phải tài khoản hay kết quả học sinh thật\n\nPhương trình và điều kiện\n\nMục tiêu: Giải \n2\n𝑥\n+\n3\n=\n7\n2x+3=7 và kiểm tra kết quả.\n\nTrừ 3 ở cả hai vế: \n2\n𝑥\n=\n4\n2x=4.\nChia hai vế cho 2 khác 0: \n𝑥\n=\n2\nx=2.\n2\n𝑥\n+\n3\n\t\n=\n7\n\n\n2\n𝑥\n\t\n=\n4\n\n\n𝑥\n\t\n=\n2\n2x+3\n2x\nx\n\t​\n\n=7\n=4\n=2\n\t​\n\nBảng trong nội dung học tập\nĐại lượng\tGiá trị\nPhân số\t\n3\n2\n2\n3\n\t​\n\n\nĐiều kiện\t\n𝑥\n≠\n0\nx\n\n=0\nKiểm tra: \n2\n⋅\n2\n+\n3\n=\n7\n2⋅2+3=7, nên nghiệm là \n𝑥\n=\n2\nx=2.\n\nGiá $5, $10 và $12.50; số tiền USD $20. Không coi $x$ là công thức.\n\nVí dụ mã: const price = \"$x$\"; \\frac{1}{2}\n\nconst text = \"$$x$$\";\nconst path = \"C:\\\\temp\";\n\nCần đối chiếu Công thức cần kiểm tra. Liên kết cấm: Công thức cần kiểm tra.\n\n𝑥\n0\n2\n+\n𝑥\n1\n2\n+\n𝑥\n2\n2\n+\n𝑥\n3\n2\n+\n𝑥\n4\n2\n+\n𝑥\n5\n2\n+\n𝑥\n6\n2\n+\n𝑥\n7\n2\n+\n𝑥\n8\n2\n+\n𝑥\n9\n2\n+\n𝑥\n10\n2\n+\n𝑥\n11\n2\n+\n𝑥\n12\n2\n+\n𝑥\n13\n2\n+\n𝑥\n14\n2\n+\n𝑥\n15\n2\n+\n𝑥\n16\n2\n+\n𝑥\n17\n2\n+\n𝑥\n18\n2\n+\n𝑥\n19\n2\n+\n𝑥\n20\n2\n+\n𝑥\n21\n2\n+\n𝑥\n22\n2\n+\n𝑥\n23\n2\n+\n𝑥\n24\n2\n+\n𝑥\n25\n2\n+\n𝑥\n26\n2\n+\n𝑥\n27\n2\n+\n𝑥\n28\n2\n+\n𝑥\n29\n2\n+\n𝑥\n30\n2\n+\n𝑥\n31\n2\n+\n𝑥\n32\n2\n+\n𝑥\n33\n2\n+\n𝑥\n34\n2\n+\n𝑥\n35\n2\n+\n𝑥\n36\n2\n+\n𝑥\n37\n2\n+\n𝑥\n38\n2\n+\n𝑥\n39\n2\n+\n𝑥\n40\n2\n+\n𝑥\n41\n2\n+\n𝑥\n42\n2\n+\n𝑥\n43\n2\n+\n𝑥\n44\n2\n+\n𝑥\n45\n2\n+\n𝑥\n46\n2\n+\n𝑥\n47\n2\n+\n𝑥\n48\n2\n+\n𝑥\n49\n2\n+\n𝑥\n50\n2\n+\n𝑥\n51\n2\n+\n𝑥\n52\n2\n+\n𝑥\n53\n2\n+\n𝑥\n54\n2\n+\n𝑥\n55\n2\n+\n𝑥\n56\n2\n+\n𝑥\n57\n2\n+\n𝑥\n58\n2\n+\n𝑥\n59\n2\n+\n𝑥\n60\n2\n+\n𝑥\n61\n2\n+\n𝑥\n62\n2\n+\n𝑥\n63\n2\n+\n𝑥\n64\n2\n+\n𝑥\n65\n2\n+\n𝑥\n66\n2\n+\n𝑥\n67\n2\n+\n𝑥\n68\n2\n+\n𝑥\n69\n2\n+\n𝑥\n70\n2\n+\n𝑥\n71\n2\n+\n𝑥\n72\n2\n+\n𝑥\n73\n2\n+\n𝑥\n74\n2\n+\n𝑥\n75\n2\n+\n𝑥\n76\n2\n+\n𝑥\n77\n2\n+\n𝑥\n78\n2\n+\n𝑥\n79\n2\n+\n𝑥\n80\n2\n+\n𝑥\n81\n2\n+\n𝑥\n82\n2\n+\n𝑥\n83\n2\n+\n𝑥\n84\n2\n+\n𝑥\n85\n2\n+\n𝑥\n86\n2\n+\n𝑥\n87\n2\n+\n𝑥\n88\n2\n+\n𝑥\n89\n2\n+\n𝑥\n90\n2\n+\n𝑥\n91\n2\n+\n𝑥\n92\n2\n+\n𝑥\n93\n2\n+\n𝑥\n94\n2\n=\n1\nx\n0\n2\n\t​\n\n+x\n1\n2\n\t​\n\n+x\n2\n2\n\t​\n\n+x\n3\n2\n\t​\n\n+x\n4\n2\n\t​\n\n+x\n5\n2\n\t​\n\n+x\n6\n2\n\t​\n\n+x\n7\n2\n\t​\n\n+x\n8\n2\n\t​\n\n+x\n9\n2\n\t​\n\n+x\n10\n2\n\t​\n\n+x\n11\n2\n\t​\n\n+x\n12\n2\n\t​\n\n+x\n13\n2\n\t​\n\n+x\n14\n2\n\t​\n\n+x\n15\n2\n\t​\n\n+x\n16\n2\n\t​\n\n+x\n17\n2\n\t​\n\n+x\n18\n2\n\t​\n\n+x\n19\n2\n\t​\n\n+x\n20\n2\n\t​\n\n+x\n21\n2\n\t​\n\n+x\n22\n2\n\t​\n\n+x\n23\n2\n\t​\n\n+x\n24\n2\n\t​\n\n+x\n25\n2\n\t​\n\n+x\n26\n2\n\t​\n\n+x\n27\n2\n\t​\n\n+x\n28\n2\n\t​\n\n+x\n29\n2\n\t​\n\n+x\n30\n2\n\t​\n\n+x\n31\n2\n\t​\n\n+x\n32\n2\n\t​\n\n+x\n33\n2\n\t​\n\n+x\n34\n2\n\t​\n\n+x\n35\n2\n\t​\n\n+x\n36\n2\n\t​\n\n+x\n37\n2\n\t​\n\n+x\n38\n2\n\t​\n\n+x\n39\n2\n\t​\n\n+x\n40\n2\n\t​\n\n+x\n41\n2\n\t​\n\n+x\n42\n2\n\t​\n\n+x\n43\n2\n\t​\n\n+x\n44\n2\n\t​\n\n+x\n45\n2\n\t​\n\n+x\n46\n2\n\t​\n\n+x\n47\n2\n\t​\n\n+x\n48\n2\n\t​\n\n+x\n49\n2\n\t​\n\n+x\n50\n2\n\t​\n\n+x\n51\n2\n\t​\n\n+x\n52\n2\n\t​\n\n+x\n53\n2\n\t​\n\n+x\n54\n2\n\t​\n\n+x\n55\n2\n\t​\n\n+x\n56\n2\n\t​\n\n+x\n57\n2\n\t​\n\n+x\n58\n2\n\t​\n\n+x\n59\n2\n\t​\n\n+x\n60\n2\n\t​\n\n+x\n61\n2\n\t​\n\n+x\n62\n2\n\t​\n\n+x\n63\n2\n\t​\n\n+x\n64\n2\n\t​\n\n+x\n65\n2\n\t​\n\n+x\n66\n2\n\t​\n\n+x\n67\n2\n\t​\n\n+x\n68\n2\n\t​\n\n+x\n69\n2\n\t​\n\n+x\n70\n2\n\t​\n\n+x\n71\n2\n\t​\n\n+x\n72\n2\n\t​\n\n+x\n73\n2\n\t​\n\n+x\n74\n2\n\t​\n\n+x\n75\n2\n\t​\n\n+x\n76\n2\n\t​\n\n+x\n77\n2\n\t​\n\n+x\n78\n2\n\t​\n\n+x\n79\n2\n\t​\n\n+x\n80\n2\n\t​\n\n+x\n81\n2\n\t​\n\n+x\n82\n2\n\t​\n\n+x\n83\n2\n\t​\n\n+x\n84\n2\n\t​\n\n+x\n85\n2\n\t​\n\n+x\n86\n2\n\t​\n\n+x\n87\n2\n\t​\n\n+x\n88\n2\n\t​\n\n+x\n89\n2\n\t​\n\n+x\n90\n2\n\t​\n\n+x\n91\n2\n\t​\n\n+x\n92\n2\n\t​\n\n+x\n93\n2\n\t​\n\n+x\n94\n2\n\t​\n\n=1\nĐi\ne\nˆ\nˋ\nu kiện \n𝑥\n≠\n0\n,\n𝛼\n+\n∑\n𝑖\n=\n1\n𝑛\n𝑖\nĐi\ne\nˆ\nˋ\nu kiện x\n\n=0,α+\ni=1\n∑\nn\n\t​\n\ni\n\n<img src=x onerror=alert(1)> <script>alert(1)</script>\n\nTiêu đề \n1\n2\n2\n1\n\t​\n",
+  "checkedAt": "2026-10-17T07:31:30.401Z",
+  "sourceProof": [
+    {
+      "path": "components/lumio/math-text.tsx",
+      "sha256": "74cfb4911fad67c1063ba59685ed4594014ac52d3aff7c3e0a1da78a43f4132f"
+    },
+    {
+      "path": "lib/lumio/rich-content.ts",
+      "sha256": "d15a3c2d62767a7d0e14fd4338bf7de1e292b22092de362871be0f3cb2fed15a"
+    },
+    {
+      "path": "lib/lumio/math-display.ts",
+      "sha256": "68ebdeaa3046ad61c78286ecb01c3cc1dd8447c3fede76bd611ab14cfc9ab043"
+    },
+    {
+      "path": "app/ai.css",
+      "sha256": "316bcc27f4ab43602e52d9c809b19ed831afe99f8752f00390dae6565cd78dee"
+    },
+    {
+      "path": "tests/content-renderer.browser.js",
+      "sha256": "7bcde1dc99975f30862082855f8189f4616d48ec4634a038908fb5d18a2a86aa"
+    }
+  ]
+}

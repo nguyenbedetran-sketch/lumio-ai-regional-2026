@@ -643,7 +643,7 @@ async function fb(body, headers = {}) {
       assert.deepEqual(fs.readFileSync(old), beforeBytes);
       const upgraded = platform.createStore(copy);
       try {
-        assert.equal(upgraded.runtimeHealth().schemaVersion, 18);
+        assert.equal(upgraded.runtimeHealth().schemaVersion, 20);
         const view = upgraded.getTutorSession(
           a.id,
           a.sessionVersion,
@@ -755,7 +755,7 @@ async function fb(body, headers = {}) {
       assert.equal(
         snapshot.snapshot(path.join(directory, "isolated.sqlite"), out)
           .schemaVersion,
-        18,
+        20,
       );
       const restored = platform.createStore(out);
       try {

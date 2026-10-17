@@ -64,7 +64,9 @@ export async function executeSummaryInput(
       duration: input.videoRange
         ? input.videoRange.endSeconds - input.videoRange.startSeconds
         : undefined,
+      sourceCharacters: input.source.length,
     });
+    input.billingModelContext = reservation.modelPolicy;
     options.onReserved?.(reservation);
     signal.throwIfAborted();
     const result = await routeAI(input, fetch, signal, store.providerAttemptObserver({ userId: principal.userId, sessionVersion: principal.sessionVersion, requestId: options.requestId, reservationId: reservation.reservationId, feature: options.feature || "learner.summary" }));

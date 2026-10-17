@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import { useMemo, useState } from "react";
 import {
   ArrowUpRight,
@@ -14,15 +15,13 @@ import type { LearningState } from "../../lib/lumio/learning-engine";
 import type { Locale } from "../../lib/lumio/i18n";
 import {
   recommend,
-  defaultRecommendationControls,
   canEvaluateRecommendation,
   type Preferences,
-  type RecommendationDifficulty,
-  type RecommendationGoal,
 } from "../../lib/lumio/recommendations";
 import { recommendationCopy } from "../../lib/lumio/recommendation-copy";
 import { SkillEvidencePanel } from "./skill-evidence";
 import { DailyLearningPlan } from "./learning-plan";
+import { StudyPreferenceForm } from "./study-preferences";
 export const personalCopy = {
   vi: {
     nav: "Đề xuất cho bạn",
@@ -198,7 +197,6 @@ export function Recommendations({
   const c = personalCopy[locale];
   const rc = recommendationCopy[locale];
   const [notice, setNotice] = useState("");
-  const controls = preferences.controls || defaultRecommendationControls();
   const result = useMemo(
     () => recommend(items, learning, preferences),
     [items, learning, preferences],
@@ -266,94 +264,12 @@ export function Recommendations({
           {c.storage}
         </p>
       )}
-      <form
-        className="lm-personal-settings"
-        key={JSON.stringify(controls)}
-        onSubmit={(event) => {
-          event.preventDefault();
-          const form = new FormData(event.currentTarget);
-          const topics = String(form.get("topics") || "")
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean);
-          if (
-            topics.length > 8 ||
-            topics.some((t) => t.length > 80) ||
-            new Set(topics.map((t) => t.toLocaleLowerCase())).size !==
-              topics.length
-          ) {
-            setNotice(rc.settingsError);
-            return;
-          }
-          update((p) => ({
-            ...p,
-            controls: {
-              topics,
-              difficulty: String(
-                form.get("difficulty"),
-              ) as RecommendationDifficulty,
-              goal: String(form.get("goal")) as RecommendationGoal,
-            },
-          }));
-          setNotice(rc.saved);
-        }}
-      >
-        <h2>{rc.controls}</h2>
-        <label className="lm-personal-topics">
-          {rc.topics}
-          <input
-            name="topics"
-            defaultValue={controls.topics.join(", ")}
-            maxLength={650}
-            disabled={!preferences.enabled || storageError}
-            placeholder={
-              locale === "vi"
-                ? "Phương trình, chuyển động, sinh học…"
-                : "Algebra, motion, biology…"
-            }
-          />
-          <small>{rc.topicsHint}</small>
-        </label>
-        <label>
-          {rc.difficulty}
-          <select
-            name="difficulty"
-            defaultValue={controls.difficulty}
-            disabled={!preferences.enabled || storageError}
-          >
-            {(["any", "beginner", "intermediate", "advanced"] as const).map(
-              (v) => (
-                <option key={v} value={v}>
-                  {rc[v]}
-                </option>
-              ),
-            )}
-          </select>
-        </label>
-        <label>
-          {rc.goal}
-          <select
-            name="goal"
-            defaultValue={controls.goal}
-            disabled={!preferences.enabled || storageError}
-          >
-            {(["balanced", "review", "practice", "explore"] as const).map(
-              (v) => (
-                <option key={v} value={v}>
-                  {rc[v]}
-                </option>
-              ),
-            )}
-          </select>
-        </label>
-        <button
-          type="submit"
-          className="lm-button"
-          disabled={!preferences.enabled || storageError}
-        >
-          {rc.save}
-        </button>
-      </form>
+      <StudyPreferenceForm
+        locale={locale}
+        preferences={preferences}
+        update={update}
+        storageError={storageError}
+      />
       <div className="lm-personal-evaluation" data-recommendation-evaluations>
         <p>
           {result.outcomes.total
@@ -422,7 +338,9 @@ export function Recommendations({
                   ? rc.goalReason
                   : c.reason[r.reason]}
             </p>
-            <h2>{r.item.title}</h2>
+            <h2>
+              <MathText text={r.item.title} inline />
+            </h2>
             <details className="lm-personal-evidence">
               <summary>{rc.evidence}</summary>
               {r.evidence.due > 0 && (

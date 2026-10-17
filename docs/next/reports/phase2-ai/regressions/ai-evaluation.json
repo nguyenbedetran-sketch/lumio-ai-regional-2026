@@ -1,0 +1,745 @@
+{
+  "schema": 1,
+  "evaluationId": "lumio-v7-authored-offline-1",
+  "corpusVersion": "1.0.0",
+  "startedAt": "2026-10-17T06:48:44.183Z",
+  "completedAt": "2026-10-17T06:48:44.228Z",
+  "elapsedMs": 45,
+  "status": "PASS_DETERMINISTIC_SCOPE",
+  "caseCount": 46,
+  "assertionCount": 219,
+  "passedCases": 46,
+  "failedCases": 0,
+  "actualProviderRequests": 0,
+  "networkAttempts": 0,
+  "model": null,
+  "provider": null,
+  "evidenceType": "Offline deterministic checks on authored inputs/outputs using existing production modules; not generated-model accuracy.",
+  "languages": [
+    {
+      "language": "vi",
+      "cases": 10,
+      "passed": 10,
+      "generatedLanguageQuality": "NOT TESTED"
+    },
+    {
+      "language": "en",
+      "cases": 9,
+      "passed": 9,
+      "generatedLanguageQuality": "NOT TESTED"
+    },
+    {
+      "language": "zh-CN",
+      "cases": 9,
+      "passed": 9,
+      "generatedLanguageQuality": "NOT TESTED"
+    },
+    {
+      "language": "ja",
+      "cases": 9,
+      "passed": 9,
+      "generatedLanguageQuality": "NOT TESTED"
+    },
+    {
+      "language": "ko",
+      "cases": 9,
+      "passed": 9,
+      "generatedLanguageQuality": "NOT TESTED"
+    }
+  ],
+  "dimensions": [
+    {
+      "id": "answer",
+      "scope": "Literal authored equation answers checked independently in supported grammar.",
+      "modelAnswerAccuracy": "NOT TESTED"
+    },
+    {
+      "id": "source",
+      "scope": "Expected lexical hits/no-hits, explicit numeric conflicts, exact quotes and forged-locator rejection.",
+      "semanticEntailmentAndRecallOnRealDocuments": "NOT TESTED"
+    },
+    {
+      "id": "math",
+      "scope": "Known valid/invalid/unsupported exact arithmetic, roots, domains, transformations and missing data.",
+      "arbitraryProofsAndScienceUnits": "NOT TESTED"
+    },
+    {
+      "id": "injection",
+      "scope": "Untrusted source serialization and server-only input authority boundaries in five languages.",
+      "liveModelAdversarialResistance": "NOT TESTED"
+    },
+    {
+      "id": "question-quality",
+      "scope": "Structure, numeric duplicate options, answer key, multiple correct options and explicit arithmetic.",
+      "pedagogyAgeSuitabilityAndDifficultyCalibration": "NOT TESTED"
+    }
+  ],
+  "bounds": {
+    "inputCharacters": 120000,
+    "queryCharacters": 4000,
+    "terms": 8192,
+    "queryTerms": 40,
+    "termCharacters": 64
+  },
+  "limitations": [
+    "Passing means the asserted deterministic contract passed, not that an AI answered these questions correctly.",
+    "Fixtures and translations are authored examples, not independently teacher-reviewed representative data.",
+    "No external provider, embedding, OAuth, browser, public deployment, load, physical device or student pilot is exercised.",
+    "Lexical bigrams are not semantic translation or a calibrated confidence score. Quote presence is not claim entailment.",
+    "Unknown/unsupported mathematics is an expected honest result, not a verified solution. Natural-language reasoning is not checked.",
+    "Source prompt boundaries are structural checks, not a penetration test or proof that a model never follows injection.",
+    "Compare only the same corpus/version and source hashes; latency is local validator time, not provider speed or SLO."
+  ],
+  "results": [
+    {
+      "id": "vi-retrieval-answerable",
+      "language": "vi",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "topDocument": "source",
+        "expectedDocument": "source",
+        "recallAt1": 1,
+        "lexicalOnly": true
+      }
+    },
+    {
+      "id": "vi-retrieval-missing",
+      "language": "vi",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "hits": 0,
+        "expectedHits": 0,
+        "modelAbstention": "NOT TESTED; no generation occurs"
+      }
+    },
+    {
+      "id": "vi-retrieval-conflict",
+      "language": "vi",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "retainedDocuments": [
+          "a",
+          "b"
+        ],
+        "numericConflictWarning": true,
+        "semanticConflictCoverage": "NOT TESTED"
+      }
+    },
+    {
+      "id": "vi-citation-integrity",
+      "language": "vi",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "validExactQuote": 1,
+        "forgedQuoteAccepted": 0,
+        "forgedLocatorAccepted": 0,
+        "entailment": "NOT TESTED"
+      }
+    },
+    {
+      "id": "vi-injection-boundary",
+      "language": "vi",
+      "dimension": "injection",
+      "status": "PASS",
+      "actual": {
+        "sourceStaysData": true,
+        "privilegedClientContextAccepted": false,
+        "liveModelResistance": "NOT TESTED"
+      }
+    },
+    {
+      "id": "vi-supported-answer-and-question",
+      "language": "vi",
+      "dimension": "answer-question",
+      "status": "PASS",
+      "actual": {
+        "authoredAnswer": 4,
+        "deterministicAnswerStatus": "verified",
+        "math": "checked-supported-cases",
+        "publication": "draft-only",
+        "humanLanguageQuality": "NOT TESTED",
+        "fixtureNotModelOutput": true
+      }
+    },
+    {
+      "id": "vi-adverse-question",
+      "language": "vi",
+      "dimension": "question-quality",
+      "status": "PASS",
+      "actual": {
+        "expectedIssue": "DUPLICATE_OPTIONS",
+        "issues": [
+          "DUPLICATE_OPTIONS",
+          "SEMANTIC_REVIEW_REQUIRED"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "id": "en-retrieval-answerable",
+      "language": "en",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "topDocument": "source",
+        "expectedDocument": "source",
+        "recallAt1": 1,
+        "lexicalOnly": true
+      }
+    },
+    {
+      "id": "en-retrieval-missing",
+      "language": "en",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "hits": 0,
+        "expectedHits": 0,
+        "modelAbstention": "NOT TESTED; no generation occurs"
+      }
+    },
+    {
+      "id": "en-retrieval-conflict",
+      "language": "en",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "retainedDocuments": [
+          "a",
+          "b"
+        ],
+        "numericConflictWarning": true,
+        "semanticConflictCoverage": "NOT TESTED"
+      }
+    },
+    {
+      "id": "en-citation-integrity",
+      "language": "en",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "validExactQuote": 1,
+        "forgedQuoteAccepted": 0,
+        "forgedLocatorAccepted": 0,
+        "entailment": "NOT TESTED"
+      }
+    },
+    {
+      "id": "en-injection-boundary",
+      "language": "en",
+      "dimension": "injection",
+      "status": "PASS",
+      "actual": {
+        "sourceStaysData": true,
+        "privilegedClientContextAccepted": false,
+        "liveModelResistance": "NOT TESTED"
+      }
+    },
+    {
+      "id": "en-supported-answer-and-question",
+      "language": "en",
+      "dimension": "answer-question",
+      "status": "PASS",
+      "actual": {
+        "authoredAnswer": 4,
+        "deterministicAnswerStatus": "verified",
+        "math": "checked-supported-cases",
+        "publication": "draft-only",
+        "humanLanguageQuality": "NOT TESTED",
+        "fixtureNotModelOutput": true
+      }
+    },
+    {
+      "id": "en-adverse-question",
+      "language": "en",
+      "dimension": "question-quality",
+      "status": "PASS",
+      "actual": {
+        "expectedIssue": "INCORRECT_ANSWER_KEY",
+        "issues": [
+          "INCORRECT_ANSWER_KEY",
+          "SEMANTIC_REVIEW_REQUIRED"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "id": "zh-CN-retrieval-answerable",
+      "language": "zh-CN",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "topDocument": "source",
+        "expectedDocument": "source",
+        "recallAt1": 1,
+        "lexicalOnly": true
+      }
+    },
+    {
+      "id": "zh-CN-retrieval-missing",
+      "language": "zh-CN",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "hits": 0,
+        "expectedHits": 0,
+        "modelAbstention": "NOT TESTED; no generation occurs"
+      }
+    },
+    {
+      "id": "zh-CN-retrieval-conflict",
+      "language": "zh-CN",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "retainedDocuments": [
+          "a",
+          "b"
+        ],
+        "numericConflictWarning": true,
+        "semanticConflictCoverage": "NOT TESTED"
+      }
+    },
+    {
+      "id": "zh-CN-citation-integrity",
+      "language": "zh-CN",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "validExactQuote": 1,
+        "forgedQuoteAccepted": 0,
+        "forgedLocatorAccepted": 0,
+        "entailment": "NOT TESTED"
+      }
+    },
+    {
+      "id": "zh-CN-injection-boundary",
+      "language": "zh-CN",
+      "dimension": "injection",
+      "status": "PASS",
+      "actual": {
+        "sourceStaysData": true,
+        "privilegedClientContextAccepted": false,
+        "liveModelResistance": "NOT TESTED"
+      }
+    },
+    {
+      "id": "zh-CN-supported-answer-and-question",
+      "language": "zh-CN",
+      "dimension": "answer-question",
+      "status": "PASS",
+      "actual": {
+        "authoredAnswer": 4,
+        "deterministicAnswerStatus": "verified",
+        "math": "checked-supported-cases",
+        "publication": "draft-only",
+        "humanLanguageQuality": "NOT TESTED",
+        "fixtureNotModelOutput": true
+      }
+    },
+    {
+      "id": "zh-CN-adverse-question",
+      "language": "zh-CN",
+      "dimension": "question-quality",
+      "status": "PASS",
+      "actual": {
+        "expectedIssue": "INVALID_STRUCTURE",
+        "issues": [
+          "INVALID_STRUCTURE",
+          "SEMANTIC_REVIEW_REQUIRED"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "id": "ja-retrieval-answerable",
+      "language": "ja",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "topDocument": "source",
+        "expectedDocument": "source",
+        "recallAt1": 1,
+        "lexicalOnly": true
+      }
+    },
+    {
+      "id": "ja-retrieval-missing",
+      "language": "ja",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "hits": 0,
+        "expectedHits": 0,
+        "modelAbstention": "NOT TESTED; no generation occurs"
+      }
+    },
+    {
+      "id": "ja-retrieval-conflict",
+      "language": "ja",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "retainedDocuments": [
+          "a",
+          "b"
+        ],
+        "numericConflictWarning": true,
+        "semanticConflictCoverage": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ja-citation-integrity",
+      "language": "ja",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "validExactQuote": 1,
+        "forgedQuoteAccepted": 0,
+        "forgedLocatorAccepted": 0,
+        "entailment": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ja-injection-boundary",
+      "language": "ja",
+      "dimension": "injection",
+      "status": "PASS",
+      "actual": {
+        "sourceStaysData": true,
+        "privilegedClientContextAccepted": false,
+        "liveModelResistance": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ja-supported-answer-and-question",
+      "language": "ja",
+      "dimension": "answer-question",
+      "status": "PASS",
+      "actual": {
+        "authoredAnswer": 4,
+        "deterministicAnswerStatus": "verified",
+        "math": "checked-supported-cases",
+        "publication": "draft-only",
+        "humanLanguageQuality": "NOT TESTED",
+        "fixtureNotModelOutput": true
+      }
+    },
+    {
+      "id": "ja-adverse-question",
+      "language": "ja",
+      "dimension": "question-quality",
+      "status": "PASS",
+      "actual": {
+        "expectedIssue": "MULTIPLE_CORRECT_OPTIONS",
+        "issues": [
+          "MULTIPLE_CORRECT_OPTIONS",
+          "SEMANTIC_REVIEW_REQUIRED"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "id": "ko-retrieval-answerable",
+      "language": "ko",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "topDocument": "source",
+        "expectedDocument": "source",
+        "recallAt1": 1,
+        "lexicalOnly": true
+      }
+    },
+    {
+      "id": "ko-retrieval-missing",
+      "language": "ko",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "hits": 0,
+        "expectedHits": 0,
+        "modelAbstention": "NOT TESTED; no generation occurs"
+      }
+    },
+    {
+      "id": "ko-retrieval-conflict",
+      "language": "ko",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "retainedDocuments": [
+          "a",
+          "b"
+        ],
+        "numericConflictWarning": true,
+        "semanticConflictCoverage": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ko-citation-integrity",
+      "language": "ko",
+      "dimension": "source",
+      "status": "PASS",
+      "actual": {
+        "validExactQuote": 1,
+        "forgedQuoteAccepted": 0,
+        "forgedLocatorAccepted": 0,
+        "entailment": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ko-injection-boundary",
+      "language": "ko",
+      "dimension": "injection",
+      "status": "PASS",
+      "actual": {
+        "sourceStaysData": true,
+        "privilegedClientContextAccepted": false,
+        "liveModelResistance": "NOT TESTED"
+      }
+    },
+    {
+      "id": "ko-supported-answer-and-question",
+      "language": "ko",
+      "dimension": "answer-question",
+      "status": "PASS",
+      "actual": {
+        "authoredAnswer": 4,
+        "deterministicAnswerStatus": "verified",
+        "math": "checked-supported-cases",
+        "publication": "draft-only",
+        "humanLanguageQuality": "NOT TESTED",
+        "fixtureNotModelOutput": true
+      }
+    },
+    {
+      "id": "ko-adverse-question",
+      "language": "ko",
+      "dimension": "question-quality",
+      "status": "PASS",
+      "actual": {
+        "expectedIssue": "INCORRECT_ARITHMETIC",
+        "issues": [
+          "INCORRECT_ARITHMETIC",
+          "SEMANTIC_REVIEW_REQUIRED"
+        ],
+        "blocked": true
+      }
+    },
+    {
+      "id": "math-linear-valid",
+      "language": "vi",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "verified",
+        "status": "verified",
+        "complete": true,
+        "scope": {
+          "candidates": "exact",
+          "domain": "checked",
+          "completeness": "proved",
+          "steps": "exact",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "2*4+3=11"
+      }
+    },
+    {
+      "id": "math-rational-pole",
+      "language": "en",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "inconsistent",
+        "status": "inconsistent",
+        "complete": false,
+        "scope": {
+          "candidates": "not_supported",
+          "domain": "checked",
+          "completeness": "incomplete",
+          "steps": "partial",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "x=2 makes the original denominator zero."
+      }
+    },
+    {
+      "id": "math-quadratic-two-roots",
+      "language": "zh-CN",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "verified",
+        "status": "verified",
+        "complete": true,
+        "scope": {
+          "candidates": "exact",
+          "domain": "checked",
+          "completeness": "proved",
+          "steps": "partial",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "Both -2 and2 square to4; neither root is omitted."
+      }
+    },
+    {
+      "id": "math-extraneous-radical-root",
+      "language": "ja",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "inconsistent",
+        "status": "inconsistent",
+        "complete": false,
+        "scope": {
+          "candidates": "not_supported",
+          "domain": "checked",
+          "completeness": "incomplete",
+          "steps": "partial",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "At x=0 the original sides are1 and-1."
+      }
+    },
+    {
+      "id": "math-missing-root",
+      "language": "ko",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "inconsistent",
+        "status": "inconsistent",
+        "complete": false,
+        "scope": {
+          "candidates": "exact",
+          "domain": "checked",
+          "completeness": "incomplete",
+          "steps": "partial",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "The valid root -2 is missing."
+      }
+    },
+    {
+      "id": "math-fraction-arithmetic",
+      "language": "vi",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expression": "1/2+1/3=5/6",
+        "expected": "exact",
+        "actual": "exact",
+        "reference": "3/6+2/6=5/6"
+      }
+    },
+    {
+      "id": "math-invalid-operation-unknown",
+      "language": "en",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expression": "1/0=0",
+        "expected": "unknown",
+        "actual": "unknown",
+        "reference": "Division by zero is undefined. The current arithmetic checker returns unknown rather than a false exact badge."
+      }
+    },
+    {
+      "id": "math-irrational-approximation",
+      "language": "zh-CN",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "not_supported",
+        "status": "not_supported",
+        "complete": null,
+        "scope": {
+          "candidates": "approximate_only",
+          "domain": "checked",
+          "completeness": "not_supported",
+          "steps": "partial",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "Floating-point approximations must not be certified as exact irrational roots."
+      }
+    },
+    {
+      "id": "math-lost-root-transformation",
+      "language": "ja",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "inconsistent",
+        "status": "inconsistent",
+        "complete": true,
+        "scope": {
+          "candidates": "exact",
+          "domain": "checked",
+          "completeness": "proved",
+          "steps": "inconsistent",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "Dividing by x loses the valid root0 even though the final candidate list contains both roots."
+      }
+    },
+    {
+      "id": "math-missing-data-prose",
+      "language": "ko",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expectedStatus": "not_supported",
+        "status": "not_supported",
+        "complete": null,
+        "scope": {
+          "candidates": "not_supported",
+          "domain": "not_supported",
+          "completeness": "not_supported",
+          "steps": "not_checked",
+          "arithmetic": "not_checked",
+          "reasoning": "not_checked"
+        },
+        "reference": "No numerical area is determined from the supplied data."
+      }
+    },
+    {
+      "id": "math-wrong-multiplication",
+      "language": "vi",
+      "dimension": "math",
+      "status": "PASS",
+      "actual": {
+        "expression": "7*8=54",
+        "expected": "invalid",
+        "actual": "invalid",
+        "reference": "7*8=56, not54."
+      }
+    }
+  ],
+  "sourceHashes": {
+    "lib/rag/retrieval.ts": "08bbb4f11713f87ee37b5a1c6c9343282f05a3d728af1b61c3a6169b64deacdf",
+    "lib/ai/contracts.ts": "fa361af951f3112b924c4d3124bbd33ba6a130faac127901b7bc73e94a4413f0",
+    "lib/ai/grounding.ts": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa",
+    "lib/ai/router.ts": "2d7716ad78799c3ebaaa6f79ea16ef5d0b17361249480706d0b986cef164160f",
+    "lib/tutor/math.ts": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
+    "lib/tutor/math-exact.ts": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
+    "lib/teaching/content-qa.ts": "4c04ce3fb3cd0110b57b96ebf5aa197eb324c45f5a2821237386ce944606e7e2",
+    "scripts/evaluate-v7-ai.cjs": "cbd551bd0cc90bd42e7a05784f80b6df191134316c2a3a3d83345a5163cb43d7",
+    "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b"
+  },
+  "corpusSha256": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
+  "sourceBaseCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+  "sourceState": "Working-tree module hashes above; base commit alone does not identify uncommitted V7 changes."
+}

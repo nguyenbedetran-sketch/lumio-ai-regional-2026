@@ -1,0 +1,120 @@
+{
+  "generatedAt": "2026-10-17T08:18:11.388Z",
+  "status": "PASS",
+  "passed": 21,
+  "scope": "Actual temporary SQLite, shared quote policy, actual route guards/router; synthetic identities/session boundary and intercepted transport only.",
+  "realProviderCalls": 0,
+  "realPayments": 0,
+  "tests": [
+    {
+      "name": "Default paid proposal is centralized, bounded and has no real provider cost",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Strict policy parser rejects model/provider overrides, unknown keys and invalid factors",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Permille arithmetic rounds up source/video chunks and separates teaching tasks",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Reading proposal/admin aliases does not seed policy or mutate any wallet",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Paid policy CAS changes only paid settings and audit; all financial rows and Free/Plus stay equal",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Free/Plus reservations keep original rate formula, return shape and null policy snapshot",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Paid reservation stores immutable quote/model snapshot and settles original units after config changes",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Paid refund is owner bound, once only, and restores held amount without repricing",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Generic client input cannot inject trusted paid model or teaching context",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Configured alias snapshot rejects environment model changes before any paid dispatch",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "A new unlisted fallback never dispatches after an existing primary failure",
+      "status": "PASS",
+      "interceptedProviderCalls": 1
+    },
+    {
+      "name": "An allowlisted fallback retains existing bounded routing without additional policy charge",
+      "status": "PASS",
+      "interceptedProviderCalls": 2
+    },
+    {
+      "name": "Admin policy API enforces guest, recent authentication, canonical account and origin",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Quote endpoint is account-bound and read-only, and rejects forged price/model fields",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Actual learner handler measures source text instead of forged quote/sourceCharacters",
+      "status": "PASS",
+      "interceptedProviderCalls": 1
+    },
+    {
+      "name": "Actual learner handler refuses Premium deep before transport and keeps plan unchanged",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Actual Pro learner deep uses configured server alias and exact quoted units",
+      "status": "PASS",
+      "interceptedProviderCalls": 1
+    },
+    {
+      "name": "Genuine schema19 upgrade preserves existing account/ledger/reservation fields and creates no grants",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Paid proposal never enables checkout, renewals or teacher/class authority",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Legacy catalog HTTP cannot bypass paid strict bounds, Pro inheritance or revision/reason CAS",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    },
+    {
+      "name": "Out-of-range historical paid catalog overlay fails closed rather than becoming a trusted policy",
+      "status": "PASS",
+      "interceptedProviderCalls": 0
+    }
+  ],
+  "limitations": [
+    "No merchant, payment lifecycle, actual provider pricing/invoice/profit or paid entitlement sale.",
+    "No real user migration; source-only migration20 is independently covered by focused fixture checks.",
+    "Teacher permissions are independent of paid plans."
+  ]
+}

@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import {
   ArrowUpRight,
   Flame,
@@ -79,7 +80,9 @@ export function Progress({
               {m.topics.map((topic) => (
                 <button key={topic.item.id} onClick={() => open(topic.item)}>
                   <span>
-                    <strong>{topic.item.title}</strong>
+                    <strong>
+                      <MathText text={topic.item.title} inline />
+                    </strong>
                     <small>
                       {topic.attempts} {c.attempts}
                     </small>
@@ -120,7 +123,9 @@ export function Progress({
                   <ClipboardCheck size={20} />
                 </span>
                 <span>
-                  <strong>{a.title}</strong>
+                  <strong>
+                    <MathText text={a.title} inline />
+                  </strong>
                   <small>
                     {new Intl.DateTimeFormat(locale, {
                       dateStyle: "medium",

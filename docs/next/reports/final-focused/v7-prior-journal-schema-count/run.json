@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-10-17T08:11:59.403Z",
+  "command": "pnpm test:v7",
+  "status": "FAIL",
+  "exitCode": 1,
+  "spawnError": null,
+  "scope": "Deterministic suites and isolated synthetic SQLite/transaction fixtures; no genuine OAuth, paid AI, production database or browser acceptance",
+  "archivedReports": [
+    "docs/v7/reports/ai-evaluation-runner.json",
+    "docs/v7/reports/ai-evaluation.json",
+    "docs/v7/reports/api-safety.json",
+    "docs/v7/reports/content-prompt.json",
+    "docs/v7/reports/grade-history.json",
+    "docs/v7/reports/live-runner-check.json",
+    "docs/v7/reports/operations-integrity.json",
+    "docs/v7/reports/provider-attempts.json",
+    "docs/v7/reports/quiz-option-order-regression.json",
+    "docs/v7/reports/rag-billing.json",
+    "docs/v7/reports/rag-lifecycle.json",
+    "docs/v7/reports/rag-tokenizer.json",
+    "docs/v7/reports/retakes.json",
+    "docs/v7/reports/usage-breakdown.json",
+    "docs/v7/reports/v7-tutor-prompt-contract.json"
+  ]
+}

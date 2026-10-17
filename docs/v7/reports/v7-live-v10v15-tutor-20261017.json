@@ -1,0 +1,859 @@
+{
+  "schema": 1,
+  "mode": "live",
+  "status": "PARTIAL_REVIEW_REQUIRED",
+  "startedAt": "2026-10-17T07:15:49.374Z",
+  "scope": "Real local Request handlers, source/tutor/math validators and temporary SQLite ledger; injected synthetic authenticated principal. Not real OAuth/public HTTP, student trial or semantic teacher review.",
+  "automaticProviderRetries": false,
+  "fallbackPolicy": "Unchanged product router may perform one eligible text fallback; each HTTP attempt counts toward the same hard cap.",
+  "providerHTTPAttemptLimit": 8,
+  "actualProviderHTTPAttempts": 7,
+  "transportAttempts": 7,
+  "routeRequests": 10,
+  "providerAttempts": [
+    {
+      "number": 1,
+      "caseId": "radical-extraneous",
+      "phase": "hint-1",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:15:51.734Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"hint\":\"Trước tiên xét miền xác định: biểu thức dưới căn yêu cầu x+1 ≥ 0, và vì căn bậc hai cho kết quả không âm nên phải có x-1 ≥ 0. Khi đã hạn chế miền, bước tiếp theo là bình phương hai vế để loại căn.\",\"question\":\"Hãy bình phương cả hai vế của phương trình và viết phương trình đại số thu được (không giải tiếp): kết quả là gì?\",\"needsClarification\":false,\"references\":[]}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1178,
+        "outputTokens": 467,
+        "totalTokens": 1645,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 7120,
+      "finishedAt": "2026-10-17T07:15:58.856Z"
+    },
+    {
+      "number": 2,
+      "caseId": "radical-extraneous",
+      "phase": "hint-2",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:15:58.896Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\n  \"hint\": \"Kiểm tra nhanh: với x = 0, vế phải x - 1 = -1 là âm trong khi căn bậc hai luôn cho kết quả không âm, nên x = 0 không thể là nghiệm của phương trình.\",\n  \"question\": \"Hãy bình phương cả hai vế của phương trình và viết phương trình đại số thu được (chỉ viết phương trình mới, không giải tiếp): kết quả là gì?\",\n  \"feedback\": \"Bạn thử x = 0, nhưng đối chiếu trực tiếp cho thấy nó không thoả: sqrt(0+1) = 1 ≠ -1.\",\n  \"misconception\": \"Có thể bạn nghĩ x = 0 thỏa vì 0 thường là nghiệm dễ thử, nhưng cần kiểm tra cả miền xác định và thay trực tiếp vào phương trình.\",\n  \"step\": \"Bình phương hai vế (tiếp theo trong phương pháp loại căn).\",\n  \"needsClarification\": false,\n  \"references\": []\n}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1566,
+        "outputTokens": 599,
+        "totalTokens": 2165,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 6212,
+      "finishedAt": "2026-10-17T07:16:05.109Z"
+    },
+    {
+      "number": 3,
+      "caseId": "radical-extraneous",
+      "phase": "hint-3",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:16:05.138Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"hint\":\"Khi bình phương hai vế ta có thể tạo thêm nghiệm giả (extraneous) vì phép biến đổi không tương đương hai chiều. Do đó sau khi tìm nghiệm của phương trình đã bình phương, cần kiểm tra lại từng nghiệm trong phương trình gốc và tuân theo miền xác định (ở đây cả hai vế phải không âm).\",\"question\":\"Bạn hãy kiểm tra: nghiệm x = 0 có thỏa điều kiện miền xác định x ≥ 1 không? (Trả lời \\\"có\\\" hoặc \\\"không\\\".)\",\"feedback\":\"Bạn đã thử x = 0 và thấy không thỏa phương trình gốc; đó là minh hoạ đúng vì vế phải âm.\",\"misconception\":\"Không có.\",\"step\":\"Kiểm tra xem nghiệm ứng cử viên có thuộc miền xác định (x ≥ 1) hay không.\",\"needsClarification\":false,\"references\":[]}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1568,
+        "outputTokens": 754,
+        "totalTokens": 2322,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 13390,
+      "finishedAt": "2026-10-17T07:16:18.529Z"
+    },
+    {
+      "number": 4,
+      "caseId": "radical-extraneous",
+      "phase": "full",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:16:18.573Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"solution\":\"Đề bài: Giải phương trình \\\\(\\\\sqrt{x+1}=x-1\\\\).\\n\\nĐiều kiện: Biểu thức dưới căn yêu cầu \\\\(x+1\\\\ge 0\\\\Rightarrow x\\\\ge -1\\\\). Do căn bậc hai cho kết quả không âm nên phải có vế phải không âm: \\\\(x-1\\\\ge 0\\\\Rightarrow x\\\\ge 1\\\\). Kết hợp được miền xác định: \\\\(x\\\\ge 1\\\\).\\n\\nLời giải:\\n1) Bình phương cả hai vế (trong miền xác định vì ở đây vế trái không âm):\\n\\\\[x+1=(x-1)^2 = x^2-2x+1.\\\\]\\n2) Chuyển vế và rút gọn:\\n\\\\[0 = x^2-2x+1-(x+1)=x^2-3x.\\\\]\\n3) Phân tích nhân tử:\\n\\\\[x^2-3x=x(x-3)=0\\\\Rightarrow x=0\\\\text{ hoặc }x=3.\\\\]\\n\\nKiểm tra: Phải kiểm tra từng nghiệm với phương trình gốc và miền xác định.\\n- \\\\(x=0\\\\) không thuộc miền xác định \\\\(x\\\\ge 1\\\\), và vào phương trình gốc cho \\\\(\\\\sqrt{1}=1\\\\) nhưng vế phải là \\\\(-1\\\\), nên \\\\(x=0\\\\) bị loại (là nghiệm giả sinh ra do bình phương).  \\n- \\\\(x=3\\\\) thuộc miền xác định; thế vào phương trình gốc: \\\\(\\\\sqrt{3+1}=\\\\sqrt{4}=2\\\\) và vế phải \\\\(3-1=2\\\\), thỏa.\\n\\nKết luận: Nghiệm thỏa phương trình là \\\\(x=3\\\\).\\n\\nGhi chú về độ chắc chắn: Kết quả này là chắc chắn trong khuôn khổ các phép toán đại số thông thường (không cần dữ liệu thêm).  \\n\\nTiếp theo một gợi ý bổ sung (hint) cho bạn: khi gặp phương trình có căn, luôn xác định miền nghiệm trước, rồi sau khi biến đổi (như bình phương) kiểm tra lại từng nghiệm tìm được để loại nghiệm giả.\",\"candidateSolutions\":[3],\"references\":[]}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1493,
+        "outputTokens": 1092,
+        "totalTokens": 2585,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 12961,
+      "finishedAt": "2026-10-17T07:16:31.536Z"
+    },
+    {
+      "number": 5,
+      "caseId": "missing-data",
+      "phase": "hint-1",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:16:31.575Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"hint\":\"Diện tích hình chữ nhật được tính bằng tích của chiều dài và chiều rộng; để tính ta cần biết cả hai kích thước. Hiện chỉ có chiều dài = 8 cm nên còn thiếu chiều rộng.\", \"question\":\"Bạn cho biết chiều rộng của hình chữ nhật bằng bao nhiêu (cm)?\", \"needsClarification\":true, \"references\":[]}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1179,
+        "outputTokens": 320,
+        "totalTokens": 1499,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 4176,
+      "finishedAt": "2026-10-17T07:16:35.754Z"
+    },
+    {
+      "number": 6,
+      "caseId": "missing-data",
+      "phase": "hint-2",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:16:35.778Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"hint\":\"Diện tích hình chữ nhật là tích của chiều dài và chiều rộng. Nếu đề chỉ cho chiều dài thì vẫn thiếu dữ kiện chiều rộng hoặc một thông tin khác để suy ra chiều rộng.\", \"question\":\"Bạn có thể cho biết chiều rộng của hình chữ nhật bằng bao nhiêu (cm)? Nếu đề có thêm thông tin khác (ví dụ chu vi, tỉ lệ hay diện tích một phần), ghi rõ chi tiết đó.\", \"needsClarification\":true}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1280,
+        "outputTokens": 251,
+        "totalTokens": 1531,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 3387,
+      "finishedAt": "2026-10-17T07:16:39.169Z"
+    },
+    {
+      "number": 7,
+      "caseId": "missing-data",
+      "phase": "hint-3",
+      "provider": "openai",
+      "requestedModel": "gpt-5-mini",
+      "startedAt": "2026-10-17T07:16:39.189Z",
+      "responseReceived": true,
+      "dispatched": true,
+      "httpStatus": 200,
+      "rawOutput": "{\"hint\":\"Không thể tính được một số cụ thể cho diện tích chỉ khi biết chiều dài; cần biết thêm chiều rộng hoặc một quan hệ khác giữa chiều dài và chiều rộng (ví dụ chu vi, tỉ lệ, hoặc ghi là hình vuông) để tìm diện tích.\",\"question\":\"Trong đề có thông tin nào khác không (ví dụ chu vi, tỉ lệ giữa hai cạnh, diện tích một phần, hoặc ghi rõ là hình vuông)?\",\"feedback\":\"Bạn đúng: đề chỉ cho chiều dài nên hiện tại thiếu dữ kiện để tính diện tích.\",\"misconception\":null,\"step\":\"Xác nhận liệu có bất kỳ dữ kiện bổ sung nào trong đề hay không.\",\"needsClarification\":true,\"references\":[]}",
+      "rawOutputTruncated": false,
+      "responseModel": "gpt-5-mini-2025-08-07",
+      "providerFinish": "completed",
+      "usage": {
+        "inputTokens": 1355,
+        "outputTokens": 690,
+        "totalTokens": 2045,
+        "cachedTokens": 0
+      },
+      "providerErrorCode": null,
+      "latencyMs": 6543,
+      "finishedAt": "2026-10-17T07:16:45.734Z"
+    }
+  ],
+  "cases": [
+    {
+      "id": "radical-extraneous",
+      "suite": "tutor",
+      "authoredProblem": "Giải phương trình sqrt(x + 1) = x - 1",
+      "source": "",
+      "reference": [
+        3
+      ],
+      "referenceCheck": "x≥1; bình phương cho x(x-3)=0; loại0; √4=2",
+      "scenario": "Bình phương sinh nghiệm ngoại lai.",
+      "transcript": [
+        {
+          "student": "[Direct full before hints]",
+          "http": 409,
+          "latencyMs": 55,
+          "providerAttemptNumbers": [],
+          "body": {
+            "error": "TUTOR_LOCKED",
+            "tutor": {
+              "sessionId": "ba41a2e9-8dc6-4014-a174-1ae716f2474c",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": false,
+              "guidance": "hints",
+              "revision": 0,
+              "expiresAt": "2026-10-24T07:15:51.708Z"
+            },
+            "requestId": "http-e42460547b816c1f64b2610df8e7325dc8f92d63812f779faad374ace22c7201"
+          }
+        },
+        {
+          "student": "Giải phương trình sqrt(x + 1) = x - 1",
+          "http": 200,
+          "latencyMs": 7157,
+          "providerAttemptNumbers": [
+            1
+          ],
+          "body": {
+            "text": "Trước tiên xét miền xác định: biểu thức dưới căn yêu cầu x+1 ≥ 0, và vì căn bậc hai cho kết quả không âm nên phải có x-1 ≥ 0. Khi đã hạn chế miền, bước tiếp theo là bình phương hai vế để loại căn.\n\nHãy bình phương cả hai vế của phương trình và viết phương trình đại số thu được (không giải tiếp): kết quả là gì?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "ba41a2e9-8dc6-4014-a174-1ae716f2474c",
+              "hintCount": 1,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": false,
+              "guidance": "hints",
+              "revision": 1,
+              "expiresAt": "2026-10-24T07:15:51.708Z",
+              "latestTurn": {
+                "id": "680c21bf-561d-4978-8258-82bc1f29aeeb",
+                "ordinal": 1,
+                "intent": "progress",
+                "counted": true,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-1ea4177c80c74a9683330fea6ca767cb8c93359f352c742f4a2c1e9d4bcabbb5"
+          }
+        },
+        {
+          "student": "x = 0",
+          "http": 200,
+          "latencyMs": 6249,
+          "providerAttemptNumbers": [
+            2
+          ],
+          "body": {
+            "text": "Bạn thử x = 0, nhưng đối chiếu trực tiếp cho thấy nó không thoả: sqrt(0+1) = 1 ≠ -1.\n\nKiểm tra nhanh: với x = 0, vế phải x - 1 = -1 là âm trong khi căn bậc hai luôn cho kết quả không âm, nên x = 0 không thể là nghiệm của phương trình.\n\nHãy bình phương cả hai vế của phương trình và viết phương trình đại số thu được (chỉ viết phương trình mới, không giải tiếp): kết quả là gì?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "ba41a2e9-8dc6-4014-a174-1ae716f2474c",
+              "hintCount": 2,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": false,
+              "guidance": "hints",
+              "revision": 2,
+              "expiresAt": "2026-10-24T07:15:51.708Z",
+              "latestTurn": {
+                "id": "9f00cd65-c87b-4834-a831-596f3fdf55c1",
+                "ordinal": 2,
+                "intent": "progress",
+                "counted": true,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-e546220af70414a5f2b548b69d48e796d15069d17efe75ca58712022092b4901"
+          }
+        },
+        {
+          "student": "Em chưa hiểu vì sao phải loại nghiệm.",
+          "http": 200,
+          "latencyMs": 13431,
+          "providerAttemptNumbers": [
+            3
+          ],
+          "body": {
+            "text": "Bạn đã thử x = 0 và thấy không thỏa phương trình gốc; đó là minh hoạ đúng vì vế phải âm.\n\nKhi bình phương hai vế ta có thể tạo thêm nghiệm giả (extraneous) vì phép biến đổi không tương đương hai chiều. Do đó sau khi tìm nghiệm của phương trình đã bình phương, cần kiểm tra lại từng nghiệm trong phương trình gốc và tuân theo miền xác định (ở đây cả hai vế phải không âm).\n\nBạn hãy kiểm tra: nghiệm x = 0 có thỏa điều kiện miền xác định x ≥ 1 không?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "ba41a2e9-8dc6-4014-a174-1ae716f2474c",
+              "hintCount": 3,
+              "requiredHints": 3,
+              "canUnlock": true,
+              "needsClarification": false,
+              "guidance": "hints",
+              "revision": 3,
+              "expiresAt": "2026-10-24T07:15:51.708Z",
+              "latestTurn": {
+                "id": "5e394112-3dd7-4be6-b007-cc3fd044af99",
+                "ordinal": 3,
+                "intent": "progress",
+                "counted": true,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-de347c692f0be18644acc7a15b5fe5ac9e5cd1a5127cb981dab5ab50eb42ff0c"
+          }
+        },
+        {
+          "student": "[Explicit full after hints]",
+          "http": 200,
+          "latencyMs": 12988,
+          "providerAttemptNumbers": [
+            4
+          ],
+          "body": {
+            "text": "Đề bài: Giải phương trình \\(\\sqrt{x+1}=x-1\\).\n\nĐiều kiện: Biểu thức dưới căn yêu cầu \\(x+1\\ge 0\\Rightarrow x\\ge -1\\). Do căn bậc hai cho kết quả không âm nên phải có vế phải không âm: \\(x-1\\ge 0\\Rightarrow x\\ge 1\\). Kết hợp được miền xác định: \\(x\\ge 1\\).\n\nLời giải:\n1) Bình phương cả hai vế (trong miền xác định vì ở đây vế trái không âm):\n\\[x+1=(x-1)^2 = x^2-2x+1.\\]\n2) Chuyển vế và rút gọn:\n\\[0 = x^2-2x+1-(x+1)=x^2-3x.\\]\n3) Phân tích nhân tử:\n\\[x^2-3x=x(x-3)=0\\Rightarrow x=0\\text{ hoặc }x=3.\\]\n\nKiểm tra: Phải kiểm tra từng nghiệm với phương trình gốc và miền xác định.\n- \\(x=0\\) không thuộc miền xác định \\(x\\ge 1\\), và vào phương trình gốc cho \\(\\sqrt{1}=1\\) nhưng vế phải là \\(-1\\), nên \\(x=0\\) bị loại (là nghiệm giả sinh ra do bình phương).  \n- \\(x=3\\) thuộc miền xác định; thế vào phương trình gốc: \\(\\sqrt{3+1}=\\sqrt{4}=2\\) và vế phải \\(3-1=2\\), thỏa.\n\nKết luận: Nghiệm thỏa phương trình là \\(x=3\\).\n\nGhi chú về độ chắc chắn: Kết quả này là chắc chắn trong khuôn khổ các phép toán đại số thông thường (không cần dữ liệu thêm).  \n\nTiếp theo một gợi ý bổ sung (hint) cho bạn: khi gặp phương trình có căn, luôn xác định miền nghiệm trước, rồi sau khi biến đổi (như bình phương) kiểm tra lại từng nghiệm tìm được để loại nghiệm giả.",
+            "verification": {
+              "status": "verified",
+              "equation": "sqrt(x + 1) = x - 1",
+              "candidates": [
+                {
+                  "value": 3,
+                  "valid": true
+                }
+              ],
+              "conditions": [
+                "(x+1) >= 0",
+                "(x-1) >= 0"
+              ],
+              "complete": true,
+              "scope": {
+                "candidates": "exact",
+                "domain": "checked",
+                "completeness": "proved",
+                "steps": "partial",
+                "arithmetic": "partial",
+                "reasoning": "not_checked"
+              },
+              "method": "Số hữu tỉ BigInt và đa thức có giới hạn; đối chiếu miền xác định, nghiệm và tính đủ nghiệm riêng biệt. Kiểm tra số gần đúng chỉ là thông tin tham khảo.",
+              "note": "Đã đối chiếu chính xác tập nghiệm trong phạm vi hỗ trợ. Chưa chứng minh lời văn hay mọi bước lập luận.",
+              "explicitSteps": [],
+              "calculations": [
+                {
+                  "equation": "sqrt(1)=1",
+                  "status": "exact"
+                },
+                {
+                  "equation": "sqrt(3+1)=sqrt(4)=2",
+                  "status": "unknown"
+                },
+                {
+                  "equation": "3-1=2",
+                  "status": "exact"
+                }
+              ]
+            },
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "ba41a2e9-8dc6-4014-a174-1ae716f2474c",
+              "hintCount": 3,
+              "requiredHints": 3,
+              "canUnlock": true,
+              "needsClarification": false,
+              "guidance": "full",
+              "revision": 4,
+              "expiresAt": "2026-10-24T07:15:51.708Z",
+              "latestTurn": {
+                "id": "cd1b883c-f567-44fc-b6d0-0802c2fda98c",
+                "ordinal": 4,
+                "intent": "progress",
+                "counted": false,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-75b6c3a2876066e4ecaa02ef1bd2af12c629860eb7e044b0c6e0c8a3a5c9a311"
+          }
+        }
+      ],
+      "status": "TECHNICAL_PASS_REVIEW_PENDING",
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "referenceCandidates": true,
+        "noLeakedCreditHold": true
+      },
+      "pedagogicalReview": "PENDING",
+      "credits": {
+        "before": {
+          "planId": "free",
+          "balance": 200,
+          "reserved": 0,
+          "settledEntries": 0,
+          "refundEntries": 0
+        },
+        "after": {
+          "planId": "free",
+          "balance": 184,
+          "reserved": 0,
+          "settledEntries": 4,
+          "refundEntries": 0
+        }
+      },
+      "mathVerification": {
+        "status": "verified",
+        "equation": "sqrt(x + 1) = x - 1",
+        "candidates": [
+          {
+            "value": 3,
+            "valid": true
+          }
+        ],
+        "conditions": [
+          "(x+1) >= 0",
+          "(x-1) >= 0"
+        ],
+        "complete": true,
+        "scope": {
+          "candidates": "exact",
+          "domain": "checked",
+          "completeness": "proved",
+          "steps": "partial",
+          "arithmetic": "partial",
+          "reasoning": "not_checked"
+        },
+        "method": "Số hữu tỉ BigInt và đa thức có giới hạn; đối chiếu miền xác định, nghiệm và tính đủ nghiệm riêng biệt. Kiểm tra số gần đúng chỉ là thông tin tham khảo.",
+        "note": "Đã đối chiếu chính xác tập nghiệm trong phạm vi hỗ trợ. Chưa chứng minh lời văn hay mọi bước lập luận.",
+        "explicitSteps": [],
+        "calculations": [
+          {
+            "equation": "sqrt(1)=1",
+            "status": "exact"
+          },
+          {
+            "equation": "sqrt(3+1)=sqrt(4)=2",
+            "status": "unknown"
+          },
+          {
+            "equation": "3-1=2",
+            "status": "exact"
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing-data",
+      "suite": "tutor",
+      "authoredProblem": "Hình chữ nhật có chiều dài 8 cm. Tính diện tích.",
+      "source": "",
+      "reference": null,
+      "referenceCheck": "Thiếu chiều rộng hoặc quan hệ xác định chiều rộng; không có đáp án số duy nhất.",
+      "scenario": "Thiếu dữ kiện: phải hỏi chiều rộng, không bịa diện tích.",
+      "transcript": [
+        {
+          "student": "[Direct full before hints]",
+          "http": 409,
+          "latencyMs": 10,
+          "providerAttemptNumbers": [],
+          "body": {
+            "error": "TUTOR_LOCKED",
+            "tutor": {
+              "sessionId": "65306695-b4bf-4a4c-8650-9de70a7ce013",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": false,
+              "guidance": "hints",
+              "revision": 0,
+              "expiresAt": "2026-10-24T07:16:31.558Z"
+            },
+            "requestId": "http-c1d4fb62216349441ca3c31e2c9f1835e51abc6e8dc0b51fe9f1b4c850da4623"
+          }
+        },
+        {
+          "student": "Hình chữ nhật có chiều dài 8 cm. Tính diện tích.",
+          "http": 200,
+          "latencyMs": 4201,
+          "providerAttemptNumbers": [
+            5
+          ],
+          "body": {
+            "text": "Diện tích hình chữ nhật được tính bằng tích của chiều dài và chiều rộng; để tính ta cần biết cả hai kích thước. Hiện chỉ có chiều dài = 8 cm nên còn thiếu chiều rộng.\n\nBạn cho biết chiều rộng của hình chữ nhật bằng bao nhiêu (cm)?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "65306695-b4bf-4a4c-8650-9de70a7ce013",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": true,
+              "guidance": "hints",
+              "revision": 1,
+              "expiresAt": "2026-10-24T07:16:31.558Z",
+              "latestTurn": {
+                "id": "a2f4d71d-a35d-49c7-968b-40dd3f0faf4d",
+                "ordinal": 1,
+                "intent": "progress",
+                "counted": false,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-582e2bc0a47e0bdbc4c989fc9f71069508506e4713d4310b4f2c588eed56159b"
+          }
+        },
+        {
+          "student": "Đề chỉ cho chiều dài thôi.",
+          "http": 200,
+          "latencyMs": 3410,
+          "providerAttemptNumbers": [
+            6
+          ],
+          "body": {
+            "text": "Diện tích hình chữ nhật là tích của chiều dài và chiều rộng. Nếu đề chỉ cho chiều dài thì vẫn thiếu dữ kiện chiều rộng hoặc một thông tin khác để suy ra chiều rộng.\n\nBạn có thể cho biết chiều rộng của hình chữ nhật bằng bao nhiêu (cm)?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "65306695-b4bf-4a4c-8650-9de70a7ce013",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": true,
+              "guidance": "hints",
+              "revision": 2,
+              "expiresAt": "2026-10-24T07:16:31.558Z",
+              "latestTurn": {
+                "id": "6d1c8d8a-9278-41c3-81b9-67b6d7d644b4",
+                "ordinal": 2,
+                "intent": "progress",
+                "counted": false,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-a51d7120bd94f242c5a91af0e9bc393ed4c74e57c2f0f8dcb6614aabb5a52b02"
+          }
+        },
+        {
+          "student": "Có thể tính được nếu chưa biết chiều rộng không?",
+          "http": 200,
+          "latencyMs": 6567,
+          "providerAttemptNumbers": [
+            7
+          ],
+          "body": {
+            "text": "Bạn đúng: đề chỉ cho chiều dài nên hiện tại thiếu dữ kiện để tính diện tích.\n\nKhông thể tính được một số cụ thể cho diện tích chỉ khi biết chiều dài; cần biết thêm chiều rộng hoặc một quan hệ khác giữa chiều dài và chiều rộng (ví dụ chu vi, tỉ lệ, hoặc ghi là hình vuông) để tìm diện tích.\n\nTrong đề có thông tin nào khác không (ví dụ chu vi, tỉ lệ giữa hai cạnh, diện tích một phần, hoặc ghi rõ là hình vuông)?",
+            "references": [],
+            "quality": {
+              "status": "review-required",
+              "structuralChecks": true,
+              "citedItems": 0,
+              "totalItems": 1,
+              "issues": [
+                "missing-source",
+                "semantic-review"
+              ]
+            },
+            "tutor": {
+              "sessionId": "65306695-b4bf-4a4c-8650-9de70a7ce013",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": true,
+              "guidance": "hints",
+              "revision": 3,
+              "expiresAt": "2026-10-24T07:16:31.558Z",
+              "latestTurn": {
+                "id": "9050ec99-135a-4ba6-bc41-519750c91ab0",
+                "ordinal": 3,
+                "intent": "progress",
+                "counted": false,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-6c7781876a49b7ff022af91a1c445b5840020089cda96c64ea35f92a6a6a4c5b"
+          }
+        },
+        {
+          "student": "[Explicit full after hints]",
+          "http": 409,
+          "latencyMs": 11,
+          "providerAttemptNumbers": [],
+          "body": {
+            "error": "TUTOR_LOCKED",
+            "tutor": {
+              "sessionId": "65306695-b4bf-4a4c-8650-9de70a7ce013",
+              "hintCount": 0,
+              "requiredHints": 3,
+              "canUnlock": false,
+              "needsClarification": true,
+              "guidance": "hints",
+              "revision": 3,
+              "expiresAt": "2026-10-24T07:16:31.558Z",
+              "latestTurn": {
+                "id": "9050ec99-135a-4ba6-bc41-519750c91ab0",
+                "ordinal": 3,
+                "intent": "progress",
+                "counted": false,
+                "feedbackRevision": 0,
+                "feedback": null
+              }
+            },
+            "requestId": "http-730debe5bbce8efff50448a537e3be5238d20c289a11dba48a900fb51abc5d5a"
+          }
+        }
+      ],
+      "status": "TECHNICAL_PASS_REVIEW_PENDING",
+      "technicalChecks": {
+        "earlyFullBlockedWithoutProvider": true,
+        "earlyFullBlockedWithoutCredit": true,
+        "serverHintProgression": true,
+        "fullGate": true,
+        "clarificationState": true,
+        "noLeakedCreditHold": true
+      },
+      "pedagogicalReview": "PENDING",
+      "credits": {
+        "before": {
+          "planId": "free",
+          "balance": 200,
+          "reserved": 0,
+          "settledEntries": 0,
+          "refundEntries": 0
+        },
+        "after": {
+          "planId": "free",
+          "balance": 188,
+          "reserved": 0,
+          "settledEntries": 3,
+          "refundEntries": 0
+        }
+      },
+      "missingDataReview": {
+        "status": "PENDING",
+        "reference": "Thiếu chiều rộng hoặc quan hệ xác định chiều rộng; không có đáp án số duy nhất.",
+        "scope": "State/hint/full gate checked; raw text still needs review for invented dimensions or area."
+      }
+    }
+  ],
+  "manualReview": {
+    "status": "PENDING",
+    "studentTrial": "NOT_TESTED",
+    "independentTeacherReview": "NOT_TESTED",
+    "semanticAccuracyClaim": false
+  },
+  "limitations": [
+    "Provider HTTP attempts can incur cost even when application credit is refunded.",
+    "Cap counts transport dispatch attempts, including failed network attempts; does not prove provider receipt or invoice amount.",
+    "Bounded math/citation/structure checks do not prove all narrative reasoning, pedagogical quality, injection resistance or learning outcomes.",
+    "No automatic retry or replacement of rejected outputs; rejected raw authored outputs remain in providerAttempts.",
+    "No vision/audio/device/public deployment coverage in this runner."
+  ],
+  "runtime": {
+    "node": "v24.19.0",
+    "packageVersion": "3.5.0-rc.1",
+    "schemaVersion": 18,
+    "workingTree": "Source hashes below identify inspected runtime files; HEAD alone may exclude uncommitted edits.",
+    "runnerSHA256": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b",
+    "headCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1"
+  },
+  "fixtures": {
+    "tutorFile": "lib/tutor/reference-problems.ts",
+    "tutorCases": [
+      "radical-extraneous",
+      "missing-data"
+    ],
+    "contentCorpusId": "lumio-v7-authored-offline-1",
+    "corpusVersion": "1.0.0",
+    "languages": [
+      "vi"
+    ],
+    "authored": true,
+    "studentData": false
+  },
+  "plannedCases": [
+    {
+      "id": "radical-extraneous",
+      "suite": "tutor"
+    },
+    {
+      "id": "missing-data",
+      "suite": "tutor"
+    }
+  ],
+  "sourceHashScope": "Selected route, generation, validation, source-grounding and math files at run start; not a complete transitive dependency manifest or proof of deployed source.",
+  "sourceHashes": {
+    "app/api/ai/route.ts": "ac73fdab4ed4b7949eb1d8bfae6448809d8ea643f4d3548371c68daf4586d88f",
+    "lib/ai/router.ts": "2d7716ad78799c3ebaaa6f79ea16ef5d0b17361249480706d0b986cef164160f",
+    "lib/ai/contracts.ts": "fa361af951f3112b924c4d3124bbd33ba6a130faac127901b7bc73e94a4413f0",
+    "lib/ai/grounding.ts": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa",
+    "lib/ai/summary.ts": "ab01af55b45fda1889a06650f3ca8f34991cf6cbaa8ab6187ee0c9d5af6a02a5",
+    "lib/ai/quiz-option-order.ts": "f24551bf0a37a72d755f591debee9088bea2c0eb4f75c4e96adf836c3dd37a7e",
+    "lib/ai/provider-attempt.ts": "060aaefab5ffa50283b76201f46bd29001042f2880e3bb96ace0e59722757d9e",
+    "lib/server/provider-attempt-core.ts": "82d27b29bda36261edd523f0cd670f20dbf7a861337656671cc1373652d1af20",
+    "lib/server/provider-attempt-schema.ts": "13b8b1af7f35a15a0a08f446606beb579bb680b72aa8beda1999ee41dda1a36c",
+    "lib/server/provider-attempt-report.ts": "a9cb9b658f6142cfe18a1c8b79fea77144741582421a3d937143ece8ce29f8b0",
+    "lib/server/store.ts": "9b3235b5f4032ad328fe598989f1ca86c4f1ced6a1955bb12ce839db1b142046",
+    "lib/tutor/policy.ts": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8",
+    "lib/tutor/math.ts": "d065aeda08165b3ae80c1f8e385c84b4cf0d794b8f9f3797877456afdbf4e762",
+    "lib/tutor/math-exact.ts": "12c8c35232ae394d14cbb19a38a76e04a4fe7ef9d127645603b7cc1f79b39e24",
+    "lib/server/schema.ts": "7aa93ad86b2f2cfcae3b6ff8db9bbb37c96a8442910a74815c1cc992b644edf1",
+    "lib/server/database-integrity.ts": "6fb5a5b86db7b76f4ddc9f13975dd9b5e9c36bda6181dba84ae4513a17667c8e",
+    "lib/tutor/reference-problems.ts": "f7ebc653b771fc24ac25dedc382ee6a14ff8e49b4dd16d002605976262109206",
+    "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
+    "scripts/evaluate-v7-live.cjs": "96bab9dcab8e20b7ccb58ebf45c30932ed2af537fa86b6cab374de82a7bec41b"
+  },
+  "notTestedCases": [],
+  "summary": {
+    "technicalPass": 2,
+    "partial": 0,
+    "fail": 0,
+    "blocked": 0,
+    "notTested": 0
+  },
+  "finishedAt": "2026-10-17T07:16:45.763Z",
+  "providerAttemptJournal": {
+    "scope": "recorded-text-provider-attempts",
+    "dimension": "model",
+    "days": 31,
+    "from": "2026-09-16T07:16:45.763Z",
+    "through": "2026-10-17T07:16:45.763Z",
+    "firstRetainedAttemptAt": "2026-10-17T07:15:51.732Z",
+    "retainedAllAges": {
+      "attempts": 7,
+      "unresolved": 0,
+      "unresolvedOutsideWindow": 0
+    },
+    "limits": {
+      "total": 100000,
+      "unresolvedGlobal": 2048,
+      "unresolvedPerAccount": 64
+    },
+    "totals": {
+      "attempts": 7,
+      "responses": 7,
+      "unresolved": 0,
+      "transportUnknown": 0,
+      "httpErrors": 0,
+      "inputTokens": 9619,
+      "outputTokens": 4173,
+      "inputTokenRecords": 7,
+      "outputTokenRecords": 7,
+      "totalTokens": 13792,
+      "totalTokenRecords": 7,
+      "responseModelRecords": 7,
+      "changedModelRecords": 7,
+      "averageLatencyMs": 7689,
+      "p50LatencyMs": 6548,
+      "p95LatencyMs": 13393,
+      "latencyRecords": 7,
+      "observedLatencyRecords": 7,
+      "httpStatusRecords": 7,
+      "httpStatusCoverage": 1,
+      "httpErrorRatio": 0,
+      "estimatedCostUsd": null,
+      "unpricedAttempts": 7
+    },
+    "groups": [
+      {
+        "attempts": 7,
+        "responses": 7,
+        "unresolved": 0,
+        "transportUnknown": 0,
+        "httpErrors": 0,
+        "inputTokens": 9619,
+        "outputTokens": 4173,
+        "inputTokenRecords": 7,
+        "outputTokenRecords": 7,
+        "totalTokens": 13792,
+        "totalTokenRecords": 7,
+        "responseModelRecords": 7,
+        "changedModelRecords": 7,
+        "averageLatencyMs": 7689,
+        "p50LatencyMs": 6548,
+        "p95LatencyMs": 13393,
+        "latencyRecords": 7,
+        "observedLatencyRecords": 7,
+        "httpStatusRecords": 7,
+        "httpStatusCoverage": 1,
+        "httpErrorRatio": 0,
+        "estimatedCostUsd": null,
+        "unpricedAttempts": 7,
+        "key": "gpt-5-mini",
+        "provider": "openai"
+      }
+    ],
+    "truncated": false,
+    "limitations": [
+      "Text/multimodal generation only: learner, teacher drafts and summary jobs. Embedding, voice and historical attempts are not backfilled.",
+      "Prepared records are dispatch intents, not proof the provider received a request. Unresolved/network/timeout/cancelled records have unknown provider receipt or cost.",
+      "An HTTP response is not a valid or accepted answer. Recorded requested models are grouped; response model metadata may differ or be absent.",
+      "Token fields sum only observed non-null values; coverage is separate. No approved price is assumed: all attempt costs remain null, not zero or an invoice.",
+      "This cohort uses preparation time. First retained row is not an instrumentation activation date. Terminal retention and storage failures can reduce coverage; credits/refunds remain in the independent billing ledger.",
+      "Latency percentiles use nearest rank over observed non-null values only; a measured zero is retained. HTTP error ratio divides statuses >=400 by recorded HTTP statuses, while status coverage divides known statuses by prepared attempts. Transport-unknown and unresolved attempts are not assumed HTTP errors or successes.",
+      "Observed attempt latency is dispatch lifecycle elapsed time, including network/timeout/cancellation outcomes, not isolated provider model processing time. Coverage is only the retained recorded cohort."
+    ]
+  }
+}

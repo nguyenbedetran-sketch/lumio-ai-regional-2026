@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-10-17T06:48:44.379Z",
+  "runs": [
+    {
+      "command": "node tests/source-grounding.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "node tests/rag.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "node tests/rag-api.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "node tests/v7-content-prompt.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "node tests/v7-tutor-prompt.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    },
+    {
+      "command": "node scripts/test-v7-ai-evaluation.cjs",
+      "status": "PASS",
+      "exitCode": 0
+    }
+  ],
+  "historicalReportBytesPreserved": true,
+  "newProviderCalls": 0,
+  "scope": "Actual isolated SQLite, extraction and intercepted/provider-free regression; not semantic/provider proof."
+}

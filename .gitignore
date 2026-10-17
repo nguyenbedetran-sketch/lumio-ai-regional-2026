@@ -23,3 +23,5 @@ apps/**/bundle/
 apps/**/local.properties
 apps/**/key.properties
 apps/**/.flutter-plugins-dependencies
+
+docs/next/reports/**/*.log

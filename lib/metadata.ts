@@ -87,6 +87,7 @@ export const siteMetadata: Metadata = {
     template: "%s · Lumio AI",
   },
   applicationName: "Lumio AI",
+  manifest: "/manifest.webmanifest",
   icons: { icon: "/brand/lumio-logo.png", apple: "/brand/lumio-logo.png" },
   ...(publicOrigin() ? { metadataBase: new URL(publicOrigin()!) } : {}),
 };

@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:17:41.691Z",
+  "scope": "Native child/IPC with synthetic LOCAL SQLite; NOT remote durability evidence",
+  "passed": 8,
+  "checks": [
+    {
+      "name": "Full schema bootstrap and fresh readiness",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh readiness latency",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical identities preserve one account and enforce organization scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Reviewed assignment and actual student submission commit together with operation receipts",
+      "status": "PASS"
+    },
+    {
+      "name": "Foreign keys and immutable audit reject writes without poisoning healthy rollback",
+      "status": "PASS"
+    },
+    {
+      "name": "Sync CAS and same-request replay preserve the acknowledged canonical revision",
+      "status": "PASS"
+    },
+    {
+      "name": "Two separate processes cannot overdraw the same canonical wallet",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet",
+      "status": "PASS"
+    }
+  ],
+  "timingsMs": {
+    "Full schema bootstrap and fresh readiness": 246,
+    "Fresh readiness latency": 5,
+    "Canonical identities preserve one account and enforce organization scope": 108,
+    "Reviewed assignment and actual student submission commit together with operation receipts": 114,
+    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 2,
+    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 15,
+    "Two separate processes cannot overdraw the same canonical wallet": 2156,
+    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 1551
+  },
+  "teachingMutationLatencyMs": {
+    "count": 12,
+    "min": 9,
+    "max": 22,
+    "median": 18,
+    "p95": 22
+  },
+  "totalMs": 4198
+}

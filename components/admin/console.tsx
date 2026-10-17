@@ -32,6 +32,7 @@ import type { AuditEvent, AIUsageEvent, User } from "../../lib/server/types";
 import { TeacherReviewPanel } from "./teacher-review";
 import { UsageBreakdownPanel } from "./usage-breakdown";
 import { JobHealthPanel } from "./job-health";
+import { PaidPlanPolicyPanel } from "./paid-plan-policy";
 
 type Tab = "overview" | "users" | "teachers" | "usage" | "flags" | "audit";
 const formatNumber = (n: number | null) =>
@@ -838,6 +839,7 @@ function AdminConsoleForActor({ initial }: { initial: AdminSnapshot }) {
                   thông tin đăng nhập luôn do máy chủ quản lý.
                 </p>
               </div>
+              {permitted("features.read") && <PaidPlanPolicyPanel key={data.actor.accountKey} accountKey={data.actor.accountKey} canEdit={permitted("features.update")} />}
             </>
           )}
           {tab === "audit" && (

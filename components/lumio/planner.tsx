@@ -1,5 +1,6 @@
 "use client";
-import { useState } from "react";
+import { MathText } from "./math-text";
+import { useEffect, useRef, useState } from "react";
 import {
   Plus,
   Check,
@@ -27,6 +28,7 @@ export function Planner({
   update,
   toggleTask,
   open,
+  initialTaskId,
 }: {
   locale: Locale;
   items: LearningItem[];
@@ -34,7 +36,18 @@ export function Planner({
   update: (fn: (old: LearningState) => LearningState) => void;
   toggleTask: (task: StudyTask) => void;
   open: (item: LearningItem) => void;
+  initialTaskId?: string;
 }) {
+  const selectedTask = useRef<HTMLElement>(null);
+  useEffect(() => {
+    if (initialTaskId) {
+      selectedTask.current?.scrollIntoView({
+        block: "center",
+        behavior: "instant",
+      });
+      selectedTask.current?.focus({ preventScroll: true });
+    }
+  }, [initialTaskId]);
   const c = learningCopy[locale],
     [editing, setEditing] = useState<StudyTask | "new" | null>(null),
     [title, setTitle] = useState(""),
@@ -139,6 +152,9 @@ export function Planner({
             const item = items.find((i) => i.id === task.itemId);
             return (
               <article
+                ref={task.id === initialTaskId ? selectedTask : undefined}
+                tabIndex={task.id === initialTaskId ? -1 : undefined}
+                data-task-id={task.id}
                 className={`lx-plan-item ${task.done ? "done" : ""}`}
                 key={task.id}
               >
@@ -151,7 +167,9 @@ export function Planner({
                   {task.done && <Check size={17} />}
                 </button>
                 <div className="lx-plan-body">
-                  <h3>{task.title}</h3>
+                  <h3>
+                    <MathText text={task.title} inline />
+                  </h3>
                   <div className="lx-plan-meta">
                     <span
                       className={
@@ -172,7 +190,7 @@ export function Planner({
                     {item && (
                       <button onClick={() => open(item)}>
                         <BookOpen size={13} />
-                        {item.title}
+                        <MathText text={item.title} inline />
                       </button>
                     )}
                   </div>

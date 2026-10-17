@@ -1,4 +1,5 @@
 import type { LearningItem, Space } from "./types";
+import type { StudyTask } from "./learning-engine";
 
 export type CommandView =
   | "home"
@@ -24,7 +25,8 @@ export type CommandDestination = {
 export const COMMAND_QUERY_LIMIT = 160;
 export const COMMAND_CONTENT_LIMIT = 12000;
 export const COMMAND_RESULT_LIMIT = 20;
-export type MatchField = "title" | "file" | "space" | "notes" | "text";
+export type MatchField =
+  "title" | "file" | "space" | "notes" | "text" | "study";
 type IndexedItem = {
   item: LearningItem;
   fields: Record<MatchField, string>;
@@ -58,10 +60,38 @@ export function buildCommandIndex(
       space: commandFold(names.get(item.spaceId) || ""),
       notes: commandFold(item.notes.slice(0, COMMAND_CONTENT_LIMIT)),
       text: commandFold(item.text.slice(0, COMMAND_CONTENT_LIMIT)),
+      study: commandFold(
+        [
+          ...item.cards
+            .slice(0, 100)
+            .flatMap((card) => [card.front, card.back]),
+          ...item.questions
+            .slice(0, 100)
+            .flatMap((q) => [q.prompt, q.topic || "", q.explanation]),
+          ...(item.artifacts || [])
+            .slice(0, 20)
+            .flatMap((a) => [
+              a.summary.title,
+              a.summary.overview,
+              ...a.summary.keyPoints,
+              ...a.summary.chapters.map((c) => c.title + " " + c.summary),
+            ]),
+        ]
+          .map((value) => value.slice(0, COMMAND_CONTENT_LIMIT))
+          .join("\n")
+          .slice(0, COMMAND_CONTENT_LIMIT),
+      ),
     },
   }));
 }
-const fieldPriority: MatchField[] = ["title", "file", "space", "notes", "text"];
+const fieldPriority: MatchField[] = [
+  "title",
+  "file",
+  "space",
+  "notes",
+  "text",
+  "study",
+];
 const openedTime = (item: LearningItem) => {
   const time = Date.parse(item.lastOpenedAt || item.createdAt);
   return Number.isFinite(time) ? time : 0;
@@ -107,7 +137,7 @@ export function searchCommandItems(
       for (const term of terms)
         score += fieldPriority.reduce(
           (best, field, rank) =>
-            Math.max(best, fields[field].includes(term) ? (5 - rank) * 10 : 0),
+            Math.max(best, fields[field].includes(term) ? (6 - rank) * 10 : 0),
           0,
         );
     }
@@ -126,6 +156,25 @@ export function searchCommandItems(
     total: scored.length,
     query,
   };
+}
+/** User-owned study plans already loaded in this workspace, never a server query. */
+export function searchCommandTasks(tasks: readonly StudyTask[], input: string) {
+  const query = commandQuery(input);
+  if (!query) return [];
+  const terms = query.split(" ").filter(Boolean);
+  return tasks
+    .filter((task) => {
+      const text = commandFold(`${task.title} ${task.date}`);
+      return terms.every((term) => text.includes(term));
+    })
+    .slice()
+    .sort(
+      (a, b) =>
+        Number(a.done) - Number(b.done) ||
+        a.date.localeCompare(b.date) ||
+        a.id.localeCompare(b.id),
+    )
+    .slice(0, COMMAND_RESULT_LIMIT);
 }
 export function commandMatches(
   input: string,

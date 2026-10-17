@@ -107,8 +107,8 @@ check(
     }
     try {
       assert.deepEqual(assertDatabaseIntegrity(view("<>")), {
-        schemaVersion: 18,
-        guardsChecked: 6,
+        schemaVersion: 20,
+        guardsChecked: 11,
       });
       assert.throws(
         () => assertDatabaseIntegrity(view("=")),
@@ -158,8 +158,8 @@ check(
     }
     try {
       assert.deepEqual(assertDatabaseIntegrity(view(false)), {
-        schemaVersion: 18,
-        guardsChecked: 6,
+        schemaVersion: 20,
+        guardsChecked: 11,
       });
       assert.throws(
         () => assertDatabaseIntegrity(view(true)),

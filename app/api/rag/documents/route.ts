@@ -143,6 +143,7 @@ export async function POST(req: Request) {
         task: "index",
         mode: "quick",
         kind: "text",
+        sourceCharacters: data.chunks.reduce((total, chunk) => total + chunk.text.length, 0),
       });
       const result = await embedTexts(
         data.chunks.map((c) => c.text),

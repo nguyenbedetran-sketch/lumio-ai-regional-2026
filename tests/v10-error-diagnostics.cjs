@@ -374,6 +374,61 @@ async function main() {
     },
   );
   await check(
+    "NextAuth framework logger discards all metadata and emits an event ID without inventing HTTP status",
+    async (load) => {
+      await withLogs(async (lines) => {
+        const { authLogger } = load("lib/server/auth-logger.ts"),
+          privateMetadata = new Proxy(
+            {},
+            {
+              get() {
+                throw Error("PRIVATE_METADATA_READ");
+              },
+            },
+          );
+        authLogger.error("PRIVATE_EMAIL_OR_TOKEN", privateMetadata);
+        authLogger.warn("PRIVATE_WARNING_DESCRIPTION", privateMetadata);
+        authLogger.debug("PRIVATE_PROFILE", privateMetadata);
+        assert.equal(lines.length, 2);
+        const [error, warning] = lines.map(parse);
+        assert.equal(error.event, "server_error");
+        assert.equal(error.code, "AUTHENTICATION_UNAVAILABLE");
+        assert.equal(warning.event, "server_warning");
+        assert.equal(warning.code, "AUTH_CONFIGURATION_WARNING");
+        for (const entry of [error, warning]) {
+          assert.equal(entry.boundary, "auth");
+          assert.equal(entry.route, "/api/auth/[...nextauth]");
+          assert.match(entry.requestId, /^[0-9a-f-]{36}$/);
+          assert.equal(Object.hasOwn(entry, "httpStatus"), false);
+        }
+        assert(!lines.join("\n").includes("PRIVATE"));
+        const values = {
+            NEXTAUTH_SECRET: "synthetic-auth-options-not-live",
+            GOOGLE_CLIENT_ID: "",
+            GOOGLE_CLIENT_SECRET: "",
+            FACEBOOK_CLIENT_ID: "",
+            FACEBOOK_CLIENT_SECRET: "",
+            LUMIO_PUBLIC_DEMO: "false",
+            LUMIO_DESKTOP: "false",
+          },
+          before = Object.fromEntries(
+            Object.keys(values).map((key) => [key, process.env[key]]),
+          );
+        Object.assign(process.env, values);
+        try {
+          const options = load("lib/lumio/auth.ts").authOptions();
+          assert.equal(options.debug, false);
+          assert.equal(options.logger, authLogger);
+        } finally {
+          for (const [key, value] of Object.entries(before))
+            value === undefined
+              ? delete process.env[key]
+              : (process.env[key] = value);
+        }
+      });
+    },
+  );
+  await check(
     "Authentication JSON failures and exceptional redirects preserve behavior and carry matching safe correlation",
     async (load) => {
       await withLogs(async (lines) => {

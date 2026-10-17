@@ -39,7 +39,12 @@ export default function config(phase: string): NextConfig {
       ];
       return [{ source: "/:path*", headers: browserHeaders }, ...["/", "/admin/:path*", "/teacher/:path*", "/classroom/:path*", "/api/:path*", "/preview-mobile.html"].map(
         (source) => ({ source, headers: privateHeaders }),
-      )];
+      ), {
+        // Next's global headers override route response headers. Keep private
+        // downloaded content inert even when a browser opens it directly.
+        source: "/api/teaching/files/:id",
+        headers: [{ key: "Content-Security-Policy", value: "sandbox; default-src 'none'; frame-ancestors 'none'" }],
+      }];
     },
     experimental: {
       webpackBuildWorker: false,

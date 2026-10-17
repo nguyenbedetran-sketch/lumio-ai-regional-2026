@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "runAt": "2026-10-17T07:13:37.261Z",
+  "checks": 14,
+  "cases": [
+    "Unauthenticated and ordinary users cannot read summary metadata",
+    "Admin reauthentication and canonical account binding precede reads",
+    "Empty report retains null token/cost metrics rather than inventing zeros",
+    "Only bounded canonical summary parameters are accepted",
+    "Inclusive time window excludes older and future telemetry",
+    "Partial recorded costs carry coverage; unknown costs remain null",
+    "Same-named models from different providers remain distinct",
+    "Task and account attribution derive existing outcome rows, not profile text",
+    "Existing telemetry request uniqueness prevents duplicated outcome counts",
+    "Direct service calls reject unbounded dimensions and windows",
+    "Groups are bounded while totals retain all rows and expose truncation",
+    "Response explicitly limits evidence and does not expose billing or source content",
+    "Legacy paginated usage rejects stale account headers before reading events",
+    "Legacy paginated usage remains compatible with canonical account"
+  ],
+  "scope": "Actual handler, canonical authorization and isolated SQLite; authored metadata only, no provider or cost invoice validation."
+}

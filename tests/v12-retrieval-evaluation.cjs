@@ -7,9 +7,9 @@ const { execFileSync } = require("node:child_process");
 const root = path.resolve(__dirname, "..");
 const evaluator = require("../scripts/rag-offline-evaluation.cjs");
 const { validateHistoricalReplay } = require("./rag-live-replay.cjs");
-const fixture = JSON.parse(fs.readFileSync(path.join(root, "tests/fixtures/v12-retrieval-evaluation.v1.json"), "utf8"));
+const fixture = JSON.parse(fs.readFileSync(path.join(root, "tests/fixtures/v12-retrieval-evaluation.v2.json"), "utf8"));
 const clone = (v) => JSON.parse(JSON.stringify(v));
-const reportDirectory = path.join(root, "docs/next/reports/retrieval-evaluation");
+const reportDirectory = path.join(root, "docs/next/reports/phase2-ai");
 const checks = [];
 let evaluated;
 const historicalPaths = ["docs/regional/rag-live-vectors.json", "docs/regional/rag-live-evaluation.json"];
@@ -37,12 +37,13 @@ try {
     assert.throws(() => evaluator.withoutNetwork(() => { throw Error("EXPECTED_FAILURE"); }), /EXPECTED_FAILURE/);
     assert.equal(global.fetch, prior);
   });
-  check("Current evaluator executes 51 production retrieval/snapshot cases without provider/network requests", () => {
+  check("Current evaluator executes 63 production retrieval/snapshot cases without provider/network requests", () => {
     evaluated = evaluator.evaluate();
     assert.equal(evaluated.status, "PASS_SCOPED_OFFLINE_CHECKS");
     assert.equal(evaluated.semanticQualityStatus, "PARTIAL_NOT_A_SEMANTIC_BENCHMARK");
-    assert.equal(evaluated.checked, 51);
+    assert.equal(evaluated.checked, 63);
     assert.equal(evaluated.authored.length, 20); assert.equal(evaluated.syntheticGeometry.length, 3); assert.equal(evaluated.savedReplay.results.length, 28);
+    assert.equal(evaluated.grade9.results.length, 12);
     assert.equal(evaluated.networkAttempts, 0); assert.equal(evaluated.newProviderCalls, 0); assert.equal(evaluated.realUserData, false);
     assert.equal(evaluated.configuration.topK, 6);
   });
@@ -67,15 +68,16 @@ try {
     assert.ok(row.selected.includes("table-a:value") && row.selected.includes("table-b:value"));
     assert.equal(row.snapshot.conflictWarning, true); assert.equal(row.metrics.chunkRecallAt6, 1);
   });
-  check("Nonnumeric contradiction is visibly recorded as an unsupported warning, not semantic success", () => {
-    const row = evaluated.authored.find((r) => r.id === "semantic-conflict-outside-numeric-warning");
-    assert.equal(row.snapshot.conflictWarning, false); assert.equal(row.selected.length, 2);
-    assert.match(row.limitationObserved, /does not detect/);
+  check("Literal direction disagreement is narrowly flagged without claiming semantic entailment", () => {
+    const row = evaluated.authored.find((r) => r.id === "literal-direction-conflict");
+    assert.equal(row.snapshot.conflictWarning, true); assert.equal(row.selected.length, 2);
+    assert.match(row.warningScope, /Not general semantic/);
   });
   check("Unanswerable lexical overlap remains a reported false-positive case, not asserted abstention", () => {
     const row = evaluated.authored.find((r) => r.id === "overlapping-terms-without-answer");
     assert.equal(row.metrics.emptyGoldRetrieved, true); assert.equal(row.snapshot.created, true);
     assert.match(row.limitationObserved, /no generated answer\/abstention was tested/);
+    assert.deepEqual(row.explicitAbsenceCueSegments, ["incomplete:scope"]);
     assert.equal(evaluated.summary.authoredLexical.emptyGoldRetrievedCases, 1);
   });
   check("An indexed answer outside the explicit selected document scope cannot become evidence", () => {
@@ -112,14 +114,14 @@ try {
   });
   check("Output isolation cannot overwrite historical/provider evidence, and missing output argument is rejected", () => {
     assert.throws(() => evaluator.outputPath("docs/regional/rag-live-evaluation.json"));
-    assert.throws(() => evaluator.outputPath("docs/next/reports/retrieval-evaluation/../escape.json"));
+    assert.throws(() => evaluator.outputPath("docs/next/reports/phase2-ai/../escape.json"));
     assert.throws(() => evaluator.main(["--offline", "--output"]), /requires/);
   });
   check("Existing evaluator offline CLI returns before environment-file reading, even with --live also present", () => {
-    const child = `const fs=require('node:fs');const original=fs.readFileSync;fs.readFileSync=function(file,...args){if(/[\\\\/]\\.env(?:\\.|$)/.test(String(file)))throw Error('ENV_FILE_FORBIDDEN');return original.call(this,file,...args)};process.argv=['node','scripts/evaluate-rag.cjs','--offline','--live','--output','docs/next/reports/retrieval-evaluation/cli-check.json'];require('./scripts/evaluate-rag.cjs');`;
+    const child = `const fs=require('node:fs');const original=fs.readFileSync;fs.readFileSync=function(file,...args){if(/[\\\\/]\\.env(?:\\.|$)/.test(String(file)))throw Error('ENV_FILE_FORBIDDEN');return original.call(this,file,...args)};process.argv=['node','scripts/evaluate-rag.cjs','--offline','--live','--output','docs/next/reports/phase2-ai/cli-check.json'];require('./scripts/evaluate-rag.cjs');`;
     const text = execFileSync(process.execPath, ["-e", child], { cwd: root, encoding: "utf8", timeout: 60000 });
     const output = JSON.parse(text.trim());
-    assert.equal(output.status, "PASS_SCOPED_OFFLINE_CHECKS"); assert.equal(output.cases, 51); assert.equal(output.newProviderCalls, 0); assert.equal(output.networkAttempts, 0);
+    assert.equal(output.status, "PASS_SCOPED_OFFLINE_CHECKS"); assert.equal(output.cases, 63); assert.equal(output.newProviderCalls, 0); assert.equal(output.networkAttempts, 0);
   });
   check("Historical vector/report evidence stays byte-for-byte unchanged", () => {
     for (const file of historical) assert.ok(fs.readFileSync(path.join(root, file.relative)).equals(file.bytes));
@@ -127,5 +129,5 @@ try {
   fs.mkdirSync(reportDirectory, { recursive: true });
   fs.writeFileSync(path.join(reportDirectory, "production-selection.json"), JSON.stringify(evaluated, null, 2) + "\n");
   fs.writeFileSync(path.join(reportDirectory, "runner-regression.json"), JSON.stringify({ checkedAt: new Date().toISOString(), status: "PASS", passed: checks.length, checks, scope: "Actual in-memory SQLite, production RAG core and deterministic/saved vectors; no live provider, network, user data or current semantic accuracy proof.", historicalBytesPreserved: true, newProviderCalls: 0 }, null, 2) + "\n");
-  console.log(checks.length + " retrieval evaluator regression groups PASS; 51 production cases + 7 distinct historical raw-top3 replay cases; no new provider calls.");
+  console.log(checks.length + " retrieval evaluator regression groups PASS; 63 production cases + 7 distinct historical raw-top3 replay cases; no new provider calls.");
 } catch (error) { console.error(error); process.exitCode = 1; }

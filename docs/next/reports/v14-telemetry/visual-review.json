@@ -1,0 +1,19 @@
+{
+  "checkedAt": "2026-10-17T07:14:22.608Z",
+  "status": "PASS",
+  "screenshots": [
+    {
+      "path": "docs/next/reports/v14-telemetry/qa-usage-attempts-desktop.png",
+      "sha256": "b35c29ecfd33d2cc8760b6e8886934fdc573de1fd490164dbe2882c5195707cd"
+    },
+    {
+      "path": "docs/next/reports/v14-telemetry/qa-usage-attempts-tablet.png",
+      "sha256": "74600832bfa91064a2fd6c4faf44f7debe571a584efffd1384cb99b0243f1559"
+    },
+    {
+      "path": "docs/next/reports/v14-telemetry/qa-usage-attempts-mobile.png",
+      "sha256": "f23830481f1eb2b167aa03744376e5eea02c68a20bf860a01a59cd4daedfe7e5"
+    }
+  ],
+  "review": "All3 final images opened and visually inspected: labelled synthetic fixture, readable totals/quantiles/sample counts, explicit ratio denominators, no page overflow; wide table intentionally scrolls within its container at768/390. Not actual public telemetry or device validation."
+}

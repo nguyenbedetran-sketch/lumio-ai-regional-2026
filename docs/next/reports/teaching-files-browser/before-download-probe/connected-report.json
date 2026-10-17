@@ -1,0 +1,39 @@
+{
+  "status": "FAIL",
+  "passed": 16,
+  "cases": [
+    "Actual compiled upload acknowledges exact SYNTHETIC-reference.md bytes",
+    "Actual compiled upload acknowledges exact SYNTHETIC-teacher-key.md bytes",
+    "Teacher draft file purpose remains explicit after actual server reload",
+    "Actual teacher review uses current attachment revision",
+    "Real student payload exposes published reference while hiding teacher-only file metadata",
+    "Actual compiled upload acknowledges exact SYNTHETIC-answer.png bytes",
+    "Actual SYNTHETIC-answer.png ACK is pending, not a submitted assignment",
+    "Actual compiled upload acknowledges exact SYNTHETIC-worksheet.docx bytes",
+    "Actual SYNTHETIC-worksheet.docx ACK is pending, not a submitted assignment",
+    "Actual compiled upload acknowledges exact SYNTHETIC-slides.pptx bytes",
+    "Actual SYNTHETIC-slides.pptx ACK is pending, not a submitted assignment",
+    "Three acknowledged pending files enforce the bounded UI file count",
+    "Actual final submit atomically binds the three acknowledged files to the saved submission",
+    "Teacher-only filename stays absent from the final student server response",
+    "Student result view labels the attached submission revision after actual ACK",
+    "Actual teacher grading inbox lists the exact three submitted files"
+  ],
+  "error": "Grader downloads exact original SYNTHETIC-answer.png bytes from compiled API",
+  "errors": [],
+  "externalRequests": 0,
+  "checkedAt": "2026-10-17T08:18:11.804Z",
+  "tool": "@playwright/cli@0.1.21",
+  "officeFixtureScope": "Authored minimal OOXML packages verify storage and type checks; Office application opening/rendering not tested",
+  "sourceSha256": {
+    "tests/teaching-files-connected.browser.js": "9db9477aee88f933f842d8f68178f877334a761510835f42f675954be687cc94",
+    "tests/v11-teaching-files-connected.cjs": "d7944ebcfe48d2b2ef1ee95fa489d552deb0a47e92bedfd852ea383499d24918",
+    "components/teaching/file-attachments.tsx": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08",
+    "components/teaching/student.tsx": "b9fe33feb6524a8c0ad3a0917821214dd12220003e922c2a3938e7cf1bff5077",
+    "components/teaching/assessment.tsx": "17a3d01f4cfc7f74da197e36cb2889fa99e50b6406fa74046eb79080b608f8ad",
+    "lib/teaching/file-client.ts": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175",
+    "lib/server/teaching-files.ts": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
+    "lib/server/teaching-file-validation.ts": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa"
+  },
+  "compiledBuildIdSha256": "d3b5c4c90eaec2bb6c0b906835c03e2007011a66ea1573810518378301a3c105"
+}

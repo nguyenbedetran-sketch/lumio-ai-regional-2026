@@ -1,0 +1,397 @@
+{
+  "status": "PASS",
+  "passed": 46,
+  "checks": [
+    "Actual component renders four supported authored references",
+    "No iframe thumbnail or provider connection before explicit consent",
+    "Resource title uses existing safe mathematical renderer",
+    "Privacy disclosure does not promise tracking-free playback",
+    "Reference links consistently prevent opener and referrer leakage",
+    "Presentation references never create arbitrary iframes",
+    "Private design access editing/conversion limits remain visible",
+    "light reference cards have no page overflow at1440",
+    "light actions stay visible with44px targets at1440",
+    "light reference cards have no page overflow at768",
+    "light actions stay visible with44px targets at768",
+    "light reference cards have no page overflow at390",
+    "light actions stay visible with44px targets at390",
+    "light reference cards have no page overflow at320",
+    "light actions stay visible with44px targets at320",
+    "dark reference cards have no page overflow at1440",
+    "dark actions stay visible with44px targets at1440",
+    "dark reference cards have no page overflow at768",
+    "dark actions stay visible with44px targets at768",
+    "dark reference cards have no page overflow at390",
+    "dark actions stay visible with44px targets at390",
+    "dark reference cards have no page overflow at320",
+    "dark actions stay visible with44px targets at320",
+    "light sampled text/actions meet4.5contrast",
+    "dark sampled text/actions meet4.5contrast",
+    "Consent action has visible keyboard focus",
+    "Keyboard consent starts exactly one allowlisted simulated provider frame",
+    "Embed retains provider controls and does not force autoplay",
+    "Player has descriptive title and fullscreen permission",
+    "Opening player never claims viewing/completion credit",
+    "Active mobile player is responsive16:9 without page overflow",
+    "Viewer-reported playback problem unloads frame and exposes recovery state",
+    "Original-source fallback remains available after reported playback problem",
+    "Only explicit retry starts a second simulated frame",
+    "Keyboard close unloads frame without another network request",
+    "Reopening requires another explicit consent action",
+    "Changing resource URL clears prior player consent",
+    "Malformed credential URL is not echoed or offered as a link",
+    "Locale en exposes consent without silently loading provider",
+    "Locale zh-CN exposes consent without silently loading provider",
+    "Locale ja exposes consent without silently loading provider",
+    "Locale ko exposes consent without silently loading provider",
+    "Locale vi exposes consent without silently loading provider",
+    "Reload does not persist or silently restore video consent",
+    "No browser runtime error",
+    "No unexpected outbound request attempted"
+  ],
+  "errors": [],
+  "unexpected": [],
+  "simulatedProviderRequests": [
+    "https://www.youtube-nocookie.com/embed/mathdemo001?controls=1&playsinline=1&rel=0&cc_load_policy=1&start=90",
+    "https://www.youtube-nocookie.com/embed/mathdemo001?controls=1&playsinline=1&rel=0&cc_load_policy=1&start=90",
+    "https://www.youtube-nocookie.com/embed/mathdemo001?controls=1&playsinline=1&rel=0&cc_load_policy=1&start=90"
+  ],
+  "layouts": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "controls": [
+        {
+          "height": 44,
+          "right": 505.5,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 634.578125,
+          "left": 513.5
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 364.578125,
+          "left": 243.5
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "controls": [
+        {
+          "height": 44,
+          "right": 505.5,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 634.578125,
+          "left": 513.5
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        },
+        {
+          "height": 44,
+          "right": 428.078125,
+          "left": 307
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 364.578125,
+          "left": 243.5
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "controls": [
+        {
+          "height": 44,
+          "right": 235.5,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        },
+        {
+          "height": 44,
+          "right": 158.078125,
+          "left": 37
+        }
+      ]
+    }
+  ],
+  "contrasts": [
+    {
+      "theme": "light",
+      "samples": [
+        {
+          "selector": "[data-teaching-resource=youtube] strong",
+          "ratio": 14.123948506764108
+        },
+        {
+          "selector": "[data-teaching-resource=youtube] p",
+          "ratio": 5.737085507479228
+        },
+        {
+          "selector": "[data-teaching-resource=youtube] button",
+          "ratio": 12.037672540618658
+        },
+        {
+          "selector": "[data-teaching-resource=canva] a",
+          "ratio": 12.037672540618658
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "samples": [
+        {
+          "selector": "[data-teaching-resource=youtube] strong",
+          "ratio": 13.941278451364472
+        },
+        {
+          "selector": "[data-teaching-resource=youtube] p",
+          "ratio": 7.178851092886291
+        },
+        {
+          "selector": "[data-teaching-resource=youtube] button",
+          "ratio": 11.99723289574781
+        },
+        {
+          "selector": "[data-teaching-resource=canva] a",
+          "ratio": 11.99723289574781
+        }
+      ]
+    }
+  ],
+  "screenshots": [
+    "docs/next/reports/teaching-resources/light-1440.png",
+    "docs/next/reports/teaching-resources/light-390.png",
+    "docs/next/reports/teaching-resources/dark-1440.png",
+    "docs/next/reports/teaching-resources/dark-390.png",
+    "docs/next/reports/teaching-resources/simulated-player-390.png"
+  ],
+  "newLiveProviderCalls": 0,
+  "scope": "Actual React component/application CSS in isolated browser with authored URLs. Every request intercepted, including simulated provider frames and fault injection. No real YouTube playback, private access, watch/completion tracking, server authorization or real classroom acceptance.",
+  "checkedAt": "2026-10-17T07:41:57.439Z",
+  "sourceProof": [
+    {
+      "path": "lib/teaching/resource-links.ts",
+      "sha256": "9f0bc5ccff02ab345dec25ad6be94a559e7e855f0e308ec06ba9c0ae53f3a742"
+    },
+    {
+      "path": "components/teaching/resource-link.tsx",
+      "sha256": "3096aa9cb96e724b716c755ab9f2c8987b533176048306d1e19096bfb25611c4"
+    },
+    {
+      "path": "components/teaching/resource-link.module.css",
+      "sha256": "6480e3e69ca8ae48178fee95510267ecb486c1c0c520771a414b94b4f808f10e"
+    },
+    {
+      "path": "tests/teaching-resource.browser.js",
+      "sha256": "024060badc9c76f9c08b6902cf68e908101bb305f69d65e7717fa32f7d254042"
+    }
+  ]
+}

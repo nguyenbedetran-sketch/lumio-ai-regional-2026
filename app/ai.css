@@ -52,6 +52,38 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
+/* Shared educational presentation. Raw content/storage and source offsets stay unchanged. */
+.lm-rich-content.lm-ai-output { white-space: normal; min-width: 0; max-width: 100%; line-height: 1.8; }
+.lm-rich-content > :first-child { margin-top: 0; }
+.lm-rich-content > :last-child { margin-bottom: 0; }
+.lm-rich-content p { margin: .65em 0; color: inherit; }
+.lm-rich-content .lm-rich-heading { color: var(--lm-text); line-height: 1.4; margin: 1.25em 0 .55em; overflow-wrap: anywhere; }
+.lm-rich-content h1 { font-size: 1.6em; }.lm-rich-content h2 { font-size: 1.35em; }.lm-rich-content h3 { font-size: 1.18em; }.lm-rich-content :is(h4,h5,h6) { font-size: 1.05em; }
+.lm-rich-content :is(ul,ol) { margin: .7em 0; padding-inline-start: 1.7em; }.lm-rich-content li { padding-inline-start: .15em; margin: .3em 0; }
+.lm-rich-content blockquote { margin: 1em 0; padding: .4em 1em; border-inline-start: 3px solid var(--lm-accent); background: var(--lm-soft); }
+.lm-rich-content :is(pre,.lm-rich-table-scroll) { max-width: 100%; overflow-x: auto; border: 1px solid var(--lm-line); border-radius: 10px; margin: 1em 0; }
+.lm-rich-content pre { padding: .9em 1em; background: var(--lm-soft); white-space: pre; line-height: 1.6; font-size: .88em; }
+.lm-rich-content code,.lm-rich-inline code { font-family: ui-monospace,Consolas,monospace; background: var(--lm-soft); border-radius: 4px; padding: .08em .3em; overflow-wrap: anywhere; }
+.lm-rich-content pre code { background: transparent; padding: 0; white-space: inherit; }
+.lm-rich-content table { border-collapse: collapse; min-width: min(100%,360px); width: 100%; font-size: .95em; }
+.lm-rich-content caption { text-align: start; padding: .65em .8em; color: var(--lm-muted); font-size: .9em; }
+.lm-rich-content :is(th,td) { border: 1px solid var(--lm-line); padding: .6em .8em; text-align: start; vertical-align: top; min-width: 6em; }
+.lm-rich-content th { background: var(--lm-soft); font-weight: 700; }
+.lm-rich-content a,.lm-rich-inline a { color: var(--lm-accent); text-decoration: underline; text-underline-offset: .16em; }
+.lm-rich-content .lm-math--display { display: block; margin: .9em 0; padding: .35em; max-width: 100%; overflow-x: auto; }
+.lm-rich-content.lm-ai-output .lm-math--display .katex-display { margin: 0; padding: .6em; background: var(--lm-soft); color: var(--lm-text); }
+.lm-rich-content .lm-math--display .katex-display > .katex { text-align: start; }
+.lm-rich-inline .lm-math--inline,.lm-rich-content .lm-math--inline { display: inline-block; vertical-align: middle; max-width: 100%; overflow-x: auto; overflow-y: hidden; }
+.lm-math-fallback { display: inline-block; color: var(--lm-muted); background: var(--lm-soft); border: 1px dashed var(--lm-line); border-radius: 6px; padding: .15em .5em; font-size: .9em; font-style: normal; }
+.lm-math-fallback--display { display: block; margin: .8em 0; }
+.lm-rich-content :is(pre,.lm-rich-table-scroll,.lm-math--display):focus-visible,.lm-rich-inline .lm-math:focus-visible { outline: 2px solid var(--lm-accent); outline-offset: 3px; }
+@media print {
+  .lm-rich-content,.lm-rich-inline { color: #111; background: white; --lm-text: #111; --lm-muted: #404040; --lm-soft: #f5f5f5; --lm-line: #b9b9b9; --lm-accent: #243e31; }
+  .lm-rich-content.lm-ai-output :is(pre,.lm-rich-table-scroll,.lm-math--display) { overflow: visible; max-width: 100%; }
+  .lm-rich-content pre { white-space: pre-wrap; }
+  .lm-rich-content :is(table,.lm-math--display) { break-inside: avoid; }
+  .lm-rich-content.lm-ai-output .lm-math--display .katex-display { background: white; color: #111; }
+}
 .lm-voice-tools {
   border-top: 1px solid var(--lm-line);
   padding-top: 25px;

@@ -109,7 +109,7 @@ const fields: Record<string, string> = {
   "assignment.issue": "id expectedRevision",
   "assignment.close": "id expectedRevision",
   "assignment.delete": "id expectedRevision",
-  "submission.submit": "assignmentId expectedRevision answers",
+  "submission.submit": "assignmentId expectedRevision answers attachmentIds",
   "submission.grade": "id expectedRevision grades feedback confirmed reason",
   "submission.publish": "id expectedRevision",
   "announcement.save": "id expectedRevision classId title body",

@@ -7,8 +7,10 @@ import type {
 } from "../../lib/server/usage-report";
 import type { ProviderAttemptBreakdown } from "../../lib/server/provider-attempt-report";
 
-const number = (value: number | null) =>
-  value === null ? "—" : new Intl.NumberFormat("vi-VN").format(value);
+const number = (value: number | null | undefined) =>
+  typeof value !== "number" || !Number.isFinite(value) ? "—" : new Intl.NumberFormat("vi-VN").format(value);
+const ratio = (value: number | null | undefined) =>
+  typeof value !== "number" || !Number.isFinite(value) ? "—" : new Intl.NumberFormat("vi-VN", { style: "percent", maximumFractionDigits: 1 }).format(value);
 const cost = (value: number | null) =>
   value === null
     ? "Chưa đo"
@@ -17,6 +19,19 @@ const cost = (value: number | null) =>
         currency: "USD",
         maximumFractionDigits: 6,
       }).format(value);
+
+export function LatencyDetails({ metrics, legacy = false }: { metrics: {
+  averageLatencyMs: number | null;
+  p50LatencyMs?: number | null;
+  p95LatencyMs?: number | null;
+  latencyRecords?: number;
+  observedLatencyRecords?: number | null;
+}; legacy?: boolean }) {
+  return <span>
+    TB {number(metrics.averageLatencyMs)} ms · p50 {number(metrics.p50LatencyMs)} ms · p95 {number(metrics.p95LatencyMs)} ms
+    <small style={{ display: "block" }}>{number(metrics.latencyRecords)} bản ghi độ trễ; {legacy ? "số giá trị đo thực chưa xác định" : `${number(metrics.observedLatencyRecords)} giá trị đo được ghi`}.</small>
+  </span>;
+}
 
 export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
   const [dimension, setDimension] = useState<UsageDimension>("model");
@@ -161,6 +176,12 @@ export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
                 {number(report.totals.unpricedRequests)} lượt chưa có chi phí.
                 Dấu “—” là chưa đo, không phải 0.
               </p>
+              <p>
+                Tỷ lệ lỗi đã ghi: {ratio(report.totals.recordedErrorRatio)} ({number(report.totals.errors)} / {number(report.totals.requests)} yêu cầu).
+                HTTP chưa được lưu ở loại báo cáo này, nên chưa tính tỷ lệ lỗi/độ phủ HTTP.
+              </p>
+              <p><LatencyDetails metrics={report.totals} legacy /></p>
+              <p>p50/p95 chọn giá trị theo hạng gần nhất (làm tròn hạng lên), không nội suy. Kết quả yêu cầu cũ có thể lưu 0 khi thiếu độ trễ; số liệu này là giá trị đã ghi, chưa xác nhận mọi giá trị đều được đo.</p>
               {!report.groups.length ? (
                 <p>Chưa có dữ liệu trong khoảng thời gian này.</p>
               ) : (
@@ -180,7 +201,7 @@ export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
                         <th scope="col">Nhóm</th>
                         <th scope="col">Yêu cầu / lỗi</th>
                         <th scope="col">Token vào / ra</th>
-                        <th scope="col">Độ trễ TB</th>
+                        <th scope="col">Độ trễ đã ghi TB / p50 / p95</th>
                         <th scope="col">Ước tính đã ghi / độ phủ</th>
                       </tr>
                     </thead>
@@ -197,6 +218,7 @@ export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
                           </th>
                           <td>
                             {number(group.requests)} / {number(group.errors)}
+                            <small>{ratio(group.recordedErrorRatio)} lỗi đã ghi</small>
                           </td>
                           <td>
                             {number(group.inputTokens)} /{" "}
@@ -205,7 +227,7 @@ export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
                               {number(group.tokenRecords)} lượt có token vào
                             </small>
                           </td>
-                          <td>{number(group.averageLatencyMs)} ms</td>
+                          <td><LatencyDetails metrics={group} legacy /></td>
                           <td>
                             {cost(group.recordedEstimatedCostUsd)}
                             <small>
@@ -232,7 +254,7 @@ export function UsageBreakdownPanel({ accountKey }: { accountKey: string }) {
   );
 }
 
-function AttemptBreakdownView({
+export function AttemptBreakdownView({
   report,
 }: {
   report: ProviderAttemptBreakdown;
@@ -258,6 +280,13 @@ function AttemptBreakdownView({
         {number(report.totals.transportUnknown)} lượt không rõ nhà cung cấp đã
         nhận/xử lý do mất mạng, hết giờ hoặc hủy.
       </p>
+      <p>
+        Tỷ lệ lỗi HTTP: {ratio(report.totals.httpErrorRatio)} ({number(report.totals.httpErrors)} / {number(report.totals.httpStatusRecords)} mã HTTP đã ghi).
+        Độ phủ mã HTTP: {ratio(report.totals.httpStatusCoverage)} ({number(report.totals.httpStatusRecords)} / {number(report.totals.attempts)} lượt chuẩn bị).
+        Lượt chưa rõ kết quả không được tự tính thành thành công hoặc lỗi HTTP.
+      </p>
+      <p><LatencyDetails metrics={report.totals} /></p>
+      <p>p50/p95 theo hạng gần nhất (làm tròn hạng lên), chỉ dùng độ trễ khác null; giữ cả giá trị 0 được đo. Đây là thời gian quan sát của lượt gọi, gồm cả mạng/hết giờ/hủy, không phải riêng thời gian model xử lý.</p>
       <p>
         Chỉ ghi luồng tạo nội dung của người học, giáo viên và tóm tắt nền từ
         khi nâng cấp; chưa gồm giọng nói, embeddings hay lịch sử trước đó. Phản
@@ -297,7 +326,7 @@ function AttemptBreakdownView({
                 <th scope="col">Chuẩn bị / phản hồi</th>
                 <th scope="col">Chưa rõ kết quả</th>
                 <th scope="col">Token đã báo</th>
-                <th scope="col">Độ trễ TB</th>
+                <th scope="col">Độ trễ TB / p50 / p95</th>
                 <th scope="col">Model trong phản hồi</th>
               </tr>
             </thead>
@@ -311,6 +340,7 @@ function AttemptBreakdownView({
                   <td>
                     {number(group.attempts)} / {number(group.responses)}
                     <small>{number(group.httpErrors)} phản hồi lỗi HTTP</small>
+                    <small>{ratio(group.httpErrorRatio)} lỗi / {number(group.httpStatusRecords)} mã; độ phủ {ratio(group.httpStatusCoverage)} ({number(group.httpStatusRecords)} / {number(group.attempts)})</small>
                   </td>
                   <td>
                     {number(group.unresolved)} chưa ghi kết quả
@@ -328,7 +358,7 @@ function AttemptBreakdownView({
                       {number(group.totalTokenRecords)} lượt)
                     </small>
                   </td>
-                  <td>{number(group.averageLatencyMs)} ms</td>
+                  <td><LatencyDetails metrics={group} /></td>
                   <td>
                     {number(group.responseModelRecords)} lượt có tên model
                     <small>

@@ -28,6 +28,8 @@ import { youtubeURL } from "../../lib/ingestion/youtube";
 import { rangeCopy } from "../../lib/ingestion/video-range";
 import { fullSummaryCopy } from "../../lib/ai/full-summary-copy";
 import { MathText } from "./math-text";
+import { parseInlineContent } from "../../lib/lumio/rich-content";
+import { contentViewCopy } from "../../lib/lumio/content-view-copy";
 import { SourceReferences } from "./source-references";
 import type { SourceReference } from "../../lib/ai/grounding";
 export const summaryCopy = {
@@ -254,6 +256,9 @@ function MindMap({
     ]),
   );
   const node = graph.nodes.find((n) => n.id === selected);
+  const richLabels = graph.nodes.some((node) =>
+    parseInlineContent(node.label).some((part) => part.kind !== "text"),
+  );
   function exportMap() {
     if (!svg.current) return;
     const url = URL.createObjectURL(
@@ -296,12 +301,22 @@ function MindMap({
           >
             <RotateCcw size={16} />
           </button>
-          <button className="lm-button" onClick={exportMap}>
+          <button
+            className="lm-button"
+            onClick={exportMap}
+            disabled={richLabels}
+            title={richLabels ? contentViewCopy[locale].svg : undefined}
+          >
             <Download size={15} />
             {c.exportMap}
           </button>
         </div>
       </div>
+      {richLabels && (
+        <p className="lm-help" data-map-export-limitation>
+          {contentViewCopy[locale].svg}
+        </p>
+      )}
       <div className="lm-map-canvas" ref={canvas}>
         <svg
           ref={svg}
@@ -366,21 +381,44 @@ function MindMap({
                   stroke={active ? "#557b43" : "#d6e1c9"}
                   strokeWidth={active ? "2" : "1"}
                 />
-                <text
-                  x={p.x}
-                  y={p.y - (lines.length - 1) * 9}
-                  textAnchor="middle"
-                  fontFamily="Arial,sans-serif"
-                  fontSize="13"
-                  fontWeight={i === 0 ? "700" : "500"}
-                  fill={i === 0 ? "#edf7df" : "#34543c"}
-                >
-                  {lines.map((line, index) => (
-                    <tspan key={index} x={p.x} dy={index ? 18 : 0}>
-                      {line}
-                    </tspan>
-                  ))}
-                </text>
+                {parseInlineContent(n.label).some(
+                  (part) => part.kind !== "text",
+                ) ? (
+                  <foreignObject
+                    x={p.x - 116}
+                    y={p.y - 34}
+                    width="232"
+                    height="68"
+                  >
+                    <div
+                      style={{
+                        fontSize: 13,
+                        color: i === 0 ? "#edf7df" : "#34543c",
+                        textAlign: "center",
+                        maxHeight: 68,
+                        overflow: "auto",
+                      }}
+                    >
+                      <MathText text={n.label} inline />
+                    </div>
+                  </foreignObject>
+                ) : (
+                  <text
+                    x={p.x}
+                    y={p.y - (lines.length - 1) * 9}
+                    textAnchor="middle"
+                    fontFamily="Arial,sans-serif"
+                    fontSize="13"
+                    fontWeight={i === 0 ? "700" : "500"}
+                    fill={i === 0 ? "#edf7df" : "#34543c"}
+                  >
+                    {lines.map((line, index) => (
+                      <tspan key={index} x={p.x} dy={index ? 18 : 0}>
+                        {line}
+                      </tspan>
+                    ))}
+                  </text>
+                )}
               </g>
             );
           })}
@@ -500,8 +538,11 @@ export function RichSummary({
             <MathText text={summary.title} inline />
           </h3>
           <p>
-            {c.source}: <strong>{artifact.source.title}</strong> ·{" "}
-            {summary.chapters.length} {c.sections}
+            {c.source}:{" "}
+            <strong>
+              <MathText text={artifact.source.title} inline />
+            </strong>{" "}
+            · {summary.chapters.length} {c.sections}
           </p>
           {artifact.source.range && (
             <p className="lm-summary-range">
@@ -542,7 +583,7 @@ export function RichSummary({
           }
         >
           <Download size={16} />
-          {c.export}
+          {c.export} · {contentViewCopy[locale].markdown}
         </button>
       </div>
       {(video ||
@@ -704,9 +745,7 @@ export function RichSummary({
       </div>
       {tab === "overview" && (
         <div className="lm-summary-overview">
-          <p>
-            <MathText text={summary.overview} inline />
-          </p>
+          <MathText text={summary.overview} />
           <h4>{c.key}</h4>
           <div className="lm-summary-keypoints">
             {summary.keyPoints.map((point, i) => (
@@ -822,9 +861,7 @@ export function RichSummary({
                 {formatTime(summary.chapters[selected].startSeconds!)}
               </button>
             )}
-            <p>
-              <MathText text={summary.chapters[selected].summary} inline />
-            </p>
+            <MathText text={summary.chapters[selected].summary} />
             <ul>
               {summary.chapters[selected].bullets.map((bullet, i) => (
                 <li key={i}>

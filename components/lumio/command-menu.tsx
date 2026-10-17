@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 
 import {
   useCallback,
@@ -24,6 +25,7 @@ import {
   X,
 } from "lucide-react";
 import type { LearningItem, Space } from "../../lib/lumio/types";
+import type { StudyTask } from "../../lib/lumio/learning-engine";
 import type { Locale } from "../../lib/lumio/i18n";
 import { commandCopy } from "../../lib/lumio/command-copy";
 import { useEffectiveMotion } from "./use-motion-settings";
@@ -32,6 +34,7 @@ import {
   commandMatches,
   isCommandShortcut,
   searchCommandItems,
+  searchCommandTasks,
   COMMAND_QUERY_LIMIT,
   type CommandDestination,
   type CommandView,
@@ -44,6 +47,8 @@ export type CommandMenuProps = {
   navigation: readonly CommandDestination[];
   onNavigate: (view: CommandView, spaceId?: string) => void;
   onOpenItem: (item: LearningItem) => void;
+  tasks?: readonly StudyTask[];
+  onOpenTask?: (task: StudyTask) => void;
   disabled?: boolean;
   className?: string;
 };
@@ -66,6 +71,8 @@ export function CommandMenu({
   navigation,
   onNavigate,
   onOpenItem,
+  tasks = [],
+  onOpenTask,
   disabled = false,
   className = "",
 }: CommandMenuProps) {
@@ -137,8 +144,12 @@ export function CommandMenu({
   const matchingSpaces = spaces
     .filter((space) => commandMatches(query, space.name))
     .slice(0, 6);
+  const matchingTasks = onOpenTask ? searchCommandTasks(tasks, query) : [];
   const count =
-    matches.items.length + destinations.length + matchingSpaces.length;
+    matches.items.length +
+    destinations.length +
+    matchingSpaces.length +
+    matchingTasks.length;
 
   const close = useCallback(() => {
     setOpen(false);
@@ -354,7 +365,9 @@ export function CommandMenu({
                                 <Icon size={18} aria-hidden="true" />
                               </span>
                               <span className="lc-command-item-text">
-                                <span>{item.title}</span>
+                                <span>
+                                  <MathText text={item.title} inline />
+                                </span>
                                 <small>
                                   {c.kind[item.kind]}
                                   {matches.query && matchedIn !== "title"
@@ -370,6 +383,31 @@ export function CommandMenu({
                             </Command.Item>
                           );
                         })}
+                      </Command.Group>
+                    )}
+                    {matchingTasks.length > 0 && (
+                      <Command.Group heading={c.tasks}>
+                        {matchingTasks.map((task) => (
+                          <Command.Item
+                            key={`task:${task.id}`}
+                            value={`task:${task.id}`}
+                            onSelect={() => {
+                              close();
+                              onOpenTask?.(task);
+                            }}
+                          >
+                            <span className="lc-command-icon">
+                              <BookOpen size={18} aria-hidden="true" />
+                            </span>
+                            <span className="lc-command-item-text">
+                              <span>
+                                <MathText text={task.title} inline />
+                              </span>
+                              <small>{task.date}</small>
+                            </span>
+                            <ArrowUpRight size={16} aria-hidden="true" />
+                          </Command.Item>
+                        ))}
                       </Command.Group>
                     )}
                     {count === 0 && (
@@ -418,7 +456,7 @@ export function CommandMenu({
                   aria-live="polite"
                   aria-atomic="true"
                 >
-                  {matches.query ? `${matches.total} ${c.results}` : ""}
+                  {matches.query ? `${count} ${c.results}` : ""}
                 </span>
               </div>
             </div>

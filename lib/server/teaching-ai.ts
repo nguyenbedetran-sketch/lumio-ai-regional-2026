@@ -38,7 +38,8 @@ export async function executeTeachingGeneration(request: TeachingGenerationReque
     signal.throwIfAborted();
     store.assertTeachingGenerationContext(context);
     const input = teachingAIInput(request, context);
-    reservation = reserveUsage({ userId: context.userId, sessionVersion: context.sessionVersion, requestId: ledgerRequestId, task, mode: "quick", kind: "text" });
+    reservation = reserveUsage({ userId: context.userId, sessionVersion: context.sessionVersion, requestId: ledgerRequestId, task, mode: "quick", kind: "text", sourceCharacters: input.source.length, pricingFeature: `teacher.${request.kind}` });
+    input.billingModelContext = reservation.modelPolicy;
     const result = await routeAI(input, fetch, signal, store.providerAttemptObserver({ userId: context.userId, sessionVersion: context.sessionVersion, requestId: ledgerRequestId, reservationId: reservation.reservationId, feature: `teacher.${request.kind}` }));
     signal.throwIfAborted();
     let raw: unknown;

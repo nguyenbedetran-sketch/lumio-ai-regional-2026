@@ -1,5 +1,8 @@
 "use client";
+import { FileAttachments } from "./file-attachments";
+import { TeachingResourceLink } from "./resource-link";
 import { MathText } from "../lumio/math-text";
+import { LessonContent } from "./content-preview";
 import { GradeHistoryButton } from "./grade-history";
 import {
   AssessmentWindow,
@@ -329,7 +332,9 @@ function ClassroomAccount({
                             Hạn {dateTime(assignment.dueAt)}
                           </span>
                         </div>
-                        <h3>{assignment.title}</h3>
+                        <h3>
+                          <MathText text={assignment.title} inline />
+                        </h3>
                         <p>
                           {
                             data.classes.find(
@@ -350,9 +355,9 @@ function ClassroomAccount({
                             không phải đề thi mới bảo mật.
                           </p>
                         )}
-                        <p style={{ marginTop: 10 }}>
-                          {assignment.instructions}
-                        </p>
+                        <div style={{ marginTop: 10 }}>
+                          <MathText text={assignment.instructions} />
+                        </div>
                         <div className="tw-card-footer">
                           <Button
                             secondary
@@ -392,6 +397,11 @@ function ClassroomAccount({
                       <Panel title={m.title} key={m.id}>
                         <div className="tw-pad tw-result">
                           <MathText text={m.content} />
+                          <TeachingResourceLink
+                            url={m.url}
+                            title={m.title}
+                            kind={m.kind}
+                          />
                         </div>
                       </Panel>
                     ))}
@@ -414,22 +424,15 @@ function ClassroomAccount({
                     .map((l) => (
                       <Panel title={l.title} key={l.id}>
                         <div className="tw-pad tw-form">
-                          <Tag tone="indigo">
-                            {l.topic} · Khối {l.grade}
-                          </Tag>
-                          <ul>
-                            {l.objectives.map((o, i) => (
-                              <li key={i}>{o}</li>
-                            ))}
-                          </ul>
-                          {l.sections.map((s, i) => (
-                            <section key={i}>
-                              <h3>{s.title}</h3>
-                              <div className="tw-result">
-                                <MathText text={s.body} />
-                              </div>
-                            </section>
-                          ))}
+                          <LessonContent
+                            lesson={l}
+                            client={client}
+                            showTitle={false}
+                          />
+                          <FileAttachments
+                            client={client}
+                            target={{ kind: "lesson", id: l.id }}
+                          />
                         </div>
                       </Panel>
                     ))}
@@ -452,7 +455,9 @@ function ClassroomAccount({
                     .map((a) => (
                       <Panel title={a.title} key={a.id}>
                         <div className="tw-pad">
-                          <div className="tw-result">{a.body}</div>
+                          <div className="tw-result">
+                            <MathText text={a.body} />
+                          </div>
                           <p className="tw-subtle">{dateTime(a.createdAt)}</p>
                         </div>
                       </Panel>
@@ -472,11 +477,13 @@ function ClassroomAccount({
                       <Tag tone="indigo">
                         {data.classes.find((c) => c.id === e.classId)?.name}
                       </Tag>
-                      <h3>{e.title}</h3>
+                      <h3>
+                        <MathText text={e.title} inline />
+                      </h3>
                       <p>
                         {dateTime(e.startAt)} → {dateTime(e.endAt)}
                       </p>
-                      <p>{e.description}</p>
+                      <MathText text={e.description} />
                     </article>
                   ))}
                   {!data.events.length && (
@@ -526,6 +533,11 @@ function ClassroomAccount({
                             client={client}
                             submission={s}
                             student
+                          />
+                          <FileAttachments
+                            client={client}
+                            target={{ kind: "submission", id: s.assignmentId }}
+                            submissionId={s.id}
                           />
                           {s.status === "published" ? (
                             <>
@@ -640,28 +652,44 @@ function StudentAssignment({
         response: q.kind === "mcq" ? null : "",
       })),
     ),
-    [confirmed, setConfirmed] = useState(false);
+    [confirmed, setConfirmed] = useState(false),
+    [attachmentIds, setAttachmentIds] = useState<string[]>([]),
+    [fileBusy, setFileBusy] = useState(false),
+    [unconfirmedFile, setUnconfirmedFile] = useState(false);
   return (
-    <Modal title={assignment.title} onClose={onClose} disabled={client.busy}>
+    <Modal
+      title={assignment.title}
+      onClose={onClose}
+      disabled={client.busy || fileBusy}
+    >
       <form
         className="tw-form"
         onSubmit={submit(async () => {
+          if (fileBusy || unconfirmedFile || !confirmed) return;
           await client.mutate({
             action: "submission.submit",
             assignmentId: assignment.id,
             expectedRevision: 0,
             answers,
+            attachmentIds,
           });
           onClose();
         })}
       >
         <FormError client={client} />
-        <p className="tw-note">
-          {assignment.instructions} · Hạn {dateTime(assignment.dueAt)}. Câu trả
-          lời chỉ gửi khi bạn bấm nộp; không tự gửi đến AI.
-        </p>
+        <div className="tw-note">
+          <MathText text={assignment.instructions} />
+          <p>
+            Hạn {dateTime(assignment.dueAt)}. Câu trả lời chỉ gửi khi bạn bấm
+            nộp; không tự gửi đến AI.
+          </p>
+        </div>
         <AssignmentAttempt assignment={assignment} />
         <AssessmentWindow assignment={assignment} />
+        <FileAttachments
+          client={client}
+          target={{ kind: "assignment", id: assignment.id }}
+        />
         {assignment.practiceRetake && (
           <p className="tw-note">
             Đây là lần luyện lại cùng đề, không phải một bài đánh giá độc lập
@@ -717,6 +745,14 @@ function StudentAssignment({
             )}
           </section>
         ))}
+        <FileAttachments
+          client={client}
+          target={{ kind: "submission", id: assignment.id }}
+          allowUpload
+          onSelection={setAttachmentIds}
+          onBusy={setFileBusy}
+          onUnconfirmed={setUnconfirmedFile}
+        />
         <label className="tw-check">
           <input
             type="checkbox"
@@ -727,10 +763,17 @@ function StudentAssignment({
           trợ thay thế bài đã nộp.
         </label>
         <div className="tw-form-footer">
-          <ModalCancelButton disabled={client.busy} onClose={onClose}>
+          <ModalCancelButton
+            disabled={client.busy || fileBusy}
+            onClose={onClose}
+          >
             Để sau
           </ModalCancelButton>
-          <Button type="submit" busy={client.busy} disabled={!confirmed}>
+          <Button
+            type="submit"
+            busy={client.busy}
+            disabled={!confirmed || fileBusy || unconfirmedFile}
+          >
             Nộp bài cho giáo viên <ArrowRight size={15} />
           </Button>
         </div>

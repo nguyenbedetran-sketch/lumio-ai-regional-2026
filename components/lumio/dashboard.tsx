@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import { useEffect, useId, useState } from "react";
 import {
   ArrowRight,
@@ -308,6 +309,7 @@ export function Dashboard({
             </form>
             <div data-dash-reveal>
               <DailyLearningPlan
+                showSetup
                 items={items}
                 learning={state}
                 preferences={preferences || emptyPreferences()}
@@ -348,7 +350,9 @@ export function Dashboard({
                         >
                           <Icon size={31} strokeWidth={1.5} />
                         </span>
-                        <strong>{item.title}</strong>
+                        <strong>
+                          <MathText text={item.title} inline />
+                        </strong>
                         <span className={styles.materialFooter}>
                           <small>{c.openMaterial}</small>
                           <ArrowUpRight size={16} />
@@ -422,7 +426,9 @@ export function Dashboard({
                       onClick={() => toggleTask(task)}
                     >
                       {task.done ? <Check size={17} /> : <Circle size={17} />}
-                      <span>{task.title}</span>
+                      <span>
+                        <MathText text={task.title} inline />
+                      </span>
                     </button>
                   ))}
                 </div>

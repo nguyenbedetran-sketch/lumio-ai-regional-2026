@@ -3,6 +3,7 @@ import { validateSummary, type StudyArtifact } from "../ai/summary";
 import { validateCoverage } from "../ai/full-summary";
 import { restoreReferences } from "../ai/grounding";
 import { parseSkillEvidence } from "./skill-evidence";
+import { parseAnswerKeyProvenance } from "./quiz-provenance";
 const DB = "lumio-local-library-v2";
 export type LibrarySnapshot = { data: LibraryState; revision: number };
 export class LibraryConflictError extends Error {
@@ -348,6 +349,7 @@ export function importLibrary(raw: string): LibraryState {
             options: unknown;
             correct: unknown;
             explanation: unknown;
+            answerKeyProvenance?: unknown;
             difficulty?: unknown;
             topic?: unknown;
             references?: unknown;
@@ -366,6 +368,13 @@ export function importLibrary(raw: string): LibraryState {
               options: q.options.map((o) => string(o, 1000)),
               correct: Number(q.correct),
               explanation: string(q.explanation, 5000),
+              ...(parseAnswerKeyProvenance(q.answerKeyProvenance)
+                ? {
+                    answerKeyProvenance: parseAnswerKeyProvenance(
+                      q.answerKeyProvenance,
+                    ),
+                  }
+                : {}),
               ...(["beginner", "intermediate", "advanced"].includes(
                 String(q.difficulty),
               )

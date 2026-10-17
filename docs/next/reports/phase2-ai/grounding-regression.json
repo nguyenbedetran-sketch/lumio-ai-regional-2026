@@ -1,0 +1,45 @@
+{
+  "checkedAt": "2026-10-17T08:18:01.253Z",
+  "status": "PASS",
+  "passed": 17,
+  "checks": [
+    "The original east/west missed warning is reproduced by the saved prior result, not rewritten",
+    "Bare identical English cardinal direction attributes flag all opposing value pairs",
+    "Vietnamese literal direction attributes detect different values without accent folding the source",
+    "Different subjects, explicit dates, condition suffixes and negation are not merged",
+    "Equal repeated direction statements and unrelated semantic opposites remain outside conflict claims",
+    "Conflict comparison does not mutate/discard excerpts and existing numeric warning remains",
+    "Literal English/Vietnamese missing-data cues are distinguished from irrelevant negative phrases",
+    "Missing-data guidance is bounded to app IDs, preserves useful facts and does not elevate source instructions",
+    "RAG warning wording describes literal comparison without mathematical/semantic verification claims",
+    "Twelve newly authored Grade9 release-holdout cases run through the existing evaluator without network",
+    "Exact authored gold/citation controls reject wrong answers and fabricated quotations separately",
+    "Four supported equations check candidates/domain/completeness while broad reasoning remains unchecked",
+    "Four science calculations check exact arithmetic without claiming formula/unit validation",
+    "Missing reading motive retains the passage and advisory; actual model abstention is NOT_TESTED",
+    "Injection source/data and privileged context boundaries are tested without claiming model resistance",
+    "The structural answer-key limitation is reported honestly, not scored as generated-answer accuracy",
+    "Phase1 and historical evidence remain byte-identical"
+  ],
+  "newProviderCalls": 0,
+  "scope": "Actual production helpers and isolated SQLite via the existing evaluator; new authored candidates, no live model/semantic/pilot proof.",
+  "sourceProof": [
+    {
+      "path": "lib/rag/retrieval.ts",
+      "sha256": "d31d6dcb3de016caef511fe28a68c519efcebf62ff52fdbcde1d6f3c1c70334d"
+    },
+    {
+      "path": "lib/ai/grounding.ts",
+      "sha256": "873d7a1c1e319cb85f3f992312e1ed1f80756ee79f31ed8540aa9dc245bbecaa"
+    },
+    {
+      "path": "lib/ai/router.ts",
+      "sha256": "3ab5ea3b9ad144d85a3c0f1450a15fe10049884b225c5bd65ff7618b0c71c46b"
+    },
+    {
+      "path": "tests/v11-grade9-grounding.cjs",
+      "sha256": "de9d4760bed7e4d8bf61891ff2bfb529478ed9303f30e227a2256db48d6e3a8e"
+    }
+  ],
+  "priorEvidenceBytesPreserved": true
+}

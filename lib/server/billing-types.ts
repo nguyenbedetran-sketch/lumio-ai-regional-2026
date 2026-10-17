@@ -12,18 +12,25 @@ export interface ReserveUsageInput {
   kind: UsageKind;
   /** Validated video segment length, supplied by the server route. */
   duration?: number;
+  /** Server-measured source text length; never copied from a client's quote. */
+  sourceCharacters?: number;
+  /** Trusted teaching workflow, not a generic client JSON field. */
+  pricingFeature?: import("../billing/paid-policy").PaidPricingFeature;
 }
 export interface UsageReservation {
   reservationId: string;
   units: number;
   balance: number;
   planId: PlanId;
+  pricing?: import("../billing/paid-policy").PaidCreditQuote;
+  modelPolicy?: import("../billing/paid-policy").PaidModelContext;
 }
 export interface BillingEntitlements {
   modes: readonly BillingMode[];
   kinds: readonly UsageKind[];
   voice: boolean;
   maxVideoSeconds: number;
+  maxSourceCharacters?: number;
 }
 export const PLAN_DEFINITIONS: Record<
   PlanId,
@@ -50,7 +57,7 @@ export const PLAN_DEFINITIONS: Record<
   premium: {
     name: "Premium",
     entitlements: {
-      modes: ["quick", "tutor", "think", "deep"],
+      modes: ["quick", "tutor", "think"],
       kinds: ["text", "image", "pdf", "audio", "video"],
       voice: true,
       maxVideoSeconds: 1800,

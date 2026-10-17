@@ -1,3 +1,5 @@
+export type { TeachingFile, TeachingFileTarget } from "./file-contracts";
+import type { TeachingFile } from "./file-contracts";
 import type { SourceEvidence } from "../ai/grounding";
 import type { SystemRole, OrganizationRole } from "../server/types";
 import type { AssessmentBlueprintCell } from "./assessment-plan";
@@ -296,6 +298,7 @@ export interface TeachingState {
   groups: TeachingGroup[];
   invites: TeachingInvite[];
   materials: TeachingMaterial[];
+  files?: TeachingFile[];
   lessons: TeachingLesson[];
   questions: TeachingQuestion[];
   assignments: TeachingAssignment[];
@@ -483,6 +486,7 @@ export type TeachingMutation = Mutation &
         assignmentId: string;
         expectedRevision: number;
         answers: TeachingAnswer[];
+        attachmentIds?: string[];
       }
     | {
         action: "submission.grade";

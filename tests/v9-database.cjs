@@ -42,9 +42,9 @@ async function main() {
     });
     db = connection();
     const boot = performance.now();
-    check("All schema18 migrations and six immutable guards bootstrap on actual libsql worker", () => {
+    check("All current schema20 migrations and eleven immutable guards bootstrap on actual libsql worker", () => {
       store = createStore(":injected:", { database: measured(db, bootstrapCalls), adminEmails: ["owner@example.test"] });
-      assert.deepEqual(assertDatabaseIntegrity(db), { schemaVersion: 18, guardsChecked: 6 });
+      assert.deepEqual(assertDatabaseIntegrity(db), { schemaVersion: 20, guardsChecked: 11 });
       assert.equal(db.prepare("PRAGMA foreign_keys").get().foreign_keys, 1);
     });
     const bootstrapMs = performance.now() - boot;
@@ -56,13 +56,13 @@ async function main() {
         all(...args) { reads++; return statement.all(...args); },
         get(...args) { reads++; return statement.get(...args); },
       }; } };
-      assert.deepEqual(assertDatabaseIntegrity(counted), { schemaVersion: 18, guardsChecked: 6 });
+      assert.deepEqual(assertDatabaseIntegrity(counted), { schemaVersion: 20, guardsChecked: 11 });
       assert.equal(reads, 2);
       const guard = DATABASE_GUARDS[0];
       db.exec(`DROP TRIGGER ${guard.name}`);
       assert.throws(() => assertDatabaseIntegrity(db), /DATABASE_GUARD_INVALID/);
       db.exec(guard.sql);
-      assert.equal(assertDatabaseIntegrity(db).guardsChecked, 6);
+      assert.equal(assertDatabaseIntegrity(db).guardsChecked, 11);
     });
     check("A foreign populated database named sqlitex is rejected before bootstrap writes", () => {
       const foreign = new (require("node:sqlite").DatabaseSync)(":memory:");

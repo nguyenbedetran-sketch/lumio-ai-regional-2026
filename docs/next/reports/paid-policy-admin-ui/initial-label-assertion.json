@@ -1,0 +1,17 @@
+{
+  "status": "FAIL",
+  "passed": 4,
+  "checks": [
+    "No network configuration write or load happens on mount",
+    "Explicit read binds the displayed canonical account",
+    "Premium initial value is the authored server config",
+    "No sale or Free/Plus edit control is implied"
+  ],
+  "errors": [],
+  "error": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Gói cần điều chỉnh', { exact: true })\u001b[22m\n",
+  "snapshot": "KIỂM THỬ\n\nCấu hình Premium / Pro\n\nKIỂM THỬ · Tài khoản và số liệu tổng hợp · Không phải gói đã bán hoặc tài khoản thật\n\nPremium & Pro\n\nCấu hình đề xuất; chưa mở thanh toán. Free và Plus không thuộc biểu mẫu này.\n\nTải lại và bỏ bản chưa lưu\n\nCác alias có cấu hình: quick: 1 · tutor: 1 · think: 1 · deep: 1. Đây không phải kiểm tra khả dụng của provider hay giá vốn.\n\nGói cần điều chỉnh\nPremium\nPro\n\nPhiên bản máy chủ: 0. Bản nhập riêng của từng gói được giữ khi chuyển lựa chọn.\n\nGiá và credit cấu hình\nGiá đề xuất theo tháng (VNĐ)\nGiá đề xuất theo năm (VNĐ)\nCredit mỗi chu kỳ tháng\n\nHệ số 1.000 nghĩa là 1×. Đây là đơn vị dự kiến theo chính sách; chi phí API chưa được xác định. Quyền lớp học vẫn được kiểm tra riêng. Hạn mức hiệu lực còn phụ thuộc từng API.\n\nQuyền, tác vụ và hệ số nâng cao\nLý do thay đổi (8–300 ký tự)\nLưu cấu hình Premium\n\nKhông tự gia hạn, không phát sinh giao dịch tiền và không thay lịch sử/số dư hiện có. Giá cấu hình chưa chứng minh có lợi nhuận.",
+  "checkedAt": "2026-10-17T07:53:33.817Z",
+  "sourceSha256": "5ff5b1ffbf02cf4573bacef3cb297ae3affc9b3077961862f4071fa594b6cae0",
+  "cssSha256": "1487a718657e19424763341e6e5fc23e2e8d8745cae120b46a320f97f60da296",
+  "scope": "Actual isolated paid policy administration React/CSS; authored config and intercepted HTTP, not actual billing/admin authorization or payments."
+}

@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "../lumio/math-text";
 import { useEffect, useState } from "react";
 import { TeachingDraftBoundary, useTeachingDraftGuard } from "./draft-guard";
 import type { TeachingState } from "../../lib/teaching/contracts";
@@ -602,7 +603,7 @@ function Dashboard({
               {data.assignments.slice(0, 4).map((a) => (
                 <div className="tw-metric-row" key={a.id}>
                   <span>
-                    {a.title}
+                    <MathText text={a.title} inline />
                     <small style={{ display: "block" }}>
                       {data.classes.find((c) => c.id === a.classId)?.name} · Hạn{" "}
                       {dateTime(a.dueAt)}
@@ -644,7 +645,7 @@ function Dashboard({
                 .map((event) => (
                   <div className="tw-metric-row" key={event.id}>
                     <span>
-                      {event.title}
+                      <MathText text={event.title} inline />
                       <small style={{ display: "block" }}>
                         {dateTime(event.startAt)}
                       </small>

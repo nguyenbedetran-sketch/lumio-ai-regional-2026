@@ -47,6 +47,10 @@ jobs:
         run: pnpm build
       - name: Verify actual compiled teaching HTTP, authorization and restore
         run: pnpm test:teaching:production
+      - name: Verify compiled NextAuth cookies, OAuth validation and private logging
+        run: pnpm test:auth:production
+      - name: Verify compiled attachment HTTP, submitted bytes and restored snapshots
+        run: pnpm test:teaching-files:production
       - name: Verify generated standalone native database process on Linux
         run: node scripts/test-v9-database-standalone.cjs
       - name: Check generated and source TypeScript

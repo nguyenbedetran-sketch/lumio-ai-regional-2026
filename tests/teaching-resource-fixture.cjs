@@ -1,0 +1,25 @@
+/* Isolated actual-component fixture. No product route/auth override or live data. */
+const fs=require('node:fs'),path=require('node:path'),ts=require('typescript');
+const root=path.resolve(__dirname,'..'),folder=path.join(root,'work/teaching-resource-ui');
+function cssModule(source){const names={};return{names,css:source.replace(/\.([a-zA-Z_][\w-]*)/g,(_m,name)=>{names[name]='resource-qa-'+name;return'.'+names[name]})}}
+function load(relative,cache=new Map()){
+  const filename=path.resolve(root,relative);if(cache.has(filename))return cache.get(filename).exports;const m={exports:{}};cache.set(filename,m);
+  if(filename.endsWith('.css')){m.exports=cssModule(fs.readFileSync(filename,'utf8')).names;return m.exports}
+  const source=ts.transpileModule(fs.readFileSync(filename,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText;
+  new Function('require','module','exports',source)(name=>{if(!name.startsWith('.'))return require(name);const base=path.resolve(path.dirname(filename),name),target=[base,base+'.tsx',base+'.ts',base+'.js'].find(f=>fs.existsSync(f)&&fs.statSync(f).isFile());if(!target)throw Error('MISSING_FIXTURE_MODULE');return load(target,cache)},m,m.exports);return m.exports;
+}
+function build(){
+  fs.mkdirSync(folder,{recursive:true});const modules=[],ids=new Map(),css=[];
+  function bundle(filename){filename=path.resolve(filename);if(ids.has(filename))return ids.get(filename);const id=modules.length;ids.set(filename,id);modules.push('');let source=fs.readFileSync(filename,'utf8');
+    if(filename.endsWith('.css')){const mapped=cssModule(source);css.push(mapped.css);modules[id]=`function(module){module.exports=${JSON.stringify(mapped.names)}}`;return id}
+    if(/\.(?:tsx?|mjs)$/.test(filename))source=ts.transpileModule(source,{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022,jsx:ts.JsxEmit.ReactJSX,esModuleInterop:true}}).outputText;
+    source=source.replace(/require\((["'])([^"']+)\1\)/g,(_all,_q,name)=>{let target;if(name.startsWith('.')){const base=path.resolve(path.dirname(filename),name);target=[base,base+'.ts',base+'.tsx',base+'.js',path.join(base,'index.js')].find(f=>fs.existsSync(f)&&fs.statSync(f).isFile())}else target=require.resolve(name,{paths:[path.dirname(filename)]});if(!target)throw Error('MISSING_FIXTURE_MODULE');return`__require(${bundle(target)})`});modules[id]=`function(module,exports,__require){${source}\n}`;return id;
+  }
+  const react=bundle(require.resolve('react')),client=bundle(require.resolve('react-dom/client')),component=bundle(path.join(root,'components/teaching/resource-link.tsx'));
+  fs.writeFileSync(path.join(folder,'fixture.js'),`(()=>{const process={env:{NODE_ENV:'production'}},modules=[${modules.join(',')}],cache={};function __require(id){if(cache[id])return cache[id].exports;const m=cache[id]={exports:{}};modules[id](m,m.exports,__require);return m.exports}const React=__require(${react}),{createRoot}=__require(${client}),{TeachingResourceLink}=__require(${component}),root=createRoot(document.getElementById('root'));let video='https://www.youtube.com/watch?v=mathdemo001&t=90',locale='vi';window.__resourceMount=(url=video,lang=locale)=>{video=url;locale=lang;root.render(React.createElement(React.Fragment,{},React.createElement(TeachingResourceLink,{url:video,title:'Video minh họa: điều kiện phương trình '+String.raw\`\\(x\\neq0\\)\`,kind:'video',locale}),React.createElement(TeachingResourceLink,{url:'https://www.canva.com/design/QA_DEMO_01/view',title:'Bài trình bày tham khảo · Dữ liệu kiểm thử',kind:'link',locale}),React.createElement(TeachingResourceLink,{url:'https://docs.google.com/presentation/d/QA_SLIDES_01/edit',title:'Google Slides · Tài nguyên do giáo viên chia sẻ',kind:'link',locale}),React.createElement(TeachingResourceLink,{url:'https://files.example.invalid/lesson.pptx',title:'PowerPoint · Liên kết tham khảo',kind:'pptx',locale})))};window.__resourceMount();})();`);
+  const layout=fs.readFileSync(path.join(root,'app/layout.tsx'),'utf8'),globalCSS=[...layout.matchAll(/import "([^"\n]+\.css)"/g)].map(m=>fs.readFileSync(m[1].startsWith('./')?path.join(root,'app',m[1]):require.resolve(m[1]),'utf8')).join('\n');
+  fs.writeFileSync(path.join(folder,'fixture.css'),globalCSS+'\n'+css.join('\n')+'\nbody{margin:0;background:var(--lm-bg);color:var(--lm-text);font-family:Segoe UI,Arial,sans-serif}.resource-fixture{max-width:900px;margin:auto;padding:20px;min-width:0}.resource-fixture>p{font-size:12px;color:var(--lm-muted);line-height:1.8}');
+  fs.writeFileSync(path.join(folder,'fixture.html'),'<!doctype html><html lang="vi" data-theme="light"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teaching resource QA</title><link rel="stylesheet" href="/__resource.css"><body><main class="resource-fixture"><p>KIỂM THỬ · Liên kết và dữ liệu tự soạn · Khung nhà cung cấp được chặn/mô phỏng · Không phải lớp học thật</p><div id="root"></div></main><script src="/__resource.js"></script></body></html>');
+  return{folder};
+}
+module.exports={load,build,root};

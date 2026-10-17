@@ -1,0 +1,29 @@
+{
+  "checkedAt": "2026-10-17T08:18:21.978Z",
+  "status": "PASS",
+  "passed": 19,
+  "checks": [
+    "Versioned authored fixture validates; duplicate/unknown relevance or oversized document scope is rejected",
+    "Offline guard refuses fetch/HTTP/socket transport and restores callers afterward",
+    "Current evaluator executes 63 production retrieval/snapshot cases without provider/network requests",
+    "Actual production diversity recovers the relevant paragraph excluded by raw top6",
+    "vi actual production lexical/source, no-hit and numeric-conflict cases preserve the declared scope",
+    "en actual production lexical/source, no-hit and numeric-conflict cases preserve the declared scope",
+    "zh-CN actual production lexical/source, no-hit and numeric-conflict cases preserve the declared scope",
+    "ja actual production lexical/source, no-hit and numeric-conflict cases preserve the declared scope",
+    "ko actual production lexical/source, no-hit and numeric-conflict cases preserve the declared scope",
+    "Numeric disagreement preserves competing sources, without inventing context/reconciliation",
+    "Literal direction disagreement is narrowly flagged without claiming semantic entailment",
+    "Unanswerable lexical overlap remains a reported false-positive case, not asserted abstention",
+    "An indexed answer outside the explicit selected document scope cannot become evidence",
+    "Synthetic cosine geometry exercises only semantic plumbing around the threshold",
+    "Historical vectors retain exact raw-top3 replay, then run separate valid four/two document production scopes",
+    "Report source hashes match evaluated bytes and retain explicit semantic/pilot limitations",
+    "Output isolation cannot overwrite historical/provider evidence, and missing output argument is rejected",
+    "Existing evaluator offline CLI returns before environment-file reading, even with --live also present",
+    "Historical vector/report evidence stays byte-for-byte unchanged"
+  ],
+  "scope": "Actual in-memory SQLite, production RAG core and deterministic/saved vectors; no live provider, network, user data or current semantic accuracy proof.",
+  "historicalBytesPreserved": true,
+  "newProviderCalls": 0
+}

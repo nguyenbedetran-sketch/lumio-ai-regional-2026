@@ -332,14 +332,21 @@ let orgId,
             .get().n,
           1,
         );
-        assert.equal(
-          db
-            .prepare(
-              "SELECT count(*) n FROM sqlite_master WHERE type='table' AND name LIKE 'teaching_%' AND name NOT IN('teaching_preferences','teaching_grade_events','teaching_assessment_windows')",
-            )
-            .get().n,
-          14,
+        const originalTables = load(
+          "lib/server/database-integrity.ts",
+        ).DATABASE_TABLES.filter(
+          (table) => table.since === 12 && table.name.startsWith("teaching_"),
         );
+        assert.equal(originalTables.length, 14);
+        for (const table of originalTables)
+          assert.ok(
+            db
+              .prepare(
+                "SELECT 1 FROM sqlite_master WHERE type='table' AND name=?",
+              )
+              .get(table.name),
+            table.name,
+          );
         assert.equal(
           store.isApprovedTeacher(teacher.id, teacher.sessionVersion),
           true,

@@ -1,4 +1,6 @@
 "use client";
+import { MathText } from "./math-text";
+import { useState } from "react";
 import { ArrowUpRight, CalendarClock, Compass } from "lucide-react";
 import type { LearningItem } from "../../lib/lumio/types";
 import type { LearningState } from "../../lib/lumio/learning-engine";
@@ -15,6 +17,9 @@ import {
   type SkillId,
 } from "../../lib/lumio/skill-taxonomy";
 import styles from "./learning-plan.module.css";
+import { StudyPreferenceForm } from "./study-preferences";
+import { studySetupCopy } from "../../lib/lumio/study-setup-copy";
+import { quizReviewCopy } from "../../lib/lumio/quiz-review-copy";
 export function DailyLearningPlan({
   items,
   learning,
@@ -24,6 +29,7 @@ export function DailyLearningPlan({
   onReview,
   onPreferences,
   storageError = false,
+  showSetup = false,
 }: {
   items: LearningItem[];
   learning: LearningState;
@@ -33,7 +39,9 @@ export function DailyLearningPlan({
   onReview?: () => void;
   onPreferences?: (fn: (p: Preferences) => Preferences) => void;
   storageError?: boolean;
+  showSetup?: boolean;
 }) {
+  const [setupOpen, setSetupOpen] = useState(!preferences.controls);
   const plan = buildLearningPlan(items, learning, preferences),
     c = learningPlanCopy[locale];
   const action = (a: LearningPlanAction, primary: boolean) => (
@@ -45,15 +53,19 @@ export function DailyLearningPlan({
       <span className={styles.eyebrow}>
         {primary ? c.primary : c.alternatives}
       </span>
-      <h3>{a.item.title}</h3>
+      <h3>
+        <MathText text={a.item.title} inline />
+      </h3>
       <p>
         {a.reason === "due"
           ? c.due
           : a.reason === "focus"
             ? c.focus
-            : a.reason === "review"
-              ? c.weak
-              : c[a.reason]}
+            : a.reason === "goal"
+              ? studySetupCopy[locale].chosen
+              : a.reason === "review"
+                ? c.weak
+                : c[a.reason]}
         .{a.skillId && <> {skillLabel(a.skillId, locale)}.</>}
         {a.basisId && a.basisId !== a.skillId && (
           <> {skillLabel(a.basisId, locale)}.</>
@@ -92,6 +104,28 @@ export function DailyLearningPlan({
         </div>
         <CalendarClock size={32} aria-hidden="true" />
       </div>
+      {plan.profile.skills.some((skill) => skill.observations > 0) && (
+        <p className="lm-help" data-plan-key-caveat>
+          {quizReviewCopy[locale].history}
+        </p>
+      )}
+      {showSetup && onPreferences && (
+        <details
+          className={styles.more}
+          data-study-setup
+          open={setupOpen}
+          onToggle={(event) => setSetupOpen(event.currentTarget.open)}
+        >
+          <summary>{studySetupCopy[locale].setup}</summary>
+          <p>{studySetupCopy[locale].hint}</p>
+          <StudyPreferenceForm
+            locale={locale}
+            preferences={preferences}
+            update={onPreferences}
+            storageError={storageError}
+          />
+        </details>
+      )}
       {onPreferences && (
         <label className={styles.focus}>
           {c.focusLabel}

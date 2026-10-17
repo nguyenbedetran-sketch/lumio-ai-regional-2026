@@ -1,4 +1,5 @@
 "use client";
+import { MathText } from "./math-text";
 import {
   Check,
   LockKeyhole,
@@ -274,9 +275,9 @@ export function MathVerificationNotice({
       <div>
         <strong>{good ? c.verified : bad ? c.invalid : c.unknown}</strong>
         <p>{c.check}</p>
-        {verification.equation && <code>{verification.equation}</code>}
+        {verification.equation && <MathText text={verification.equation} />}
         {verification.conditions?.length ? (
-          <p>{verification.conditions.join("; ")}</p>
+          <MathText text={verification.conditions.join("; ")} />
         ) : null}
         {scope ? (
           <div aria-label={labels.title} data-math-scope>
@@ -307,9 +308,7 @@ export function MathVerificationNotice({
             <ul>
               {verification.explicitSteps.map((step, i) => (
                 <li key={i}>
-                  <code>
-                    {step.from} ⇔ {step.to}
-                  </code>
+                  <MathText text={`${step.from} ⇔ ${step.to}`} />
                   <p>{labels[step.status]}</p>
                 </li>
               ))}

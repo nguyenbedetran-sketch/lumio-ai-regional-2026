@@ -153,8 +153,10 @@ function GradeHistory({
   return (
     <section className="tw-pad tw-form" data-grade-history aria-busy={loading}>
       <p className="tw-muted">
-        <strong>{assignment?.title || "Bài đã nộp"}</strong> · Nộp lúc{" "}
-        {dateTime(submission.submittedAt)}
+        <strong>
+          <MathText text={assignment?.title || "Bài đã nộp"} inline />
+        </strong>{" "}
+        · Nộp lúc {dateTime(submission.submittedAt)}
       </p>
       <p className="tw-note">
         {student

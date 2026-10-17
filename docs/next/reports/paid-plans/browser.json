@@ -1,0 +1,241 @@
+{
+  "status": "PASS",
+  "passed": 33,
+  "checks": [
+    "Actual BillingPanel preserves four cards",
+    "Free200/Plus59000 authored preview remains",
+    "Paid cards show centralized proposal prices",
+    "Premium and Pro expose distinct configured mode access",
+    "Source and separate teaching authority limits are visible",
+    "Paid calculator uses source chunks and shared server policy arithmetic",
+    "Configured mode factor changes quote",
+    "Over-policy input is rejected without payment/provider action",
+    "light paid dialog remains within1440",
+    "light paid controls retain44px targets at1440",
+    "light paid dialog remains within768",
+    "light paid controls retain44px targets at768",
+    "light paid dialog remains within390",
+    "light paid controls retain44px targets at390",
+    "light paid dialog remains within320",
+    "light paid controls retain44px targets at320",
+    "dark paid dialog remains within1440",
+    "dark paid controls retain44px targets at1440",
+    "dark paid dialog remains within768",
+    "dark paid controls retain44px targets at768",
+    "dark paid dialog remains within390",
+    "dark paid controls retain44px targets at390",
+    "dark paid dialog remains within320",
+    "dark paid controls retain44px targets at320",
+    "Paid account sees policy calculator instead of obsolete legacy estimator",
+    "Reading paid proposal never simulates credit deposits",
+    "Paid detail/calculator available in en",
+    "Paid detail/calculator available in zh-CN",
+    "Paid detail/calculator available in ja",
+    "Paid detail/calculator available in ko",
+    "All UI requests remain read-only; no checkout or grant request",
+    "No unexpected outbound request",
+    "No browser runtime error"
+  ],
+  "errors": [],
+  "unexpected": [],
+  "calls": [
+    {
+      "method": "GET",
+      "path": "/api/billing/catalog"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    }
+  ],
+  "screenshots": [
+    "docs/next/reports/paid-plans/light-1440.png",
+    "docs/next/reports/paid-plans/light-390.png",
+    "docs/next/reports/paid-plans/dark-1440.png",
+    "docs/next/reports/paid-plans/dark-390.png"
+  ],
+  "layouts": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "dialog": [
+        {
+          "scroll": 558,
+          "client": 558
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "dialog": [
+        {
+          "scroll": 558,
+          "client": 558
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "dialog": [
+        {
+          "scroll": 360,
+          "client": 360
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "dialog": [
+        {
+          "scroll": 290,
+          "client": 290
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "scroll": 1440,
+      "client": 1440,
+      "dialog": [
+        {
+          "scroll": 558,
+          "client": 558
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 768,
+      "scroll": 768,
+      "client": 768,
+      "dialog": [
+        {
+          "scroll": 558,
+          "client": 558
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "scroll": 390,
+      "client": 390,
+      "dialog": [
+        {
+          "scroll": 360,
+          "client": 360
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "scroll": 320,
+      "client": 320,
+      "dialog": [
+        {
+          "scroll": 290,
+          "client": 290
+        }
+      ],
+      "controls": [
+        44,
+        44,
+        44,
+        44
+      ]
+    }
+  ],
+  "realProviderCalls": 0,
+  "realPayments": 0,
+  "scope": "Actual BillingPanel/paid details and CSS; authored catalog/wallet with intercepted HTTP only. No real account, payment, merchant or public entitlement sale.",
+  "checkedAt": "2026-10-17T08:00:55.599Z",
+  "sourceProof": [
+    {
+      "path": "lib/billing/paid-policy.ts",
+      "sha256": "8c33b42701f138878fe788e6283dd8c08a922934583315ba59ca8308d5829e01"
+    },
+    {
+      "path": "components/lumio/billing.tsx",
+      "sha256": "706cbb30e56a503bfc1642df3464f8a548cb71eaf73e6e542a48996d2df2f6e8"
+    },
+    {
+      "path": "components/lumio/paid-plan-details.tsx",
+      "sha256": "4d829e813ec17faf6182537bbc87e61b2b2045b2649e265bb1336a21d42160e8"
+    },
+    {
+      "path": "components/lumio/paid-plan-details.module.css",
+      "sha256": "45b61cf937bc72bb6beaf20d2b15e5d7031a6b00f3a800c1eb71f04127c47139"
+    }
+  ]
+}

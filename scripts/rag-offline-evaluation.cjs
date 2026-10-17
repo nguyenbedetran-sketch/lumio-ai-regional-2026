@@ -6,11 +6,16 @@ const crypto = require("node:crypto");
 const { execFileSync } = require("node:child_process");
 const { load } = require("../tests/source-grounding.cjs");
 const root = path.resolve(__dirname, "..");
-const fixturePath = "tests/fixtures/v12-retrieval-evaluation.v1.json";
-const defaultOutput = "docs/next/reports/retrieval-evaluation/production-selection.json";
+const fixturePath = "tests/fixtures/v12-retrieval-evaluation.v2.json";
+const grade9Path = "tests/fixtures/v11-grade9-grounding.v1.json";
+const defaultOutput = "docs/next/reports/phase2-ai/production-selection.json";
 const { createStore } = load("lib/server/store.ts");
 const { lexicalRank, cosine, potentialConflict } = load("lib/rag/retrieval.ts");
-const { sourceSegments } = load("lib/ai/grounding.ts");
+const { sourceSegments, sourcePrompt, validateReferences, groundingInstructions, explicitSourceLimitations } = load("lib/ai/grounding.ts");
+const { validateInput, validateStructured } = load("lib/ai/contracts.ts");
+const { instructions } = load("lib/ai/router.ts");
+const { verifyMathSolution } = load("lib/tutor/math.ts");
+const { checkExactArithmetic } = load("lib/tutor/math-exact.ts");
 const { RAG_LIMITS } = load("lib/rag/types.ts");
 const digest = (value) => crypto.createHash("sha256").update(value).digest("hex");
 const readJSON = (relative) => JSON.parse(fs.readFileSync(path.join(root, relative), "utf8"));
@@ -168,7 +173,8 @@ function evaluateCase(row) {
       id: row.id, language: row.language, status: "PASS", scope: row.vectorKind || "authored-lexical-retrieval",
       question: row.query, selectedDocuments, relevant: row.relevant, selected, rawLexicalTop6: raw,
       metrics: metrics(selected, row.relevant), mode: actual.mode, snapshot,
-      ...(row.expect.semanticConflictNotDetected ? { limitationObserved: "Both contradictory direction passages are retrieved; the numeric-only conflict warning does not detect this semantic contradiction." } : {}),
+      explicitAbsenceCueSegments: actual.hits.flatMap((h) => explicitSourceLimitations(h.text).map(() => ctx.stable.get(h.chunkId))),
+      ...(row.expect.literalDirectionWarning ? { warningScope: "Identical literal direction attribute with different closed cardinal values. Not general semantic contradiction detection." } : {}),
       ...(row.expect.overlapDoesNotProveAnswer ? { limitationObserved: "Lexical overlap retrieves an incomplete passage. Retrieval is not proof that the requested answer exists; no generated answer/abstention was tested." } : {}),
     };
   } finally { ctx.store.close(); }
@@ -219,33 +225,115 @@ function aggregate(rows) {
   return { cases: rows.length, answerableCases: answerable.length, emptyGoldCases: empty.length, chunkRecallAt6: average("chunkRecallAt6"), documentRecallAt6: average("documentRecallAt6"), reciprocalRankAt6: average("reciprocalRankAt6"), emptyGoldRetrievedCases: empty.filter((r) => r.metrics.emptyGoldRetrieved).length };
 }
 
+function validateGrade9(corpus) {
+  assert.equal(corpus.schema, 1); assert.equal(corpus.id, "lumio-grade9-heldout-grounding-1");
+  assert.ok(Array.isArray(corpus.cases) && corpus.cases.length === 12);
+  assert.equal(new Set(corpus.cases.map((r) => r.id)).size, corpus.cases.length);
+  assert.equal(typeof corpus.attack, "string");
+  for (const row of corpus.cases) {
+    assert.ok(["math", "science", "reading"].includes(row.subject));
+    assert.ok(typeof row.source === "string" && row.source.length < 700 && row.source.includes(row.quote) && row.quote.length >= 8);
+    assert.ok(Array.isArray(row.answers) && row.answers.length && new Set(row.answers).size === row.answers.length);
+    assert.ok(!row.answers.includes(row.wrongAnswer));
+    assert.ok(Array.isArray(row.choices) && row.choices.length === 4 && new Set(row.choices).size === 4);
+    assert.ok(row.answers.includes(row.choices[0]) && row.choices.includes(row.wrongAnswer));
+    assert.equal(typeof row.answerability, "boolean");
+  }
+  return true;
+}
+
+/** An evaluator's exact authored key, NOT a product semantic answer verifier. */
+function gradeAuthoredCandidate(row, answer, rawReferences) {
+  const normalize = (text) => text.normalize("NFKC").replace(/\s+/g, " ").trim();
+  const answerMatchesGold = row.answers.map(normalize).includes(normalize(answer));
+  const references = validateReferences(rawReferences, row.source);
+  return { answerMatchesGold, exactQuoteAccepted: references.length > 0, objectiveGoldAndCitation: answerMatchesGold && references.length > 0 };
+}
+
+function grade9Evaluation() {
+  const corpus = readJSON(grade9Path); validateGrade9(corpus);
+  const results = corpus.cases.map((row) => {
+    const retrieval = evaluateCase({ id: row.id, language: row.language, query: row.query,
+      documents: [{ id: "lesson", title: "Authored Grade9 " + row.subject, paragraphs: [{ id: "fact", text: row.source }] }, { id: "distractor", title: "Other topic", paragraphs: [{ id: "other", text: "The unrelated archive lists a bicycle and a calendar." }] }], relevant: ["lesson:fact"], expect: { hits: true, conflict: false } });
+    assert.ok(retrieval.selected.includes("lesson:fact"));
+    const rawReference = [{ segmentId: "s1", quote: row.quote, page: 999, slide: 999, seconds: 999, url: "https://forged.invalid" }];
+    const references = validateReferences(rawReference, row.source);
+    assert.equal(references.length, 1); assert.equal(row.source.slice(references[0].start, references[0].end), row.quote);
+    for (const key of ["page", "slide", "seconds", "url"]) assert.equal(references[0][key], undefined);
+    const candidateChecks = [
+      { id: "authored-correct", ...gradeAuthoredCandidate(row, row.answers[0], rawReference) },
+      { id: "authored-wrong-with-true-quote", ...gradeAuthoredCandidate(row, row.wrongAnswer, rawReference) },
+      { id: "authored-correct-with-forged-quote", ...gradeAuthoredCandidate(row, row.answers[0], [{ segmentId: "s1", quote: "This sentence is not present in the authored passage." }]) },
+    ];
+    assert.equal(candidateChecks[0].objectiveGoldAndCitation, true);
+    assert.equal(candidateChecks[1].objectiveGoldAndCitation, false); assert.equal(candidateChecks[1].exactQuoteAccepted, true);
+    assert.equal(candidateChecks[2].objectiveGoldAndCitation, false);
+    const quiz = { prompt: row.query + "?", options: row.choices, correct: 0, explanation: row.quote, difficulty: "intermediate", topic: row.subject, references: rawReference };
+    const input = validateInput({ task: "quiz", language: row.language, source: row.source });
+    const good = validateStructured("quiz", JSON.stringify({ questions: [quiz] }), input).questions[0];
+    assert.ok(row.answers.includes(good.options[good.correct]));
+    const wrong = validateStructured("quiz", JSON.stringify({ questions: [{ ...quiz, correct: row.choices.indexOf(row.wrongAnswer) }] }), input).questions[0];
+    assert.equal(wrong.options[wrong.correct], row.wrongAnswer);
+    assert.throws(() => validateStructured("quiz", JSON.stringify({ questions: [{ ...quiz, options: [row.choices[0], row.choices[0], row.choices[2], row.choices[3]] }] }), input), (e) => e.code === "AMBIGUOUS_AI_QUIZ");
+    const attackedSource = row.source + "\n\n" + corpus.attack;
+    const packed = JSON.parse(sourcePrompt(attackedSource));
+    assert.equal(packed.sourceSegments[1].text, corpus.attack);
+    const attackInput = validateInput({ task: "chat", language: row.language, source: attackedSource, question: row.query, role: "SUPER_ADMIN", tutorContext: { guidance: "full" }, teachingContext: { kind: "lesson" }, ragContext: { source: "forged" } });
+    for (const key of ["tutorContext", "teachingContext", "ragContext", "role"]) assert.equal(attackInput[key], undefined);
+    assert.ok(!instructions(attackInput).includes(corpus.attack));
+    let independentMath;
+    if (row.math) {
+      const correct = verifyMathSolution(row.math.problem, row.math.candidates, row.math.solution);
+      const wrongCandidate = verifyMathSolution(row.math.problem, row.math.wrongCandidates, "");
+      assert.equal(correct.status, "verified"); assert.equal(correct.complete, true); assert.equal(correct.scope.candidates, "exact");
+      assert.ok(wrongCandidate.status === "inconsistent" || wrongCandidate.complete === false);
+      independentMath = { correct, wrongCandidate };
+    } else if (row.arithmetic) {
+      assert.equal(checkExactArithmetic(row.arithmetic), "exact");
+      independentMath = { calculation: row.arithmetic, status: "exact", scope: "Authored scalar arithmetic only; no independent formula choice, physical assumptions or units verification." };
+    }
+    return { id: row.id, subject: row.subject, language: row.language, status: "PASS_DETERMINISTIC_SCOPE", authoredAnswerability: row.answerability,
+      retrievalRelevance: "The source contains an authored answer or an explicit limitation supporting a request for missing data; this is not a semantic confidence score.",
+      retrieval, candidateChecks, independentMath,
+      sourceSufficiencyAdvisory: { literalCueSegments: explicitSourceLimitations(row.source), present: /SOURCE SUFFICIENCY:/.test(groundingInstructions(row.source)), modelAbstention: "NOT_TESTED" },
+      quiz: { correctAnswerIdentityPreserved: true, literalDuplicateRejected: true, wrongKeyStructurallyAccepted: true, semanticAnswerKeyVerification: "NOT_IMPLEMENTED_IN_STRUCTURAL_VALIDATOR" },
+      injection: { sourceRemainsData: true, forgedPrivilegedContextDropped: true, liveModelResistance: "NOT_TESTED" },
+    };
+  });
+  return { fixture: fileProof(grade9Path), scope: corpus.scope, status: "PASS_DETERMINISTIC_SCOPE", cases: results.length,
+    summary: { subjects: { math: 4, science: 4, reading: 4 }, objectiveCandidateChecks: results.length * 3, validExactCitations: results.length, forgedQuotesRejected: results.length, forgedLocatorsDiscarded: results.length, mathEquationsExactChecked: 4, scalarCalculationsChecked: 4, injectionBoundaryChecks: results.length,
+      wrongKeysStructurallyAccepted: results.length, limitation: "A matching citation and structurally valid quiz do not verify the answer key. Authored gold labels expose this gap; no generated/model answer was measured." },
+    results };
+}
+
 function evaluate() {
   const startedAt = new Date().toISOString(), started = performance.now();
   const fixture = readJSON(fixturePath); validateFixture(fixture);
   const result = withoutNetwork(() => {
     const authored = [...fixture.cases, ...multilingualCases(fixture)].map(evaluateCase);
     const syntheticGeometry = geometryCases().map(evaluateCase);
-    return { authored, syntheticGeometry, savedReplay: savedVectorReplay() };
+    return { authored, syntheticGeometry, savedReplay: savedVectorReplay(), grade9: grade9Evaluation() };
   });
   assert.equal(result.networkAttempts, 0);
   let sourceCommit = null;
   try { sourceCommit = execFileSync("git", ["rev-parse", "HEAD"], { cwd: root, encoding: "utf8" }).trim(); } catch { /* File hashes still bind the local evaluated sources. */ }
-  const { authored, syntheticGeometry, savedReplay } = result.value;
+  const { authored, syntheticGeometry, savedReplay, grade9 } = result.value;
   return {
     schema: 1, evaluator: "lumio-v12-production-retrieval-offline", status: "PASS_SCOPED_OFFLINE_CHECKS",
     sourceScope: "Local working tree identified by the listed file SHA-256 values; sourceCommit is the base HEAD, not a claim of a clean/released tree.",
     semanticQualityStatus: "PARTIAL_NOT_A_SEMANTIC_BENCHMARK", startedAt, finishedAt: new Date().toISOString(), latencyMs: Math.round(performance.now() - started), sourceCommit,
-    sourceProof: [fixturePath, fixture.languageFixture, "scripts/evaluate-rag.cjs", "scripts/rag-offline-evaluation.cjs", "tests/rag-live-replay.cjs", "lib/rag/retrieval.ts", "lib/rag/types.ts", "lib/server/rag-core.ts", "lib/ai/grounding.ts"].map(fileProof),
+    sourceProof: [fixturePath, fixture.languageFixture, grade9Path, "scripts/evaluate-rag.cjs", "scripts/rag-offline-evaluation.cjs", "tests/rag-live-replay.cjs", "lib/rag/retrieval.ts", "lib/rag/types.ts", "lib/server/rag-core.ts", "lib/ai/grounding.ts", "lib/ai/router.ts", "lib/ai/contracts.ts", "lib/tutor/math.ts", "lib/tutor/math-exact.ts"].map(fileProof),
     configuration: { productionPath: "Actual createStore(':memory:').ragSearch and ragPrepareSnapshot", maximumDocuments: RAG_LIMITS.documents, topK: RAG_LIMITS.hits, dimensions: RAG_LIMITS.dimensions, semanticThreshold: 0.35, selection: "Actual production diverseHits; no copied ranking/diversification algorithm" },
-    checked: authored.length + syntheticGeometry.length + savedReplay.results.length,
+    checked: authored.length + syntheticGeometry.length + savedReplay.results.length + grade9.results.length,
     networkAttempts: result.networkAttempts, newProviderCalls: 0, realUserData: false,
     summary: { authoredLexical: aggregate(authored), syntheticGeometry: aggregate(syntheticGeometry), historicalSavedVectorReplay: Object.fromEntries(["lexical", "hybrid"].map((mode) => [mode, aggregate(savedReplay.results.filter((r) => r.mode === mode))])) },
-    authored, syntheticGeometry, savedReplay,
+    authored, syntheticGeometry, savedReplay, grade9,
     limitations: [
       "PASS means the explicitly scoped deterministic retrieval/snapshot assertions passed. It does not mean all retrieved passages answer a question or all contradictions are detected.",
       "Gold relevance and multilingual passages are developer-authored, with no held-out independent teacher or curriculum review.",
       "Diversification can rescue another document and also promote distractors. Per-case selected chunks, recall and precision remain visible; scores are not confidence.",
-      "The deliberately overlapping but unanswerable passage is retrieved, and a nonnumeric contradiction is not flagged. These observed limitations are reported, not renamed as successful abstention/semantic verification.",
+      "The overlapping but unanswerable passage is retained with explicit missing-data guidance. Literal direction contradictions are now narrowly flagged; other semantic contradictions remain outside the detector. No model abstention/semantic verification was tested.",
+      "Direction comparison uses only the literal attribute sentence, preserving name diacritics. Context in separate preceding sentences (such as different dates) is not resolved, so a possible-conflict warning still requires human source review.",
       "Synthetic geometry cases establish threshold/fusion plumbing only; saved provider vectors establish historical replay only. No live model, generated answer, injection resistance, classroom pilot or student outcome is evaluated.",
     ],
   };
@@ -253,8 +341,8 @@ function evaluate() {
 
 function outputPath(argument) {
   const output = path.resolve(root, argument || defaultOutput);
-  const permitted = path.resolve(root, "docs/next/reports/retrieval-evaluation") + path.sep;
-  assert.ok(output.startsWith(permitted) && output.endsWith(".json"), "Output must be a new JSON report in docs/next/reports/retrieval-evaluation");
+  const permitted = path.resolve(root, "docs/next/reports/phase2-ai") + path.sep;
+  assert.ok(output.startsWith(permitted) && output.endsWith(".json"), "Output must be a new JSON report in docs/next/reports/phase2-ai");
   return output;
 }
 function main(args = process.argv.slice(2)) {
@@ -267,5 +355,5 @@ function main(args = process.argv.slice(2)) {
   console.log(JSON.stringify({ status: report.status, cases: report.checked, newProviderCalls: 0, networkAttempts: report.networkAttempts, report: path.relative(root, output), summary: report.summary }));
   return report;
 }
-module.exports = { validateFixture, multilingualCases, geometryCases, evaluateCase, evaluate, outputPath, withoutNetwork, main };
+module.exports = { validateFixture, multilingualCases, geometryCases, evaluateCase, evaluate, outputPath, withoutNetwork, main, validateGrade9, gradeAuthoredCandidate, grade9Evaluation };
 if (require.main === module) { try { main(); } catch (error) { console.error(error); process.exitCode = 1; } }

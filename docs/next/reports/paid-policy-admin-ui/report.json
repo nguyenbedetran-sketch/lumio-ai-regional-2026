@@ -1,0 +1,84 @@
+{
+  "status": "PASS",
+  "passed": 27,
+  "checks": [
+    "No network configuration write or load happens on mount",
+    "Explicit read binds the displayed canonical account",
+    "Premium initial value is the authored server config",
+    "No sale or Free/Plus edit control is implied",
+    "Switching plan preserves its unsaved draft",
+    "Save requires an audit reason",
+    "Save sends only selected paid plan and its captured server revision",
+    "Only acknowledged server config advances visible revision",
+    "Saving Premium preserves the separate unsaved Pro draft",
+    "Conflict preserves typed draft rather than claiming it was saved",
+    "Conflict explains the required readback",
+    "Unknown write keeps draft and no false success",
+    "Explicit discard/readback returns authoritative server state",
+    "Malformed JSON cannot submit",
+    "light controls remain inside viewport at1440",
+    "light controls remain inside viewport at768",
+    "light controls remain inside viewport at390",
+    "light controls remain inside viewport at320",
+    "dark controls remain inside viewport at1440",
+    "dark controls remain inside viewport at768",
+    "dark controls remain inside viewport at390",
+    "dark controls remain inside viewport at320",
+    "Read-only admin has no editable paid fields",
+    "Late prior-account result cannot render after an account switch",
+    "Reload after switch captures only the current account",
+    "No uncaught browser error",
+    "Every test HTTP request was intercepted"
+  ],
+  "errors": [],
+  "unexpected": [],
+  "requests": [
+    {
+      "method": "GET",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "POST",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "POST",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "POST",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "GET",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "GET",
+      "account": "qa-usage-a"
+    },
+    {
+      "method": "GET",
+      "account": "qa-readonly"
+    },
+    {
+      "method": "GET",
+      "account": "qa-late"
+    },
+    {
+      "method": "GET",
+      "account": "qa-current"
+    }
+  ],
+  "screenshots": [
+    "docs/next/reports/paid-policy-admin-ui/light-1440.png",
+    "docs/next/reports/paid-policy-admin-ui/light-390.png",
+    "docs/next/reports/paid-policy-admin-ui/dark-1440.png",
+    "docs/next/reports/paid-policy-admin-ui/dark-390.png"
+  ],
+  "actualPaymentRequests": 0,
+  "checkedAt": "2026-10-17T08:01:49.095Z",
+  "sourceSha256": "6560eac9be1c1333a0a9146f31fba011e287c781b4939c7b8c79bdf3b3dea7fc",
+  "cssSha256": "1487a718657e19424763341e6e5fc23e2e8d8745cae120b46a320f97f60da296",
+  "scope": "Actual isolated paid policy administration React/CSS; authored config and intercepted HTTP, not actual billing/admin authorization or payments."
+}

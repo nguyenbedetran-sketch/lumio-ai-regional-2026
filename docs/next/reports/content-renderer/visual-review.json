@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-10-17T07:46:11.798Z",
+  "status": "PASS",
+  "method": "All four fresh screenshots opened after numeric-pair regression fix; table result3 renders as math.",
+  "screenshots": [
+    {
+      "path": "docs/next/reports/content-renderer/light-1440.png",
+      "sha256": "fe3305a06740317fd2cb243c6f0bf74a4afa0d91855f786633740efbe529a9b3",
+      "observed": "Readable Vietnamese text, rendered equations, fractions, real table/list structure; no page clipping or overlaps. Long equation intentionally scrolls within its own region."
+    },
+    {
+      "path": "docs/next/reports/content-renderer/light-390.png",
+      "sha256": "1880774827a23356ac9f8971b26bc10ebcc4b069cf22ab508d2893e3c958578b",
+      "observed": "Readable Vietnamese text, rendered equations, fractions, real table/list structure; no page clipping or overlaps. Long equation intentionally scrolls within its own region."
+    },
+    {
+      "path": "docs/next/reports/content-renderer/dark-1440.png",
+      "sha256": "d896d52e90cab4d4c28a10c347ffb19b340f522e4deb5089c416580c3fb27013",
+      "observed": "Readable Vietnamese text, rendered equations, fractions, real table/list structure; no page clipping or overlaps. Long equation intentionally scrolls within its own region."
+    },
+    {
+      "path": "docs/next/reports/content-renderer/dark-390.png",
+      "sha256": "0663f71f6cf34d1c9dd08d658141536b12a67389928a07b02f9145b008634841",
+      "observed": "Readable Vietnamese text, rendered equations, fractions, real table/list structure; no page clipping or overlaps. Long equation intentionally scrolls within its own region."
+    }
+  ],
+  "scope": "Authored synthetic shared-renderer fixture using actual React SSR, KaTeX and application CSS. No real students, providers, device/screenreader hardware or all-consumer claims. Nested220px grid computed fit passes; a distinct teacher-dialog consumer layout concern is not claimed fixed by this proof.",
+  "checks": {
+    "ssrSecurity": 27,
+    "browser": 56,
+    "focusedTypeScriptDiagnostics": 0,
+    "providers": 0,
+    "networkRequests": 0
+  },
+  "limitations": [
+    "Bounded Markdown subset, not complete CommonMark or arbitrary HTML.",
+    "No blanket imported JSON/entity decoding; legacy repair is limited to paired escaped math delimiters and recognized commands.",
+    "Unsupported or malformed math receives a safe visible note; mathematical semantics are not verified by display.",
+    "Fallback, scroll, caption and truncation labels currently use Vietnamese, including in other interface locales.",
+    "KaTeX emits a character-metrics warning for a Vietnamese accented text glyph in the authored formula; the visible fixture remains readable.",
+    "Print checks establish computed ink/surface/overflow styles, not exported PDF pagination.",
+    "Rendering is capped at 120000 characters,512 formulas,2000 blocks; original persisted content is unchanged."
+  ]
+}

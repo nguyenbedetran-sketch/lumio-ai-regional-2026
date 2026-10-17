@@ -35,7 +35,7 @@ Next bounded phases after this assurance increment: critical compiled auth/brows
 
 - [x] Record user order and inspect current architecture/implemented tests at76970b4.
 - [x] Establish scoped local/Linux/Turso QA baseline in V9 reports; no production claim.
-- [ ] Public release/submission is deferred until the requested next phased work and acceptance; a later cutover still needs the explicit old-data decision.
+- [x] User accepted the local UI and explicitly authorized final release/submission after acceptance. Fresh Turso initialization accepted with old server data not fully migrated; deployment gates remain pending.
 - [x] Reproduce account-link mismatch at76970b4 and implement smallest guarded fix;14 focused +9 existing auth checks and TypeScript passed with synthetic session/transport/hooks and real in-memory SQLite. Full browser/OAuth acceptance remains separate.
 - [x] Export actual synthetic Turso QA and restore to a separate private local file; verify51 tables/all rows/6 guards, FK/quick_check and unchanged source. This is not production/cloud re-import acceptance.
 - [x] Reproduce/fix legacy admin account intent and captured RAG reads with focused authorization regressions.
@@ -44,8 +44,12 @@ Next bounded phases after this assurance increment: critical compiled auth/brows
 - [x] Audit V11/V12/V14/V15 against actual source; record partial/missing work above.
 - [x] Add versioned offline production-selection evaluation; preserve observed failures as limitations.
 - [x] Current aggregate/build/compiled HTTP13 groups/typecheck/generated Windows native standalone passed; initial public-config cache assertion error corrected and retained.
-- [ ] Complete exact candidate Linux CI after this increment is committed.
+- [x] Exact pushed code6976f33 Linux push CI39009035660 passed dependency audit, aggregate, build, compiled HTTP, generated Linux native standalone and TypeScript. CI record is in reports/ci-6976f33.json; later documentation changes do not imply a new runtime acceptance.
 - [x] Isolated browser import acceptance20 checks passed using real browser storage,3 reviewed screenshots and390px layout. Corrected overbroad partial-state wording and reran23 focused +20 browser checks; final build passed. Genuine OAuth/provider/device/load/student outcomes remain separate gates.
 - [ ] Complete the remaining gaps above before labeling V10–V15 fully accepted.
 
 Current blocker for the earlier release: no full export route or free-host shell on the old Render instance. A full migration requires a valid private snapshot; a fresh database requires explicit acceptance of old server data not being fully migrated. Browser backup is partial only. See `../v9/CUTOVER-AUDIT.md` and `../v9/CHECKLIST.md`.
+
+## Authorized release scope update
+
+17October: user explicitly accepted fresh Turso initialization with incomplete old server migration. This resolves the prior decision blocker only. Keep all historical observations above. Phase2 verification/evidence will be recorded with exact source and CI; unimplemented roadmap items remain partial. No production or competition submission success inferred from approval.

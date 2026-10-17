@@ -1,0 +1,92 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T06:16:46.189Z",
+  "sourceCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+  "runId": 39009035660,
+  "url": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026/actions/runs/39009035660",
+  "event": "push",
+  "scope": "Exact pushed commit, Ubuntu24.04, Node24.19.0; deterministic/isolated SQLite aggregate, production advisory audit, production build, actual compiled synthetic teaching HTTP, generated native standalone and TypeScript. No genuine OAuth, paid provider, deployment, production migration, user data or competition submission.",
+  "jobs": [
+    {
+      "name": "Web and isolated database regression",
+      "conclusion": "success",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check out the exact revision",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Use the tested Node release",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install the pinned package manager",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Install from the lockfile",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Audit production dependencies for high or critical advisories",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Run deterministic and isolated SQLite tests",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Compile the production application",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify actual compiled teaching HTTP, authorization and restore",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Verify generated standalone native database process on Linux",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Check generated and source TypeScript",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Install the pinned package manager",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Use the tested Node release",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Post Check out the exact revision",
+          "status": "completed",
+          "conclusion": "success"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success"
+        }
+      ]
+    }
+  ]
+}

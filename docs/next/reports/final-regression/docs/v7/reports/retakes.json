@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:16:33.253Z",
+  "passed": 24,
+  "checks": [
+    {
+      "name": "Scheduled GET hides actual questions, IDs, keys and instructions before the server start",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicitly closed future work is labelled closed and never promises a later opening",
+      "status": "PASS"
+    },
+    {
+      "name": "A hard end is exclusive and overrides allowLateSubmissions while pre-end late work is labelled",
+      "status": "PASS"
+    },
+    {
+      "name": "Draft windows normalize explicit offset to UTC and reject naive/reversed/out-of-range data",
+      "status": "PASS"
+    },
+    {
+      "name": "Issued window, questions and targets cannot be edited via the existing update action",
+      "status": "PASS"
+    },
+    {
+      "name": "Practice retake requires a previously teacher-graded original attempt",
+      "status": "PASS"
+    },
+    {
+      "name": "Retake grant requires literal acknowledgement and eligible original student; no forged snapshot input",
+      "status": "PASS"
+    },
+    {
+      "name": "Source edits do not rewrite the issued retake question snapshot",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost ACK and a second SQLite connection replay one child without a consumed extra attempt",
+      "status": "PASS"
+    },
+    {
+      "name": "Child has one target, hides future question content and private reason, including when class is archived",
+      "status": "PASS"
+    },
+    {
+      "name": "Cached child submission is rejected before start; an ungraded child remains the only pending attempt",
+      "status": "PASS"
+    },
+    {
+      "name": "A third practice attempt preserves the original and second submitted answer/grade/history rows",
+      "status": "PASS"
+    },
+    {
+      "name": "Three attempts of one root remain one assessment and only the newest published attempt counts",
+      "status": "PASS"
+    },
+    {
+      "name": "An unpublished correction selects the previous published attempt without multiplying evidence",
+      "status": "PASS"
+    },
+    {
+      "name": "Exports label immutable root/attempt and evidence selection without leaking other students",
+      "status": "PASS"
+    },
+    {
+      "name": "Three distinct roots are still required for a mastery label after practice retakes",
+      "status": "PASS"
+    },
+    {
+      "name": "An unused expired child consumes its attempt but permits the last explicit grant without fake submissions",
+      "status": "PASS"
+    },
+    {
+      "name": "Retake insert/audit faults rollback child, target, window, parent revision and operation together",
+      "status": "PASS"
+    },
+    {
+      "name": "Current enrollment, bound account, role and credential protect grant/read/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Distinct concurrent HTTP grants create only one child and a closed original can issue practice",
+      "status": "PASS"
+    },
+    {
+      "name": "Foreign-organization and unassigned-class teachers cannot grant, read or replay a practice child",
+      "status": "PASS"
+    },
+    {
+      "name": "Session revocation rejects both current JSON reads and a previously accepted grant replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Schema15 upgrade backfills windows while preserving issued bytes, submission IDs and immutable grade events",
+      "status": "PASS"
+    },
+    {
+      "name": "No retake/window/grade operation calls providers or modifies AI credit balances",
+      "status": "PASS"
+    }
+  ],
+  "schemaVersion": 20,
+  "providerRequests": 0,
+  "scope": "Actual teaching handlers and isolated SQLite; synthetic OAuth accounts, server clock, source questions and confirmed grades only. No provider/credit usage, real learner records, UI/deployment or secure-exam claim.",
+  "notImplemented": [
+    "Timed/proctored exams",
+    "Accommodations",
+    "Different-question automatic retakes",
+    "Automatic deadline/background scheduling"
+  ]
+}

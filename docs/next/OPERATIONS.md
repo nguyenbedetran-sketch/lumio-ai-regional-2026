@@ -1,10 +1,10 @@
-# Active operations: schema18 and private remote storage
+# Active operations: schema20 and private remote storage
 
 17 October2026. Applies to the current candidate, not automatically to the public service. Preserve the frozen V9 evidence and use the exact candidate commit for every new release gate. See [current execution](CURRENT.md) and [cutover audit](../v9/CUTOVER-AUDIT.md).
 
 ## Storage and failure behavior
 
-The current contract is schema18,51 application tables and6 immutable guards. Local SQLite and direct remote libSQL use the same canonical contract. Partial or mixed remote configuration fails closed; remote errors must never silently switch to an empty local database. The bounded synchronous remote bridge is a small preview deployment constraint, not evidence of capacity under load.
+The current contract is schema20,54 application tables and11 immutable guards. Local SQLite and direct remote libSQL use the same canonical contract. Partial or mixed remote configuration fails closed; remote errors must never silently switch to an empty local database. The bounded synchronous remote bridge is a small preview deployment constraint, not evidence of capacity under load. See [file and paid-policy limits](TEACHING-FILES-AND-PAID-POLICY.md).
 
 Render Free's old local filesystem is ephemeral. A browser library export contains library/learning/preferences only: it is not a server backup of identities, organizations, classes, submissions, grades, receipts or the credit ledger. The approved production Turso key is held privately for the Render server; it has not been connected by this increment. Never put a database, token or dotenv file in Git, a web directory or competition evidence.
 
@@ -20,11 +20,13 @@ node scripts/database-snapshot.cjs backup --source <private-source.sqlite> --out
 node scripts/database-snapshot.cjs restore --source <private-backup.sqlite> --out <new-private-rehearsal.sqlite>
 ```
 
-Inspect accepts genuine schema13–18 without migrating or seeding the source. Backup/restore uses SQLite VACUUM INTO, then checks quick_check, foreign keys, consecutive migration history and canonical tables/guards. The output size and SHA-256 identify the file, not the semantic quality of its data. A different file hash after VACUUM is expected; compare canonical schema and all row values as well.
+Inspect accepts genuine schema13–20 without migrating or seeding the source. Backup/restore uses SQLite VACUUM INTO, then checks quick_check, foreign keys, consecutive migration history and canonical tables/guards. The output size and SHA-256 identify the file, not the semantic quality of its data. A different file hash after VACUUM is expected; compare canonical schema and all row values as well.
 
 For remote libSQL, the CLI accepts **local filenames only**. Export an authorized database through Turso's SQLite download, keep the file private, inspect it, then restore it to a separate new file with the same commands. Do not pass a database URL or token as a filename or claim this is a supported cloud import mechanism. Record the environment, export time, exact hashes, schema and private comparison results. Verify canonical UUIDs, memberships, issued snapshots, targets, answers, grades, sync revisions, operation receipts and ledger entries that are actually present. Empty tables do not exercise recovery of their nonempty histories.
 
-Actual QA rehearsal: [remote-export-local-restore.json](reports/remote-export-local-restore.json). A737280-byte Turso QA export was restored to a new local file; all51 tables and all row content matched, with6 guards, quick_check=ok and0 foreign-key violations.23 tables were nonempty, including synthetic identities, classes, assignments, submissions, sync, receipts and ledger. Grade-event history was empty in this export; nonempty grade recovery remains covered separately by isolated operations/compiled HTTP fixtures. The source file stayed unchanged. This establishes cloud-export-to-local recovery only. It does not establish production migration, cloud re-import, scheduled off-device backups, provider outage recovery or an RPO/RTO. The data files remain outside this repository.
+Historical schema18 QA rehearsal: [remote-export-local-restore.json](reports/remote-export-local-restore.json). A737280-byte Turso QA export was restored to a new local file; all51 tables and all row content matched, with6 guards, quick_check=ok and0 foreign-key violations.23 tables were nonempty, including synthetic identities, classes, assignments, submissions, sync, receipts and ledger. Grade-event history was empty in this export; nonempty grade recovery remains covered separately by isolated operations/compiled HTTP fixtures. The source file stayed unchanged. This establishes cloud-export-to-local recovery only. It does not establish production migration, cloud re-import, scheduled off-device backups, provider outage recovery or an RPO/RTO. The data files remain outside this repository.
+
+Current schema20 actual isolated Turso acceptance: canonical8 groups and file15 groups passed separately. File chunks survived reopen with exact bytes; private scopes, final submission binding and bounded quotas were checked. Local/compiled schema20 snapshots also recovered exact submitted files. A separate cloud point-in-time branch reproduced the older schema18 table counts; complete cloud row equality was not established. None of these results replaces the final public restart gate.
 
 ## Upgrade and rollback
 
@@ -34,7 +36,7 @@ Actual QA rehearsal: [remote-export-local-restore.json](reports/remote-export-lo
 4. For remote deployment, validate URL/token on the server without exposing them. Verify startup schema, readiness, authorized teacher/student flows, denied cross-account/org access and persistence after a controlled restart. Health alone is not a complete acceptance test.
 5. Retain the baseline artifact and snapshot. Roll back using the matching old artifact plus a new restore of its compatible snapshot; do not point old code at an incompatible newer schema, edit migration history or drop guards to force startup. Preserve the newer DB for reconciliation. State which writes after the snapshot would be missing before approving rollback.
 
-The old Render Free service offers no full export endpoint or free shell in the inspected setup. Redeploying an export endpoint can itself replace the ephemeral filesystem. This remains a release blocker until the full-snapshot or fresh-start decision is resolved; no migration is claimed here.
+The old Render Free service offers no full export endpoint or free shell in the inspected setup. Redeploying an export endpoint can itself replace the ephemeral filesystem. The user explicitly accepted fresh Turso initialization on17October after disclosure that the old server data was not fully migrated. The decision blocker is resolved; deployment, login and restart-persistence verification remain required. No complete migration is claimed.
 
 ## Operational acceptance limits
 
@@ -42,4 +44,4 @@ The compiled teaching HTTP suite uses a separate temporary SQLite database, auth
 
 Credits are an internal ledger, not a provider invoice. Unknown token/cost values remain unknown; zero is valid only when observed. Text/multimodal attempt metadata does not cover voice/embedding invoices. Do not replay an uncertain provider call or settled operation merely to recreate missing telemetry. Existing bounded retry, retention and idempotency rules remain authoritative.
 
-Pending operations work: independently retained backup schedule, documented retention and access owners, measured recovery objectives, cloud re-import rehearsal and production outage/restart acceptance. No paid service or new data sharing was introduced by this increment.
+Pending operations work: independently retained backup schedule, documented retention and access owners, measured recovery objectives, cloud re-import rehearsal and production outage/restart acceptance. Only the explicitly approved Turso Free storage/key scope is authorized for the database cutover; no paid plan or additional service is activated.

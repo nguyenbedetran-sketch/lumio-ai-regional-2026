@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-10-17T07:13:47.217Z",
+  "runs": [
+    {
+      "command": "node tests/v7-usage-report.cjs",
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "node tests/v7-provider-attempt-report.cjs",
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "node tests/v14-telemetry-distributions.cjs",
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "node scripts/test-v14-telemetry-ui.cjs",
+      "exitCode": 0,
+      "status": "PASS"
+    }
+  ],
+  "historicalReportBytesPreserved": true,
+  "newProviderCalls": 0
+}

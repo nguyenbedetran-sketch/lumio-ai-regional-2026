@@ -1,5 +1,7 @@
 import type { PlanId } from "../server/billing-types";
 import type { Locale } from "./i18n";
+import { defaultPaidPolicy } from "../billing/paid-policy";
+const premiumDefaults = defaultPaidPolicy("premium"), proDefaults = defaultPaidPolicy("pro");
 /** Product-owner proposal for UI review. Never passed to wallet, entitlement or checkout code. */
 export const PRICING_PREVIEW: Readonly<
   Record<
@@ -15,15 +17,15 @@ export const PRICING_PREVIEW: Readonly<
   free: { monthlyVnd: 0, yearlyVnd: 0, credits: 200, period: "once" },
   plus: { monthlyVnd: 59000, yearlyVnd: 590000, credits: 600, period: "month" },
   premium: {
-    monthlyVnd: 129000,
-    yearlyVnd: 1290000,
-    credits: 1600,
+    monthlyVnd: premiumDefaults.monthlyPriceMinor,
+    yearlyVnd: premiumDefaults.yearlyPriceMinor,
+    credits: premiumDefaults.credits,
     period: "month",
   },
   pro: {
-    monthlyVnd: 249000,
-    yearlyVnd: 2490000,
-    credits: 3500,
+    monthlyVnd: proDefaults.monthlyPriceMinor,
+    yearlyVnd: proDefaults.yearlyPriceMinor,
+    credits: proDefaults.credits,
     period: "month",
   },
 };

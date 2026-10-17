@@ -42,6 +42,25 @@ function test(name, fn) {
   passed++;
 }
 try {
+  test("Install metadata links a public manifest with the actual existing icon dimensions", () => {
+    const manifest = load("app/manifest.ts").default();
+    assert.equal(meta.siteMetadata.manifest, "/manifest.webmanifest");
+    assert.equal(manifest.id, "/");
+    assert.equal(manifest.start_url, "/");
+    assert.equal(manifest.scope, "/");
+    assert.equal(manifest.display, "standalone");
+    for (const icon of manifest.icons) {
+      assert.match(icon.src, /^\/brand\/[A-Za-z0-9.-]+\.png$/);
+      const bytes = fs.readFileSync(path.join(root, "public", icon.src));
+      assert.equal(
+        icon.sizes,
+        `${bytes.readUInt32BE(16)}x${bytes.readUInt32BE(20)}`,
+      );
+      assert.equal(icon.purpose, "any");
+    }
+    assert.equal(manifest.shortcuts, undefined);
+    assert.equal(/offline/i.test(JSON.stringify(manifest)), false);
+  });
   delete process.env.NEXT_PUBLIC_SITE_URL;
   delete process.env.LUMIO_PUBLIC_INDEXING;
   test("Local review has no public origin, canonical, sitemap or structured data", () => {
