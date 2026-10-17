@@ -68,7 +68,7 @@
       "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       "suggestedFilename": "SYNTHETIC-worksheet.docx",
       "bytes": 392,
-      "sha256": "3c1f4995884ca9645e795c8b97b41916094b4d4e88bc89eebb7b33fb7a58a5be",
+      "sha256": "9b0a07bac7661b262451e040e325e65996b9e8437477cd16437f21d1815abf6d",
       "exactBytesVerified": true
     },
     {
@@ -78,12 +78,12 @@
       "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
       "suggestedFilename": "SYNTHETIC-slides.pptx",
       "bytes": 372,
-      "sha256": "d3669a2baa452ee6150b3bfe50f896f355ef419554f90985d149206f2c58a7c7",
+      "sha256": "84c9c92e61648a0c01f3ee767d660783443c046d7cb88080cab60b8099d5d7a2",
       "exactBytesVerified": true
     }
   ],
   "scope": "Actual compiled teacher/classroom React + file serializer + HTTP + SQLite; isolated synthetic signed sessions, no business API interception, real OAuth/provider playback not tested",
-  "checkedAt": "2026-10-17T09:01:51.675Z",
+  "checkedAt": "2026-10-17T09:25:37.947Z",
   "tool": "@playwright/cli@0.1.21",
   "officeFixtureScope": "Authored minimal OOXML packages verify storage and type checks; Office application opening/rendering not tested",
   "sourceSha256": {
@@ -96,6 +96,6 @@
     "lib/server/teaching-files.ts": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
     "lib/server/teaching-file-validation.ts": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa"
   },
-  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "compiledBuildIdSha256": "b7f3790fb2db0edd98e3046a656b1f4ddfae3a23be8e7044692169747268f294",
   "downloadVerification": "Native browser download event and saveAs; Node compares actual saved bytes and SHA-256, avoiding CDP attachment-body limitations"
 }

@@ -1,6 +1,6 @@
 {
   "status": "PASS_LOCAL_SCOPE",
-  "checkedAt": "2026-10-17T09:04:29.512Z",
+  "checkedAt": "2026-10-17T09:27:16.637Z",
   "schemaVersion": 20,
   "tables": 54,
   "immutableGuards": 11,
@@ -9,12 +9,12 @@
       "command": "pnpm test:all",
       "exitCode": 0,
       "proof": "docs/next/reports/driver-fix-regression/run.json",
-      "scope": "Combined Windows suite before final directory-driver and guest-modal delta; final focused native11, compiled4/QA2 and modal39 reran afterward. Exact Linux CI must repeat aggregate on final commit."
+      "scope": "Combined Windows suite before final directory-driver, guest-modal and storage-notice copy delta; native11, compiled4/QA2, modal39 and copy7 with inheritedSSR6/32 provide focused follow-up. Exact Linux CI must repeat aggregate on final commit."
     },
     {
       "command": "pnpm build",
       "exitCode": 0,
-      "scope": "Directory-driver, NFT tracing anchor and final guest-login modal revision; exec session28425 completed0"
+      "scope": "Final storage-notice copy, directory-driver and centered billing modal; exec session58529 completed0"
     },
     {
       "command": "pnpm typecheck",
@@ -46,6 +46,12 @@
       "exitCode": 0,
       "proof": "docs/next/reports/database-production/standalone.json",
       "scope": "Actual generated Windows package/native child; Linux remains exact-CI gate"
+    },
+    {
+      "command": "node tests/teaching-storage-notice.cjs",
+      "exitCode": 0,
+      "proof": "docs/next/reports/teaching-storage-notice/report.json",
+      "scope": "7 actual-component browser assertions and separately recorded inherited teacherSSR6/workspaceSSR32"
     }
   ],
   "connectedBrowser": {
@@ -645,8 +651,8 @@
       "lfNormalizedSha256": "750cf67927dfc33edfe21ed43e0a226ca637408f4c92cbf0e176072e1df2d3a8"
     },
     "components/teachers/portal.tsx": {
-      "worktreeSha256": "fca26d0b2a91f36094a242df8d899a1666fe0621204d1d17e82da56c24a398ee",
-      "lfNormalizedSha256": "fca26d0b2a91f36094a242df8d899a1666fe0621204d1d17e82da56c24a398ee"
+      "worktreeSha256": "d1544e7a3dd95094742ed027520babe77a2311339d2567dec74114824be1aba2",
+      "lfNormalizedSha256": "d1544e7a3dd95094742ed027520babe77a2311339d2567dec74114824be1aba2"
     },
     "components/teaching/assessment-blueprint.tsx": {
       "worktreeSha256": "148fb61baf59ab3adcb4e092e97690ba69c5016d20a85e95f8b54983b6c088a9",
@@ -725,8 +731,8 @@
       "lfNormalizedSha256": "c6cc69cc0d91313c96beecde6c544f86517661e0b301d4c40f4565d8a2d1e057"
     },
     "components/teaching/workspace.tsx": {
-      "worktreeSha256": "8c862bec9c370cb008ff2c44d0f5a1d3dc1ccfdf68d509940f3fa61bedfcf639",
-      "lfNormalizedSha256": "8c862bec9c370cb008ff2c44d0f5a1d3dc1ccfdf68d509940f3fa61bedfcf639"
+      "worktreeSha256": "157b5a0d46c797c3420171dd70a636a85985362c0bf1a12f072414104ba92f34",
+      "lfNormalizedSha256": "157b5a0d46c797c3420171dd70a636a85985362c0bf1a12f072414104ba92f34"
     },
     "lib/ai/content-format.ts": {
       "worktreeSha256": "0d5ad2313ebb1990e460e6e01633c601ce78d420eec3780412fb7aa29dc71032",

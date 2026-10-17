@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "passed": 23,
+  "cases": [
+    "Actual compiled upload acknowledges exact SYNTHETIC-reference.md bytes",
+    "Actual compiled upload acknowledges exact SYNTHETIC-teacher-key.md bytes",
+    "Teacher draft file purpose remains explicit after actual server reload",
+    "Actual teacher review uses current attachment revision",
+    "Real student payload exposes published reference while hiding teacher-only file metadata",
+    "Actual compiled upload acknowledges exact SYNTHETIC-answer.png bytes",
+    "Actual SYNTHETIC-answer.png ACK is pending, not a submitted assignment",
+    "Actual compiled upload acknowledges exact SYNTHETIC-worksheet.docx bytes",
+    "Actual SYNTHETIC-worksheet.docx ACK is pending, not a submitted assignment",
+    "Actual compiled upload acknowledges exact SYNTHETIC-slides.pptx bytes",
+    "Actual SYNTHETIC-slides.pptx ACK is pending, not a submitted assignment",
+    "Three acknowledged pending files enforce the bounded UI file count",
+    "Actual final submit atomically binds the three acknowledged files to the saved submission",
+    "Teacher-only filename stays absent from the final student server response",
+    "Student result view labels the attached submission revision after actual ACK",
+    "Actual teacher grading inbox lists the exact three submitted files",
+    "Grader receives the native SYNTHETIC-answer.png download after compiled API 200 ACK",
+    "Grader receives the native SYNTHETIC-worksheet.docx download after compiled API 200 ACK",
+    "Grader receives the native SYNTHETIC-slides.pptx download after compiled API 200 ACK",
+    "No browser exceptions, API mocks or real external provider requests",
+    "Native browser-saved SYNTHETIC-answer.png exactly matches authored bytes and SHA-256",
+    "Native browser-saved SYNTHETIC-worksheet.docx exactly matches authored bytes and SHA-256",
+    "Native browser-saved SYNTHETIC-slides.pptx exactly matches authored bytes and SHA-256"
+  ],
+  "errors": [],
+  "externalRequests": 0,
+  "receipts": [
+    {
+      "status": 200,
+      "boundAccount": true
+    },
+    {
+      "status": 200,
+      "boundAccount": true
+    },
+    {
+      "status": 200,
+      "boundAccount": true
+    },
+    {
+      "status": 200,
+      "boundAccount": true
+    },
+    {
+      "status": 200,
+      "boundAccount": true
+    }
+  ],
+  "downloads": [
+    {
+      "format": "png",
+      "status": 200,
+      "expectedBytes": 68,
+      "contentType": "image/png",
+      "suggestedFilename": "SYNTHETIC-answer.png",
+      "bytes": 68,
+      "sha256": "b6468fc1098ff44210d981565f98f2c62e409e617cff260fa8e59354c1fd549c",
+      "exactBytesVerified": true
+    },
+    {
+      "format": "docx",
+      "status": 200,
+      "expectedBytes": 392,
+      "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "suggestedFilename": "SYNTHETIC-worksheet.docx",
+      "bytes": 392,
+      "sha256": "3c1f4995884ca9645e795c8b97b41916094b4d4e88bc89eebb7b33fb7a58a5be",
+      "exactBytesVerified": true
+    },
+    {
+      "format": "pptx",
+      "status": 200,
+      "expectedBytes": 372,
+      "contentType": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "suggestedFilename": "SYNTHETIC-slides.pptx",
+      "bytes": 372,
+      "sha256": "d3669a2baa452ee6150b3bfe50f896f355ef419554f90985d149206f2c58a7c7",
+      "exactBytesVerified": true
+    }
+  ],
+  "scope": "Actual compiled teacher/classroom React + file serializer + HTTP + SQLite; isolated synthetic signed sessions, no business API interception, real OAuth/provider playback not tested",
+  "checkedAt": "2026-10-17T09:01:51.675Z",
+  "tool": "@playwright/cli@0.1.21",
+  "officeFixtureScope": "Authored minimal OOXML packages verify storage and type checks; Office application opening/rendering not tested",
+  "sourceSha256": {
+    "tests/teaching-files-connected.browser.js": "0b8e220bf54e1a413e24af0261510cd62013dda231bf254c379d25017848c42d",
+    "tests/v11-teaching-files-connected.cjs": "04a8fabc0f227a5d8fcb9d2b6e81a1a88966813c15773255b86309cf123b9351",
+    "components/teaching/file-attachments.tsx": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08",
+    "components/teaching/student.tsx": "b9fe33feb6524a8c0ad3a0917821214dd12220003e922c2a3938e7cf1bff5077",
+    "components/teaching/assessment.tsx": "17a3d01f4cfc7f74da197e36cb2889fa99e50b6406fa74046eb79080b608f8ad",
+    "lib/teaching/file-client.ts": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175",
+    "lib/server/teaching-files.ts": "1317b1d1718520d88d50b7ec1588e767387421aa5853af5bdd5f02918fcb63dc",
+    "lib/server/teaching-file-validation.ts": "01908d99378134de1d3f084cc8c7277b4f72fd33284b3fa95f65ad92b53946aa"
+  },
+  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "downloadVerification": "Native browser download event and saveAs; Node compares actual saved bytes and SHA-256, avoiding CDP attachment-body limitations"
+}

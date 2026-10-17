@@ -1,0 +1,70 @@
+{
+  "status": "PASS",
+  "passed": 7,
+  "cases": [
+    "Teacher application discloses conditional database storage without a lifetime guarantee",
+    "Teacher application does not falsely tie data loss to every restart or deployment",
+    "Teacher role boundary and existing guest sign-in remain visible",
+    "Create-space review accurately conditions storage on database configuration",
+    "Create-space review no longer claims automatic reset on restart/deploy",
+    "Existing organization creation field remains available without changing permissions",
+    "Copy verification performs no organization writes, authentication, provider calls or unexpected requests"
+  ],
+  "errors": [],
+  "unexpected": [],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/__teacher"
+    },
+    {
+      "method": "GET",
+      "path": "/__teacher-self-fixture.css"
+    },
+    {
+      "method": "GET",
+      "path": "/__teacher-self-fixture.js"
+    },
+    {
+      "method": "GET",
+      "path": "/brand/lumio-logo.png"
+    },
+    {
+      "method": "GET",
+      "path": "/data/vietnam-locations-v5.2.0.json"
+    },
+    {
+      "method": "GET",
+      "path": "/__teaching"
+    },
+    {
+      "method": "GET",
+      "path": "/__v7-teaching-ui.css"
+    },
+    {
+      "method": "GET",
+      "path": "/__v7-teaching-ui.js"
+    },
+    {
+      "method": "GET",
+      "path": "/brand/lumio-logo.png"
+    },
+    {
+      "method": "GET",
+      "path": "/api/teaching"
+    }
+  ],
+  "scope": "Actual TeacherPortal/TeacherWorkspace components and CSS with synthetic intercepted read-only HTTP. Storage copy is deliberately neutral for local/remote/unknown configurations; no production persistence or authentication proof.",
+  "checkedAt": "2026-10-17T09:19:29.771Z",
+  "inheritedSSRChecks": {
+    "teacher": 6,
+    "workspace": 32
+  },
+  "sourceSha256": {
+    "components/teachers/portal.tsx": "d1544e7a3dd95094742ed027520babe77a2311339d2567dec74114824be1aba2",
+    "components/teaching/workspace.tsx": "157b5a0d46c797c3420171dd70a636a85985362c0bf1a12f072414104ba92f34",
+    "tests/teacher-self-fixture.cjs": "db3cc0cd974029fe507562c553c7801ba382bf94cb6a2c42878210034f1b983f",
+    "tests/teaching-storage-notice.browser.js": "fd6bcf052dbd1da887716873a157cf9bf057af20ae0079ac774fd549aa5a1b1a",
+    "tests/teaching-storage-notice.cjs": "9f8ecaea387e14eb1bb2e6fc0937a12037805d67ad7f84f1ca178d2ca3c06433"
+  }
+}

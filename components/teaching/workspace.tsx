@@ -391,8 +391,8 @@ function TeacherWorkspaceContent({
             </Field>
             <p className="tw-note">
               Thông tin và nội dung được lưu phía máy chủ để lớp có thể truy
-              cập. Bản thi trên hosting miễn phí có thể đặt lại dữ liệu khi khởi
-              động hoặc triển khai.
+              cập. Việc lưu dữ liệu phụ thuộc cấu hình cơ sở dữ liệu; hosting
+              miễn phí có thể ngủ hoặc gián đoạn. Không cam kết lưu trữ lâu dài.
             </p>
             <FormFooter
               busy={client.busy}

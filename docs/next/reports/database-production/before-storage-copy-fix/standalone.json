@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T09:00:09.859Z",
+  "platform": "win32",
+  "architecture": "x64",
+  "standaloneDriver": "node_modules/.pnpm/libsql@0.5.29/node_modules/libsql/index.js",
+  "child": "scripts/database-child.cjs",
+  "broker": "scripts/database-worker.cjs",
+  "actualNativeSelect": true,
+  "naturalExit": true,
+  "scope": "Generated standalone tree with in-memory synthetic SQLite; no remote service or Linux claim from a Windows run",
+  "dependenciesInsideStandalone": {
+    "@neon-rs/load": true,
+    "detect-libc": true,
+    "@libsql/win32-x64-msvc": true
+  },
+  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "sourceSha256": {
+    "lib/server/database-remote.ts": "0fe00dd2891b97809cb3374c63a5bce74663f2e13437caaf79520b6b8336950d",
+    "scripts/database-worker.cjs": "d5a9884d370db162af4d4613c6020be93a73b294ef024a5a4db97f031b9ee35e",
+    "scripts/database-child.cjs": "a41e4ba47ee756dcc9d9097579a40ff81bb171e94176c9d631f25b9178a05264"
+  }
+}

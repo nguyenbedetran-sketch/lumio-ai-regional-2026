@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-17T09:00:27.400Z",
+  "checkedAt": "2026-10-17T09:24:35.681Z",
   "checks": [
     {
       "name": "Actual compiled health reaches ready through the configured database",
@@ -18,5 +18,5 @@
     "scripts/database-worker.cjs": "d5a9884d370db162af4d4613c6020be93a73b294ef024a5a4db97f031b9ee35e",
     "scripts/database-child.cjs": "a41e4ba47ee756dcc9d9097579a40ff81bb171e94176c9d631f25b9178a05264"
   },
-  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b"
+  "compiledBuildIdSha256": "b7f3790fb2db0edd98e3046a656b1f4ddfae3a23be8e7044692169747268f294"
 }

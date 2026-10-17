@@ -20,6 +20,9 @@ function build() {
   const guest=renderToStaticMarkup(React.createElement(TeacherPortal,{account:null,providers:{google:true,facebook:true}}));
   assert.ok(guest.includes('Đăng nhập với Google')&&guest.includes('Đăng nhập với Facebook'));
   assert.ok(!guest.includes('<form'));
+  const storageNotice=guest.match(/<p class="tp-footnote">([\s\S]*?)<\/p>/)?.[1];
+  assert.ok(storageNotice?.includes('cấu hình cơ sở dữ liệu máy chủ'));
+  assert.ok(!/Hồ sơ máy chủ có thể mất khi|không bao giờ mất|lưu trữ vĩnh viễn/.test(storageNotice));
   const signed=renderToStaticMarkup(React.createElement(TeacherPortal,{account:{key:'synthetic-teacher-self-a',name:'QA · NGƯỜI GIẢNG DẠY TỔNG HỢP'},providers:{google:true,facebook:true}}));
   assert.ok(signed.includes('<form')&&signed.includes('<fieldset disabled'));
   assert.ok(!signed.includes('QA PRIVATE SERVER PROFILE'));
@@ -43,7 +46,7 @@ function build() {
   const css=[...layout.matchAll(/import "\.\/([^"\n]+\.css)"/g)].map(m=>fs.readFileSync(path.join(root,'app',m[1]),'utf8')).join('\n')+'\n'+fs.readFileSync(path.join(root,'app/teacher/teacher.css'),'utf8');
   fs.writeFileSync(path.join(folder,'fixture.css'),css);
   fs.writeFileSync(path.join(folder,'fixture.html'),'<!doctype html><html lang="vi"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Teacher self · Synthetic UI verification</title><link rel="stylesheet" href="/__teacher-self-fixture.css"><body style="margin:0"><div style="padding:10px 18px;background:#214438;color:#cbf3dc;font:12px system-ui">KIỂM THỬ UI · Hồ sơ tổng hợp · Không phải giáo viên thật</div><div id="root"></div><script src="/__teacher-self-fixture.js"></script></body></html>');
-  return {unitChecks:4,folder};
+  return {unitChecks:6,folder};
 }
 module.exports={build};
 if(require.main===module)console.log(JSON.stringify({status:'PASS',...build()}));

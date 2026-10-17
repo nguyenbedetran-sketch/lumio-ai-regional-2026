@@ -387,9 +387,10 @@ function TeacherAccountPortal({
               </a>
             </div>
             <p className="tp-footnote">
-              Bản dự thi dùng hosting miễn phí. Hồ sơ máy chủ có thể mất khi
-              triển khai hoặc khởi động lại. Quyền giáo viên không tự cấp quyền
-              quản trị hoặc truy cập dữ liệu học sinh.
+              Hosting miễn phí có thể ngủ hoặc gián đoạn. Hồ sơ được lưu theo
+              cấu hình cơ sở dữ liệu máy chủ; không cam kết lưu trữ lâu dài.
+              Quyền giáo viên không tự cấp quyền quản trị hoặc truy cập dữ liệu
+              học sinh.
             </p>
           </aside>
           <section className="tp-panel" aria-label="Hồ sơ giáo viên">

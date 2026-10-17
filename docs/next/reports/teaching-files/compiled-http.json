@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-17T09:01:05.677Z",
+  "checkedAt": "2026-10-17T09:24:58.152Z",
   "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
   "providerCalls": 0,
   "phases": {
@@ -135,7 +135,7 @@
     "components/teaching/file-attachments.tsx": "e72b6213c23bbd5ba6b3acdd4157ef602ad6e19ce3250207b07ec01a9d931a08",
     "lib/teaching/file-client.ts": "06247d671ce67ca4c6b9714d688ef9e662b3ac8c8805db977d72d0fb5db8f175"
   },
-  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "compiledBuildIdSha256": "b7f3790fb2db0edd98e3046a656b1f4ddfae3a23be8e7044692169747268f294",
   "fileAcceptance": {
     "status": "PASS",
     "uploadedFormats": [
@@ -156,5 +156,5 @@
   },
   "passed": 19,
   "version": "3.5.0-rc.1",
-  "completedAt": "2026-10-17T09:01:52.829Z"
+  "completedAt": "2026-10-17T09:25:39.379Z"
 }

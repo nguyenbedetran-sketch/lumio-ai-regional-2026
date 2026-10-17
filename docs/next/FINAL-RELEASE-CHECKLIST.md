@@ -33,6 +33,8 @@ Updated17October2026. User order: finish assurance V10–V15, fix educational re
 - [ ] Exact final pushed SHA Linux CI, plus scoped browser receipts; no provider secrets in CI.
 - [x] Centered full-viewport native billing review, independently scrolling content and visible payment footer:39 focused browser checks across1440/390/320px/light/dark, keyboard/focus and guest-login layering. Existing checkout is unavailable and no payment/credit/plan change is claimed.
 - [x] Compiled remote-mode startup defect reproduced after a canceled rollout; fixed native package-directory resolution and retained dependency tracing. Actual compiled native4, packaged native broker Unicode roundtrip and actual compiled Turso QA health2 passed. These do not replace public persistence acceptance.
+- [x]4fd2dfe exact Linux CI and Render deployment succeeded. Genuine Google login and labelled public QA organization/class/lesson/PDF upload, reload and exact downloaded bytes/hash passed. Synthetic file UUID metadata was independently read via provider UI; final redeploy/restart proof is still pending.
+- [x] Corrected two obsolete automatic-reset notices in teacher landing/create-space UI; focused browser7 and teacherSSR6/workspaceSSR32 passed. No authentication, role or API change. Final build, TypeScript, auth10 and compiled native/file/browser gates refreshed after this copy-only delta.
 
 ## Release and delivery gates
 
