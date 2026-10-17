@@ -63,8 +63,15 @@ export class SqliteWorkerConnection implements DatabaseConnection {
     const channel = new MessageChannel();
     this.port = channel.port1;
     this.port.unref();
+    // Tracing anchor only: retain libsql's dependency graph and pnpm links in
+    // Next's standalone package. This resolves a module ID without loading
+    // native code on the main thread; the ID is never passed to the child.
+    void require.resolve("libsql");
     this.worker = new Worker(options.workerFile || resolve(process.cwd(), "scripts/database-worker.cjs"), {
-      workerData: { ...options.workerExtra, url: options.url, authToken: options.authToken || "", port: channel.port2, signal: this.signal.buffer, packetLimit: PACKET_LIMIT, rpcMs: this.budgets.rpcMs, driverPath: require.resolve("libsql") },
+      // Pass a package directory, not require.resolve(): Webpack rewrites that
+      // call into its module ID. Native Node in the unbundled child resolves
+      // this absolute directory and its real pnpm dependencies itself.
+      workerData: { ...options.workerExtra, url: options.url, authToken: options.authToken || "", port: channel.port2, signal: this.signal.buffer, packetLimit: PACKET_LIMIT, rpcMs: this.budgets.rpcMs, driverPath: resolve(process.cwd(), "node_modules/libsql") },
       transferList: [channel.port2],
       env: { ...nativeEnvironment(), RUST_LOG: "off", RUST_BACKTRACE: "0" },
       stdout: true,

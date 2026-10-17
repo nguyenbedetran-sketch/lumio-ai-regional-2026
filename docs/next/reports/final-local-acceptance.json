@@ -1,6 +1,6 @@
 {
   "status": "PASS_LOCAL_SCOPE",
-  "checkedAt": "2026-10-17T08:24:12.298Z",
+  "checkedAt": "2026-10-17T09:04:29.512Z",
   "schemaVersion": 20,
   "tables": 54,
   "immutableGuards": 11,
@@ -8,16 +8,18 @@
     {
       "command": "pnpm test:all",
       "exitCode": 0,
-      "proof": "docs/next/reports/final-regression/run.json"
+      "proof": "docs/next/reports/driver-fix-regression/run.json",
+      "scope": "Combined Windows suite before final directory-driver and guest-modal delta; final focused native11, compiled4/QA2 and modal39 reran afterward. Exact Linux CI must repeat aggregate on final commit."
     },
     {
       "command": "pnpm build",
       "exitCode": 0,
-      "scope": "Final build after file-download CSP fix"
+      "scope": "Directory-driver, NFT tracing anchor and final guest-login modal revision; exec session28425 completed0"
     },
     {
       "command": "pnpm typecheck",
-      "exitCode": 0
+      "exitCode": 0,
+      "scope": "Generated/source TypeScript after final build; command completed0"
     },
     {
       "command": "node scripts/test-v10-auth-production.cjs",
@@ -30,9 +32,20 @@
       "proof": "docs/next/reports/teaching-files/compiled-http.json"
     },
     {
+      "command": "node scripts/test-database-production.cjs",
+      "exitCode": 0,
+      "proof": "docs/next/reports/database-production/native-compiled.json"
+    },
+    {
+      "command": "node scripts/test-database-production.cjs --remote-qa",
+      "exitCode": 0,
+      "proof": "docs/next/reports/database-production/remote-qa.json"
+    },
+    {
       "command": "node scripts/test-v9-database-standalone.cjs",
       "exitCode": 0,
-      "scope": "Windows generated native driver; Linux remains exact-CI gate"
+      "proof": "docs/next/reports/database-production/standalone.json",
+      "scope": "Actual generated Windows package/native child; Linux remains exact-CI gate"
     }
   ],
   "connectedBrowser": {
@@ -40,7 +53,12 @@
     "passed": 23,
     "proof": "docs/next/reports/teaching-files-browser/connected-report.json"
   },
-  "scope": "Current Windows working tree, deterministic tests, authored OIDC transport and isolated actual compiled teaching HTTP/browser with synthetic identities. No production/real-Google/learning-efficacy or full-roadmap completion claim. LF-normalized hashes allow later exact Git source binding without treating CRLF conversion as a runtime change.",
+  "billingModal": {
+    "status": "PASS",
+    "passed": 39,
+    "proof": "docs/next/reports/billing-modal/report.json"
+  },
+  "scope": "Windows working tree with deterministic suites, authored OIDC transport and isolated compiled teaching HTTP/browser. Actual compiled remote-mode native4 and actual approved Turso QA2 are separate from public acceptance. No production/real-Google/learning-efficacy or full-roadmap completion claim. LF-normalized hashes allow later exact Git source binding without treating CRLF conversion as runtime change.",
   "sourceFiles": {
     "app/admin/admin.css": {
       "worktreeSha256": "be2f7893b7adae68a311da241a9e01dee2a24885682bb58b1931162c3be16c9e",
@@ -219,8 +237,8 @@
       "lfNormalizedSha256": "099541b5dcd8c89e9ea6035a38c251d2aece75f473a793aae911672b748e7680"
     },
     "app/billing.css": {
-      "worktreeSha256": "e0817f4b62fae9edd31ecba23023246987fbdbc8d10c6ed79d3cb54c3d95aabb",
-      "lfNormalizedSha256": "e0817f4b62fae9edd31ecba23023246987fbdbc8d10c6ed79d3cb54c3d95aabb"
+      "worktreeSha256": "cdfbb3670e52a149f1c99fec974195b187c8b6b31d76862ae44d10842d5a3b74",
+      "lfNormalizedSha256": "cdfbb3670e52a149f1c99fec974195b187c8b6b31d76862ae44d10842d5a3b74"
     },
     "app/classroom/page.tsx": {
       "worktreeSha256": "70f98a88cc9318f6ee1b37c785d7082a3e255ae8ee715151fa5b83d64ec716d5",
@@ -418,9 +436,13 @@
       "worktreeSha256": "59927d2fe9ecbb045c2e6428097a8864a4d8d041e677a9995efde37ff2bab17a",
       "lfNormalizedSha256": "59927d2fe9ecbb045c2e6428097a8864a4d8d041e677a9995efde37ff2bab17a"
     },
+    "components/lumio/billing-dialog.tsx": {
+      "worktreeSha256": "f0b868475d51520d38df9fc988b2fe513804a4767fe8b8e6ec7164d2e5410e31",
+      "lfNormalizedSha256": "f0b868475d51520d38df9fc988b2fe513804a4767fe8b8e6ec7164d2e5410e31"
+    },
     "components/lumio/billing.tsx": {
-      "worktreeSha256": "706cbb30e56a503bfc1642df3464f8a548cb71eaf73e6e542a48996d2df2f6e8",
-      "lfNormalizedSha256": "706cbb30e56a503bfc1642df3464f8a548cb71eaf73e6e542a48996d2df2f6e8"
+      "worktreeSha256": "2f82d8638f8db2a9183ba9afaffddd3ac4532ba376af68b377981c87a4e6b1b6",
+      "lfNormalizedSha256": "2f82d8638f8db2a9183ba9afaffddd3ac4532ba376af68b377981c87a4e6b1b6"
     },
     "components/lumio/brand.tsx": {
       "worktreeSha256": "347418518202a395fef35329f7fcfc4d1543c1736abfd7d9a46b0b5fa1496100",
@@ -810,6 +832,10 @@
       "worktreeSha256": "6b277757edc4eaef45dab6b0248cef0453227a2703d4c701c73a73e8cf58a656",
       "lfNormalizedSha256": "674faa5c0226ec148b302654aad23c866c5e95af521abad1b53325a1404b6754"
     },
+    "lib/lumio/checkout-copy.ts": {
+      "worktreeSha256": "c6962b47ef3a236a8ac5a57e3e083e103900f75f0cb684c1f3ae48d43f9f7f71",
+      "lfNormalizedSha256": "c6962b47ef3a236a8ac5a57e3e083e103900f75f0cb684c1f3ae48d43f9f7f71"
+    },
     "lib/lumio/command-copy.ts": {
       "worktreeSha256": "229ccfdc112d3f21589ae52c7be4dedfbe92f28a38aec218eb8235365f8fb119",
       "lfNormalizedSha256": "229ccfdc112d3f21589ae52c7be4dedfbe92f28a38aec218eb8235365f8fb119"
@@ -1051,8 +1077,8 @@
       "lfNormalizedSha256": "484a36a2ed2ecf6e360edbddd72f21dccea91699690d6077833d44820bee939f"
     },
     "lib/server/database-remote.ts": {
-      "worktreeSha256": "465eb654e10402233d33cd642ad062cbe78e51648fe703dc871cbf9466408508",
-      "lfNormalizedSha256": "465eb654e10402233d33cd642ad062cbe78e51648fe703dc871cbf9466408508"
+      "worktreeSha256": "0fe00dd2891b97809cb3374c63a5bce74663f2e13437caaf79520b6b8336950d",
+      "lfNormalizedSha256": "0fe00dd2891b97809cb3374c63a5bce74663f2e13437caaf79520b6b8336950d"
     },
     "lib/server/desktop-health.ts": {
       "worktreeSha256": "31c6147a81250735df51ffe354de7277622af547b360a2d278b6fdd05147077f",
@@ -1319,8 +1345,8 @@
       "lfNormalizedSha256": "799ca2715267eab8565d1d1c99ef257e04196ac195eb16c067da584e544a8a6d"
     },
     "package.json": {
-      "worktreeSha256": "ff1cd8604fa2301aab4fc3ea33028ee315705582b56b80e9291966438bc72ca7",
-      "lfNormalizedSha256": "00d64a01d019b4fe207f3f48b8d45c9d9a742b1ebb998aae7ba726954a6364a0"
+      "worktreeSha256": "38f44e6dc2f6d569fd5aec7ff2ac555b40438793035d673952008d31d5d6d520",
+      "lfNormalizedSha256": "9cb7eacad6715817bc7c6123074b42b286118a0d83325259c6cbb853c8b33011"
     },
     "pnpm-lock.yaml": {
       "worktreeSha256": "5d9f65f0a883cfd1bcd5e57823bc779f43adbef0dbad89342c9cd6f16d4e6691",

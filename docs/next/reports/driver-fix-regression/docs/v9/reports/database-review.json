@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:55:42.215Z",
+  "passed": 14,
+  "checks": [
+    {
+      "name": "A foreign table beginning sqlitex is rejected before bootstrap writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Read timeout is bounded, poisons the port and cannot issue subsequent SQL",
+      "status": "PASS"
+    },
+    {
+      "name": "Aggregate transaction budget expires across individually successful reads without automatic retry",
+      "status": "PASS"
+    },
+    {
+      "name": "Aggregate bootstrap budget is independent of the longer per-RPC budget",
+      "status": "PASS"
+    },
+    {
+      "name": "Wrong response ordinal fails closed and cannot become a successful mutation result",
+      "status": "PASS"
+    },
+    {
+      "name": "Transport error details do not expose SQL values, endpoints or tokens",
+      "status": "PASS"
+    },
+    {
+      "name": "Oversize response is unavailable rather than a partial row or successful result",
+      "status": "PASS"
+    },
+    {
+      "name": "Definite SQL constraint error permits explicit rollback and healthy later transactions",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual COMMIT followed by lost ACK reports unknown and never sends rollback or replays SQL",
+      "status": "PASS"
+    },
+    {
+      "name": "Real store settlement and receipt commit atomically even when only the COMMIT ACK is lost",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh-process recovery reads canonical completed receipt and cannot double-debit the same intent",
+      "status": "PASS"
+    },
+    {
+      "name": "Callback failure survives lost rollback ACK while the uncertain connection stays quarantined",
+      "status": "PASS"
+    },
+    {
+      "name": "Factory latches failed worker initialization and cannot spawn again on the next call",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual native libsql HTTP blackhole times out and probe process exits naturally while server remains unresponsive",
+      "status": "PASS"
+    }
+  ],
+  "javascriptFetchCalls": 0,
+  "externalNetworkCalls": 0,
+  "nativeLoopback": {
+    "code": "DATABASE_TIMEOUT",
+    "poisoned": true,
+    "elapsedMs": 1038,
+    "naturalExitRequired": true,
+    "processExitStatus": 0,
+    "externallyKilled": false,
+    "acceptedLoopbackConnections": 1
+  },
+  "paidProviderCalls": 0,
+  "scope": "Independent authored Worker fault protocol backed by real temporary LOCAL node:sqlite; actual store/ledger/receipt paths and separate-process recovery. One actual native libsql connection to an unresponsive LOOPBACK server checks timeout and natural process exit. NOT a remote Turso or live-provider test.",
+  "limitations": [
+    "Native libsql parity is a separate suite",
+    "Native child is deliberately killed on deadline; this does not prove a remote transaction rolled back",
+    "No remote latency, quota, two-client or public redeploy evidence"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T09:00:09.155Z",
+  "checks": [
+    {
+      "name": "Actual compiled health reaches ready through the configured database",
+      "status": "PASS"
+    },
+    {
+      "name": "Native child receives a real absolute driver path rather than webpack module ID",
+      "status": "PASS"
+    },
+    {
+      "name": "Real native child initializes current schema and immutable file guards",
+      "status": "PASS"
+    },
+    {
+      "name": "Repeated actual HTTP readiness retains healthy canonical database access",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Compiled Next HTTP and actual native child/SQLite; test-only worker transport URL redirection, not remote TLS verification",
+  "passed": 4,
+  "sourceSha256": {
+    "lib/server/database-remote.ts": "0fe00dd2891b97809cb3374c63a5bce74663f2e13437caaf79520b6b8336950d",
+    "scripts/database-worker.cjs": "d5a9884d370db162af4d4613c6020be93a73b294ef024a5a4db97f031b9ee35e",
+    "scripts/database-child.cjs": "a41e4ba47ee756dcc9d9097579a40ff81bb171e94176c9d631f25b9178a05264"
+  },
+  "compiledBuildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "observedDriver": {
+    "type": "string",
+    "absolute": true,
+    "exists": true
+  }
+}

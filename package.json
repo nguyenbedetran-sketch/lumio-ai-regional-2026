@@ -48,7 +48,8 @@
     "test:v14": "node tests/v14-telemetry-distributions.cjs",
     "test:v15": "node tests/v15-learner-phase2.cjs",
     "test:auth:production": "node scripts/test-v10-auth-production.cjs",
-    "test:teaching-files:production": "node scripts/test-teaching-files-production.cjs"
+    "test:teaching-files:production": "node scripts/test-teaching-files-production.cjs",
+    "test:database:production": "node scripts/test-database-production.cjs"
   },
   "engines": {
     "node": ">=24.0.0 <25"

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-17T08:18:11.388Z",
+  "generatedAt": "2026-10-17T08:56:30.891Z",
   "status": "PASS",
   "passed": 21,
   "scope": "Actual temporary SQLite, shared quote policy, actual route guards/router; synthetic identities/session boundary and intercepted transport only.",

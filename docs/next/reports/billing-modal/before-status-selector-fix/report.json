@@ -1,0 +1,204 @@
+{
+  "status": "FAIL",
+  "passed": 32,
+  "cases": [
+    "Free/Plus proposal prices and credits are preserved",
+    "Actual billing dialog is a native modal portaled above the transformed learner shell",
+    "Real ephemeral calculator remains usable inside the review",
+    "light modal centers over the entire 1440px viewport, including sidebar",
+    "light dialog stays within 1440px viewport without horizontal clipping",
+    "light long Pro review scrolls separately while payment CTA remains visible at 1440px",
+    "light footer stays visible after scrolling long content at 1440px",
+    "light modal centers over the entire 390px viewport, including sidebar",
+    "light dialog stays within 390px viewport without horizontal clipping",
+    "light long Pro review scrolls separately while payment CTA remains visible at 390px",
+    "light footer stays visible after scrolling long content at 390px",
+    "light modal centers over the entire 320px viewport, including sidebar",
+    "light dialog stays within 320px viewport without horizontal clipping",
+    "light long Pro review scrolls separately while payment CTA remains visible at 320px",
+    "light footer stays visible after scrolling long content at 320px",
+    "dark modal centers over the entire 1440px viewport, including sidebar",
+    "dark dialog stays within 1440px viewport without horizontal clipping",
+    "dark long Pro review scrolls separately while payment CTA remains visible at 1440px",
+    "dark footer stays visible after scrolling long content at 1440px",
+    "dark modal centers over the entire 390px viewport, including sidebar",
+    "dark dialog stays within 390px viewport without horizontal clipping",
+    "dark long Pro review scrolls separately while payment CTA remains visible at 390px",
+    "dark footer stays visible after scrolling long content at 390px",
+    "dark modal centers over the entire 320px viewport, including sidebar",
+    "dark dialog stays within 320px viewport without horizontal clipping",
+    "dark long Pro review scrolls separately while payment CTA remains visible at 320px",
+    "dark footer stays visible after scrolling long content at 320px",
+    "Tab wraps from payment CTA to the close control",
+    "Shift+Tab wraps within the native modal",
+    "Unavailable payment and no-charge policy are explicit before any checkout action",
+    "Payment CTA prevents repeated pending requests and reports actual loading",
+    "Checkout sends only the selected item and billing interval, never displayed price or wallet data"
+  ],
+  "error": "locator.innerText: Error: strict mode violation: locator('dialog.lm-billing-dialog[open]').getByRole('status') resolved to 2 elements:\n    1) <output aria-live=\"polite\">4 credits</output> aka getByText('4 credits')\n    2) <p role=\"status\" aria-live=\"polite\" class=\"lm-checkout-status\">Chưa kết nối cổng thanh toán. Tài khoản chưa bị t…</p> aka getByText('Chưa kết nối cổng thanh toán')\n\nCall log:\n\u001b[2m  - waiting for locator('dialog.lm-billing-dialog[open]').getByRole('status')\u001b[22m\n",
+  "errors": [],
+  "unexpected": [],
+  "calls": [
+    {
+      "method": "GET",
+      "path": "/api/billing/catalog"
+    },
+    {
+      "method": "GET",
+      "path": "/api/billing"
+    },
+    {
+      "method": "POST",
+      "path": "/api/billing/checkout",
+      "body": {
+        "itemId": "pro",
+        "interval": "month"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/billing/checkout",
+      "body": {
+        "itemId": "pro",
+        "interval": "month"
+      }
+    }
+  ],
+  "layouts": [
+    {
+      "theme": "light",
+      "width": 1440,
+      "left": 400,
+      "right": 1040,
+      "top": 30,
+      "bottom": 870,
+      "centerX": 720,
+      "centerY": 450,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "footerBottom": 869,
+      "buttonTop": 809,
+      "buttonBottom": 853,
+      "bodyClient": 624,
+      "bodyScroll": 1058,
+      "scrollWidth": 638,
+      "clientWidth": 638
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "left": 10,
+      "right": 380,
+      "top": 10,
+      "bottom": 630,
+      "centerX": 195,
+      "centerY": 320,
+      "viewport": {
+        "width": 390,
+        "height": 640
+      },
+      "footerBottom": 629,
+      "buttonTop": 571,
+      "buttonBottom": 615,
+      "bodyClient": 398,
+      "bodyScroll": 1358,
+      "scrollWidth": 368,
+      "clientWidth": 368
+    },
+    {
+      "theme": "light",
+      "width": 320,
+      "left": 10,
+      "right": 310,
+      "top": 10,
+      "bottom": 630,
+      "centerX": 160,
+      "centerY": 320,
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "footerBottom": 629,
+      "buttonTop": 571,
+      "buttonBottom": 615,
+      "bodyClient": 398,
+      "bodyScroll": 1511,
+      "scrollWidth": 298,
+      "clientWidth": 298
+    },
+    {
+      "theme": "dark",
+      "width": 1440,
+      "left": 400,
+      "right": 1040,
+      "top": 30,
+      "bottom": 870,
+      "centerX": 720,
+      "centerY": 450,
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "footerBottom": 869,
+      "buttonTop": 809,
+      "buttonBottom": 853,
+      "bodyClient": 624,
+      "bodyScroll": 1058,
+      "scrollWidth": 638,
+      "clientWidth": 638
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "left": 10,
+      "right": 380,
+      "top": 10,
+      "bottom": 630,
+      "centerX": 195,
+      "centerY": 320,
+      "viewport": {
+        "width": 390,
+        "height": 640
+      },
+      "footerBottom": 629,
+      "buttonTop": 571,
+      "buttonBottom": 615,
+      "bodyClient": 398,
+      "bodyScroll": 1358,
+      "scrollWidth": 368,
+      "clientWidth": 368
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "left": 10,
+      "right": 310,
+      "top": 10,
+      "bottom": 630,
+      "centerX": 160,
+      "centerY": 320,
+      "viewport": {
+        "width": 320,
+        "height": 640
+      },
+      "footerBottom": 629,
+      "buttonTop": 571,
+      "buttonBottom": 615,
+      "bodyClient": 398,
+      "bodyScroll": 1511,
+      "scrollWidth": 298,
+      "clientWidth": 298
+    }
+  ],
+  "checkedAt": "2026-10-17T08:54:08.534Z",
+  "sourceSha256": {
+    "components/lumio/billing.tsx": "3a6ad70d5af38f42a26be6c178df3aec1f76f15160a4e90c8e960b1451a088d1",
+    "components/lumio/billing-dialog.tsx": "f0b868475d51520d38df9fc988b2fe513804a4767fe8b8e6ec7164d2e5410e31",
+    "lib/lumio/checkout-copy.ts": "c6962b47ef3a236a8ac5a57e3e083e103900f75f0cb684c1f3ae48d43f9f7f71",
+    "app/billing.css": "cdfbb3670e52a149f1c99fec974195b187c8b6b31d76862ae44d10842d5a3b74",
+    "tests/billing-modal.browser.js": "3454922667b7776382f52c15f41ff2cf64be6593f62a2af793938a200105c922",
+    "tests/billing-modal-ui.cjs": "ea7619eb76138daf1a65ef1c96111f46bef7fb855f2e989b94d4b255a7f98c91"
+  }
+}

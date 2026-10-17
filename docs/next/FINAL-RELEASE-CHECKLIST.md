@@ -31,6 +31,8 @@ Updated17October2026. User order: finish assurance V10–V15, fix educational re
 - [x] Connected compiled teacher/student browser23 PASS with no business API interception: actual upload/submit ACK/reload/protected download. Native browser-saved PNG/DOCX/PPTX bytes/SHA match originals. Synthetic JWT identities; not real Google or a student pilot.
 - [x] Full combined aggregate exit0, final production build exit0, compiled teaching/file19+auth10, TypeScript and Windows native standalone. Global CSP override of download sandbox was caught by compiled HTTP, repaired with a specific final header rule and reverified. Final source hashes in `reports/final-local-acceptance.json`.
 - [ ] Exact final pushed SHA Linux CI, plus scoped browser receipts; no provider secrets in CI.
+- [x] Centered full-viewport native billing review, independently scrolling content and visible payment footer:39 focused browser checks across1440/390/320px/light/dark, keyboard/focus and guest-login layering. Existing checkout is unavailable and no payment/credit/plan change is claimed.
+- [x] Compiled remote-mode startup defect reproduced after a canceled rollout; fixed native package-directory resolution and retained dependency tracing. Actual compiled native4, packaged native broker Unicode roundtrip and actual compiled Turso QA health2 passed. These do not replace public persistence acceptance.
 
 ## Release and delivery gates
 

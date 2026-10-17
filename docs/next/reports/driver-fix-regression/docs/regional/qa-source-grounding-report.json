@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checks": 20,
+  "passed": [
+    "App segment ids and offsets are deterministic, literal timestamp only",
+    "References reject invented excerpt, segment, pages and external links",
+    "Prompt injection stays literal source data and cannot create privileged segments",
+    "Long Unicode source splits without losing or corrupting content",
+    "Signed document provenance binds actor, source text and physical location",
+    "Source schema rejects overlaps, wrong kinds and out-of-bound physical metadata",
+    "Restored backups lose page claims and recheck only supplied text",
+    "Duplicate card fronts are rejected before returning study content",
+    "Duplicate equivalent numeric or text quiz options are rejected",
+    "Duplicate quiz prompts and multi-answer output are rejected",
+    "Quiz metadata and citations persist and structural validation never claims semantic proof",
+    "Missing references stay honestly unlocated and quotes are never treated as correctness",
+    "Actual PDF extraction retains page order and text",
+    "Actual DOCX XML extraction preserves headings without invented page numbers",
+    "PPTX extraction uses presentation order, not the slide file number",
+    "Archive bomb metadata, external entities and invalid files are rejected",
+    "Cancellation does not leave a document worker running",
+    "Structured Office math is rejected instead of flattening a fraction",
+    "Flashcard explicit JSON suffix is normalized only after exact-source validation",
+    "Invented or malformed flashcard reference suffix cannot become source evidence"
+  ],
+  "checkedAt": "2026-10-17T08:53:06.495Z",
+  "actualExtraction": true,
+  "providerRequests": 0,
+  "studentData": false,
+  "semanticAccuracyClaim": false
+}

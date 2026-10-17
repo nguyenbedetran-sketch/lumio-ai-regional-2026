@@ -45,6 +45,8 @@ jobs:
         run: pnpm test:all
       - name: Compile the production application
         run: pnpm build
+      - name: Verify compiled remote-mode broker and actual native child
+        run: pnpm test:database:production
       - name: Verify actual compiled teaching HTTP, authorization and restore
         run: pnpm test:teaching:production
       - name: Verify compiled NextAuth cookies, OAuth validation and private logging

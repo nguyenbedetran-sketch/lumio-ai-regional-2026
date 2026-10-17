@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-17T08:20:16.974Z",
+  "checkedAt": "2026-10-17T09:03:56.191Z",
   "scope": "Dedicated isolated Turso QA database only; synthetic identities, classes, submission and ledger; no live users, OAuth, provider requests or payments",
   "passed": 8,
   "checks": [
@@ -38,21 +38,21 @@
     }
   ],
   "timingsMs": {
-    "Full schema bootstrap and fresh readiness": 2604,
-    "Fresh readiness latency": 419,
-    "Canonical identities preserve one account and enforce organization scope": 39178,
-    "Reviewed assignment and actual student submission commit together with operation receipts": 53673,
-    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 668,
-    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 7448,
-    "Two separate processes cannot overdraw the same canonical wallet": 23747,
-    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 36777
+    "Full schema bootstrap and fresh readiness": 2916,
+    "Fresh readiness latency": 598,
+    "Canonical identities preserve one account and enforce organization scope": 44494,
+    "Reviewed assignment and actual student submission commit together with operation receipts": 57797,
+    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 682,
+    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 7621,
+    "Two separate processes cannot overdraw the same canonical wallet": 22608,
+    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 37813
   },
   "teachingMutationLatencyMs": {
     "count": 12,
-    "min": 5016,
-    "max": 8537,
-    "median": 7078,
-    "p95": 8537
+    "min": 5736,
+    "max": 9221,
+    "median": 7746,
+    "p95": 9221
   },
-  "totalMs": 164516
+  "totalMs": 174531
 }

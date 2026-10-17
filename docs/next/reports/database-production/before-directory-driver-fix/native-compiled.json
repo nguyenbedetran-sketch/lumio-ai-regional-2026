@@ -1,0 +1,8 @@
+{
+  "status": "FAIL",
+  "checkedAt": "2026-10-17T08:54:32.716Z",
+  "checks": [],
+  "scope": "Compiled Next HTTP and actual native child/SQLite; test-only worker transport URL redirection, not remote TLS verification",
+  "error": "COMPILED_DATABASE_NOT_READY\n\nfalse !== true\n",
+  "compiledBuildIdSha256": "05f1c90816293f01a02364b0ddc1d8a4314e31274c1ccef16524370fbb370fc7"
+}

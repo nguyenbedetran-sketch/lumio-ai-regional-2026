@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T09:00:31.327Z",
+  "recordingMethod": "Operator records completed exec exit codes; raw build logs retained privately outside Git",
+  "commands": [
+    {
+      "command": "pnpm build",
+      "exitCode": 0,
+      "scope": "Directory-driver, NFT tracing anchor and final guest-login modal revision; exec session28425 completed0"
+    },
+    {
+      "command": "pnpm typecheck",
+      "exitCode": 0,
+      "scope": "Generated/source TypeScript after final build; command completed0"
+    }
+  ],
+  "buildIdSha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b",
+  "scope": "Compiled Windows application, no Linux/provider/production inference"
+}

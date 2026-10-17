@@ -360,6 +360,110 @@
 .lm-billing-admin {
   border-style: dashed;
 }
+.lm-billing-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  padding: 0;
+  width: min(640px, calc(100vw - 32px));
+  max-width: calc(100vw - 32px);
+  max-height: min(840px, calc(100vh - 32px));
+  max-height: min(840px, calc(100dvh - 32px));
+  border: 1px solid var(--lm-line);
+  border-radius: 22px;
+  color: var(--lm-text);
+  background: var(--lm-bg);
+  box-shadow: 0 22px 90px #14193444;
+  overflow: hidden;
+}
+.lm-billing-dialog[open] {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+.lm-billing-dialog::backdrop {
+  background: #10191699;
+  backdrop-filter: blur(5px);
+}
+.lm-billing-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px;
+  border-bottom: 1px solid var(--lm-line);
+}
+.lm-billing-dialog-head h2 {
+  margin: 0;
+  font-size: 19px;
+  line-height: 1.4;
+}
+.lm-billing-dialog-head .lm-icon {
+  flex: none;
+  width: 44px;
+  height: 44px;
+}
+.lm-billing-dialog-body {
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 22px;
+}
+.lm-billing-dialog-footer {
+  padding: 16px 22px;
+  border-top: 1px solid var(--lm-line);
+  background: var(--lm-bg);
+}
+.lm-billing-dialog-footer p {
+  margin: 0 0 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.lm-checkout-status {
+  font-weight: 600;
+}
+.lm-billing-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lm-billing-dialog-actions .lm-button {
+  min-height: 44px;
+  justify-content: center;
+}
+.lm-billing-dialog .lm-button.primary {
+  background: var(--lm-primary);
+  border-color: var(--lm-primary-line);
+  color: var(--lm-on-primary);
+}
+.lm-billing-dialog .lm-button.primary:not(:disabled):hover {
+  background: var(--lm-primary-hover);
+}
+.lm-billing-dialog .lm-button.primary:disabled {
+  background: var(--lm-disabled-bg);
+  border-color: var(--lm-border);
+  color: var(--lm-disabled-fg);
+  opacity: 1;
+}
+@media (max-width: 400px) {
+  .lm-billing-dialog {
+    width: calc(100vw - 20px);
+    max-width: calc(100vw - 20px);
+    max-height: calc(100dvh - 20px);
+  }
+  .lm-billing-dialog-head,
+  .lm-billing-dialog-body,
+  .lm-billing-dialog-footer {
+    padding: 14px;
+  }
+  .lm-billing-dialog-actions .lm-button {
+    flex: 1;
+  }
+  .lm-billing-dialog-head h2 {
+    font-size: 17px;
+  }
+}
 [data-theme="dark"] .lm-plan,
 [data-theme="dark"] .lm-billing-wallet,
 [data-theme="dark"] .lm-credit-packs > button,

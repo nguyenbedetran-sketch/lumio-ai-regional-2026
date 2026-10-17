@@ -1,0 +1,60 @@
+{
+  "scope": "Actual libsql0.5.29 native child + Worker/RPC with synthetic LOCAL SQLite file; no remote service/provider call or durability claim",
+  "passed": 11,
+  "checks": [
+    {
+      "name": "Configuration fails closed for mixed credentials, non-TLS, missing token and URL injection",
+      "status": "PASS"
+    },
+    {
+      "name": "All current schema20 migrations and eleven immutable guards bootstrap on actual libsql worker",
+      "status": "PASS"
+    },
+    {
+      "name": "Health uses a fresh two-read schema snapshot and still detects guard tampering",
+      "status": "PASS"
+    },
+    {
+      "name": "A foreign populated database named sqlitex is rejected before bootstrap writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical identity and verified exact allowlist retain server role rules",
+      "status": "PASS"
+    },
+    {
+      "name": "Teacher org/class persist and an outsider cannot read the scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Teaching operation replay retains its UUID and does not duplicate writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Credit reserve/fail has one trial grant and restores exact wallet balance",
+      "status": "PASS"
+    },
+    {
+      "name": "Immutable audit and FK failures remain definite SQL failures with healthy rollback",
+      "status": "PASS"
+    },
+    {
+      "name": "Unicode, null, floats, binary zero bytes and 64-bit integers round-trip without timing metadata",
+      "status": "PASS"
+    },
+    {
+      "name": "Reopening a new worker restores canonical UUID, class and wallet without a new trial",
+      "status": "PASS"
+    }
+  ],
+  "bootstrapCounts": {
+    "exec": 62,
+    "get": 21,
+    "all": 4,
+    "run": 23
+  },
+  "existingSchemaBootstrapCalls": 8,
+  "healthReadCalls": 2,
+  "bootstrapMs": 369,
+  "elapsedMs": 1018
+}

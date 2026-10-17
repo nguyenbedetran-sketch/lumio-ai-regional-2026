@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Check,
   Crown,
@@ -9,6 +9,7 @@ import {
   ArrowUpRight,
   LockKeyhole,
   FlaskConical,
+  CreditCard,
 } from "lucide-react";
 import type { Locale } from "../../lib/lumio/i18n";
 import type {
@@ -16,9 +17,13 @@ import type {
   PlanId,
 } from "../../lib/server/billing-types";
 import { billingCopy } from "../../lib/lumio/billing-copy";
-import { Dialog } from "./dialog";
+import { BillingDialog } from "./billing-dialog";
+import { checkoutCopy } from "../../lib/lumio/checkout-copy";
 import { PaidPlanDetails, paidPlanSummary } from "./paid-plan-details";
-import { defaultPaidPolicy, type PaidPolicy } from "../../lib/billing/paid-policy";
+import {
+  defaultPaidPolicy,
+  type PaidPolicy,
+} from "../../lib/billing/paid-policy";
 import {
   PRICING_PREVIEW,
   PACK_PRICING_PREVIEW,
@@ -91,6 +96,10 @@ export function BillingPanel({
 }) {
   const c = billingCopy[locale];
   const pc = pricingPreviewCopy[locale];
+  const cc = checkoutCopy[locale];
+  const checkoutController = useRef<AbortController | null>(null),
+    [checkoutBusy, setCheckoutBusy] = useState(false),
+    [checkoutNotice, setCheckoutNotice] = useState("");
   const [catalog, setCatalog] = useState<Catalog | null>(null),
     [snapshot, setSnapshot] = useState<Snapshot | null>(null),
     [busy, setBusy] = useState(false),
@@ -110,6 +119,59 @@ export function BillingPanel({
     [kind, setKind] = useState("text"),
     [minutes, setMinutes] = useState(1),
     [page, setPage] = useState(0);
+  useEffect(() => {
+    setCheckoutNotice("");
+    setCheckoutBusy(false);
+    return () => checkoutController.current?.abort();
+  }, [selected?.id]);
+  function closeCheckout() {
+    checkoutController.current?.abort();
+    setSelected(null);
+  }
+  async function checkCheckout() {
+    if (!selected || selected.id === "free") return;
+    if (!signedIn) {
+      closeCheckout();
+      login();
+      return;
+    }
+    checkoutController.current?.abort();
+    const controller = new AbortController();
+    checkoutController.current = controller;
+    setCheckoutBusy(true);
+    setCheckoutNotice("");
+    try {
+      const response = await fetch("/api/billing/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ itemId: selected.id, interval }),
+        signal: controller.signal,
+      });
+      const data = await response.json();
+      if (
+        controller.signal.aborted ||
+        checkoutController.current !== controller
+      )
+        return;
+      setCheckoutNotice(
+        data.error === "PRICE_NOT_CONFIGURED"
+          ? cc.price
+          : data.error === "PAYMENT_PROVIDER_NOT_CONFIGURED"
+            ? cc.provider
+            : data.error === "SIGN_IN_REQUIRED"
+              ? cc.signIn
+              : c.billingReady,
+      );
+    } catch (error) {
+      if (!controller.signal.aborted) setCheckoutNotice(c.failed);
+    } finally {
+      if (
+        !controller.signal.aborted &&
+        checkoutController.current === controller
+      )
+        setCheckoutBusy(false);
+    }
+  }
   const refresh = useCallback(
     async (signal?: AbortSignal) => {
       setBusy(true);
@@ -190,14 +252,23 @@ export function BillingPanel({
           currency: "VND",
           maximumFractionDigits: 0,
         }).format(value);
-  const features = (p: Plan) => p.paidPolicy ? [paidPlanSummary(p.paidPolicy, locale).title, paidPlanSummary(p.paidPolicy, locale).modes, paidPlanSummary(p.paidPolicy, locale).source, `${p.entitlements.maxVideoSeconds / 60} ${c.video}`, p.entitlements.voice ? c.voice : c.noVoice] : [
-    c.quick,
-    c.documents,
-    `${p.entitlements.maxVideoSeconds / 60} ${c.video}`,
-    p.entitlements.voice ? c.voice : c.noVoice,
-    ...(p.entitlements.modes.includes("think") ? [c.think] : []),
-    ...(p.entitlements.modes.includes("deep") ? [c.deep] : []),
-  ];
+  const features = (p: Plan) =>
+    p.paidPolicy
+      ? [
+          paidPlanSummary(p.paidPolicy, locale).title,
+          paidPlanSummary(p.paidPolicy, locale).modes,
+          paidPlanSummary(p.paidPolicy, locale).source,
+          `${p.entitlements.maxVideoSeconds / 60} ${c.video}`,
+          p.entitlements.voice ? c.voice : c.noVoice,
+        ]
+      : [
+          c.quick,
+          c.documents,
+          `${p.entitlements.maxVideoSeconds / 60} ${c.video}`,
+          p.entitlements.voice ? c.voice : c.noVoice,
+          ...(p.entitlements.modes.includes("think") ? [c.think] : []),
+          ...(p.entitlements.modes.includes("deep") ? [c.deep] : []),
+        ];
   const rates = catalog?.rates;
   const effectiveMode = task === "chat" ? mode : "quick";
   const voiceTask = task === "speech" || task === "transcription";
@@ -223,15 +294,25 @@ export function BillingPanel({
   } as Record<string, string>;
   // Display-only proposals. These objects never enter billing mutations or the real wallet.
   const previewPlans = (catalog?.plans || []).map((plan) => {
-    const paid = plan.id === "premium" || plan.id === "pro" ? plan.paidPolicy || { planId: plan.id, revision: 0, config: defaultPaidPolicy(plan.id) } : undefined;
-    return ({
-    ...plan,
-    monthlyPriceMinor: paid?.config.monthlyPriceMinor ?? PRICING_PREVIEW[plan.id].monthlyVnd,
-    yearlyPriceMinor: paid?.config.yearlyPriceMinor ?? PRICING_PREVIEW[plan.id].yearlyVnd,
-    credits: paid?.config.credits ?? PRICING_PREVIEW[plan.id].credits,
-    checkoutAvailable: PRICING_PREVIEW_CHECKOUT,
-    ...(paid ? { paidPolicy: paid } : {}),
-  }); });
+    const paid =
+      plan.id === "premium" || plan.id === "pro"
+        ? plan.paidPolicy || {
+            planId: plan.id,
+            revision: 0,
+            config: defaultPaidPolicy(plan.id),
+          }
+        : undefined;
+    return {
+      ...plan,
+      monthlyPriceMinor:
+        paid?.config.monthlyPriceMinor ?? PRICING_PREVIEW[plan.id].monthlyVnd,
+      yearlyPriceMinor:
+        paid?.config.yearlyPriceMinor ?? PRICING_PREVIEW[plan.id].yearlyVnd,
+      credits: paid?.config.credits ?? PRICING_PREVIEW[plan.id].credits,
+      checkoutAvailable: PRICING_PREVIEW_CHECKOUT,
+      ...(paid ? { paidPolicy: paid } : {}),
+    };
+  });
   const previewPacks = (catalog?.packs || []).map((pack) => {
     const draft =
       PACK_PRICING_PREVIEW[pack.id as keyof typeof PACK_PRICING_PREVIEW];
@@ -242,7 +323,9 @@ export function BillingPanel({
       checkoutAvailable: PRICING_PREVIEW_CHECKOUT,
     };
   });
-  const currentPaidPolicy = previewPlans.find(plan => plan.id === snapshot?.account.planId)?.paidPolicy;
+  const currentPaidPolicy = previewPlans.find(
+    (plan) => plan.id === snapshot?.account.planId,
+  )?.paidPolicy;
   return (
     <section className="lm-billing">
       <div className="lm-billing-hero">
@@ -428,71 +511,75 @@ export function BillingPanel({
         </div>
         <p className="lm-help">{pc.tax}</p>
       </div>
-      {currentPaidPolicy ? <PaidPlanDetails policy={currentPaidPolicy} locale={locale} /> : rates && (
-        <details className="lm-personal-details">
-          <summary>{c.rates}</summary>
-          <div className="lm-credit-calculator">
-            <label>
-              {c.activity}
-              <select value={task} onChange={(e) => setTask(e.target.value)}>
-                {Object.keys(rates.tasks).map((k) => (
-                  <option key={k} value={k}>
-                    {taskLabels[k] || c.unknown}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              {c.modeLabel}
-              <select
-                value={effectiveMode}
-                disabled={task !== "chat"}
-                onChange={(e) => setMode(e.target.value)}
-              >
-                {Object.keys(rates.modes).map((k) => (
-                  <option key={k} value={k}>
-                    {modeLabels[k] || c.unknown}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label>
-              {c.sourceLabel}
-              <select
-                value={effectiveKind}
-                disabled={voiceTask}
-                onChange={(e) => setKind(e.target.value)}
-              >
-                {(voiceTask ? [effectiveKind] : Object.keys(rates.kinds)).map(
-                  (k) => (
-                    <option key={k} value={k}>
-                      {kindLabels[k] || c.unknown}
-                    </option>
-                  ),
-                )}
-              </select>
-            </label>
-            {effectiveKind === "video" && (
+      {currentPaidPolicy ? (
+        <PaidPlanDetails policy={currentPaidPolicy} locale={locale} />
+      ) : (
+        rates && (
+          <details className="lm-personal-details">
+            <summary>{c.rates}</summary>
+            <div className="lm-credit-calculator">
               <label>
-                {c.video}
-                <input
-                  type="number"
-                  min={1}
-                  max={30}
-                  value={minutes}
-                  onChange={(e) =>
-                    setMinutes(
-                      Math.min(30, Math.max(1, Number(e.target.value) || 1)),
-                    )
-                  }
-                />
+                {c.activity}
+                <select value={task} onChange={(e) => setTask(e.target.value)}>
+                  {Object.keys(rates.tasks).map((k) => (
+                    <option key={k} value={k}>
+                      {taskLabels[k] || c.unknown}
+                    </option>
+                  ))}
+                </select>
               </label>
-            )}
-            <output>
-              {estimate} <span>credits</span>
-            </output>
-          </div>
-        </details>
+              <label>
+                {c.modeLabel}
+                <select
+                  value={effectiveMode}
+                  disabled={task !== "chat"}
+                  onChange={(e) => setMode(e.target.value)}
+                >
+                  {Object.keys(rates.modes).map((k) => (
+                    <option key={k} value={k}>
+                      {modeLabels[k] || c.unknown}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label>
+                {c.sourceLabel}
+                <select
+                  value={effectiveKind}
+                  disabled={voiceTask}
+                  onChange={(e) => setKind(e.target.value)}
+                >
+                  {(voiceTask ? [effectiveKind] : Object.keys(rates.kinds)).map(
+                    (k) => (
+                      <option key={k} value={k}>
+                        {kindLabels[k] || c.unknown}
+                      </option>
+                    ),
+                  )}
+                </select>
+              </label>
+              {effectiveKind === "video" && (
+                <label>
+                  {c.video}
+                  <input
+                    type="number"
+                    min={1}
+                    max={30}
+                    value={minutes}
+                    onChange={(e) =>
+                      setMinutes(
+                        Math.min(30, Math.max(1, Number(e.target.value) || 1)),
+                      )
+                    }
+                  />
+                </label>
+              )}
+              <output>
+                {estimate} <span>credits</span>
+              </output>
+            </div>
+          </details>
+        )
       )}
       <section className="lm-billing-section">
         <h2>{c.history}</h2>
@@ -617,12 +704,8 @@ export function BillingPanel({
         </details>
       )}
       {selected && (
-        <Dialog
-          title={c.checkout}
-          close={() => setSelected(null)}
-          label={c.close}
-        >
-          <div className="lm-checkout-review">
+        <BillingDialog title={c.checkout} close={closeCheckout} label={c.close}>
+          <div className="lm-billing-dialog-body lm-checkout-review">
             <span className="lm-plan-symbol">
               <Crown />
             </span>
@@ -647,44 +730,74 @@ export function BillingPanel({
               </ul>
             )}
             <p>{pc.notice}</p>
-            {"entitlements" in selected && selected.paidPolicy && <PaidPlanDetails policy={selected.paidPolicy} locale={locale} />}
-            <button
-              className="lm-button primary"
-              disabled={!PRICING_PREVIEW_CHECKOUT}
-            >
-              <LockKeyhole size={16} />
-              {c.disabled}
-            </button>
+            {"entitlements" in selected && selected.paidPolicy && (
+              <PaidPlanDetails policy={selected.paidPolicy} locale={locale} />
+            )}
             <p className="lm-muted">{c.noRenew}</p>
           </div>
-        </Dialog>
+          <footer className="lm-billing-dialog-footer">
+            <p className="lm-checkout-status" role="status" aria-live="polite">
+              {checkoutNotice ||
+                (selected.id === "free" ? cc.free : cc.unavailable)}
+            </p>
+            {selected.id !== "free" && <p className="lm-muted">{cc.hint}</p>}
+            <div className="lm-billing-dialog-actions">
+              <button
+                type="button"
+                className="lm-button"
+                onClick={closeCheckout}
+              >
+                {c.close}
+              </button>
+              {selected.id !== "free" && (
+                <button
+                  type="button"
+                  className="lm-button primary"
+                  disabled={checkoutBusy}
+                  onClick={() => void checkCheckout()}
+                >
+                  <CreditCard size={17} />
+                  {checkoutBusy ? cc.checking : cc.pay}
+                </button>
+              )}
+            </div>
+          </footer>
+        </BillingDialog>
       )}
       {action && (
-        <Dialog title={c.manage} close={() => setAction(null)} label={c.close}>
-          <p>{c.cancelConfirm}</p>
-          <p>
-            <strong>
-              {action === "cancel"
-                ? c.cancel
-                : action === "resume"
-                  ? c.resume
-                  : c.downgrade}
-            </strong>
-          </p>
-          <button
-            className="lm-button primary"
-            disabled={busy}
-            onClick={() =>
-              void mutate("/api/billing/subscription", {
-                requestId: crypto.randomUUID(),
-                action,
-                ...(action === "downgrade" ? { planId: "free" } : {}),
-              })
-            }
-          >
-            {c.confirmed}
-          </button>
-        </Dialog>
+        <BillingDialog
+          title={c.manage}
+          close={() => setAction(null)}
+          label={c.close}
+        >
+          <div className="lm-billing-dialog-body">
+            <p>{c.cancelConfirm}</p>
+            <p>
+              <strong>
+                {action === "cancel"
+                  ? c.cancel
+                  : action === "resume"
+                    ? c.resume
+                    : c.downgrade}
+              </strong>
+            </p>
+          </div>
+          <footer className="lm-billing-dialog-footer">
+            <button
+              className="lm-button primary"
+              disabled={busy}
+              onClick={() =>
+                void mutate("/api/billing/subscription", {
+                  requestId: crypto.randomUUID(),
+                  action,
+                  ...(action === "downgrade" ? { planId: "free" } : {}),
+                })
+              }
+            >
+              {c.confirmed}
+            </button>
+          </footer>
+        </BillingDialog>
       )}
     </section>
   );

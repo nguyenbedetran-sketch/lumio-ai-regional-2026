@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T08:55:09.631Z",
+  "passed": 12,
+  "cases": [
+    "Attempt scope is denied to anonymous, learner, stale-admin and stale intended accounts",
+    "Empty attempt metadata has zero counts but unknown tokens/cost and no fabricated activation date",
+    "Attempt scope keeps strict query enums, duplicates, windows and legacy paging separate",
+    "Two fallback dispatches count separately from the one logical request outcome",
+    "Observed zeros count toward token coverage while unknown usage stays null",
+    "Requested-model provider identities stay distinct and response aliases are disclosed separately",
+    "Preparation-time bounds exclude older/future records and retained-first is not an activation claim",
+    "Feature and user grouping use canonical metadata and omit names, sources and provider IDs",
+    "Direct report calls reject arbitrary SQL dimensions and unbounded windows",
+    "25 displayed groups remain bounded while totals include all retained in-window attempts",
+    "Explicit outcomes and legacy pagination retain their original response contracts",
+    "Old unresolved rows remain visible in separate capacity totals without inflating the selected time cohort"
+  ],
+  "providerCalls": 0,
+  "scope": "Actual administrator guards, journal/core and SQLite aggregation with authored metadata and synthetic sessions. Not provider transport, price/invoice verification or a public deployment."
+}

@@ -4,10 +4,10 @@
   "status": "PASS_SCOPED_OFFLINE_CHECKS",
   "sourceScope": "Local working tree identified by the listed file SHA-256 values; sourceCommit is the base HEAD, not a claim of a clean/released tree.",
   "semanticQualityStatus": "PARTIAL_NOT_A_SEMANTIC_BENCHMARK",
-  "startedAt": "2026-10-17T08:18:21.336Z",
-  "finishedAt": "2026-10-17T08:18:21.936Z",
-  "latencyMs": 599,
-  "sourceCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+  "startedAt": "2026-10-17T08:56:43.101Z",
+  "finishedAt": "2026-10-17T08:56:44.834Z",
+  "latencyMs": 1730,
+  "sourceCommit": "0d2e85bf2ffb0157a546d3a2a5a0ec1219b3c626",
   "sourceProof": [
     {
       "path": "tests/fixtures/v12-retrieval-evaluation.v2.json",
@@ -137,17 +137,17 @@
         "crowded:copy-5",
         "verification:required",
         "distractor:calendar",
-        "crowded:copy-3",
-        "crowded:copy-1",
-        "crowded:copy-6"
+        "crowded:copy-4",
+        "crowded:copy-2",
+        "crowded:copy-1"
       ],
       "rawLexicalTop6": [
         "crowded:copy-5",
-        "crowded:copy-3",
-        "crowded:copy-1",
-        "crowded:copy-6",
+        "crowded:copy-4",
         "crowded:copy-2",
-        "crowded:copy-7"
+        "crowded:copy-1",
+        "crowded:copy-7",
+        "crowded:copy-3"
       ],
       "metrics": {
         "authoredRelevantChunks": 1,
@@ -593,12 +593,12 @@
         "table-b:value"
       ],
       "selected": [
-        "table-b:value",
-        "table-a:value"
+        "table-a:value",
+        "table-b:value"
       ],
       "rawLexicalTop6": [
-        "table-b:value",
-        "table-a:value"
+        "table-a:value",
+        "table-b:value"
       ],
       "metrics": {
         "authoredRelevantChunks": 2,
@@ -695,12 +695,12 @@
         "table-b:value"
       ],
       "selected": [
-        "table-a:value",
-        "table-b:value"
+        "table-b:value",
+        "table-a:value"
       ],
       "rawLexicalTop6": [
-        "table-a:value",
-        "table-b:value"
+        "table-b:value",
+        "table-a:value"
       ],
       "metrics": {
         "authoredRelevantChunks": 2,
@@ -797,12 +797,12 @@
         "table-b:value"
       ],
       "selected": [
-        "table-a:value",
-        "table-b:value"
+        "table-b:value",
+        "table-a:value"
       ],
       "rawLexicalTop6": [
-        "table-a:value",
-        "table-b:value"
+        "table-b:value",
+        "table-a:value"
       ],
       "metrics": {
         "authoredRelevantChunks": 2,
@@ -1419,8 +1419,8 @@
           "boiling-b:body"
         ],
         "selected": [
-          "boiling-b:body",
-          "boiling-a:body"
+          "boiling-a:body",
+          "boiling-b:body"
         ],
         "metrics": {
           "authoredRelevantChunks": 2,
@@ -1442,8 +1442,8 @@
           "boiling-b:body"
         ],
         "selected": [
-          "boiling-b:body",
-          "boiling-a:body"
+          "boiling-a:body",
+          "boiling-b:body"
         ],
         "metrics": {
           "authoredRelevantChunks": 2,

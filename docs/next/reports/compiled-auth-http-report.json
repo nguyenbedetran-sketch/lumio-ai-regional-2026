@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-17T08:15:20.522Z",
+  "checkedAt": "2026-10-17T09:00:08.281Z",
   "checks": [
     {
       "name": "Real CSRF cookie is HttpOnly/SameSite=Lax/root-scoped and double-submit token is stable",
@@ -46,7 +46,7 @@
   "scope": "Actual compiled NextAuth HTTP/cookie/CSRF/state/PKCE/JWT and canonical isolated SQLite. Only outbound Google discovery/token/JWKS transport is redirected in a child-only preload to authored loopback OIDC responses signed with an ephemeral test RSA key. Not genuine Google/OAuth-consent/browser/TLS/real-account/provider acceptance.",
   "genuineGoogleAcceptance": "PENDING_SEPARATE_PUBLIC_GATE",
   "realProviderCalls": 0,
-  "sourceCommit": "6976f33ed0583d4cb145a0eb6c02e3c7c768c4d1",
+  "sourceCommit": "0d2e85bf2ffb0157a546d3a2a5a0ec1219b3c626",
   "sourceScope": "Source hashes and compiled artifact hash recorded separately; base HEAD is not a clean/released-tree assertion. Rebuild after auth runtime changes.",
   "proof": [
     {
@@ -79,7 +79,7 @@
     },
     {
       "path": ".next/BUILD_ID",
-      "sha256": "05a8039e7c2d4ed2bbae5cc3e85425abdccb2ac2738d67558cdccd1ecff50404"
+      "sha256": "5d07003e1bbba83b220aec2d7abbbc43d82ef772d7530ccb0d15ca183533071b"
     },
     {
       "path": ".next/server/app/api/auth/[...nextauth]/route.js",
@@ -87,7 +87,7 @@
     }
   ],
   "passed": 10,
-  "completedAt": "2026-10-17T08:15:25.021Z",
+  "completedAt": "2026-10-17T09:00:15.190Z",
   "transport": {
     "discovery": 33,
     "token": 13,
