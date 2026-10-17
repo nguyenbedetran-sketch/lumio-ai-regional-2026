@@ -21,6 +21,9 @@ export async function POST(req: Request) {
       user.sessionVersion !== session?.sessionVersion
     )
       throw new PlatformError("SIGN_IN_REQUIRED", 401);
+    // The displayed account may be stale after another tab changes the cookie.
+    if (req.headers.get("x-lumio-user") !== user.id)
+      throw new PlatformError("SESSION_REVOKED", 401);
     if (Date.now() - (session.authenticatedAt || 0) > 3600000)
       throw new PlatformError("REAUTHENTICATION_REQUIRED", 401);
     const body = await readJSON(req, 1000);

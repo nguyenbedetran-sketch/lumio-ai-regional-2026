@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import type { Locale } from "../../lib/lumio/i18n";
 type State = {
+  id?: string;
   authenticated: boolean;
   isAdmin: boolean;
   recentLogin?: boolean;
@@ -33,6 +34,8 @@ const texts = {
       "Chưa liên kết được. Thử lại hoặc đăng nhập lại tài khoản hiện tại.",
     admin: "Mở trung tâm quản trị",
     busy: "Đang mở…",
+    changed:
+      "Tài khoản đã thay đổi. Tải lại trang và xác nhận tài khoản trước khi liên kết.",
   },
   en: {
     title: "One account, two ways in",
@@ -49,6 +52,8 @@ const texts = {
       "Could not link. Try again or sign in to your current account again.",
     admin: "Open admin console",
     busy: "Opening…",
+    changed:
+      "Your account has changed. Reload this page and confirm your account before linking.",
   },
   "zh-CN": {
     title: "一个账户，两种登录方式",
@@ -62,6 +67,7 @@ const texts = {
     failed: "关联失败，请重试或重新登录。",
     admin: "打开管理中心",
     busy: "正在打开…",
+    changed: "账户已更改。请重新加载页面并确认账户后再关联。",
   },
   ja: {
     title: "1つのアカウント、2つのログイン方法",
@@ -77,6 +83,8 @@ const texts = {
     failed: "連携できません。再試行または再ログインしてください。",
     admin: "管理画面を開く",
     busy: "開いています…",
+    changed:
+      "アカウントが変わりました。ページを再読み込みしてアカウントを確認してから連携してください。",
   },
   ko: {
     title: "하나의 계정, 두 가지 로그인",
@@ -92,6 +100,8 @@ const texts = {
     failed: "연결하지 못했습니다. 다시 시도하거나 현재 계정에 로그인하세요.",
     admin: "관리 콘솔 열기",
     busy: "여는 중…",
+    changed:
+      "계정이 변경되었어요. 페이지를 새로고침하고 계정을 확인한 뒤 연결하세요.",
   },
 };
 export function AccountConnections({ locale }: { locale: Locale }) {
@@ -137,13 +147,28 @@ export function AccountConnections({ locale }: { locale: Locale }) {
     setError("");
     try {
       if (state?.authenticated) {
+        if (!state.id) {
+          setError(t.changed);
+          setState(null);
+          setBusy("");
+          return;
+        }
         const r = await fetch("/api/account/link", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "X-Lumio-User": state.id,
+          },
           body: JSON.stringify({ provider }),
         });
         if (!r.ok) {
           const b = await r.json();
+          if (b.error === "SESSION_REVOKED") {
+            setError(t.changed);
+            setState(null);
+            setBusy("");
+            return;
+          }
           if (b.error === "REAUTHENTICATION_REQUIRED") {
             setError(t.reauth);
             setBusy("");
