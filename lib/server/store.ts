@@ -162,7 +162,7 @@ export function createStore(
     }
     assertDatabaseIntegrity(db, { maximumVersion: migrations.length });
     const presentFlags = new Set(db.prepare(
-      `SELECT key FROM feature_flags WHERE key IN (${flagDefinitions.map(() => "?").join(",")})`,
+      `SELECT key AS "key" FROM feature_flags WHERE key IN (${flagDefinitions.map(() => "?").join(",")})`,
     ).all(...flagDefinitions.map((flag) => flag.key)).map((row) => row.key));
     for (const flag of flagDefinitions) {
       if (presentFlags.has(flag.key)) continue;
@@ -543,7 +543,7 @@ export function createStore(
   }
   function listFlags(): FeatureFlag[] {
     return db
-      .prepare("SELECT * FROM feature_flags ORDER BY key")
+      .prepare('SELECT key AS "key",enabled,description,updated_at,updated_by FROM feature_flags ORDER BY key')
       .all()
       .map((row) => ({
         key: String(row.key),
@@ -646,7 +646,7 @@ export function createStore(
   function listAudit(limit = 40, offset = 0): AuditEvent[] {
     return db
       .prepare(
-        "SELECT * FROM audit_events ORDER BY created_at DESC,id LIMIT ? OFFSET ?",
+        'SELECT id,actor_id,action AS "action",target,result,request_id,before_json,after_json,created_at FROM audit_events ORDER BY created_at DESC,id LIMIT ? OFFSET ?',
       )
       .all(
         Math.max(1, Math.min(100, Math.floor(limit))),

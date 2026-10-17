@@ -1118,7 +1118,7 @@ export function createTeachingStore({
     return transaction(() => {
       const u = actor(userId, version),
         old = one(
-          "SELECT * FROM teaching_operations WHERE request_id=?",
+          'SELECT request_id,actor_id,organization_id,class_id,action AS "action",fingerprint,result_json,created_at FROM teaching_operations WHERE request_id=?',
           b.requestId,
         );
       if (old) {

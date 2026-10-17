@@ -91,20 +91,22 @@ async function main() {
     config = databaseConfiguration(); validateConfig(config);
   }
   const checks = [], timings = {}, mutationDurations = [], started = performance.now();
-  let activeCase = "configuration";
+  let activeCase = "configuration", activeMutation = "none";
   const check = async (name, fn) => { activeCase = name; const start = performance.now(); await fn(); timings[name] = Math.round(performance.now() - start); checks.push({ name, status: "PASS" }); console.log("PASS " + name); };
   const latencySummary = () => { const sorted = [...mutationDurations].sort((a, b) => a - b); return { count: sorted.length, min: sorted[0] ?? null, max: sorted.at(-1) ?? null, median: sorted[Math.floor(sorted.length / 2)] ?? null, p95: sorted[Math.max(0, Math.ceil(sorted.length * 0.95) - 1)] ?? null }; };
-  const report = (status, failure) => ({ status, checkedAt: new Date().toISOString(), scope: local ? "Native child/IPC with synthetic LOCAL SQLite; NOT remote durability evidence" : "Dedicated isolated Turso QA database only; synthetic identities, classes, submission and ledger; no live users, OAuth, provider requests or payments", passed: checks.length, checks, timingsMs: timings, teachingMutationLatencyMs: latencySummary(), totalMs: Math.round(performance.now() - started), ...(failure ? { failure: { check: activeCase, code: safeCode(failure) } } : {}) });
+  const report = (status, failure) => ({ status, checkedAt: new Date().toISOString(), scope: local ? "Native child/IPC with synthetic LOCAL SQLite; NOT remote durability evidence" : "Dedicated isolated Turso QA database only; synthetic identities, classes, submission and ledger; no live users, OAuth, provider requests or payments", passed: checks.length, checks, timingsMs: timings, teachingMutationLatencyMs: latencySummary(), totalMs: Math.round(performance.now() - started), ...(failure ? { failure: { check: activeCase, mutation: activeMutation, code: safeCode(failure), frames: String(failure.stack || "").split("\n").filter(line => /(?:teaching-core\.ts|store\.ts|test-v9-database-remote\.cjs):\d+:\d+/.test(line)).map(line => line.replace(/.*[\\/](?=(?:teaching-core\.ts|store\.ts|test-v9-database-remote\.cjs):)/, "").trim()) } } : {}) });
   const save = (value) => { const output = path.join(root, "docs/v9/reports", local ? "database-remote-runner-selftest.json" : "database-remote-qa.json"); fs.mkdirSync(path.dirname(output), { recursive: true }); fs.writeFileSync(output, JSON.stringify(value, null, 2) + "\n"); };
   try {
     await check("Full schema bootstrap and fresh readiness", () => { db = connect(config); store = createStore(":qa:", { database: db, adminEmails: ["synthetic-owner@example.test"] }); assert.equal(store.runtimeHealth().schemaVersion, 18); });
     await check("Fresh readiness latency", () => assert.deepEqual(store.runtimeHealth(), { ready: true, schemaVersion: 18 }));
     const run = randomUUID(), identity = (label) => ({ provider: "google", providerAccountId: `v9-qa-${run}-${label}`, name: "Synthetic QA", email: label === "owner" ? "synthetic-owner@example.test" : `${label}@example.test`, emailVerified: true });
     let owner, student, outsider, budgetUser, orgId, classId, questionId, assignmentId, submissionId;
-    const mutate = (user, data) => { const start = performance.now(); try { return store.mutateTeaching(user.id, user.sessionVersion, { requestId: randomUUID(), ...data }); } finally { mutationDurations.push(Math.round(performance.now() - start)); } };
+    const mutate = (user, data) => { activeMutation = data.action; const start = performance.now(); try { return store.mutateTeaching(user.id, user.sessionVersion, { requestId: randomUUID(), ...data }); } finally { mutationDurations.push(Math.round(performance.now() - start)); } };
     await check("Canonical identities preserve one account and enforce organization scope", () => {
       owner = store.ensureIdentity(identity("owner")); student = store.ensureIdentity(identity("student")); outsider = store.ensureIdentity(identity("outsider")); budgetUser = store.ensureIdentity(identity("budget"));
       assert.equal(owner.role, "SUPER_ADMIN"); assert.equal(store.ensureIdentity(identity("student")).id, student.id);
+      assert.ok(store.listFlags().every((flag) => flag.key && flag.key !== "undefined"));
+      assert.ok(store.listAudit().every((event) => /^[A-Z][A-Z0-9_]+$/.test(event.action)));
       orgId = mutate(owner, { action: "org.create", name: "Synthetic durability QA" }).result.id;
       const input = { requestId: randomUUID(), action: "class.create", orgId, name: "Synthetic class", subject: "Toán", grade: "9", description: "Isolated synthetic QA only" };
       const created = mutate(owner, input); classId = created.result.id;

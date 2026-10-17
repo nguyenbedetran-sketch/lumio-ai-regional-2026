@@ -2,9 +2,9 @@
   "schema": 1,
   "evaluationId": "lumio-v7-authored-offline-1",
   "corpusVersion": "1.0.0",
-  "startedAt": "2026-10-16T23:43:26.763Z",
-  "completedAt": "2026-10-16T23:43:26.803Z",
-  "elapsedMs": 39,
+  "startedAt": "2026-10-17T05:14:26.647Z",
+  "completedAt": "2026-10-17T05:14:26.732Z",
+  "elapsedMs": 82,
   "status": "PASS_DETERMINISTIC_SCOPE",
   "caseCount": 46,
   "assertionCount": 219,
@@ -740,6 +740,6 @@
     "tests/fixtures/v7-ai-evaluation.v1.json": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b"
   },
   "corpusSha256": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b",
-  "sourceBaseCommit": "d758b38435bbc1cf5d4d48eca86f70455d8042b7",
+  "sourceBaseCommit": "cebd02940dfc0b1e172d5872d89dcdee8c9c4971",
   "sourceState": "Working-tree module hashes above; base commit alone does not identify uncommitted V7 changes."
 }

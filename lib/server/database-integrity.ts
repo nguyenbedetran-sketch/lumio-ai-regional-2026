@@ -585,18 +585,23 @@ export const DATABASE_GUARDS: readonly {
 
 type DatabaseReader = Pick<DatabaseSync, "prepare">;
 type IntegrityOptions = { allowPrefix?: boolean; maximumVersion?: number };
-type SchemaRow = { name: unknown; type: unknown; tbl_name: unknown; sql: unknown };
+type SchemaRow = {
+  name: unknown;
+  type: unknown;
+  tbl_name: unknown;
+  sql: unknown;
+};
 // A fresh read per invocation, not a cache. Remote health needs two round trips
 // (schema + history), while preserving every existing SQL/type/guard check.
 function readSchema(db: DatabaseReader): SchemaRow[] {
-  return db.prepare("SELECT name,type,tbl_name,sql FROM sqlite_schema").all() as SchemaRow[];
+  return db
+    .prepare("SELECT name,type,tbl_name,sql FROM sqlite_schema")
+    .all() as SchemaRow[];
 }
-// Preserve literal contents and SQL structure. Only normalize platform line
-// endings, surrounding whitespace and SQLite's discarded terminal semicolon.
+// Preserve every SQL token and literal. Remote SQLite's schema rewriter can
+// reformat RAISE(...) and BEGIN/END whitespace without changing the guard.
 export function normalizedGuardSQL(value: unknown): string {
-  return typeof value === "string"
-    ? value.replace(/\r\n?/g, "\n").trim().replace(/;$/, "")
-    : "";
+  return normalizedTableSQL(value);
 }
 /** Token boundaries and SQL literals survive formatting normalization. This
  * includes column types, PK/UNIQUE/FK/CHECK constraints, not just table names. */
@@ -604,7 +609,7 @@ export function normalizedTableSQL(value: unknown): string {
   if (typeof value !== "string") return "";
   const tokens =
     value.match(
-      /'(?:''|[^'])*'|"(?:""|[^"])*"|--[^\r\n]*|\/\*[\s\S]*?\*\/|[A-Za-z_][A-Za-z0-9_$]*|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|[^\s]/g,
+      /'(?:''|[^'])*'|"(?:""|[^"])*"|--[^\r\n]*|\/\*[\s\S]*?\*\/|!=|<>|[A-Za-z_][A-Za-z0-9_$]*|\d+(?:\.\d+)?(?:[eE][+-]?\d+)?|[^\s]/g,
     ) || [];
   const meaningful = tokens.filter(
     (token) => !token.startsWith("--") && !token.startsWith("/*"),
@@ -612,7 +617,10 @@ export function normalizedTableSQL(value: unknown): string {
   if (meaningful.at(-1) === ";") meaningful.pop();
   return JSON.stringify(
     meaningful.map((token) =>
-      /^['"]/.test(token) ? token : token.toLowerCase(),
+      // SQLite's schema rewriter may spell != as <> after ALTER TABLE.
+      // Normalize only the complete operator token, never literals, quoted
+      // identifiers, separated punctuation or different comparison operators.
+      token === "!=" ? "<>" : /^['"]/.test(token) ? token : token.toLowerCase(),
     ),
   );
 }
@@ -639,7 +647,9 @@ function historyFromSchema(
   const present = tables.some((row) => row.name === "schema_migrations");
   // Only SQLite's literal reserved prefix is internal. SQL LIKE 'sqlite_%'
   // treats '_' as a wildcard and could disguise a foreign table named sqlitex.
-  const applicationTables = tables.filter((row) => !/^sqlite_/i.test(String(row.name)));
+  const applicationTables = tables.filter(
+    (row) => !/^sqlite_/i.test(String(row.name)),
+  );
   if (!present) {
     const populated = applicationTables.length > 0;
     if (populated || !options.allowPrefix)

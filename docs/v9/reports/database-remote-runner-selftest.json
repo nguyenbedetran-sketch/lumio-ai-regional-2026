@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T23:49:13.969Z",
+  "checkedAt": "2026-10-17T05:17:17.914Z",
   "scope": "Native child/IPC with synthetic LOCAL SQLite; NOT remote durability evidence",
   "passed": 8,
   "checks": [
@@ -38,21 +38,21 @@
     }
   ],
   "timingsMs": {
-    "Full schema bootstrap and fresh readiness": 191,
-    "Fresh readiness latency": 5,
-    "Canonical identities preserve one account and enforce organization scope": 78,
-    "Reviewed assignment and actual student submission commit together with operation receipts": 103,
-    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 3,
-    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 13,
-    "Two separate processes cannot overdraw the same canonical wallet": 1447,
-    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 1169
+    "Full schema bootstrap and fresh readiness": 342,
+    "Fresh readiness latency": 9,
+    "Canonical identities preserve one account and enforce organization scope": 162,
+    "Reviewed assignment and actual student submission commit together with operation receipts": 209,
+    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 7,
+    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 33,
+    "Two separate processes cannot overdraw the same canonical wallet": 3142,
+    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 2539
   },
   "teachingMutationLatencyMs": {
     "count": 12,
-    "min": 7,
-    "max": 18,
-    "median": 14,
-    "p95": 18
+    "min": 13,
+    "max": 42,
+    "median": 28,
+    "p95": 42
   },
-  "totalMs": 3010
+  "totalMs": 6446
 }

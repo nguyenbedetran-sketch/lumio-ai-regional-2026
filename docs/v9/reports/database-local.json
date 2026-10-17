@@ -55,6 +55,6 @@
   },
   "existingSchemaBootstrapCalls": 8,
   "healthReadCalls": 2,
-  "bootstrapMs": 196,
-  "elapsedMs": 752
+  "bootstrapMs": 278,
+  "elapsedMs": 1020
 }

@@ -1,6 +1,20 @@
 # V9 — Cơ sở dữ liệu bền vững: kiểm toán và quyết định kiến trúc
 
-Ngày kiểm tra: 17/10/2026. Trạng thái: **đã triển khai adapter ứng viên và kiểm thử local; chưa chạy hoặc xác nhận database Turso thật**. V9 về giao diện đã được đọc đầy đủ; yêu cầu lưu dữ liệu giáo viên/học sinh bền vững là yêu cầu bổ sung trực tiếp của người dùng.
+Ngày kiểm tra: 17/10/2026. Trạng thái: **adapter đã qua local và8 cổng trên database Turso QA riêng; chưa cutover public hoặc xác nhận di chuyển dữ liệu cũ**. V9 về giao diện đã được đọc đầy đủ; yêu cầu lưu dữ liệu giáo viên/học sinh bền vững là yêu cầu bổ sung trực tiếp của người dùng.
+
+## Nghiệm thu Turso tổng hợp lúc 05:19 UTC
+
+`reports/database-remote-qa.json` ghi **8 PASS** trong165.269 ms trên DB QA tách riêng. Giữ nguyên UUID giáo viên/học sinh/lớp/bài/bài nộp, sync và ví sau khi đóng process ban đầu rồi mở process mới; digest canonical khớp. Hai process tranh cùng ví chỉ tạo một reservation, process còn lại nhận `CREDITS_INSUFFICIENT`; hoàn reservation không gọi provider giữ đúng số dư. FK và audit từ chối ghi, rollback giữ connection sạch. Không phải bằng chứng Render đã redeploy, backup/restore đã chạy, tải lớn hoặc học sinh thật.
+
+12 thao tác giảng dạy đo từ máy này tới Tokyo: min4.719 ms, median8.154 ms, p95/max11.347 ms; health mới392 ms. Đây là latency của lượt tổng hợp có cả transaction/đọc trạng thái, không phải latency model hay cam kết SLA. Adapter vẫn chặn main thread có giới hạn; chỉ chấp nhận phạm vi preview nhỏ, chưa chứng minh khả năng mở rộng.
+
+Các lượt thất bại ban đầu đã được giữ riêng, không gọi là PASS. Kiểm thử thật phát hiện và sửa:
+
+- Schema từ xa đổi `!=` thành toán tử tương đương `<>`, thêm khoảng trắng quanh `RAISE`. Integrity giữ mọi token/literal/guard và chỉ chuẩn hóa hai toán tử tương đương;5 ca chống nới CHECK/trigger đã qua.
+- Tên cột không quote `ACTION`/`KEY` được Turso viết hoa. Các projection cần `action`/`key` nay có alias quote tường minh; không lowercase toàn bộ kết quả hoặc thay quyền.4 ca SQLite thật tái hiện cột uppercase đã qua, gồm student join replay, audit/flag, billing replay và reopen không reseed.
+- SDK pin0.5.29 bọc lỗi remote có cấu trúc trong chuỗi `Hrana(StreamError(Error {...}))`, để `error.code` rỗng. Chỉ parse toàn bộ envelope đúng dạng và whitelist mã SQL chắc chắn;15 assertion từ chối lỗi mạng, mã chung, envelope thiếu/sai/nối thêm và không lộ message. Lỗi transport/commit không rõ vẫn quarantine, không auto-retry/fallback. [Nguồn lỗi Rust tại bản pin](https://github.com/tursodatabase/libsql-js/blob/55bee86d1c284f1ddf2b9e280e870d2b6cef884a/src/errors.rs).
+
+Hai khóa được operator chấp thuận riêng: production1 năm, QA7 ngày; lưu trong tệp riêng ngoài repo với ACL người dùng/SYSTEM. Không có khóa trong báo cáo, frontend, lệnh CLI hoặc Git. Production vẫn chưa có dữ liệu/biến Render; cần cổng cutover trong [CUTOVER-AUDIT.md](CUTOVER-AUDIT.md).
 
 ## Hiện trạng đã đối chiếu
 
@@ -77,7 +91,7 @@ Runner tạo danh tính/lớp/bài nộp tổng hợp, kiểm RBAC, FK/guard, re
 | PostgreSQL qua Supabase/Neon | Database ngoài host, transaction và hệ sinh thái vận hành phổ biến | Chuyển SQL/trigger/schema integrity, 51 bảng và async call graph; blueprint 001–003 chưa đủ; cần migration và kiểm thử riêng |
 | File SQLite + upload định kỳ | Không chọn | Có thể mất thay đổi đã báo lưu; snapshot không giải quyết cạnh tranh ghi, ACK và khôi phục danh tính |
 
-**Chưa đủ điều kiện xác nhận production durable.** Adapter native + child process đã qua các cổng local bên dưới. Cổng remote, hai client thật, độ trễ và Linux vẫn phải đạt trước cutover; không đánh đổi dữ liệu đã xác nhận lưu để giảm số file sửa.
+**Chưa đủ điều kiện xác nhận public durable.** Cổng remote riêng, hai client và độ trễ đã có kết quả ở đầu tài liệu. CI Linux của candidate trước đã đạt; delta runtime mới còn cần CI đúng commit. Sau đó vẫn cần quyết định cutover và nghiệm thu public qua redeploy; không đánh đổi dữ liệu đã xác nhận lưu để giảm số file sửa.
 
 ## Hợp đồng adapter cần giữ
 

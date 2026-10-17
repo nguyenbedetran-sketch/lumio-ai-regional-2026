@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "passed": 18,
-  "checkedAt": "2026-10-16T23:44:36.966Z",
+  "checkedAt": "2026-10-17T05:16:53.620Z",
   "scope": "Pure safe-metadata helpers, actual config handler with mocked store/auth/features boundaries, and actual React notice/privacy static SSR. No remote database/network/provider calls; no durability, live deployment or device proof.",
   "checks": [
     "Public metadata accepts only known modes with ready true and emits exactly two safe fields",

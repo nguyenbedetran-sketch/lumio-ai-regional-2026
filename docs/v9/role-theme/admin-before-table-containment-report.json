@@ -1,0 +1,2404 @@
+{
+  "status": "FINDINGS",
+  "passed": 10,
+  "cases": [
+    "Actual bootstrap preserves light and resolves dark",
+    "Actual account-review dialog retains authored identity",
+    "Actual bootstrap preserves dark and resolves light",
+    "Actual account-review dialog retains authored identity",
+    "Actual bootstrap preserves system and resolves light",
+    "Actual bootstrap preserves system and resolves dark",
+    "No React/browser page errors in actual rendered fixture",
+    "Theme and confirmations do not cause any mutation",
+    "Admin root changes between canonical light and dark surfaces",
+    "Native controls inherit the resolved theme color-scheme"
+  ],
+  "observations": [
+    {
+      "label": "overview",
+      "theme": "light",
+      "width": 320,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "light",
+      "width": 768,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 92,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 131,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Số tác vụ",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 141,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Số tác vụ",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs-error",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 83,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs-error",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 93,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "light",
+      "width": 320,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "light",
+      "width": 768,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 62,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-empty",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 30,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "1",
+        "selector": "SPAN",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Tìm hồ sơ",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-empty",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 40,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "1",
+        "selector": "SPAN",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Tìm hồ sơ",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 320,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 669,
+      "clientWidth": 320,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "Ngày gửi",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.1582732382362284
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 669,
+      "clientWidth": 390,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "Ngày gửi",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.1582732382362284
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 768,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "Ngày gửi",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.1582732382362284
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 96,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "Ngày gửi",
+        "selector": "TH",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.1582732382362284
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "light",
+      "width": 320,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "light",
+      "width": 768,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 73,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-attempts",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 96,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-attempts",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 106,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-error",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 31,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "1",
+        "selector": "SPAN",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-error",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 41,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "1",
+        "selector": "SPAN",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "light",
+      "width": 320,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 5.737085507479228,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 4.938930414550033
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "light",
+      "width": 390,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 5.737085507479228,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 4.938930414550033
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "light",
+      "width": 768,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 5.737085507479228,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 4.938930414550033
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 5.737085507479228,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 4.938930414550033
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 82,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "overview",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 92,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 131,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Số tác vụ",
+        "selector": "TH",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 141,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs-error",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 83,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "jobs-error",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 93,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Lý do KIỂM THỬ, không thay đổi tài khoản thật",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Lý do KIỂM THỬ, không thay đổi tài khoản thật",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 52,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thao tác",
+        "selector": "TH",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Lý do KIỂM THỬ, không thay đổi tài khoản thật",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "access-dialog",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 62,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Lý do KIỂM THỬ, không thay đổi tài khoản thật",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-empty",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 30,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải x",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới hồ sơ giáo viên",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-empty",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 40,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Thông tin do người dùng khai báo. Duyệt nội bộ Lumio không phải x",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới hồ sơ giáo viên",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 669,
+      "clientWidth": 320,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "09:00 17/10/26",
+        "selector": "TIME",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.030901377471017
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 669,
+      "clientWidth": 390,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "09:00 17/10/26",
+        "selector": "TIME",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.030901377471017
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 86,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "09:00 17/10/26",
+        "selector": "TIME",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.030901377471017
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 96,
+      "controlCount": 12,
+      "protruding": [],
+      "minimumText": {
+        "text": "09:00 17/10/26",
+        "selector": "TIME",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Xem hồ sơ KIỂM THỬ GIÁO VIÊN",
+        "ratio": 3.030901377471017
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 63,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-outcomes",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 73,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-attempts",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 96,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "qa-provider",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-attempts",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 106,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-error",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 31,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "1",
+        "selector": "SPAN",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "usage-error",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 41,
+      "controlCount": 5,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "7 ngày14 ngày31 ngày",
+        "ratio": 4.027220119522153
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 320,
+      "clientWidth": 320,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 7.178851092886291,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 12.468842461814639
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 7.178851092886291,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 12.468842461814639
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 768,
+      "clientWidth": 768,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 7.178851092886291,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 12.468842461814639
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "gate",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgba(0, 0, 0, 0)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 6,
+      "controlCount": 1,
+      "protruding": [],
+      "minimumText": {
+        "text": "Quyền quản trị do máy chủ xác nhận. Không có chế độ truy cập thử.",
+        "selector": "SMALL",
+        "ratio": 7.178851092886291,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Đăng nhập bằng Google",
+        "ratio": 12.468842461814639
+      },
+      "clippedHeader": 0,
+      "chart": null,
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgb(200, 242, 154)"
+      }
+    },
+    {
+      "label": "system",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 83,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "system",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": "rgb(29, 47, 38)",
+      "colorScheme": "light",
+      "canonicalCanvas": "#f1f5ee",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 93,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 4.889649423706823,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 3.2970468010598752
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(49, 95, 77)",
+        "ratio": 7.305258651542595
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(101, 80, 168)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "system",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 390,
+      "clientWidth": 390,
+      "textCount": 83,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "0 lượt có metadata token",
+        "selector": "SMALL",
+        "ratio": 6.177794151785348,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    },
+    {
+      "label": "system",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": "rgb(237, 243, 232)",
+      "colorScheme": "dark",
+      "canonicalCanvas": "#101916",
+      "pageWidth": 1440,
+      "clientWidth": 1440,
+      "textCount": 93,
+      "controlCount": 2,
+      "protruding": [],
+      "minimumText": {
+        "text": "Phiên quản trị giới hạn 1 giờ.",
+        "selector": "P",
+        "ratio": 5.402830990194324,
+        "minimum": 4.5
+      },
+      "failedText": [],
+      "failedControls": [],
+      "minimumControl": {
+        "name": "Làm mới dữ liệu",
+        "ratio": 4.578486468013453
+      },
+      "clippedHeader": 0,
+      "chart": {
+        "stroke": "rgb(175, 209, 189)",
+        "ratio": 9.509369968491303
+      },
+      "focus": {
+        "tag": "A",
+        "outline": "solid",
+        "width": 2,
+        "color": "rgb(200, 242, 154)",
+        "background": "rgba(0, 0, 0, 0)"
+      }
+    }
+  ],
+  "baseline": [
+    {
+      "theme": "light",
+      "width": 320,
+      "pageWidth": 669,
+      "hiddenLabels": [
+        {
+          "text": "Chi tiết hồ sơ",
+          "width": 1,
+          "right": 669.28125,
+          "position": "absolute"
+        }
+      ]
+    },
+    {
+      "theme": "light",
+      "width": 390,
+      "pageWidth": 669,
+      "hiddenLabels": [
+        {
+          "text": "Chi tiết hồ sơ",
+          "width": 1,
+          "right": 669.28125,
+          "position": "absolute"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 320,
+      "pageWidth": 669,
+      "hiddenLabels": [
+        {
+          "text": "Chi tiết hồ sơ",
+          "width": 1,
+          "right": 669.28125,
+          "position": "absolute"
+        }
+      ]
+    },
+    {
+      "theme": "dark",
+      "width": 390,
+      "pageWidth": 669,
+      "hiddenLabels": [
+        {
+          "text": "Chi tiết hồ sơ",
+          "width": 1,
+          "right": 669.28125,
+          "position": "absolute"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 320,
+      "code": "PAGE_OVERFLOW"
+    },
+    {
+      "label": "teacher-review",
+      "theme": "light",
+      "width": 390,
+      "code": "PAGE_OVERFLOW"
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 320,
+      "code": "PAGE_OVERFLOW"
+    },
+    {
+      "label": "teacher-review",
+      "theme": "dark",
+      "width": 390,
+      "code": "PAGE_OVERFLOW"
+    }
+  ],
+  "errors": [],
+  "requestCount": 14,
+  "realProviderCalls": 0,
+  "scope": "Actual current React/CSS; authored local identities, HTTP results and timestamps. No OAuth, provider, public server, real people or private DB.",
+  "checkedAt": "2026-10-17T00:06:43.842Z",
+  "fixtureSSRChecks": 3
+}

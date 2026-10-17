@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "runAt": "2026-10-16T23:43:46.558Z",
+  "runAt": "2026-10-17T05:14:54.890Z",
   "checks": 14,
   "cases": [
     "Unauthenticated and ordinary users cannot read summary metadata",

@@ -1,0 +1,5642 @@
+{
+  "status": "PASS",
+  "v9Layout": [
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 320,
+      "background": "rgb(241, 245, 238)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(101, 80, 168)",
+          "background": "rgb(239,234,251)",
+          "ratio": 5.46,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 6.43
+      },
+      "pageWidth": 320,
+      "colorScheme": "light",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 390,
+      "background": "rgb(241, 245, 238)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(101, 80, 168)",
+          "background": "rgb(239,234,251)",
+          "ratio": 5.46,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 6.43
+      },
+      "pageWidth": 390,
+      "colorScheme": "light",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 768,
+      "background": "rgb(241, 245, 238)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(101, 80, 168)",
+          "background": "rgb(239,234,251)",
+          "ratio": 5.46,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 6.43
+      },
+      "pageWidth": 768,
+      "colorScheme": "light",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "light",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(101, 80, 168)",
+          "background": "rgb(239,234,251)",
+          "ratio": 5.46,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 6.43
+      },
+      "pageWidth": 1440,
+      "colorScheme": "light",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 320,
+      "background": "rgb(16, 25, 22)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(183, 168, 255)",
+          "background": "rgb(48,43,67)",
+          "ratio": 6.48,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 12.47
+      },
+      "pageWidth": 320,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 390,
+      "background": "rgb(16, 25, 22)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(183, 168, 255)",
+          "background": "rgb(48,43,67)",
+          "ratio": 6.48,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 12.47
+      },
+      "pageWidth": 390,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 768,
+      "background": "rgb(16, 25, 22)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(183, 168, 255)",
+          "background": "rgb(48,43,67)",
+          "ratio": 6.48,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 12.47
+      },
+      "pageWidth": 768,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(183, 168, 255)",
+          "background": "rgb(48,43,67)",
+          "ratio": 6.48,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 12.47
+      },
+      "pageWidth": 1440,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "system",
+      "width": 1440,
+      "background": "rgb(241, 245, 238)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(101, 80, 168)",
+          "background": "rgb(239,234,251)",
+          "ratio": 5.46,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(29, 47, 38)",
+          "background": "rgb(255,255,255)",
+          "ratio": 14.12,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(232,239,228)",
+          "ratio": 4.89,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(86, 107, 94)",
+          "background": "rgb(255,255,255)",
+          "ratio": 5.74,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 139, 125)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 3.64,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 6.43
+      },
+      "pageWidth": 1440,
+      "colorScheme": "light",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "system",
+      "width": 1440,
+      "background": "rgb(16, 25, 22)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(183, 168, 255)",
+          "background": "rgb(48,43,67)",
+          "ratio": 6.48,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(237, 243, 232)",
+          "background": "rgb(27,37,33)",
+          "ratio": 13.94,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(36,49,43)",
+          "ratio": 6.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(163, 179, 168)",
+          "background": "rgb(27,37,33)",
+          "ratio": 7.18,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(23, 39, 25)",
+          "background": "rgb(200,242,154)",
+          "ratio": 12.4,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(113, 134, 117)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.03,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 12.47
+      },
+      "pageWidth": 1440,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    },
+    {
+      "label": "assessment-editor",
+      "theme": "dark",
+      "background": "rgb(255, 255, 255)",
+      "text": [
+        {
+          "selector": "SPAN.tw-eyebrow",
+          "text": "LUMIO · GIẢNG DẠY",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H2.",
+          "text": "Chỉnh sửa bài tập",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Tên bài tập",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Tên bài tập",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "Đề kiểm thử ma trận",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Lớp nhận bàiChọn lớpLớp kiểm thử A",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Lớp nhận bài",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Chọn lớpLớp kiểm thử A",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hạn nộp (giờ trên thiết bị)",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "2027-01-01T12:00",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LEGEND.",
+          "text": "Thời gian nhận bài (tùy chọn)",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Mở nhận bài (giờ trên thiết bị)",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đóng cứng (giờ trên thiết bị)",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Giờ mở không sau hạn nộp; giờ đóng không trước hạn. Trước khi mở, học sinh chỉ t",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Hướng dẫnGiáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Hướng dẫn",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TEXTAREA.",
+          "text": "Giáo viên kiểm tra bản nháp trước khi giao.",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-field",
+          "text": "Đối tượngCả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.",
+          "text": "Đối tượng",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SELECT.",
+          "text": "Cả lớpNhóm học tậpHọc sinh được chọn",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-muted",
+          "text": "Câu hỏi đã được xem lại",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 11 điểm · Số học",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "LABEL.tw-check",
+          "text": "Câu hỏi kiểm thử 21 điểm · Số học",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "INPUT.",
+          "text": "on",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SMALL.",
+          "text": "1 điểm · Số học",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "H3.",
+          "text": "Kiểm tra toàn đề",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "SPAN.tw-tag indigo",
+          "text": "Chờ giáo viên đối chiếu",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.",
+          "text": "1 câu · 1 điểm · 0 câu cần chấm theo rubric",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "CAPTION.",
+          "text": "Phân bố từ các câu đang chọn",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nhóm",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Nội dung",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Số câu",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TH.",
+          "text": "Điểm",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Chủ đề",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Số học",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Độ khó",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Cơ bản",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Dạng",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "Trắc nghiệm",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "TD.",
+          "text": "1",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "0/1 câu có trích đoạn. Phân bố và kiểm tra cấu trúc không chứng minh mọi đáp án ",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "P.tw-note",
+          "text": "Lưu nháp chưa giao cho học sinh. Xem lại đề và đối tượng trước khi bấm giao; nội",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button secondary  ",
+          "text": "Hủy",
+          "color": "rgb(51, 51, 51)",
+          "background": "rgb(255,255,255)",
+          "ratio": 12.63,
+          "minimum": 4.5
+        },
+        {
+          "selector": "BUTTON.tw-button   ",
+          "text": "Lưu đề nháp",
+          "color": "rgb(17, 17, 17)",
+          "background": "rgb(255,255,255)",
+          "ratio": 18.88,
+          "minimum": 4.5
+        }
+      ],
+      "controls": [
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "INPUT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "TEXTAREA",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        },
+        {
+          "tag": "SELECT",
+          "border": "rgb(119, 119, 119)",
+          "style": "solid",
+          "width": 1,
+          "ratio": 4.48,
+          "exempt": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid",
+        "width": 3,
+        "ratio": 1.26
+      },
+      "pageWidth": 1440,
+      "width": 1440,
+      "colorScheme": "dark",
+      "entryAnimations": [
+        "none"
+      ]
+    }
+  ],
+  "v9Findings": [],
+  "passed": 19,
+  "cases": [
+    "Live matrix preview reports exact authorized-bank shortage",
+    "Complete matrix preview shows actual count",
+    "Composition transparently identifies local deterministic bank selection",
+    "Mutation remains bound to current teacher account and organization 1",
+    "Server shortage details render without losing teacher form",
+    "Form is retained after rejected composition",
+    "Mutation remains bound to current teacher account and organization 2",
+    "Composition request sends requirements and class revision, not caller-selected IDs",
+    "Retry uses the existing idempotency request ID",
+    "Created assessment remains a draft without recipients",
+    "Assignment card shows actual topic/type/difficulty distribution",
+    "No implicit review or publish request is sent",
+    "Ordinary draft edit recalculates the current distribution",
+    "Mutation remains bound to current teacher account and organization 3",
+    "Composed draft reuses the normal CAS update path",
+    "Mobile teacher editor does not overflow the page horizontally",
+    "Mobile save action remains available",
+    "No browser runtime errors in blueprint and draft editing",
+    "Fixture contacts no external service or live API"
+  ],
+  "errors": [],
+  "providerRequests": 0,
+  "scope": "Actual teacher React/CSS and browser interaction with synthetic HTTP. Backend behavior is covered separately by isolated SQLite handler tests.",
+  "workspaceCssSha256": "950353c0fb2319f75457fa1b31d2b693c170fcd8b6e602122155bc892ed582f6",
+  "fixtureCssSha256": "1e6d6c70fcf0aff6fbc088b5ec87773d9d68ae27409bd6f973bd43626111fc5c",
+  "thresholds": {
+    "normalText": 4.5,
+    "largeText": 3,
+    "controls": 3,
+    "focus": 3
+  },
+  "checkedAt": "2026-10-17T00:05:10.815Z",
+  "fixtureChecks": 32,
+  "isolation": "Current actual React/CSS + authored identity/HTTP fixtures, isolated Edge session/output files. No auth browser, live server, real students, provider or public writes.",
+  "layoutStatus": "PASS"
+}

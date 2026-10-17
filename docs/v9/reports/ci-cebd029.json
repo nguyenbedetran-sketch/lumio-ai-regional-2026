@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T00:03:36Z",
+  "commit": "cebd02940dfc0b1e172d5872d89dcdee8c9c4971",
+  "tree": "86a3a23e58811fab8c86acde18fe277aa68dea12",
+  "event": "push",
+  "runId": 38983969304,
+  "url": "https://github.com/nguyenbedetran-sketch/lumio-ai-regional-2026/actions/runs/38983969304",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "id": 117251002364,
+      "name": "Web and isolated database regression",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 38983969304,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Check out the exact revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2
+        },
+        {
+          "name": "Use the tested Node release",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Install the pinned package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Install from the lockfile",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Run deterministic and isolated SQLite tests",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Compile the production application",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Verify generated standalone native database process on Linux",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Check generated and source TypeScript",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Post Install the pinned package manager",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16
+        },
+        {
+          "name": "Post Use the tested Node release",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Post Check out the exact revision",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        }
+      ]
+    }
+  ],
+  "scope": "Exact branch push revision on Ubuntu24.04/Node24.19; isolated test:all, production build, standalone native child smoke and TypeScript. No Turso, OAuth, live-provider or public deployment proof."
+}

@@ -10,7 +10,7 @@ module.exports = function createLoader(root = path.resolve(__dirname, "..")) {
     localRequire.resolve = nativeRequire.resolve;
     new Function("require", "module", "exports", ts.transpileModule(fs.readFileSync(file, "utf8"), {
       compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText)(localRequire, m, m.exports);
+    }).outputText + "\n//# sourceURL=" + file.replaceAll("\\", "/"))(localRequire, m, m.exports);
     return m.exports;
   };
 };

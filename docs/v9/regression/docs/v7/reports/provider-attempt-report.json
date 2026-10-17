@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T23:44:21.027Z",
+  "checkedAt": "2026-10-17T05:15:29.953Z",
   "passed": 12,
   "cases": [
     "Attempt scope is denied to anonymous, learner, stale-admin and stale intended accounts",

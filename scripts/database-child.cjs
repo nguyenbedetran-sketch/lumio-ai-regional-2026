@@ -2,20 +2,12 @@
 // Native code lives only in this persistent, killable process. Credentials are
 // delivered through private advanced IPC, never command-line arguments.
 const { serialize } = require("node:v8");
+const errorInfo = require("./database-errors.cjs");
 let database, packetLimit = 32 * 1024 * 1024, initialized = false;
 function send(message) {
   if (serialize(message).byteLength > packetLimit)
     message = { id: message.id, ok: false, error: { kind: "size" } };
   if (process.connected) process.send(message);
-}
-function errorInfo(error) {
-  const code = typeof error?.code === "string" ? error.code : "";
-  // Generic SQLITE_ERROR can wrap transport failures; never return its text.
-  if (/^SQLITE_(?:CONSTRAINT(?:_[A-Z_]+)?|BUSY(?:_[A-Z_]+)?|LOCKED(?:_[A-Z_]+)?|RANGE|MISMATCH|TOOBIG|READONLY(?:_[A-Z_]+)?)$/.test(code)) {
-    const guard = ["AUDIT_APPEND_ONLY", "LEDGER_APPEND_ONLY", "TEACHING_HISTORY_IMMUTABLE"].find((text) => String(error.message).includes(text));
-    return { kind: "sql", code, ...(guard ? { guard } : {}) };
-  }
-  return { kind: "transport" };
 }
 function normalize(value) {
   if (typeof value === "bigint") return value <= BigInt(Number.MAX_SAFE_INTEGER) && value >= BigInt(Number.MIN_SAFE_INTEGER) ? Number(value) : value;

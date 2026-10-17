@@ -1,0 +1,20 @@
+{
+  "status": "FAIL",
+  "checkedAt": "2026-10-17T04:56:12.709Z",
+  "scope": "Dedicated isolated Turso QA database only; synthetic identities, classes, submission and ledger; no live users, OAuth, provider requests or payments",
+  "passed": 0,
+  "checks": [],
+  "timingsMs": {},
+  "teachingMutationLatencyMs": {
+    "count": 0,
+    "min": null,
+    "max": null,
+    "median": null,
+    "p95": null
+  },
+  "totalMs": 15449,
+  "failure": {
+    "check": "Full schema bootstrap and fresh readiness",
+    "code": "QA_ASSERTION_FAILED"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schema": 1,
   "status": "PASS",
-  "checkedAt": "2026-10-16T23:44:01.728Z",
+  "checkedAt": "2026-10-17T05:15:14.365Z",
   "scope": "Prompt-contract assertions and actual parser regressions. These checks do not prove that a provider follows the instructions or that hints are semantically correct.",
   "policySHA256": "3763d52056555c6b8061d6b2bd7f93c89b557122206d6ddff58ee60c1963bcb8",
   "realProviderCalls": 0,

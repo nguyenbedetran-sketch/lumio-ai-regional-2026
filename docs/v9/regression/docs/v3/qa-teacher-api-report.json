@@ -30,6 +30,6 @@
     "Two SQLite store instances resolve competing admin decisions by revision, without duplicate credentials",
     "A disabled or session-revoked approved account cannot use the canonical teacher privilege check"
   ],
-  "checkedAt": "2026-10-16T23:43:12.152Z",
+  "checkedAt": "2026-10-17T05:14:09.012Z",
   "fixture": "Synthetic teacher declarations only; actual Request/Response handlers and isolated SQLite. No real OAuth, teacher verification, student data or network/provider calls."
 }

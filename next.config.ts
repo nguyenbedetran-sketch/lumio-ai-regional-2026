@@ -9,6 +9,7 @@ export default function config(phase: string): NextConfig {
       "/*": [
         "./scripts/database-worker.cjs",
         "./scripts/database-child.cjs",
+        "./scripts/database-errors.cjs",
         "./node_modules/@libsql/**/*",
         "./node_modules/.pnpm/libsql@*/node_modules/libsql/**/*",
         "./node_modules/.pnpm/libsql@*/node_modules/@neon-rs/**/*",

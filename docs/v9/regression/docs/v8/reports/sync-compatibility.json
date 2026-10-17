@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "passed": 17,
-  "checkedAt": "2026-10-16T23:43:12.862Z",
+  "checkedAt": "2026-10-17T05:13:53.237Z",
   "scope": "Actual disposable SQLite stores, authored sync payloads, existing VACUUM restore; zero providers, no public deployment",
   "checks": [
     {

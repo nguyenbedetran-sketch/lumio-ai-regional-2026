@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "passed": 39,
-  "checkedAt": "2026-10-16T23:42:52.877Z",
+  "checkedAt": "2026-10-17T05:13:59.619Z",
   "kind": "deterministic synthetic local regression; no students or provider calls",
   "cases": [
     "Taxonomy is an explicit acyclic graph with existing prerequisite IDs",

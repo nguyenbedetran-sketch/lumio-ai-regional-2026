@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "scope": "Local real SQLite with synthetic uppercase physical columns; not remote durability",
+  "passed": 4,
+  "checks": [
+    {
+      "name": "Physical ACTION/KEY labels do not corrupt flags or audit projections",
+      "status": "PASS"
+    },
+    {
+      "name": "Student join replay keeps its canonical operation and permission checks",
+      "status": "PASS"
+    },
+    {
+      "name": "Sandbox billing replay preserves the exact balance with uppercase ACTION",
+      "status": "PASS"
+    },
+    {
+      "name": "Reopen recognizes existing uppercase KEY flags without reseeding",
+      "status": "PASS"
+    }
+  ]
+}

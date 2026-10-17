@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "checkedAt": "2026-10-16T23:48:50.062Z",
+  "checkedAt": "2026-10-17T05:17:09.370Z",
   "passed": 14,
   "checks": [
     {
@@ -65,7 +65,7 @@
   "nativeLoopback": {
     "code": "DATABASE_TIMEOUT",
     "poisoned": true,
-    "elapsedMs": 1224,
+    "elapsedMs": 1094,
     "naturalExitRequired": true,
     "processExitStatus": 0,
     "externallyKilled": false,

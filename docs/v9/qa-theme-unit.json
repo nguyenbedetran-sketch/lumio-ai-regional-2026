@@ -10,6 +10,6 @@
     "Blocked bootstrap storage still resolves system; unavailable media safely falls back to dark",
     "Actual Layout bootstrap is synchronous in head before body and suppression is root-only"
   ],
-  "checkedAt": "2026-10-16T23:44:36.134Z",
+  "checkedAt": "2026-10-17T05:16:52.629Z",
   "scope": "Pure theme helper/constant bootstrap VM plus actual Layout+Skeleton static SSR, no browser/provider/accounts"
 }

@@ -2,6 +2,8 @@
 
 **V9 đang nghiệm thu, chưa thay thế bản public/lần nộp5 bên dưới.** Candidate3.5.0-rc.1 giữ schema18, làm gọn Home, thống nhất token forest/violet/lime, theme trước paint và skeleton từ trạng thái tải thật. Adapter libSQL canonical tách dữ liệu máy chủ khỏi hosting; có deadline, cô lập tiến trình native và không fallback local hoặc tự thử lại lệnh ghi. Kiểm thử local không thay bằng chứng Turso, cutover và redeploy. Theo dõi [checklist](docs/v9/CHECKLIST.md), [kế hoạch](docs/v9/PLAN.md) và [database](docs/v9/DATABASE.md).
 
+Pha tiếp theo đã đồng bộ theme Teacher/Classroom/Admin và qua kiểm thử component responsive. Database Turso QA riêng đã qua8 cổng với dữ liệu tổng hợp, gồm bài nộp/chống trùng, FK/audit, sync CAS, hai tiến trình tranh credits và đọc lại canonical sau dừng tiến trình. Đây chưa phải xác nhận bản public đã chuyển database hoặc dữ liệu server cũ đã di chuyển.
+
 ## Bản V8 hiện được ghi nhận trên public và cổng thi
 
 **Cổng thi xác nhận lần nộp 5 lúc 22:21:45 ngày 16/10/2026 (UTC+7), “Bản dùng để chấm”.** [Dùng thử website](https://lumio-ai-demo.onrender.com/), [PDF minh chứng 6 trang](https://drive.google.com/file/d/1U8pIYeIuN5Z2AWchMhzf2GdVGBoftYB2/view), [thư mục minh chứng](https://drive.google.com/drive/folders/1ARB9KHRNnAiHRMd_FH8tHLY4C8dlWbzG) và [biên nhận/bàn giao lần5](docs/v8/FINAL_RELEASE_2026-10-16.md).

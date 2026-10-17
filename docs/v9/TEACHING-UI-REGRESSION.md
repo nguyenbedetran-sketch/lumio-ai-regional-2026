@@ -40,7 +40,9 @@ Ratios use browser-computed text color and the nearest opaque background, WCAG r
 
 The initial local V9 reports and selected captures are preserved in [role-before-a11y](role-before-a11y/). Historical V3/V7/V8 reports and runners were not rewritten.
 
-## Remaining theme limitation
+## Historical theme limitation at the earlier contrast-only phase
+
+**Superseded by the subsequent role-theme phase:** see [Teacher/Classroom acceptance](role-theme/TEACHER-THEME.md) and [Admin acceptance](role-theme/ADMIN-THEME.md). The observations below are retained as the original failing baseline, not current candidate findings.
 
 The matrix deliberately records `THEME_NOT_INHERITED` findings rather than declaring the role theme work complete:
 

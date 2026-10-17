@@ -39,8 +39,8 @@
     "test:v7:usage-ui": "node scripts/test-v7-usage-ui.cjs",
     "test:v8": "node tests/v8-learning.cjs && node tests/v8-tutor.cjs && node tests/v8-voice-client.cjs && node tests/v8-assessment.cjs && node tests/v8-job-health.cjs",
     "test:v8:ui": "node scripts/test-v8-learning-ui.cjs && node scripts/test-v8-tutor-ui.cjs && node scripts/test-v8-assessment-ui.cjs && node scripts/test-v8-job-health-ui.cjs && node scripts/test-v8-home-ui.cjs",
-    "test:v9": "node tests/v9-theme.cjs && node tests/v9-storage-status.cjs && node tests/v9-database.cjs && node tests/v9-database-review.cjs && node scripts/test-v9-database-remote.cjs --local-self-test",
-    "test:v9:ui": "node scripts/test-v9-foundation-ui.cjs && node scripts/test-v9-theme-loading-ui.cjs && node scripts/test-v9-home-ui.cjs"
+    "test:v9": "node tests/v9-theme.cjs && node tests/v9-storage-status.cjs && node tests/v9-database-sql.cjs && node tests/v9-database-column-labels.cjs && node tests/v9-database-errors.cjs && node tests/v9-database.cjs && node tests/v9-database-review.cjs && node scripts/test-v9-database-remote.cjs --local-self-test",
+    "test:v9:ui": "node scripts/test-v9-foundation-ui.cjs && node scripts/test-v9-theme-loading-ui.cjs && node scripts/test-v9-home-ui.cjs && node scripts/test-v9-teacher-theme-ui.cjs && node scripts/test-v9-admin-theme.cjs"
   },
   "engines": {
     "node": ">=24.0.0 <25"

@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T05:19:14.355Z",
+  "scope": "Dedicated isolated Turso QA database only; synthetic identities, classes, submission and ledger; no live users, OAuth, provider requests or payments",
+  "passed": 8,
+  "checks": [
+    {
+      "name": "Full schema bootstrap and fresh readiness",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh readiness latency",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical identities preserve one account and enforce organization scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Reviewed assignment and actual student submission commit together with operation receipts",
+      "status": "PASS"
+    },
+    {
+      "name": "Foreign keys and immutable audit reject writes without poisoning healthy rollback",
+      "status": "PASS"
+    },
+    {
+      "name": "Sync CAS and same-request replay preserve the acknowledged canonical revision",
+      "status": "PASS"
+    },
+    {
+      "name": "Two separate processes cannot overdraw the same canonical wallet",
+      "status": "PASS"
+    },
+    {
+      "name": "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet",
+      "status": "PASS"
+    }
+  ],
+  "timingsMs": {
+    "Full schema bootstrap and fresh readiness": 2533,
+    "Fresh readiness latency": 392,
+    "Canonical identities preserve one account and enforce organization scope": 45712,
+    "Reviewed assignment and actual student submission commit together with operation receipts": 61438,
+    "Foreign keys and immutable audit reject writes without poisoning healthy rollback": 622,
+    "Sync CAS and same-request replay preserve the acknowledged canonical revision": 7450,
+    "Two separate processes cannot overdraw the same canonical wallet": 17484,
+    "Fresh process recovers exact canonical teacher/student UUIDs, submission, sync and wallet": 29634
+  },
+  "teachingMutationLatencyMs": {
+    "count": 12,
+    "min": 4719,
+    "max": 11347,
+    "median": 8154,
+    "p95": 11347
+  },
+  "totalMs": 165269
+}

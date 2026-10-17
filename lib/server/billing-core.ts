@@ -424,7 +424,7 @@ export function createBillingStore(ctx: Context) {
       .update(JSON.stringify(payload))
       .digest("hex");
     const existing = db
-      .prepare("SELECT * FROM billing_actions WHERE request_id=?")
+      .prepare('SELECT request_id,user_id,actor_id,action AS "action",fingerprint,created_at FROM billing_actions WHERE request_id=?')
       .get(requestId);
     if (existing) {
       if (
