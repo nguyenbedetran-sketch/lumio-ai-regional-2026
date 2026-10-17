@@ -87,16 +87,18 @@ export function createRagStore({
       expiresAt: new Date(Number(row.expires_at)).toISOString(),
     };
   }
-  function ragList(userId: string, space: string) {
-    current(userId);
-    workspace(space);
-    sweep();
-    return db
-      .prepare(
-        "SELECT * FROM rag_documents WHERE user_id=? AND workspace_id=? ORDER BY updated_at DESC,id",
-      )
-      .all(userId, space)
-      .map(summary);
+  function ragList(userId: string, space: string, version?: number) {
+    return transaction(() => {
+      current(userId, version);
+      workspace(space);
+      sweep();
+      return db
+        .prepare(
+          "SELECT * FROM rag_documents WHERE user_id=? AND workspace_id=? ORDER BY updated_at DESC,id",
+        )
+        .all(userId, space)
+        .map(summary);
+    });
   }
   function ragIndex(userId: string, input: RagIndexInput, version?: number) {
     current(userId, version);
@@ -407,7 +409,14 @@ export function createRagStore({
     ragAssertSnapshot(userId, snapshot, version);
     return snapshot;
   }
-  function ragEmbeddingInput(userId: string, space: string, id: string) {
+  // Plain internal reader for callers already inside the settlement transaction.
+  function embeddingInput(
+    userId: string,
+    space: string,
+    id: string,
+    version?: number,
+  ) {
+    current(userId, version);
     const doc = owned(userId, space, id),
       rows = db
         .prepare(
@@ -426,6 +435,14 @@ export function createRagStore({
         text: (JSON.parse(String(r.segment_json)) as SourceSegment).text,
       })),
     };
+  }
+  function ragEmbeddingInput(
+    userId: string,
+    space: string,
+    id: string,
+    version?: number,
+  ) {
+    return transaction(() => embeddingInput(userId, space, id, version));
   }
   function ragRequireSemantic(
     userId: string,
@@ -458,7 +475,7 @@ export function createRagStore({
   ) {
     const save = () => {
       current(userId, version);
-      const data = ragEmbeddingInput(userId, space, id);
+      const data = embeddingInput(userId, space, id, version);
       if (data.digest !== digest || data.revision !== revision)
         throw new PlatformError("RAG_SOURCE_CHANGED", 409);
       if (

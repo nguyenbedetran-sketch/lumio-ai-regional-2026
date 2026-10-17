@@ -1,5 +1,7 @@
 # V7 · Backup, nâng cấp và rollback schema17
 
+Historical V7 checkpoint. For the current schema18/remote candidate, use [the active operations guide](../next/OPERATIONS.md); the statements and test counts below describe their recorded V7 scope.
+
 Đây là hướng dẫn vận hành hiện hành. Kiểm thử dùng SQLite mẫu trên máy phát triển; **chưa sao lưu, nâng cấp hoặc rollback DB Render Free thực tế theo runbook này**. Bản public trước nâng cấp đang dùng schema13 theo kiểm tra của điều phối viên. Không suy ra phiên bản DB public từ source local.
 
 DB chứa tài khoản, lịch sử học/điểm, bài nộp, nhận xét, credit, receipt và journal metadata từng provider dispatch. ID liên kết tài khoản vẫn là dữ liệu riêng; không đưa DB/backup vào GitHub, thư mục web hoặc Drive minh chứng. Journal không lưu prompt/source/raw output, nhưng điều đó không làm cả backup trở thành dữ liệu công khai.

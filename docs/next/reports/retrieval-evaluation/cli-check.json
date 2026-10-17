@@ -1,0 +1,1461 @@
+{
+  "schema": 1,
+  "evaluator": "lumio-v12-production-retrieval-offline",
+  "status": "PASS_SCOPED_OFFLINE_CHECKS",
+  "sourceScope": "Local working tree identified by the listed file SHA-256 values; sourceCommit is the base HEAD, not a claim of a clean/released tree.",
+  "semanticQualityStatus": "PARTIAL_NOT_A_SEMANTIC_BENCHMARK",
+  "startedAt": "2026-10-17T06:05:54.976Z",
+  "finishedAt": "2026-10-17T06:05:55.422Z",
+  "latencyMs": 444,
+  "sourceCommit": "f1ac9c28832a7a3b4d4b83b0240f6e62bd80ff04",
+  "sourceProof": [
+    {
+      "path": "tests/fixtures/v12-retrieval-evaluation.v1.json",
+      "sha256": "1449aa49a0f8a4ed5c65b2d1f55f58b032556fa1eebb8faa2a47631b5517a112"
+    },
+    {
+      "path": "tests/fixtures/v7-ai-evaluation.v1.json",
+      "sha256": "2502e14ffc09e637fef6858fbf20a59f5bded01a167fc5d6b05930662966187b"
+    },
+    {
+      "path": "scripts/evaluate-rag.cjs",
+      "sha256": "cb3d08d404915a5267019c9b60f5614f3234938db4df9039404a4a6284bd5aa0"
+    },
+    {
+      "path": "scripts/rag-offline-evaluation.cjs",
+      "sha256": "dc0acab72b48334746b291a50052c27103446932f79620bc5d6740fcf1c6020c"
+    },
+    {
+      "path": "tests/rag-live-replay.cjs",
+      "sha256": "476e055bdbf93633b88c2defab3cd9a27b771a829bc8e79aaf196f093908457d"
+    },
+    {
+      "path": "lib/rag/retrieval.ts",
+      "sha256": "7a161e02985c698cad4cbc61b1aa9d9889f31b0514748b2b53952cd562cc04b9"
+    },
+    {
+      "path": "lib/rag/types.ts",
+      "sha256": "c7e6b6ec6285a183e5efa8255c4f104b3c3256d10adef47def62bb34a50f39a6"
+    },
+    {
+      "path": "lib/server/rag-core.ts",
+      "sha256": "0d0727a633134b84f55034cf3efbc8a732b831272dcbb87dc697a9ee6b7e5fcf"
+    },
+    {
+      "path": "lib/ai/grounding.ts",
+      "sha256": "664e0f198b59116dcd68d006b0a8f6e550af192823f009d17a6b72d4db7ea0a8"
+    }
+  ],
+  "configuration": {
+    "productionPath": "Actual createStore(':memory:').ragSearch and ragPrepareSnapshot",
+    "maximumDocuments": 5,
+    "topK": 6,
+    "dimensions": 256,
+    "semanticThreshold": 0.35,
+    "selection": "Actual production diverseHits; no copied ranking/diversification algorithm"
+  },
+  "checked": 51,
+  "networkAttempts": 0,
+  "newProviderCalls": 0,
+  "realUserData": false,
+  "summary": {
+    "authoredLexical": {
+      "cases": 20,
+      "answerableCases": 13,
+      "emptyGoldCases": 7,
+      "chunkRecallAt6": 1,
+      "documentRecallAt6": 1,
+      "reciprocalRankAt6": 0.9615384615384616,
+      "emptyGoldRetrievedCases": 1
+    },
+    "syntheticGeometry": {
+      "cases": 3,
+      "answerableCases": 2,
+      "emptyGoldCases": 1,
+      "chunkRecallAt6": 1,
+      "documentRecallAt6": 1,
+      "reciprocalRankAt6": 1,
+      "emptyGoldRetrievedCases": 0
+    },
+    "historicalSavedVectorReplay": {
+      "lexical": {
+        "cases": 14,
+        "answerableCases": 6,
+        "emptyGoldCases": 8,
+        "chunkRecallAt6": 0.8333333333333334,
+        "documentRecallAt6": 0.8333333333333334,
+        "reciprocalRankAt6": 0.8333333333333334,
+        "emptyGoldRetrievedCases": 0
+      },
+      "hybrid": {
+        "cases": 14,
+        "answerableCases": 6,
+        "emptyGoldCases": 8,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrievedCases": 0
+      }
+    }
+  },
+  "authored": [
+    {
+      "id": "multi-chunk-diversification",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "orbital calibration reference reading",
+      "selectedDocuments": [
+        "crowded",
+        "verification",
+        "distractor"
+      ],
+      "relevant": [
+        "verification:required"
+      ],
+      "selected": [
+        "crowded:copy-4",
+        "verification:required",
+        "distractor:calendar",
+        "crowded:copy-3",
+        "crowded:copy-2",
+        "crowded:copy-6"
+      ],
+      "rawLexicalTop6": [
+        "crowded:copy-4",
+        "crowded:copy-3",
+        "crowded:copy-2",
+        "crowded:copy-6",
+        "crowded:copy-7",
+        "crowded:copy-5"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 0.16666666666666666,
+        "reciprocalRankAt6": 0.5,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "numeric-conflict-preserves-both",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "recorded reservoir volume",
+      "selectedDocuments": [
+        "table-a",
+        "table-b",
+        "distractor"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-b:value",
+        "table-a:value",
+        "distractor:format"
+      ],
+      "rawLexicalTop6": [
+        "table-b:value",
+        "table-a:value",
+        "distractor:format"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 0.6666666666666666,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "semantic-conflict-outside-numeric-warning",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "emergency route direction",
+      "selectedDocuments": [
+        "east",
+        "west"
+      ],
+      "relevant": [
+        "east:route",
+        "west:route"
+      ],
+      "selected": [
+        "east:route",
+        "west:route"
+      ],
+      "rawLexicalTop6": [
+        "east:route",
+        "west:route"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      },
+      "limitationObserved": "Both contradictory direction passages are retrieved; the numeric-only conflict warning does not detect this semantic contradiction."
+    },
+    {
+      "id": "overlapping-terms-without-answer",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "mercury orbital mass measurement",
+      "selectedDocuments": [
+        "incomplete",
+        "unrelated"
+      ],
+      "relevant": [],
+      "selected": [
+        "incomplete:scope"
+      ],
+      "rawLexicalTop6": [
+        "incomplete:scope"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": 0,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": true
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      },
+      "limitationObserved": "Lexical overlap retrieves an incomplete passage. Retrieval is not proof that the requested answer exists; no generated answer/abstention was tested."
+    },
+    {
+      "id": "selected-sources-exclude-unselected-answer",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "volcanic magma eruption",
+      "selectedDocuments": [
+        "geometry",
+        "biology"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "vi-lexical-source",
+      "language": "vi",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "điều kiện mẫu số",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [
+        "lesson:domain"
+      ],
+      "selected": [
+        "lesson:domain"
+      ],
+      "rawLexicalTop6": [
+        "lesson:domain"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "vi-no-token-hit",
+      "language": "vi",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "núi lửa sao hỏa",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "vi-numeric-conflict",
+      "language": "vi",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "nhiệt độ ghi nhận",
+      "selectedDocuments": [
+        "table-a",
+        "table-b"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "rawLexicalTop6": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "en-lexical-source",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "nonzero denominator",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [
+        "lesson:domain"
+      ],
+      "selected": [
+        "lesson:domain"
+      ],
+      "rawLexicalTop6": [
+        "lesson:domain"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "en-no-token-hit",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "volcanic magma eruption",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "en-numeric-conflict",
+      "language": "en",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "recorded temperature",
+      "selectedDocuments": [
+        "table-a",
+        "table-b"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "rawLexicalTop6": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "zh-CN-lexical-source",
+      "language": "zh-CN",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "分母不能为零",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [
+        "lesson:domain"
+      ],
+      "selected": [
+        "lesson:domain"
+      ],
+      "rawLexicalTop6": [
+        "lesson:domain"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "zh-CN-no-token-hit",
+      "language": "zh-CN",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "火星火山喷发",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "zh-CN-numeric-conflict",
+      "language": "zh-CN",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "实验温度",
+      "selectedDocuments": [
+        "table-a",
+        "table-b"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "rawLexicalTop6": [
+        "table-b:value",
+        "table-a:value"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "ja-lexical-source",
+      "language": "ja",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "分数方程式",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [
+        "lesson:domain"
+      ],
+      "selected": [
+        "lesson:domain"
+      ],
+      "rawLexicalTop6": [
+        "lesson:domain"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "ja-no-token-hit",
+      "language": "ja",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "火星火山噴火",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "ja-numeric-conflict",
+      "language": "ja",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "実験の温度",
+      "selectedDocuments": [
+        "table-a",
+        "table-b"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "rawLexicalTop6": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "ko-lexical-source",
+      "language": "ko",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "분수방정식",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [
+        "lesson:domain"
+      ],
+      "selected": [
+        "lesson:domain"
+      ],
+      "rawLexicalTop6": [
+        "lesson:domain"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "ko-no-token-hit",
+      "language": "ko",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "화성 화산 분출",
+      "selectedDocuments": [
+        "lesson",
+        "distractor"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    },
+    {
+      "id": "ko-numeric-conflict",
+      "language": "ko",
+      "status": "PASS",
+      "scope": "authored-lexical-retrieval",
+      "question": "실험 온도",
+      "selectedDocuments": [
+        "table-a",
+        "table-b"
+      ],
+      "relevant": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "selected": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "rawLexicalTop6": [
+        "table-a:value",
+        "table-b:value"
+      ],
+      "metrics": {
+        "authoredRelevantChunks": 2,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "lexical",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": true,
+        "exactOffsetsChecked": true
+      }
+    }
+  ],
+  "syntheticGeometry": [
+    {
+      "id": "synthetic-semantic-only-selection",
+      "language": "en",
+      "status": "PASS",
+      "scope": "synthetic-geometry-not-semantic-evidence",
+      "question": "xyzzq semantic needle",
+      "selectedDocuments": [
+        "aligned",
+        "orthogonal"
+      ],
+      "relevant": [
+        "aligned:body"
+      ],
+      "selected": [
+        "aligned:body"
+      ],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "hybrid",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "synthetic-threshold-neighbours",
+      "language": "en",
+      "status": "PASS",
+      "scope": "synthetic-geometry-not-semantic-evidence",
+      "question": "xyzzq semantic needle",
+      "selectedDocuments": [
+        "above",
+        "below"
+      ],
+      "relevant": [
+        "above:body"
+      ],
+      "selected": [
+        "above:body"
+      ],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 1,
+        "chunkRecallAt6": 1,
+        "documentRecallAt6": 1,
+        "precisionAtSelected": 1,
+        "reciprocalRankAt6": 1,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "hybrid",
+      "snapshot": {
+        "created": true,
+        "conflictWarning": false,
+        "exactOffsetsChecked": true
+      }
+    },
+    {
+      "id": "synthetic-semantic-no-hit",
+      "language": "en",
+      "status": "PASS",
+      "scope": "synthetic-geometry-not-semantic-evidence",
+      "question": "xyzzq semantic needle",
+      "selectedDocuments": [
+        "orthogonal"
+      ],
+      "relevant": [],
+      "selected": [],
+      "rawLexicalTop6": [],
+      "metrics": {
+        "authoredRelevantChunks": 0,
+        "chunkRecallAt6": null,
+        "documentRecallAt6": null,
+        "precisionAtSelected": null,
+        "reciprocalRankAt6": 0,
+        "emptyGoldRetrieved": false
+      },
+      "mode": "hybrid",
+      "snapshot": {
+        "created": false,
+        "error": "RAG_NO_EVIDENCE",
+        "httpStatus": 422
+      }
+    }
+  ],
+  "savedReplay": {
+    "status": "PASS_REPLAY_SCOPE",
+    "provenance": [
+      {
+        "path": "docs/regional/rag-live-vectors.json",
+        "sha256": "28728e956915fd9393e7677b7c71cde0aca0912b3f16a9331152ef4e7543896c"
+      },
+      {
+        "path": "docs/regional/rag-live-evaluation.json",
+        "sha256": "6993703781ca58df3705c9229ab0dd46c0001d4b0f89f691ece1ffd1b9fcf2f4"
+      }
+    ],
+    "vectors": "Saved actual provider vectors for authored historical fixtures; zero new provider requests. Current production selection is exercised offline, not current provider quality.",
+    "originalProviderRequests": 2,
+    "originalModel": "text-embedding-3-small",
+    "legacy": {
+      "status": "PASS_HISTORICAL_RAW_TOP3",
+      "cases": 7,
+      "documents": 6,
+      "topK": 3,
+      "productionScope": false,
+      "newProviderCalls": 0
+    },
+    "productionScopes": [
+      {
+        "id": "school",
+        "ids": [
+          "equation",
+          "triangle",
+          "plants",
+          "recall"
+        ]
+      },
+      {
+        "id": "laboratory",
+        "ids": [
+          "boiling-a",
+          "boiling-b"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "id": "school-q1-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "nonzero divisor",
+        "relevant": [
+          "equation:body"
+        ],
+        "selected": [
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q1-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "nonzero divisor",
+        "relevant": [
+          "equation:body"
+        ],
+        "selected": [
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q2-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "How can I keep both expressions equal while solving for an unknown?",
+        "relevant": [
+          "equation:body"
+        ],
+        "selected": [
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q2-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "How can I keep both expressions equal while solving for an unknown?",
+        "relevant": [
+          "equation:body"
+        ],
+        "selected": [
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q3-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "How do leaves make their own food?",
+        "relevant": [
+          "plants:body"
+        ],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 0,
+          "documentRecallAt6": 0,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q3-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "How do leaves make their own food?",
+        "relevant": [
+          "plants:body"
+        ],
+        "selected": [
+          "plants:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q4-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "What is the longest edge when the perpendicular sides are 6 and 8?",
+        "relevant": [
+          "triangle:body"
+        ],
+        "selected": [
+          "triangle:body",
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 0.5,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q4-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "What is the longest edge when the perpendicular sides are 6 and 8?",
+        "relevant": [
+          "triangle:body"
+        ],
+        "selected": [
+          "triangle:body",
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 0.5,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q5-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "I forget a card repeatedly. When should it return?",
+        "relevant": [
+          "recall:body"
+        ],
+        "selected": [
+          "recall:body",
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 0.5,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q5-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "I forget a card repeatedly. When should it return?",
+        "relevant": [
+          "recall:body"
+        ],
+        "selected": [
+          "recall:body",
+          "equation:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 1,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 0.5,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q6-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "recorded boiling temperature",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q6-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "recorded boiling temperature",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q7-lexical",
+        "mode": "lexical",
+        "scope": "school",
+        "question": "Who won the football world cup in 1998?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "school-q7-hybrid",
+        "mode": "hybrid",
+        "scope": "school",
+        "question": "Who won the football world cup in 1998?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q1-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "nonzero divisor",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q1-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "nonzero divisor",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q2-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "How can I keep both expressions equal while solving for an unknown?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q2-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "How can I keep both expressions equal while solving for an unknown?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q3-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "How do leaves make their own food?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q3-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "How do leaves make their own food?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q4-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "What is the longest edge when the perpendicular sides are 6 and 8?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q4-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "What is the longest edge when the perpendicular sides are 6 and 8?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q5-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "I forget a card repeatedly. When should it return?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q5-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "I forget a card repeatedly. When should it return?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q6-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "recorded boiling temperature",
+        "relevant": [
+          "boiling-a:body",
+          "boiling-b:body"
+        ],
+        "selected": [
+          "boiling-b:body",
+          "boiling-a:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 2,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": true
+      },
+      {
+        "id": "laboratory-q6-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "recorded boiling temperature",
+        "relevant": [
+          "boiling-a:body",
+          "boiling-b:body"
+        ],
+        "selected": [
+          "boiling-b:body",
+          "boiling-a:body"
+        ],
+        "metrics": {
+          "authoredRelevantChunks": 2,
+          "chunkRecallAt6": 1,
+          "documentRecallAt6": 1,
+          "precisionAtSelected": 1,
+          "reciprocalRankAt6": 1,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": true
+      },
+      {
+        "id": "laboratory-q7-lexical",
+        "mode": "lexical",
+        "scope": "laboratory",
+        "question": "Who won the football world cup in 1998?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      },
+      {
+        "id": "laboratory-q7-hybrid",
+        "mode": "hybrid",
+        "scope": "laboratory",
+        "question": "Who won the football world cup in 1998?",
+        "relevant": [],
+        "selected": [],
+        "metrics": {
+          "authoredRelevantChunks": 0,
+          "chunkRecallAt6": null,
+          "documentRecallAt6": null,
+          "precisionAtSelected": null,
+          "reciprocalRankAt6": 0,
+          "emptyGoldRetrieved": false
+        },
+        "conflictWarning": false
+      }
+    ],
+    "limitations": [
+      "The old corpus has six documents, above today's five-document per-account limit. Fixed school (4) and laboratory (2) scopes are evaluated independently; gold labels do not select individual documents per query.",
+      "Scores/cosine threshold are not calibrated probability or semantic confidence.",
+      "Metrics on seven old authored questions are descriptive, not acceptance thresholds or population estimates."
+    ]
+  },
+  "limitations": [
+    "PASS means the explicitly scoped deterministic retrieval/snapshot assertions passed. It does not mean all retrieved passages answer a question or all contradictions are detected.",
+    "Gold relevance and multilingual passages are developer-authored, with no held-out independent teacher or curriculum review.",
+    "Diversification can rescue another document and also promote distractors. Per-case selected chunks, recall and precision remain visible; scores are not confidence.",
+    "The deliberately overlapping but unanswerable passage is retrieved, and a nonnumeric contradiction is not flagged. These observed limitations are reported, not renamed as successful abstention/semantic verification.",
+    "Synthetic geometry cases establish threshold/fusion plumbing only; saved provider vectors establish historical replay only. No live model, generated answer, injection resistance, classroom pilot or student outcome is evaluated."
+  ]
+}

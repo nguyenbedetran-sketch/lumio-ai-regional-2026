@@ -25,12 +25,21 @@ export default function config(phase: string): NextConfig {
     distDir: phase === "phase-development-server" ? ".next-dev" : ".next",
     devIndicators: false,
     async headers() {
+      // Framing protection only: outbound YouTube/PDF frames, microphone,
+      // workers and the prepaint theme script retain their existing behavior.
+      // A complete script/connect CSP needs a separate compatibility rollout.
+      const browserHeaders = [
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "X-Frame-Options", value: "DENY" },
+        { key: "Content-Security-Policy", value: "frame-ancestors 'none'" },
+        { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+      ];
       const privateHeaders = [
         { key: "X-Robots-Tag", value: "noindex, nofollow, noarchive" },
       ];
-      return ["/", "/admin/:path*", "/teacher/:path*", "/classroom/:path*", "/api/:path*", "/preview-mobile.html"].map(
+      return [{ source: "/:path*", headers: browserHeaders }, ...["/", "/admin/:path*", "/teacher/:path*", "/classroom/:path*", "/api/:path*", "/preview-mobile.html"].map(
         (source) => ({ source, headers: privateHeaders }),
-      );
+      )];
     },
     experimental: {
       webpackBuildWorker: false,

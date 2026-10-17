@@ -1,0 +1,11 @@
+PASS Stale/missing account header blocks list, snapshot URL and source deletion before side effects
+PASS Guest and hostile-origin deletion cannot resolve or erase source IDs
+PASS Delete-source requires strict bounded ID and refuses forged owner/workspace/action shapes
+PASS A foreign actor cannot erase an owner-only source or infer its existence
+PASS Session revocation between authorization and streamed body parsing rolls deletion back
+PASS Failure deleting a document restores all affected snapshots and chunks atomically
+PASS All owned workspace copies and cached evidence delete, leaving unrelated and other-owner data
+PASS Repeated deletion is an idempotent metadata-only zero without a credit mutation
+PASS Native source access requires matching canonical user and rejects browser credential mixing
+PASS Existing per-document delete stays scoped and invalidates only its owned workspace
+V7 RAG lifecycle: 10 checks passed.

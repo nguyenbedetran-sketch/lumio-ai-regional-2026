@@ -10,7 +10,7 @@ const { spawn } = require("node:child_process");
 const { DatabaseSync } = require("node:sqlite");
 const { encode } = require("next-auth/jwt");
 const root = path.resolve(__dirname, "..");
-const output = path.join(root, "docs/v7/reports/compiled-http-report.json");
+const output = path.join(root, "docs/next/reports/compiled-http-report.json");
 const checks = [];
 const report = {
   status: "RUNNING",
@@ -114,11 +114,27 @@ async function main() {
     await new Promise((r) => setTimeout(r, 250));
   }
   assert.ok(started, "Compiled server readiness");
+  await check(1, "Real compiled HTTP sends framing/referrer/MIME protection on pages, APIs and error responses", async () => {
+    for (const endpoint of ["/", "/privacy", "/teacher", "/classroom", "/admin", "/api/config", "/api/account", "/robots.txt", "/not-a-real-lumio-page"]) {
+      const response = await fetch(origin + endpoint, { signal: AbortSignal.timeout(20000) });
+      assert.ok([200, 401, 403, 404].includes(response.status));
+      assert.equal(response.headers.get("x-frame-options"), "DENY");
+      assert.equal(response.headers.get("content-security-policy"), "frame-ancestors 'none'");
+      assert.equal(response.headers.get("x-content-type-options"), "nosniff");
+      assert.equal(response.headers.get("referrer-policy"), "strict-origin-when-cross-origin");
+      // Public capability configuration uses no-store; account data additionally
+      // carries private. Both existing response policies must remain intact.
+      if (endpoint.startsWith("/api/")) assert.match(response.headers.get("cache-control") || "", /no-store/);
+      if (endpoint === "/api/account") assert.match(response.headers.get("cache-control") || "", /private/);
+      if (["/", "/teacher", "/classroom", "/admin", "/api/config", "/api/account"].includes(endpoint)) assert.match(response.headers.get("x-robots-tag") || "", /noindex/);
+    }
+  });
   db = new DatabaseSync(dbPath);
   db.exec("PRAGMA foreign_keys=ON; PRAGMA busy_timeout=5000;");
   const users = {};
   for (const name of [
     "owner",
+    "otherAdmin",
     "teacher",
     "otherTeacher",
     "student",
@@ -135,7 +151,7 @@ async function main() {
       key,
       "SYNTHETIC " + name,
       null,
-      name === "owner" ? "SUPER_ADMIN" : "USER",
+      ["owner", "otherAdmin"].includes(name) ? "SUPER_ADMIN" : "USER",
       stamp,
       stamp,
     );
@@ -224,6 +240,37 @@ async function main() {
     assignment,
     submission,
     practice;
+  await check(
+    1,
+    "Compiled legacy admin APIs bind reads and mutations to the page account across a cookie switch",
+    async () => {
+      for (const endpoint of ["/api/admin", "/api/admin/users", "/api/admin/audit"]) {
+        const matched = await fetch(origin + endpoint, { headers: headers(users.owner) });
+        assert.equal(matched.status, 200);
+        assert.match(matched.headers.get("cache-control"), /no-store/);
+        for (const account of [null, "", users.owner.key]) {
+          const requestHeaders = headers(users.otherAdmin);
+          if (account === null) delete requestHeaders["x-lumio-account"];
+          else requestHeaders["x-lumio-account"] = account;
+          const denied = await fetch(origin + endpoint, { headers: requestHeaders });
+          assert.equal(denied.status, 401);
+          assert.equal((await denied.json()).error, "SESSION_REVOKED");
+        }
+        assert.equal((await fetch(origin + endpoint, {headers: headers(users.student)})).status, 403);
+      }
+      const before = db.prepare("SELECT * FROM users WHERE id=?").get(users.outsider.id);
+      const audits = db.prepare("SELECT count(*) n FROM audit_events").get().n;
+      const denied = await fetch(origin + "/api/admin/users", {
+        method: "PATCH",
+        headers: headers(users.otherAdmin, {"x-lumio-account": users.owner.key}),
+        body: JSON.stringify({userId: users.outsider.id, action: "disable", reason: "Synthetic stale page must be rejected"}),
+      });
+      assert.equal(denied.status, 401);
+      assert.equal((await denied.json()).error, "SESSION_REVOKED");
+      assert.deepEqual(db.prepare("SELECT * FROM users WHERE id=?").get(users.outsider.id), before);
+      assert.equal(db.prepare("SELECT count(*) n FROM audit_events").get().n, audits);
+    },
+  );
   await check(
     1,
     "Compiled endpoints deny anonymous, cross-origin and forged account binding",

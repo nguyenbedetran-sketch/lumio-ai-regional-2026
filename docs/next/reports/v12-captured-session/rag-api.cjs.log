@@ -1,0 +1,22 @@
+PASS Canonical GET works without Origin; cross-site and unauthenticated reads are denied
+PASS Indexing requires explicit storage consent and same-origin write
+PASS Search and vector indexing deny foreign document ids before transport
+PASS Lexical search returns verbatim source and costs zero credits
+PASS No evidence creates no provider call or credit debit
+PASS Actual AI route maps model quote to owner-bound document provenance and snapshot
+PASS Follow-up reuses immutable retrieval text instead of searching the new student response
+PASS Full-solution gate is still enforced for retrieved sources before three hints
+PASS Changed source revision rejects old tutor snapshot before paid transport
+PASS Deletion during provider generation prevents response commit and refunds credits
+PASS Optional embeddings require external consent; successful vectors debit exactly two credits atomically
+PASS Embedding provider error refunds reservation and preserves lexical index
+PASS Hybrid search is explicit, combines vectors and lexical hits, and debits two credits
+PASS Failed first RAG hint returns its immutable snapshot and can retry without resetting the exercise
+PASS Repeated embedding request for current source is idempotent with no extra transport or debit
+PASS Session revocation during document embedding rolls back vector assignment and refunds credits
+PASS Session revocation during semantic search rejects excerpts and refunds query credits
+PASS A source update between precheck and settlement is rejected inside the atomic tutor transaction
+PASS Source changes during query embedding cannot be billed as a hybrid result from stale vectors
+PASS A failed first-turn semantic embedding refunds both chat and query reservations
+PASS Hybrid tutoring debits both costs once and follow-ups do not embed the question again
+21 RAG API checks passed; no real OAuth or paid provider claim.

@@ -1,17 +1,17 @@
 import {
-  requireAdmin,
   assertSameOrigin,
   readJSON,
   json,
   errorResponse,
 } from "../../../../lib/server/access";
+import { adminActor } from "../../../../lib/server/admin-access";
 import { getStore } from "../../../../lib/server/store";
 import { PlatformError } from "../../../../lib/server/types";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(req: Request) {
   try {
-    await requireAdmin("users.read");
+    await adminActor(req, "users.read");
     const params = new URL(req.url).searchParams;
     const offset = Number(params.get("offset") || 0);
     if (!Number.isSafeInteger(offset) || offset < 0 || offset > 1000000)
@@ -35,7 +35,8 @@ export async function PATCH(req: Request) {
     )
       throw new PlatformError("INVALID_REQUEST");
     const action = data.action as "disable" | "enable" | "revoke";
-    const actor = await requireAdmin(
+    const actor = await adminActor(
+      req,
       action === "revoke" ? "users.sessions.revoke" : "users.suspend",
     );
     return json({

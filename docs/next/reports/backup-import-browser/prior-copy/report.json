@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "checks": 20,
+  "passed": [
+    "Real pending library ACK exposes an accessible saving status",
+    "Saving status is marked aria-busy",
+    "Import control is disabled until the library ACK resolves",
+    "Study stores are unchanged while the real library ACK is held",
+    "Successful import persists the actual library revision in browser IndexedDB",
+    "Success also persists exactly the imported progress and preferences",
+    "Completed persistent status exposes a usable dismiss control",
+    "Success remains readable after the transient toast lifetime",
+    "A real aborted IndexedDB transaction preserves the original library and revision",
+    "Denied library ACK leaves both actual localStorage study stores unchanged",
+    "Import control leaves the busy state after an acknowledged failure",
+    "Failure remains a persistent accessible alert, not a disappearing toast",
+    "Partial status truthfully retains the already committed library",
+    "Partial restoration preserves the failed preference store and acknowledges the saved progress",
+    "Partial alert explains that stores are separate and asks for review/export before retry",
+    "Partial result stays visible for deliberate recovery",
+    "Partial recovery copy and controls fit a 390px phone viewport",
+    "Partial alert can be dismissed by its visible accessible control",
+    "No browser page errors occurred",
+    "No paid mutation or external network request occurred"
+  ],
+  "pageErrors": [],
+  "externalRequests": [],
+  "unexpectedMutations": [],
+  "observedApiMetadata": [
+    {
+      "path": "/api/account",
+      "method": "GET"
+    },
+    {
+      "path": "/api/rag/documents",
+      "method": "GET"
+    },
+    {
+      "path": "/api/account",
+      "method": "GET"
+    },
+    {
+      "path": "/api/rag/documents",
+      "method": "GET"
+    },
+    {
+      "path": "/api/account",
+      "method": "GET"
+    },
+    {
+      "path": "/api/rag/documents",
+      "method": "GET"
+    }
+  ],
+  "screenshots": [
+    "success-desktop.png",
+    "failure-desktop.png",
+    "partial-phone.png"
+  ],
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1050
+    },
+    {
+      "width": 390,
+      "height": 1000
+    }
+  ],
+  "scope": "Actual Workspace React/DOM and real browser IndexedDB/localStorage with isolated synthetic guest/config; no real OAuth, student, provider, device, or production validation",
+  "limitations": [
+    "Completion callback was held and transaction aborted only in this synthetic browser fixture.",
+    "Separate IndexedDB/localStorage stores are not globally atomic. Cross-tab localStorage check/write races cannot guarantee that every concurrent edit is preserved.",
+    "This covers three import outcomes and accessibility/status controls, not all learner features."
+  ],
+  "checkedAt": "2026-10-17T06:07:27.982Z",
+  "tool": "@playwright/cli@0.1.21",
+  "syntaxChecks": 6,
+  "sourceSha256": {
+    "components/lumio/app.tsx": "9bba6aa1144d51e1bcee90c3c4ff22e61bdfb24d8b95a0a6e226f91351bf752b",
+    "lib/lumio/backup-import-copy.ts": "1e73d15b644d7dbaf2ddd1750c1467df01698e24425569a4afb524a5c7adeab2",
+    "lib/lumio/storage.ts": "00ccd77a83ffd40bf65b4ae1b7a154013cfd5bbf115b3189e1d19032a9c6383f",
+    "tests/v10-backup-import.browser.js": "5a87295a67e6be51e3bd9fc7da0091d710e49867a6ae5cb700af093362f6afc7"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "results": [
+    {
+      "script": "tests/rag.cjs",
+      "exit": 0,
+      "passed": 23,
+      "status": "PASS"
+    },
+    {
+      "script": "tests/rag-api.cjs",
+      "exit": 0,
+      "passed": 21,
+      "status": "PASS"
+    },
+    {
+      "script": "tests/v7-rag-lifecycle.cjs",
+      "exit": 0,
+      "passed": 10,
+      "status": "PASS"
+    },
+    {
+      "script": "tests/v7-rag-billing.cjs",
+      "exit": 0,
+      "passed": 32,
+      "status": "PASS"
+    }
+  ],
+  "historicalReportBytesPreserved": true,
+  "scope": "Relevant actual isolated RAG tests with synthetic authentication/provider transport; no live database/network/providers",
+  "checkedAt": "2026-10-17T05:48:17.136Z"
+}

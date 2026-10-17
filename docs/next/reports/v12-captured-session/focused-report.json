@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "runs": [
+    {
+      "name": "baseline",
+      "baseline": "f1ac9c2",
+      "reproduced": true,
+      "passed": 2,
+      "providerCalls": 0
+    },
+    {
+      "name": "focused",
+      "status": "PASS",
+      "passed": 10,
+      "providerCalls": 0,
+      "scope": "Actual RAG handlers/core/transactions/ledger with real isolated in-memory SQLite and synthetic OAuth; no live database, network, provider or browser"
+    }
+  ],
+  "sourceHashes": {
+    "lib/server/rag-core.ts": "0d0727a633134b84f55034cf3efbc8a732b831272dcbb87dc697a9ee6b7e5fcf",
+    "app/api/rag/documents/route.ts": "6936845b12c714a85dd255958c1924da3627309164ee2d5bdb4db952fe300696",
+    "tests/v12-rag-session-boundary.cjs": "4922b9007b72c46977a33e742d3281dcdf1c47196a6a1acdfa365b56ddb60720"
+  },
+  "checkedAt": "2026-10-17T05:49:03.123Z"
+}

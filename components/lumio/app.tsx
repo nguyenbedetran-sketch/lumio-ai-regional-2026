@@ -79,12 +79,17 @@ import { accountHeaders } from "../../lib/ai/request-client";
 import { DraftBoundary, useDraftGuard } from "../shared/draft-guard";
 import packageInfo from "../../package.json";
 import { settingsCopy } from "../../lib/lumio/settings-copy-v7";
+import { backupImportCopy } from "../../lib/lumio/backup-import-copy";
 import { AddContent, AddMode } from "./add-content";
 import { LearningView } from "./learning-view";
 import { BrandSymbol } from "./brand";
 import { enhancements } from "../../lib/lumio/enhancements";
 import { learningCopy } from "../../lib/lumio/learning-copy";
-import { parseLearning, type StudyTask } from "../../lib/lumio/learning-engine";
+import {
+  emptyLearning,
+  parseLearning,
+  type StudyTask,
+} from "../../lib/lumio/learning-engine";
 import { useLearning } from "./use-learning";
 import { Dashboard } from "./dashboard";
 import homeStyles from "./home-v8.module.css";
@@ -101,7 +106,10 @@ import { useSurfaceEntrance } from "./use-surface-entrance";
 import { AccountConnections } from "./account-connections";
 import { Recommendations, personalCopy } from "./recommendations";
 import { usePersonalization } from "./use-personalization";
-import { parsePreferences } from "../../lib/lumio/recommendations";
+import {
+  emptyPreferences,
+  parsePreferences,
+} from "../../lib/lumio/recommendations";
 import { BillingPanel } from "./billing";
 import { billingCopy } from "../../lib/lumio/billing-copy";
 import { PreviewNotice } from "./preview-notice";
@@ -503,6 +511,11 @@ function Workspace({
     [recoveringLibrary, setRecoveringLibrary] = useState(false),
     [recoveryDraft, setRecoveryDraft] = useState<LibraryState | null>(null),
     [toast, setToast] = useState(""),
+    [isImportingBackup, setImportingBackup] = useState(false),
+    [backupImportNotice, setBackupImportNotice] = useState<{
+      phase: "saving" | "saved" | "failed" | "partial";
+      message: string;
+    } | null>(null),
     [idea, setIdea] = useState("");
   const learning = useLearning(profile.account);
   const draftGuard = useDraftGuard();
@@ -615,6 +628,8 @@ function Workspace({
     libraryChannel = useRef<BroadcastChannel | null>(null),
     editingLibrary = useRef(false),
     currentData = useRef<LibraryState | null>(null),
+    importingBackup = useRef(false),
+    backupSelection = useRef(0),
     importInput = useRef<HTMLInputElement>(null);
   // Source/card/add dialogs can contain child-local drafts not yet submitted to commit.
   editingLibrary.current = !!selected || !!add || !!spaceDialog || !!confirm;
@@ -886,7 +901,35 @@ function Workspace({
     });
   }
   async function importFile(file: File | undefined) {
-    if (!file) return;
+    if (!file || importingBackup.current) return;
+    const account = profile.account,
+      selection = ++backupSelection.current,
+      base = currentData.current,
+      expectedRevision = base ? snapshotRevisions.current.get(base) : undefined,
+      observedLearning = JSON.stringify(syncLocalSnapshot.current.learning),
+      observedPreferences = JSON.stringify(
+        syncLocalSnapshot.current.preferences,
+      ),
+      copy = backupImportCopy[locale];
+    const bound = () =>
+      mounted.current &&
+      syncLocalSnapshot.current.account === account &&
+      backupSelection.current === selection;
+    // The file read may yield to another tab, focus completion, or an account change.
+    // Retain the original storage values rather than accepting a newer version later.
+    let localBefore: {
+      learning: string | null;
+      preferences: string | null;
+    } | null = null;
+    try {
+      localBefore = {
+        learning: localStorage.getItem(learningKey(account)),
+        preferences: localStorage.getItem(preferenceKey(account)),
+      };
+    } catch {
+      /* A library-only legacy backup does not require localStorage. */
+    }
+    let validBackup = false;
     try {
       if (file.size > 20 * 1024 * 1024) throw new Error();
       const raw = await file.text();
@@ -898,18 +941,131 @@ function Workspace({
       const restoredPreferences = backupData.personalization
         ? parsePreferences(backupData.personalization)
         : null;
+      validBackup = true;
+      if (!bound()) return;
+      const unchanged = () =>
+        bound() &&
+        (!restoredLearning ||
+          (!!localBefore &&
+            JSON.stringify(syncLocalSnapshot.current.learning) ===
+              observedLearning &&
+            localStorage.getItem(learningKey(account)) ===
+              localBefore.learning &&
+            JSON.stringify(
+              parseLearning(
+                JSON.parse(
+                  localBefore.learning || JSON.stringify(emptyLearning()),
+                ),
+              ),
+            ) === observedLearning)) &&
+        (!restoredPreferences ||
+          (!!localBefore &&
+            JSON.stringify(syncLocalSnapshot.current.preferences) ===
+              observedPreferences &&
+            localStorage.getItem(preferenceKey(account)) ===
+              localBefore.preferences &&
+            JSON.stringify(
+              parsePreferences(
+                JSON.parse(
+                  localBefore.preferences || JSON.stringify(emptyPreferences()),
+                ),
+              ),
+            ) === observedPreferences));
+      const libraryUnchanged = () =>
+        !!base &&
+        loaded.current &&
+        !blocked.current &&
+        !pending.current &&
+        currentData.current === base &&
+        expectedRevision !== undefined &&
+        snapshotRevisions.current.get(base) === expectedRevision;
+      if (!libraryUnchanged() || !unchanged()) {
+        setBackupImportNotice({ phase: "failed", message: copy.changed });
+        return;
+      }
       setConfirm({
         message: t.importConfirm,
-        action: () => {
-          commit(parsed, currentData.current);
-          if (restoredLearning) learning.update(restoredLearning, true);
-          if (restoredPreferences)
-            personalization.update(restoredPreferences, true);
-          go("library");
+        action: async () => {
+          if (importingBackup.current || !bound()) return;
+          let librarySaved = false;
+          importingBackup.current = true;
+          setImportingBackup(true);
+          try {
+            if (!libraryUnchanged() || !unchanged()) {
+              setBackupImportNotice({ phase: "failed", message: copy.changed });
+              return;
+            }
+            setBackupImportNotice({ phase: "saving", message: copy.saving });
+            commit(parsed, base);
+            await saveQueue.current;
+            // commit retains its optimistic draft after an error. Only an acknowledged
+            // revision can unlock the separate progress/preferences writes below.
+            librarySaved = revision.current >= expectedRevision! + 1;
+            if (!bound()) return;
+            if (
+              !librarySaved ||
+              blocked.current ||
+              pending.current ||
+              currentData.current !== parsed
+            )
+              throw Error("BACKUP_LIBRARY_SAVE_FAILED");
+            if (!unchanged()) throw Error("BACKUP_LOCAL_CHANGED");
+            if (restoredLearning) {
+              learning.update(restoredLearning, true);
+              if (
+                JSON.stringify(
+                  parseLearning(
+                    JSON.parse(
+                      localStorage.getItem(learningKey(account)) || "null",
+                    ),
+                  ),
+                ) !== JSON.stringify(restoredLearning)
+              )
+                throw Error("BACKUP_LEARNING_SAVE_FAILED");
+            }
+            if (restoredPreferences) {
+              // Do not overwrite preferences changed while the earlier store was saved.
+              if (
+                !bound() ||
+                JSON.stringify(syncLocalSnapshot.current.preferences) !==
+                  observedPreferences ||
+                localStorage.getItem(preferenceKey(account)) !==
+                  localBefore!.preferences
+              )
+                throw Error("BACKUP_LOCAL_CHANGED");
+              personalization.update(restoredPreferences, true);
+              if (
+                JSON.stringify(
+                  parsePreferences(
+                    JSON.parse(
+                      localStorage.getItem(preferenceKey(account)) || "null",
+                    ),
+                  ),
+                ) !== JSON.stringify(restoredPreferences)
+              )
+                throw Error("BACKUP_PREFERENCES_SAVE_FAILED");
+            }
+            if (!bound()) return;
+            setBackupImportNotice({ phase: "saved", message: copy.saved });
+            go("library");
+          } catch {
+            if (bound())
+              setBackupImportNotice({
+                phase: librarySaved ? "partial" : "failed",
+                message: librarySaved ? copy.partial : copy.failed,
+              });
+          } finally {
+            importingBackup.current = false;
+            if (bound()) setImportingBackup(false);
+          }
         },
       });
     } catch {
-      setToast(t.invalidBackup);
+      if (bound()) {
+        if (validBackup)
+          setBackupImportNotice({ phase: "failed", message: copy.failed });
+        else setToast(t.invalidBackup);
+      }
     } finally {
       if (importInput.current) importInput.current.value = "";
     }
@@ -948,8 +1104,7 @@ function Workspace({
         </button>
       </div>
     );
-  if (!data || !learning.ready)
-    return <LoadingSkeleton label={t.loading} />;
+  if (!data || !learning.ready) return <LoadingSkeleton label={t.loading} />;
   const item = data.items.find((i) => i.id === selected),
     space = data.spaces.find((s) => s.id === spaceId),
     name = profile.name || t.guestName;
@@ -1271,14 +1426,34 @@ function Workspace({
             storage={providers.storage}
           />
         )}
-        {providers?.publicDemo && (
-          <PreviewNotice locale={locale} kind="demo" />
-        )}
+        {providers?.publicDemo && <PreviewNotice locale={locale} kind="demo" />}
         <main
           ref={contentRef}
           key={item?.id || view}
           className={item ? "lm-content document" : "lm-content"}
         >
+          {backupImportNotice && (
+            <section
+              className="lm-panel"
+              role={
+                backupImportNotice.phase === "failed" ||
+                backupImportNotice.phase === "partial"
+                  ? "alert"
+                  : "status"
+              }
+              aria-busy={isImportingBackup || undefined}
+            >
+              <p className="lm-help">{backupImportNotice.message}</p>
+              {!isImportingBackup && (
+                <button
+                  className="lm-button"
+                  onClick={() => setBackupImportNotice(null)}
+                >
+                  {t.close}
+                </button>
+              )}
+            </section>
+          )}
           {libraryConflict && (
             <section className="lm-panel" role="alert">
               <h2>{conflictCopy.title}</h2>
@@ -1539,6 +1714,7 @@ function Workspace({
                       account={profile.account}
                       locale={locale}
                       disabled={
+                        isImportingBackup ||
                         libraryConflict ||
                         status !== "saved" ||
                         !learning.ready ||
@@ -1815,6 +1991,7 @@ function Workspace({
                       </button>
                       <button
                         className="lm-button"
+                        disabled={isImportingBackup}
                         onClick={() => importInput.current?.click()}
                       >
                         <Upload size={16} />

@@ -1,0 +1,9 @@
+{
+  "status": "FAIL",
+  "checkedAt": "2026-10-17T06:06:07.902Z",
+  "scope": "Compiled next start, actual HTTP handlers and separate SQLite; manually authored school content, synthetic sessions/accounts. No mock business handlers. Not Google OAuth, real teacher identity, real students, provider or physical device testing.",
+  "providerCalls": 0,
+  "phases": {},
+  "checks": [],
+  "error": "The input did not match the regular expression /private.*no-store|no-store.*private/. Input:\n\n'no-store'\n"
+}

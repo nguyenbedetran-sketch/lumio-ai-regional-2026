@@ -39,10 +39,14 @@ jobs:
           run_install: false
       - name: Install from the lockfile
         run: pnpm install --frozen-lockfile
+      - name: Audit production dependencies for high or critical advisories
+        run: pnpm audit --prod --audit-level high
       - name: Run deterministic and isolated SQLite tests
         run: pnpm test:all
       - name: Compile the production application
         run: pnpm build
+      - name: Verify actual compiled teaching HTTP, authorization and restore
+        run: pnpm test:teaching:production
       - name: Verify generated standalone native database process on Linux
         run: node scripts/test-v9-database-standalone.cjs
       - name: Check generated and source TypeScript

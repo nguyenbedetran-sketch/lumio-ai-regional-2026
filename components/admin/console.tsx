@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { signIn } from "next-auth/react";
 import {
   Activity,
@@ -65,13 +65,23 @@ const errorMessages: Record<string, string> = {
   DATABASE_CONNECTION_POISONED:
     "Kết nối database cần được quản trị khởi động lại. Chưa xác nhận thay đổi.",
 };
-async function request<T>(url: string, options?: RequestInit): Promise<T> {
+async function adminRequest<T>(
+  accountKey: string,
+  isCurrent: () => boolean,
+  url: string,
+  options?: RequestInit,
+): Promise<T> {
+  if (!isCurrent()) throw new Error(errorMessages.SESSION_REVOKED);
+  const headers = new Headers(options?.headers);
+  headers.set("Content-Type", "application/json");
+  headers.set("X-Lumio-Account", accountKey);
   const result = await fetch(url, {
     ...options,
     cache: "no-store",
-    headers: { "Content-Type": "application/json", ...options?.headers },
+    headers,
   });
   const payload = await result.json();
+  if (!isCurrent()) throw new Error(errorMessages.SESSION_REVOKED);
   if (!result.ok)
     throw new Error(
       errorMessages[payload.error] ||
@@ -124,6 +134,29 @@ export function AdminGate({ code }: { code: string }) {
 }
 
 export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
+  return (
+    <AdminConsoleForActor
+      key={initial.actor.id + ":" + initial.actor.accountKey}
+      initial={initial}
+    />
+  );
+}
+
+function AdminConsoleForActor({ initial }: { initial: AdminSnapshot }) {
+  const current = useRef(true);
+  useEffect(() => {
+    current.current = true;
+    return () => {
+      current.current = false;
+    };
+  }, []);
+  const request = <T,>(url: string, options?: RequestInit) =>
+    adminRequest<T>(
+      initial.actor.accountKey,
+      () => current.current,
+      url,
+      options,
+    );
   const [data, setData] = useState(initial),
     [tab, setTab] = useState<Tab>("overview"),
     [busy, setBusy] = useState(false),
@@ -215,9 +248,10 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
     try {
       await action();
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Có lỗi xảy ra.");
+      if (current.current)
+        setError(e instanceof Error ? e.message : "Có lỗi xảy ra.");
     } finally {
-      setBusy(false);
+      if (current.current) setBusy(false);
     }
   }
   async function refresh() {
@@ -256,9 +290,10 @@ export function AdminConsole({ initial }: { initial: AdminSnapshot }) {
       setAuditOffset(0);
       setUsageOffset(0);
     } catch {
-      setError(
-        "Quyết định đã lưu; chưa tải lại được nhật ký. Hãy làm mới dữ liệu.",
-      );
+      if (current.current)
+        setError(
+          "Quyết định đã lưu; chưa tải lại được nhật ký. Hãy làm mới dữ liệu.",
+        );
     }
   }
   const { dashboard } = data,

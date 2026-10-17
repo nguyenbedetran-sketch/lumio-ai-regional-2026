@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "passed": 7,
+  "checks": [
+    "Only explicit light/dark/system preferences are accepted; absent/invalid values select system",
+    "System resolution follows current media preference without replacing explicit choices",
+    "Unreadable storage defaults to system and never throws",
+    "Theme reader retains a supported explicit preference",
+    "Constant bootstrap and helper resolution agree across stored values and both system schemes",
+    "Blocked bootstrap storage still resolves system; unavailable media safely falls back to dark",
+    "Actual Layout bootstrap is synchronous in head before body and suppression is root-only"
+  ],
+  "checkedAt": "2026-10-17T06:04:38.941Z",
+  "scope": "Pure theme helper/constant bootstrap VM plus actual Layout+Skeleton static SSR, no browser/provider/accounts"
+}

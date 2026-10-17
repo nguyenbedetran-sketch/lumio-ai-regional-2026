@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T05:48:14.652Z",
+  "passed": 10,
+  "checks": [
+    {
+      "name": "Stale/missing account header blocks list, snapshot URL and source deletion before side effects",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest and hostile-origin deletion cannot resolve or erase source IDs",
+      "status": "PASS"
+    },
+    {
+      "name": "Delete-source requires strict bounded ID and refuses forged owner/workspace/action shapes",
+      "status": "PASS"
+    },
+    {
+      "name": "A foreign actor cannot erase an owner-only source or infer its existence",
+      "status": "PASS"
+    },
+    {
+      "name": "Session revocation between authorization and streamed body parsing rolls deletion back",
+      "status": "PASS"
+    },
+    {
+      "name": "Failure deleting a document restores all affected snapshots and chunks atomically",
+      "status": "PASS"
+    },
+    {
+      "name": "All owned workspace copies and cached evidence delete, leaving unrelated and other-owner data",
+      "status": "PASS"
+    },
+    {
+      "name": "Repeated deletion is an idempotent metadata-only zero without a credit mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "Native source access requires matching canonical user and rejects browser credential mixing",
+      "status": "PASS"
+    },
+    {
+      "name": "Existing per-document delete stays scoped and invalidates only its owned workspace",
+      "status": "PASS"
+    }
+  ],
+  "scope": "Actual authenticated handlers and isolated SQLite, synthetic accounts and exact stored snapshots/chunks. OAuth session is fixture only; no external provider/network/student data.",
+  "providerRequests": 0
+}

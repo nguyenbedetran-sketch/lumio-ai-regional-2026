@@ -1,0 +1,167 @@
+{
+  "checkedAt": "2026-10-17T06:12:08.285Z",
+  "scope": "Current working tree with listed source hashes; base HEAD is not a release or clean-tree claim. Windows local checks only; live OAuth, provider/model quality, production cutover and devices excluded.",
+  "baseCommit": "f1ac9c28832a7a3b4d4b83b0240f6e62bd80ff04",
+  "checks": [
+    {
+      "command": "pnpm test:all",
+      "status": "PASS",
+      "evidence": "regression/run.json"
+    },
+    {
+      "command": "pnpm build",
+      "status": "PASS",
+      "note": "Existing home-v8 CSS warning; compilation, static generation and type validity completed."
+    },
+    {
+      "command": "pnpm test:teaching:production",
+      "status": "PASS",
+      "groups": 13,
+      "evidence": "compiled-http-report.json"
+    },
+    {
+      "command": "pnpm typecheck",
+      "status": "PASS"
+    },
+    {
+      "command": "node scripts/test-v9-database-standalone.cjs",
+      "status": "PASS",
+      "evidence": "regression/database-standalone-win32.json"
+    },
+    {
+      "command": "pnpm audit --prod --audit-level high --json",
+      "status": "PASS",
+      "evidence": "dependency-audit.json"
+    }
+  ],
+  "sourceProof": [
+    {
+      "path": ".github/workflows/verify.yml",
+      "sha256": "f22a155416a01635243485d0b9cc050ba9a5da343a8bdea6c3e06a4af68e398d"
+    },
+    {
+      "path": "app/api/admin/audit/route.ts",
+      "sha256": "6a1120fb3af4300624d40f0caa8143d1755208ca55b0152c1d111bec21410082"
+    },
+    {
+      "path": "app/api/admin/flags/route.ts",
+      "sha256": "c81fcf50e28890ec03ad94ce5ef02d1363abc534f794828e661ab1df61dca57f"
+    },
+    {
+      "path": "app/api/admin/route.ts",
+      "sha256": "a01d0ed5dec20cf06698072cb5be46ec03e19a5f4465f2426da2a50a3f507664"
+    },
+    {
+      "path": "app/api/admin/users/route.ts",
+      "sha256": "d85ce1bef88e2e38d6eae76daf26bed1e00f62897fe4a74d4060d5b3ff66d13a"
+    },
+    {
+      "path": "app/api/rag/documents/route.ts",
+      "sha256": "6936845b12c714a85dd255958c1924da3627309164ee2d5bdb4db952fe300696"
+    },
+    {
+      "path": "components/admin/console.tsx",
+      "sha256": "503adc0a6b2695cd49ab9439d53db90f3a288a0a051b759e77ffcdc46c9c46e2"
+    },
+    {
+      "path": "components/lumio/app.tsx",
+      "sha256": "9bba6aa1144d51e1bcee90c3c4ff22e61bdfb24d8b95a0a6e226f91351bf752b"
+    },
+    {
+      "path": "lib/lumio/backup-import-copy.ts",
+      "sha256": "0b2bb3ed324a65508b55cf8efbb2f95e01dac3eca5a227974e1bf3239d7d0e89"
+    },
+    {
+      "path": "lib/server/access.ts",
+      "sha256": "59772c2adc175de1a2c5237494277984cf36dffc0e5e197802c5045a0390bf9e"
+    },
+    {
+      "path": "lib/server/admin-access.ts",
+      "sha256": "486e2be841d08bf652ad810a96f51997cd4f1016e31ce5efcb215ee56c8fc1ff"
+    },
+    {
+      "path": "lib/server/auth-errors.ts",
+      "sha256": "e75d69d150b1dc1d7ec6fb34be65d2bf0a79de9fce6ed788c1a80777d280d472"
+    },
+    {
+      "path": "lib/server/error-diagnostics.ts",
+      "sha256": "04b4d3517446a1ce3fd6488633831e868470bb7397bc21d64e6ce09bb6e6644b"
+    },
+    {
+      "path": "lib/server/rag-core.ts",
+      "sha256": "0d0727a633134b84f55034cf3efbc8a732b831272dcbb87dc697a9ee6b7e5fcf"
+    },
+    {
+      "path": "next.config.ts",
+      "sha256": "84efe3d7b8d7e2233a41e75a4afae312d0dd268a364c9002811b8f2ab8673ea0"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0401b4882e1f7bac211ab96da77c890cf8405dccc2f6c39c4c4ab06e7c3d5254"
+    },
+    {
+      "path": "scripts/evaluate-rag.cjs",
+      "sha256": "cb3d08d404915a5267019c9b60f5614f3234938db4df9039404a4a6284bd5aa0"
+    },
+    {
+      "path": "scripts/rag-offline-evaluation.cjs",
+      "sha256": "dc0acab72b48334746b291a50052c27103446932f79620bc5d6740fcf1c6020c"
+    },
+    {
+      "path": "scripts/test-teaching-production.cjs",
+      "sha256": "e09810b6bd21a79c5a012f93478a2e663375c5de432c288e471b95eef312cb7d"
+    },
+    {
+      "path": "tests/fixtures/v12-retrieval-evaluation.v1.json",
+      "sha256": "1449aa49a0f8a4ed5c65b2d1f55f58b032556fa1eebb8faa2a47631b5517a112"
+    },
+    {
+      "path": "tests/rag-live-replay.cjs",
+      "sha256": "476e055bdbf93633b88c2defab3cd9a27b771a829bc8e79aaf196f093908457d"
+    },
+    {
+      "path": "tests/v10-admin-account-binding.cjs",
+      "sha256": "675bc4c964bced27f7929c141b0d791f983619d0f030db6fc92bb67bb0811932"
+    },
+    {
+      "path": "tests/v10-backup-import-ui.cjs",
+      "sha256": "a6662c2c9698c551c5242d350dbe8be98316ebb58cd840879d6347023e42826b"
+    },
+    {
+      "path": "tests/v10-backup-import.browser.js",
+      "sha256": "6404cdea11b973d7f96187b5aa2e80241c892dc266a6de38b30c20616bcd342a"
+    },
+    {
+      "path": "tests/v10-backup-import.cjs",
+      "sha256": "03c590cdeddafad2ad3a6c2dba7323b7c530ba4e164a36e093e271db5b6edcd6"
+    },
+    {
+      "path": "tests/v10-error-diagnostics.cjs",
+      "sha256": "c2f46ec20ff7199a67514c41b642caf7d29a0ff540e47e97c5589a4594b2e04c"
+    },
+    {
+      "path": "tests/v12-rag-session-boundary.cjs",
+      "sha256": "4922b9007b72c46977a33e742d3281dcdf1c47196a6a1acdfa365b56ddb60720"
+    },
+    {
+      "path": "tests/v12-retrieval-evaluation.cjs",
+      "sha256": "db5be162b6571fb3a2cbcf415d8c48ae223aa2fea8e65359cd940616869baedd"
+    },
+    {
+      "path": "tests/v13-security-headers.cjs",
+      "sha256": "c7058960f3f344ef3e56f3392fd4a68b9d399a8391807dc5f0755b4b7a38ae21"
+    }
+  ],
+  "knownInitialCheckFailure": {
+    "evidence": "compiled-http-initial-header-assertion.json",
+    "cause": "New assertion incorrectly required private on the public /api/config capability response. Existing no-store is correct; assertion now requires no-store there and additionally private for account data. Rerun13groups passed; app cache policy unchanged."
+  },
+  "finalCopyAcceptance": {
+    "focused": 23,
+    "browser": 20,
+    "reviewedScreenshots": 3,
+    "evidence": "backup-import-browser/report.json",
+    "finalBuild": "PASS",
+    "finalCompiledHttpGroups": 13
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T06:03:51.997Z",
+  "passed": 24,
+  "checks": [
+    {
+      "name": "CLI requires one explicit mode, bounded cap and rejects unknown/duplicate flags",
+      "status": "PASS"
+    },
+    {
+      "name": "Offline mode cannot read an env-file or use an implicit real fetch",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider env parser ignores DB/auth/Node overrides and accepts only key/model allowlist",
+      "status": "PASS"
+    },
+    {
+      "name": "Only an explicit absolute private env path is read",
+      "status": "PASS"
+    },
+    {
+      "name": "Output is confined to new V7 report basenames and never overwrites old or existing reports",
+      "status": "PASS"
+    },
+    {
+      "name": "Every local request has canonical account binding and a UUID including early-full gate",
+      "status": "PASS"
+    },
+    {
+      "name": "Strict provider origins, endpoints, methods and redirect policy prevent credential forwarding",
+      "status": "PASS"
+    },
+    {
+      "name": "Hard HTTP cap includes failed attempts and blocks a second transport before send",
+      "status": "PASS"
+    },
+    {
+      "name": "Report persistence failure blocks dispatch instead of losing the paid-call budget record",
+      "status": "PASS"
+    },
+    {
+      "name": "Provider response metadata fixtures capture model/status/latency/tokens without request headers",
+      "status": "PASS"
+    },
+    {
+      "name": "Five-language content plans retain injection/unrelated-goal/conflict labels without missing-source claims",
+      "status": "PASS"
+    },
+    {
+      "name": "Real handler/SQLite four-turn tutor check uses canonical headers and never pretends to be a student pilot",
+      "status": "PASS"
+    },
+    {
+      "name": "Duplicate valid full-answer roots are compared as mathematical sets",
+      "status": "PASS"
+    },
+    {
+      "name": "A rejected incorrect full answer is a recorded technical FAIL with refunded full-answer hold",
+      "status": "PASS"
+    },
+    {
+      "name": "Full-phase terminal errors or exhausted caps use the same stop policy as hint-phase errors",
+      "status": "PASS"
+    },
+    {
+      "name": "Derived technical review changes classification only and preserves raw fixtures without HTTP",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual product fallback is counted and cannot bypass the total HTTP cap",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual fallback records both provider attempts and their independent raw responses",
+      "status": "PASS"
+    },
+    {
+      "name": "Terminal provider authentication or rate-limit errors stop new cases without retries or benchmark failures",
+      "status": "PASS"
+    },
+    {
+      "name": "Three consecutive validator failures stop the run and retain unstarted cases as NOT_TESTED",
+      "status": "PASS"
+    },
+    {
+      "name": "A provider cap stops a partial case and labels the remaining case NOT_TESTED",
+      "status": "PASS"
+    },
+    {
+      "name": "Missing-data tutor checks state and locked full answer while leaving semantic clarification review pending",
+      "status": "PASS"
+    },
+    {
+      "name": "Actual content route accepts a valid source summary despite an unrelated goal without claiming missing-source abstention",
+      "status": "PASS"
+    },
+    {
+      "name": "Rejected raw authored output stays recorded; report redacts credentials and makes no semantic PASS",
+      "status": "PASS"
+    }
+  ],
+  "providerRequests": 0,
+  "scope": "Offline cap/path/header/metadata tests plus actual local AI handlers and temporary SQLite with injected synthetic auth and intercepted provider transport. No private credentials, real provider calls or semantic/student review."
+}

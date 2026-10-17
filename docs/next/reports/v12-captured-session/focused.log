@@ -1,0 +1,11 @@
+PASS Actual GET rejects session revoked after HTTP authorization before listing or expiry cleanup
+PASS Core list rejects stale captured version without private reads or cleanup
+PASS Core embedding preflight rejects stale captured version before source/chunk reads
+PASS Actual embedding POST rechecks captured version before private preflight and any provider/credit receipt
+PASS Already-embedded fast path rejects a session revoked after replay precheck without returning metadata
+PASS Fresh GET remains owner/workspace scoped and excludes source text while cleaning expired records
+PASS Fresh embedding preflight uses the same transaction for authorization and source/chunk reads
+PASS Embedding preflight still rejects foreign-owner and wrong-workspace document IDs
+PASS Canonical new session can read after revocation without reinstating the old version
+PASS Embedding write inside actual ledger settlement does not open a nested read transaction
+{"status":"PASS","passed":10,"providerCalls":0,"scope":"Actual RAG handlers/core/transactions/ledger with real isolated in-memory SQLite and synthetic OAuth; no live database, network, provider or browser"}

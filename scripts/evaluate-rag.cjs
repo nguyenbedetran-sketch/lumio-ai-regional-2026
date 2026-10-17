@@ -1,7 +1,13 @@
-/* Explicit paid evaluation on authored fixtures only. Hard cap: four requests. */
+/* --offline exercises current production selection without network or credentials.
+ * --live retains the historical bounded paid evaluator; it is not run offline. */
+if (process.argv.includes('--offline')) {
+  try { require('./rag-offline-evaluation.cjs').main(process.argv.slice(2)); }
+  catch (error) { console.error(error); process.exitCode = 1; }
+  return;
+}
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
 const root=path.resolve(__dirname,'..'),output=path.join(root,'docs/regional/rag-live-evaluation.json'),vectorsOutput=path.join(root,'docs/regional/rag-live-vectors.json');
-if(!process.argv.includes('--live')){console.log('No provider call made. Run node scripts/evaluate-rag.cjs --live for the bounded authored-fixture evaluation.');process.exit(0);}
+if(!process.argv.includes('--live')){console.log('No provider call made. Run node scripts/evaluate-rag.cjs --offline for current production selection, or --live for the historical bounded paid evaluation.');process.exit(0);}
 if(fs.existsSync(output)){console.error('Evaluation report already exists. Refusing to overwrite/repeat paid requests.');process.exit(1);}
 for(const key of ['OPENAI_API_KEY','OPENAI_EMBEDDING_MODEL','LUMIO_EMBEDDINGS_ENABLED'])delete process.env[key];
 const env=fs.readFileSync(path.join(root,'.env.local'),'utf8');for(const line of env.split(/\r?\n/)){const match=/^(OPENAI_API_KEY|OPENAI_EMBEDDING_MODEL)=(.*)$/.exec(line);if(match)process.env[match[1]]=match[2].trim().replace(/^(['"])(.*)\1$/,'$2');}

@@ -1,0 +1,1 @@
+PASS Actual saved provider vectors replay all 7 historical raw top3 lexical/hybrid rankings without new API calls; current production selection is a separate offline scope.

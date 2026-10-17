@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "passed": 17,
+  "checkedAt": "2026-10-17T06:02:00.385Z",
+  "scope": "Actual disposable SQLite stores, authored sync payloads, existing VACUUM restore; zero providers, no public deployment",
+  "checks": [
+    {
+      "name": "Shared database coordinates per-account concurrency across two independent stores",
+      "status": "PASS"
+    },
+    {
+      "name": "Global three-request concurrency is transactional across accounts and stores",
+      "status": "PASS"
+    },
+    {
+      "name": "Quota attempts are not refunded by errors or lease release and survive reopening",
+      "status": "PASS"
+    },
+    {
+      "name": "UTC rollover resets attempt windows while live leases remain bounded",
+      "status": "PASS"
+    },
+    {
+      "name": "Abandoned leases expire and revoked session versions cannot acquire a lease",
+      "status": "PASS"
+    },
+    {
+      "name": "First sync has an account-specific epoch and no fabricated data",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical ownership and compare-and-swap reject stale or foreign writes",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost-ACK retry is idempotent and cannot rewrite a newer revision",
+      "status": "PASS"
+    },
+    {
+      "name": "Sync strips binaries, live timers, unknown fields and rejects oversized input",
+      "status": "PASS"
+    },
+    {
+      "name": "Three-way merge keeps independent edits and detects same-item conflicts",
+      "status": "PASS"
+    },
+    {
+      "name": "Delete-versus-edit is a conflict; unchanged items can be deleted safely",
+      "status": "PASS"
+    },
+    {
+      "name": "Deleting server data invalidates the old epoch and cannot resurrect an old outbox",
+      "status": "PASS"
+    },
+    {
+      "name": "Seven-day expiry removes payload and generates a fresh sync epoch",
+      "status": "PASS"
+    },
+    {
+      "name": "VACUUM backup and restore preserve schema, canonical accounts and sync state",
+      "status": "PASS"
+    },
+    {
+      "name": "Older direct PUT preserves unsupported V8 controls while applying opt-out preferences",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit controls clear is retained and replaying an older intent never resurrects it",
+      "status": "PASS"
+    },
+    {
+      "name": "Combined preserved payload enforces size cap with no snapshot or receipt mutation",
+      "status": "PASS"
+    }
+  ]
+}

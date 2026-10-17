@@ -1,0 +1,206 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T06:02:28.995Z",
+  "passed": 49,
+  "checks": [
+    {
+      "name": "Migration12 persists14 teaching tables and preserves existing credentials",
+      "status": "PASS"
+    },
+    {
+      "name": "Guest, wrong account, cross-site GET and bearer cannot read",
+      "status": "PASS"
+    },
+    {
+      "name": "Teacher privilege cannot be self-granted; origin and strict schema enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit own organization; no cross-tenant access even for SUPER_ADMIN",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost-ACK mutation replay exactly once rejects payload and actor reuse",
+      "status": "PASS"
+    },
+    {
+      "name": "Classes persist ownership and reject stale CAS",
+      "status": "PASS"
+    },
+    {
+      "name": "Co-teacher approval and class isolation enforced",
+      "status": "PASS"
+    },
+    {
+      "name": "Invite only hash stored; lost-ACK code recovery and join uses exactly once",
+      "status": "PASS"
+    },
+    {
+      "name": "Invite cannot bind foreign org or make staff impersonate student",
+      "status": "PASS"
+    },
+    {
+      "name": "Group membership current; student payload omits peer roster and emails",
+      "status": "PASS"
+    },
+    {
+      "name": "SourceEvidence rejects spoofed page and cross-actor proof",
+      "status": "PASS"
+    },
+    {
+      "name": "Co-teacher metadata edit keeps exact server proof; changed text cannot reuse proof",
+      "status": "PASS"
+    },
+    {
+      "name": "Locators rebuilt by server; source edits invalidate stale reviewed reference",
+      "status": "PASS"
+    },
+    {
+      "name": "Invalid drafts save for editing; wrong supported answer and duplicate choices blocked at review",
+      "status": "PASS"
+    },
+    {
+      "name": "Explicit review resets on edit; valid decimal rubric values accepted",
+      "status": "PASS"
+    },
+    {
+      "name": "Draft content hidden from students; publish requires review",
+      "status": "PASS"
+    },
+    {
+      "name": "Assignments require reviewed questions and explicit review/issue transitions",
+      "status": "PASS"
+    },
+    {
+      "name": "Issued snapshots and recipients immutable after group and question edits",
+      "status": "PASS"
+    },
+    {
+      "name": "Unpublished student assignment recursively omits answer keys, rubric and private target roster",
+      "status": "PASS"
+    },
+    {
+      "name": "Late joiner cannot see historical issue; teacher cannot submit as student",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical submission ownership; complete unique answers and hidden provisional MCQ mark",
+      "status": "PASS"
+    },
+    {
+      "name": "Lost-ACK student submission update replays once without requiring staff role",
+      "status": "PASS"
+    },
+    {
+      "name": "Manual bounded grades require teacher confirmation and remain hidden until publication",
+      "status": "PASS"
+    },
+    {
+      "name": "Publication exposes only own confirmed result and issued answer snapshot",
+      "status": "PASS"
+    },
+    {
+      "name": "Regrading withdraws result and answer visibility until explicit republish",
+      "status": "PASS"
+    },
+    {
+      "name": "Audit fault rolls back grade, status, idempotency and revision atomically",
+      "status": "PASS"
+    },
+    {
+      "name": "Secure topic label requires three distinct published assessments",
+      "status": "PASS"
+    },
+    {
+      "name": "Announcement draft/publish/edit and calendar remain scoped",
+      "status": "PASS"
+    },
+    {
+      "name": "Settings require organization admin, valid timezone and current CAS",
+      "status": "PASS"
+    },
+    {
+      "name": "Due date policy and closed status reject submissions without grading",
+      "status": "PASS"
+    },
+    {
+      "name": "Allowed late submission recorded but provisional mark private",
+      "status": "PASS"
+    },
+    {
+      "name": "CSV formula safety; student exports own published results only",
+      "status": "PASS"
+    },
+    {
+      "name": "Enrollment removal blocks history/export/invite bypass until explicit restore",
+      "status": "PASS"
+    },
+    {
+      "name": "Organization membership removal blocks prior class and invite bypass",
+      "status": "PASS"
+    },
+    {
+      "name": "Teacher removal ends class/source access; cannot self-escalate org role",
+      "status": "PASS"
+    },
+    {
+      "name": "Org role requires strict string and active teacher, protects owner, changes no system role",
+      "status": "PASS"
+    },
+    {
+      "name": "Canonical session and teacher credential revocation enforced on all access",
+      "status": "PASS"
+    },
+    {
+      "name": "Second SQLite connection shares CAS and lost-ACK operation atomically",
+      "status": "PASS"
+    },
+    {
+      "name": "Archive blocks new writes and invites but preserves history",
+      "status": "PASS"
+    },
+    {
+      "name": "Invite max uses, revoke, expiry and secret rotation fail safely",
+      "status": "PASS"
+    },
+    {
+      "name": "Literal SQL search does not expand wildcard or tenant scope",
+      "status": "PASS"
+    },
+    {
+      "name": "Audit and idempotency metadata omit raw sources, grades, answers and invitation",
+      "status": "PASS"
+    },
+    {
+      "name": "Stale pre-issue question snapshot is rejected and creates no recipients",
+      "status": "PASS"
+    },
+    {
+      "name": "Per-teacher preferences persist self-only, CAS and AI opt-out are canonical",
+      "status": "PASS"
+    },
+    {
+      "name": "Aggregate content quota accounts for replacements and rolls back failed request/replay",
+      "status": "PASS"
+    },
+    {
+      "name": "Communication payload has an independent cumulative quota with atomic rollback",
+      "status": "PASS"
+    },
+    {
+      "name": "Total workspace budget also bounds repeated immutable question snapshots",
+      "status": "PASS"
+    },
+    {
+      "name": "Upgrade from schema11 preserves legacy private snapshot and applies12/13 once",
+      "status": "PASS"
+    },
+    {
+      "name": "Reopen preserves assignments, snapshots, grades and migration once only",
+      "status": "PASS"
+    }
+  ],
+  "fixture": "Actual Request/Response, temporary SQLite, canonical synthetic users/manual teacher approvals and real source proofs/transactions/CAS/exports. OAuth session only synthetic. No network/providers/real teacher or student PII.",
+  "publicDeployment": "NOT TESTED",
+  "realSchoolTrials": "NOT TESTED"
+}

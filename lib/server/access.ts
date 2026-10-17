@@ -2,6 +2,11 @@ import { getStore, type PlatformStore } from "./store";
 import { requirePermission } from "./policy";
 import { requestOrigin } from "./origin";
 import { PlatformError, type Actor, type Permission } from "./types";
+import {
+  reportServerError,
+  safeServerErrorCode,
+  type ServerErrorContext,
+} from "./error-diagnostics";
 
 export function actorFromSession(
   session: unknown,
@@ -108,13 +113,17 @@ export function json(data: unknown, status = 200) {
     },
   });
 }
-export function errorResponse(error: unknown) {
+export function errorResponse(error: unknown, context?: ServerErrorContext) {
+  const status = error instanceof PlatformError ? error.status : 503,
+    code = error instanceof PlatformError ? error.code : "PLATFORM_UNAVAILABLE",
+    publicCode = status >= 500 ? safeServerErrorCode(code) : code,
+    requestId = crypto.randomUUID();
+  reportServerError({ requestId, code: publicCode, status, context });
   return json(
     {
-      error:
-        error instanceof PlatformError ? error.code : "PLATFORM_UNAVAILABLE",
-      requestId: crypto.randomUUID(),
+      error: publicCode,
+      requestId,
     },
-    error instanceof PlatformError ? error.status : 503,
+    status,
   );
 }

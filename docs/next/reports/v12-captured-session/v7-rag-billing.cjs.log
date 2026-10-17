@@ -1,0 +1,33 @@
+PASS Lexical search stays free without UUID or AI feature and creates no receipt
+PASS Hybrid query token usage omitted keeps unknown distinct from observed0 without changing charge/replay
+PASS Hybrid query token usage observed zero keeps unknown distinct from observed0 without changing charge/replay
+PASS Hybrid query token usage observed positive keeps unknown distinct from observed0 without changing charge/replay
+PASS Hybrid query token usage malformed string keeps unknown distinct from observed0 without changing charge/replay
+PASS Hybrid query token usage negative keeps unknown distinct from observed0 without changing charge/replay
+PASS embed: missing/stale account or invalid UUID stops before provider, hold and paid quota
+PASS embed: lost ACK returns completed metadata receipt with one provider, charge and quota slot
+PASS embed: concurrent identical requests have one dispatch and persisted in-progress receipt
+PASS embed: provider failure refunds once and same uncertain intent never dispatches again
+PASS embed: cancellation after provider response rolls back hold and produces no excerpts/vectors
+PASS embed: canonical session revocation at provider settlement prevents result and charge
+PASS embed: receipt commit fault atomically restores credit and embedding state
+PASS embed: changed source during provider call refunds and does not commit stale evidence
+PASS embed: deletion during provider call refunds without restoring erased content
+PASS search: missing/stale account or invalid UUID stops before provider, hold and paid quota
+PASS search: lost ACK returns completed metadata receipt with one provider, charge and quota slot
+PASS search: concurrent identical requests have one dispatch and persisted in-progress receipt
+PASS search: provider failure refunds once and same uncertain intent never dispatches again
+PASS search: cancellation after provider response rolls back hold and produces no excerpts/vectors
+PASS search: canonical session revocation at provider settlement prevents result and charge
+PASS search: receipt commit fault atomically restores credit and embedding state
+PASS search: changed source during provider call refunds and does not commit stale evidence
+PASS search: deletion during provider call refunds without restoring erased content
+PASS A fresh unchanged embedding key stays free without a receipt or paid quota
+PASS Fingerprint binds canonical document revision/model and query; changed paid intent cannot reuse key
+PASS Embedding model configuration is part of the immutable paid intent
+PASS Identical UUIDs remain account scoped and cannot retrieve another account's result
+PASS Query whitespace/key casing/JSON field order preserve the same paid search intent
+PASS Native pairing user binding and receipt account ownership hold for paid RAG endpoints
+PASS Abandoned paid embedding lease fences late commit and refunds without automatic rerun
+PASS Paid RAG receipts survive SQLite reopen and contain only digest/metadata, never source or vectors
+V7 RAG billing: 32 checks passed.

@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checkedAt": "2026-10-17T06:04:32.213Z",
+  "command": "pnpm audit --prod --audit-level high --json",
+  "scope": "Registry advisory check of installed production dependency graph at the checked time; not a source-code security review, zero-day guarantee or dev/OS/browser dependency audit.",
+  "vulnerabilities": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0
+  },
+  "dependencies": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0
+    },
+    "dependencies": 73,
+    "devDependencies": 0,
+    "optionalDependencies": 53,
+    "totalDependencies": 126
+  },
+  "sourceProof": [
+    {
+      "path": "package.json",
+      "sha256": "0401b4882e1f7bac211ab96da77c890cf8405dccc2f6c39c4c4ab06e7c3d5254"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "5d9f65f0a883cfd1bcd5e57823bc779f43adbef0dbad89342c9cd6f16d4e6691"
+    }
+  ]
+}

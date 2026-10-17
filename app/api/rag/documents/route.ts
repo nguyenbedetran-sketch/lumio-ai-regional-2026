@@ -41,6 +41,7 @@ export async function GET(req: Request) {
       documents: getStore().ragList(
         actor.user.id,
         url.searchParams.get("workspaceId") || "main",
+        actor.user.sessionVersion,
       ),
       embeddingsAvailable: embeddingStatus().enabled,
       retentionDays: 7,
@@ -96,6 +97,7 @@ export async function POST(req: Request) {
         actor.user.id,
         space,
         body.documentId,
+        actor.user.sessionVersion,
       );
       if (!embeddingStatus().enabled)
         throw new AIError("EMBEDDINGS_DISABLED", 503);
@@ -119,7 +121,7 @@ export async function POST(req: Request) {
       if (data.semantic && data.model === model)
         return json({
           document: store
-            .ragList(actor.user.id, space)
+            .ragList(actor.user.id, space, actor.user.sessionVersion)
             .find((d) => d.id === data.id),
           credits: 0,
           unchanged: true,
